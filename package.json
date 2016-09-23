@@ -12,12 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/GallopingTriangles/GrandTheftAutomation.git"
   },
-  "author": "",
+  "author": "LorenzoE KevinC ChrisC AlexP",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kevindchan/GrandTheftAutomation/issues"
+    "url": "https://github.com/GallopingTriangles/GrandTheftAutomation/issues"
   },
-  "homepage": "https://github.com/kevindchan/GrandTheftAutomation#readme",
+  "homepage": "https://github.com/GallopingTriangles/GrandTheftAutomation#readme",
   "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
