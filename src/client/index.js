@@ -8,8 +8,8 @@ var store = createStore(reducer);
 
 var render = () => {
   ReactDOM.render(
-    <App />,
-    document.getElementById('app');
+    <App store={ store } />,
+    document.getElementById('app')
   )
 }
 
