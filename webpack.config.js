@@ -1,3 +1,10 @@
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  filename: 'index.html',
+  template: __dirname + '/src/client/views/index.html',
+  inject: 'body'
+})
+
 module.exports = {
   entry: __dirname + '/src/index.js',
   output: {
@@ -12,5 +19,8 @@ module.exports = {
         'babel'
       ]
     }
-  }
+  },
+  plugins: [
+    HtmlWebpackPluginConfig
+  ]
 }
