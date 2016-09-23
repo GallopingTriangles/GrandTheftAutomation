@@ -19,6 +19,13 @@ module.exports = {
         loaders: [
           'babel'
         ]
+      },
+      {
+        test: /\.jsx?$/,
+        include: __dirname + '/src',
+        loaders: [
+          'babel'
+        ]
       }
     ]
   },
