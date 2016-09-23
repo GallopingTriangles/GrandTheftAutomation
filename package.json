@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server/server.js",
     "build": "webpack -w",
     "rebase": "git pull --rebase upstream master && git push origin master"
   },
@@ -30,6 +31,10 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "morgan": "^1.7.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
