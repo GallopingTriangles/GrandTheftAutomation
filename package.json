@@ -4,10 +4,14 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test:watch": "npm run test -- --watch",
     "start": "nodemon src/server/server.js",
     "build": "webpack -w",
     "rebase": "git pull --rebase upstream master && git push origin master"
+  },
+  "babel": {
+    "presets": ["es2015"]
   },
   "repository": {
     "type": "git",
