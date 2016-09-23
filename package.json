@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -w",
-    "rebase": "git pull upstream master && git push origin master"
+    "rebase": "git pull --rebase upstream master && git push origin master"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevindchan/GrandTheftAutomation.git"
+    "url": "git+https://github.com/GallopingTriangles/GrandTheftAutomation.git"
   },
   "author": "",
   "license": "ISC",
@@ -28,5 +28,11 @@
     "mocha": "^3.0.2",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
+  },
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0"
   }
 }
