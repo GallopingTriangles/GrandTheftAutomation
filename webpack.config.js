@@ -6,19 +6,21 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 module.exports = {
-  entry: __dirname + '/src/index.js',
+  entry: __dirname + '/src/client/index.js',
   output: {
     path: __dirname + '/dist',
     filename: 'bundle.js'
   },
   module: {
-    loaders: {
-      test: /\.js?$/,
-      include: __dirname + '/src',
-      loader: [
-        'babel'
-      ]
-    }
+    loaders: [
+      {
+        test: /\.js?$/,
+        include: __dirname + '/src',
+        loaders: [
+          'babel'
+        ]
+      }
+    ]
   },
   plugins: [
     HtmlWebpackPluginConfig
