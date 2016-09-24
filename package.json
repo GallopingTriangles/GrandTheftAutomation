@@ -4,7 +4,6 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-<<<<<<< a64706bcf514cd9419b3800aac215b423808d5e5
     "test": "mocha --compilers js:babel-core/register --recursive --reporter spec",
     "test:watch": "npm run test -- --watch",
     "start": "nodemon src/server/server.js",
