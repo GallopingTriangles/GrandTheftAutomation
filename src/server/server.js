@@ -1,8 +1,8 @@
 // == set up ===================================================
 var express = require('express');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var port = process.env.PORT || 8080;
+var bodyParser = require('body-parser');												// pull information from HTML POST
+var morgan = require('morgan');																	// log requests to the console
+var port = process.env.PORT || 8080;													  // set the port
 var path = require('path');
 var session = require('express-session');
 var routes = require('./routes/routes');
@@ -10,13 +10,13 @@ var routes = require('./routes/routes');
 var app = express();
 
 // == configuration ============================================
-app.use(express.static('../client')); 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev')); // log every request to the console
+app.use(express.static('../client')); 													// set static files location
+app.use(bodyParser.json());																			// parse application/json
+app.use(bodyParser.urlencoded({ extended: true }));							// parse application/x-www-form-urlencoded
+app.use(morgan('dev')); 																				// log every request to the console
 
 // == routes ===================================================
-app.use('/api', routes);
+app.use('/api', routes);																				// api endpoints
 
 // == listen ===================================================
 app.listen(port, () => {

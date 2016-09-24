@@ -1,3 +1,4 @@
+// EXAMPLE
 var router = require('express').Router();
 var testController = require('../controllers/testController');
 
