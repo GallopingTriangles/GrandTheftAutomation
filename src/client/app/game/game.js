@@ -29,22 +29,24 @@ function update() {
   car.body.velocity.y = 0;
   car.body.angularVelocity = 0;
 
-  function leftRight() {
-    if (cursors.left.isDown) {
-      car.body.angularVelocity = -200;
-    } else if (cursors.right.isDown) {
-      car.body.angularVelocity = 200;
-    }
-  }
-
   if (cursors.up.isDown) {
     game.physics.arcade.velocityFromAngle(car.angle, 300, car.body.velocity);
-    leftRight();
+    leftRight(true);
   } else if (cursors.down.isDown) {
     game.physics.arcade.velocityFromAngle(car.angle, -100, car.body.velocity);
-    leftRight();
+    leftRight(false);
   }
 }
 
 function render() {
+}
+
+// HELPER FUNCTIONS
+
+function leftRight(forward) {
+  if (cursors.left.isDown) {
+    car.body.angularVelocity = forward ? -200 : -100;
+  } else if (cursors.right.isDown) {
+    car.body.angularVelocity = forward ? 200 : 100;
+  }
 }
