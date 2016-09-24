@@ -15,13 +15,15 @@ function create() {
   car.scale.setTo(.2, .2);
 
   //
-  car.anchor.setTo(.3, .5);
+  // car.anchor.setTo(.3, .5);
 
   // enable physics on the car
   game.physics.p2.enable(car);
+  console.log('Car body: ', car.body);
   car.body.collideWorldBounds = true;
 
   cursors = game.input.keyboard.createCursorKeys();
+
 }
 
 function update() {
@@ -56,4 +58,8 @@ function leftRight(forward) {
   } else if (cursors.right.isDown) {
     car.body.angularVelocity = forward ? 200 : 100;
   }
+}
+
+function decomposeVelocity(velocity, angle) {
+
 }
