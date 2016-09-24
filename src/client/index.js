@@ -13,6 +13,10 @@ import reducer from './app/reducers/reducer.js';
 */
 var store = createStore(reducer);
 
+/*
+** Wrap the root component in a Provider
+** Child components can access the store through context
+*/
 var render = () => {
   ReactDOM.render(
     <Provider store={ store } >

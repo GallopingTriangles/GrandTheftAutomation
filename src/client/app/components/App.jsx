@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Nav from './Nav.jsx';
@@ -8,25 +8,27 @@ class App extends Component {
     super(props);
   }
   render() {
-    console.log(this.props);
+    console.log(this.props.state);
     return (
       <div>
         <Nav />
         <p>Hey mang</p>
         <p>Grand Theft Automation</p>
-        <button onClick={ () => this.props.click() }>click</button>
-        <p>Here{ this.props.command }</p>
+        <button onClick={ this.props.click }>click</button>
+        <p>{ this.props.command }</p>
       </div>
     )
   }
 }
 
+// inject state from store into props of App
 var mapStateToProps = state => {
   return {
-    command: state.command
+    command: state.userCommand.command,
   }
 };
 
+// inject dispatch method into props of App
 var mapDispatchToProps = dispatch => {
   return {
     click: () => {
@@ -37,5 +39,11 @@ var mapDispatchToProps = dispatch => {
     }
   }
 }
-// mapping store to prop currently not working
+
+App.propTypes = {
+  command: PropTypes.string,
+  click: PropTypes.func
+}
+
+// connect() provides a link between this component and the store through the props
 export default connect(mapStateToProps, mapDispatchToProps)(App);
