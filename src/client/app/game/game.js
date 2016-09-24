@@ -4,7 +4,7 @@ function preload() {
   game.load.image('car', './assets/car-top-view.png');
 }
 
-
+var car;
 
 function create() {
   // Use the arcade physics system
