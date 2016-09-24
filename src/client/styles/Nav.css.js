@@ -18,5 +18,14 @@ module.exports = {
     backgroundColor: 'black',
     color: 'white',
     verticalAlign: 'middle'
+  },
+  header: {
+    float: 'left',
+    fontStyle: 'italic',
+    fontSize: '32px',
+    marginTop: '4px',
+    marginBottom: '0px',
+    marginLeft: '10px',
+    verticalAlign: 'middle'
   }
 }
