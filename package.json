@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --reporter nyan",
+    "test": "mocha --compilers js:babel-core/register --reporter spec",
     "start": "nodemon src/server/server.js",
     "build": "webpack -w",
     "rebase": "git pull --rebase upstream master && git push origin master"

@@ -1,6 +1,5 @@
-import chai from 'chai';
+import { expect } from 'chai';
 import userCommand from '../src/client/app/reducers/UserCommand.js';
-var expect = chai.expect;
 
 describe('userCommand reducer function', function() {
 
@@ -9,9 +8,18 @@ describe('userCommand reducer function', function() {
       type: 'INPUT_COMMAND',
       command: 'Hello, World!'
     };
-    var result = userCommand(undefined, action);
+    var result = userCommand({}, action);
     expect(result).to.be.an('object');
   });
+
+  it('should create an object if state is undefined', function() {
+    var action = {
+      type: 'INPUT_COMMAND',
+      command: 'Hello, World!'
+    };
+    var result = userCommand(undefined, action);
+    expect(result).to.be.an('object');
+  })
 
   it('should have a command property', function() {
     var action = {
@@ -31,5 +39,6 @@ describe('userCommand reducer function', function() {
     var result = userCommand(state, action);
     expect(state).to.not.equal(result);
     expect(state).to.deep.equal({ command: 'Sup foo' });
-  })
+  });
+
 })
