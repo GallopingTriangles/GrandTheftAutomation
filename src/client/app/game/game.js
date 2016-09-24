@@ -19,6 +19,7 @@ function create() {
 
   // enable physics on the car
   game.physics.arcade.enable(car);
+  car.body.collideWorldBounds = true;
 
   cursors = game.input.keyboard.createCursorKeys();
 }
