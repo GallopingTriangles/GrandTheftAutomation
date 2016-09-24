@@ -16,9 +16,9 @@ class Nav extends Component {
   }
 }
 
-Nav.contextTypes = {
-  store: PropTypes.object
-}
+// Nav.contextTypes = {
+//   store: PropTypes.object
+// }
 
 var mapStateToProps = (state) => {
   return {

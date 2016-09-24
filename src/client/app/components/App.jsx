@@ -8,7 +8,6 @@ class App extends Component {
     super(props);
   }
   render() {
-    console.log(this.props.state);
     return (
       <div>
         <Nav />

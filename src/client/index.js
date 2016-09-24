@@ -27,4 +27,4 @@ var render = () => {
 }
 
 render();
-store.subscribe(render); // App will re-render when the store has been changed
+store.subscribe(render); // App will re-render when the store has been updated
