@@ -1,6 +1,6 @@
 const createCommand = command => {
   return {
-    type: 'ADD_COMMAND',
+    type: 'INPUT_COMMAND',
     command
   };
 }

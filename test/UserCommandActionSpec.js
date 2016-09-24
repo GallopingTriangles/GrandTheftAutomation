@@ -18,9 +18,9 @@ describe('userCommandActionCreator', () => {
       expect(createCommand(text)).to.be.a('object');
     });
 
-    it('should return an object with an "ADD_COMMAND" type', () => {
+    it('should return an object with an "INPUT_COMMAND" type', () => {
       var action = createCommand(text);
-      expect(action.type).to.equal('ADD_COMMAND');
+      expect(action.type).to.equal('INPUT_COMMAND');
     });
 
     it('should return an object with a "command" property', () => {
