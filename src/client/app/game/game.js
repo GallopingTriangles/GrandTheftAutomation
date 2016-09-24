@@ -7,8 +7,8 @@ function preload() {
 var car;
 
 function create() {
-  // Use the arcade physics system
-  game.physics.startSystem(Phaser.Physics.ARCADE);
+  // Use the p2 physics system
+  game.physics.startSystem(Phaser.Physics.P2JS);
   game.stage.backgroundColor = '#3e5f96';
 
   car = game.add.sprite(400, 300, 'car');
@@ -18,7 +18,7 @@ function create() {
   car.anchor.setTo(.3, .5);
 
   // enable physics on the car
-  game.physics.arcade.enable(car);
+  game.physics.p2.enable(car);
   car.body.collideWorldBounds = true;
 
   cursors = game.input.keyboard.createCursorKeys();
@@ -26,17 +26,23 @@ function create() {
 
 function update() {
   //  Reset the cars velocity before rendering next frame;
-  car.body.velocity.x = 0;
-  car.body.velocity.y = 0;
-  car.body.angularVelocity = 0;
+  // car.body.velocity.x = 0;
+  // car.body.velocity.y = 0;
+  // car.body.angularVelocity = 0;
 
-  if (cursors.up.isDown) {
-    game.physics.arcade.velocityFromAngle(car.angle, 300, car.body.velocity);
-    leftRight(true);
-  } else if (cursors.down.isDown) {
-    game.physics.arcade.velocityFromAngle(car.angle, -100, car.body.velocity);
-    leftRight(false);
-  }
+  if (cursors.left.isDown) {car.body.rotateLeft(100);}   //car movement
+    else if (cursors.right.isDown){car.body.rotateRight(100);}
+    else {car.body.setZeroRotation();}
+    if (cursors.up.isDown){car.body.thrust(400);}
+    else if (cursors.down.isDown){car.body.reverse(400);}
+
+  // if (cursors.up.isDown) {
+  //   game.physics.p2.velocityFromAngle(car.angle, 300, car.body.velocity);
+  //   leftRight(true);
+  // } else if (cursors.down.isDown) {
+  //   game.physics.p2.velocityFromAngle(car.angle, -100, car.body.velocity);
+  //   leftRight(false);
+  // }
 }
 
 function render() {
