@@ -30,31 +30,38 @@ function update() {
   //  Reset the cars velocity (movement)
   car.body.velocity.x = 0;
   car.body.velocity.y = 0;
-  car.angle += 1;
+  car.body.angularVelocity = 0;
   // console.log(car.angle);
-  if (cursors.left.isDown)
-  {
-      //  Move to the left
-      car.body.velocity.x = -150;
+  if (cursors.up.isDown) {
+    game.physics.arcade.velocityFromAngle(car.angle, 300, car.body.velocity);
 
-      // car.animations.play('left');
+    if (cursors.left.isDown) {
+      car.body.angularVelocity = -200;
+    } else if (cursors.right.isDown) {
+      car.body.angularVelocity = 200;
+    }
   }
-  else if (cursors.right.isDown)
-  {
-      //  Move to the right
-      car.body.velocity.x = 150;
-
-      // car.animations.play('right');
-  } else if (cursors.down.isDown) {
-    car.body.velocity.y = 150;
-  } else if (cursors.up.isDown) {
-    car.body.velocity.y = -150;
-  }
-  {
+  // {
+  //     //  Move to the left
+  //     car.body.velocity.x = -150;
+  //
+  //     // car.animations.play('left');
+  // }
+  // else if (cursors.right.isDown)
+  // {
+  //     //  Move to the right
+  //     car.body.velocity.x = 150;
+  //
+  //     // car.animations.play('right');
+  // } else if (cursors.down.isDown) {
+  //   car.body.velocity.y = 150;
+  // } else if (cursors.up.isDown) {
+  //   car.body.velocity.y = -150;
+  // }
+  // {
       //  Stand still
       car.animations.stop();
       car.frame = 4;
-  }
 
 }
 
