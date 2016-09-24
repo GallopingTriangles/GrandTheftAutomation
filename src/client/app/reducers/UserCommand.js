@@ -1,4 +1,4 @@
-const userCommand = (state = {command: 'initializing'}, action) => {
+const userCommand = (state = {command: ''}, action) => {
   switch (action.type) {
     case 'INPUT_COMMAND':
       return Object.assign(

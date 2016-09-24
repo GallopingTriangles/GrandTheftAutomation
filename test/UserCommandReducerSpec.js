@@ -15,7 +15,7 @@ describe('userCommand reducer function', function() {
       expect(result).to.be.an('object');
     });
 
-    it('should create an object if state is undefined', function() {
+    it('should return an initial state object if state is undefined', function() {
       var action = {
         type: 'INPUT_COMMAND',
         command: 'Hello, World!'
@@ -30,7 +30,7 @@ describe('userCommand reducer function', function() {
         command: 'Hello, World!'
       };
       var result = userCommand(undefined, action);
-      expect(result.command)
+      expect(result.command).to.not.be.undefined;
     })
 
     it('should not mutate the original state', function() {
