@@ -1,13 +1,24 @@
+// == set up ===================================================
 var express = require('express');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
+var bodyParser = require('body-parser');												// pull information from HTML POST
+var morgan = require('morgan');																	// log requests to the console
+var port = process.env.PORT || 8080;													  // set the port
 var path = require('path');
 var session = require('express-session');
+var routes = require('./routes/routes');
 
 var app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// == configuration ============================================
+app.use(express.static('../client')); 													// set static files location
+app.use(bodyParser.json());																			// parse application/json
+app.use(bodyParser.urlencoded({ extended: true }));							// parse application/x-www-form-urlencoded
+app.use(morgan('dev')); 																				// log every request to the console
 
-app.listen(8888);
-console.log('Listening on 127.0.0.1:8888');
+// == routes ===================================================
+app.use('/api', routes);																				// api endpoints
+
+// == listen ===================================================
+app.listen(port, () => {
+  console.log('app listening on port', port);
+});
