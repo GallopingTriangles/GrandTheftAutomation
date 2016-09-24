@@ -1,75 +1,50 @@
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
-
-    game.load.image('car', './assets/car-top-view.png');
-
-
-
+  game.load.image('car', './assets/car-top-view.png');
 }
 
 
 
 function create() {
-  // game.add.sprite(0, 0, 'arrow');
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.stage.backgroundColor = '#3e5f96';
+  // Use the arcade physics system
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+  game.stage.backgroundColor = '#3e5f96';
 
-    car = game.add.sprite(400, 300, 'car');
-    car.anchor.setTo(.5, 1);
-    car.scale.setTo(.2, .2);
-    car.anchor.setTo(.5, .5);
+  car = game.add.sprite(400, 300, 'car');
+  car.scale.setTo(.2, .2);
 
-    //  We need to enable physics on the player
-    game.physics.arcade.enable(car);
+  //
+  car.anchor.setTo(.3, .5);
 
-    cursors = game.input.keyboard.createCursorKeys();
+  // enable physics on the car
+  game.physics.arcade.enable(car);
+
+  cursors = game.input.keyboard.createCursorKeys();
 }
 
 function update() {
-  //  Reset the cars velocity (movement)
+  //  Reset the cars velocity before rendering next frame;
   car.body.velocity.x = 0;
   car.body.velocity.y = 0;
   car.body.angularVelocity = 0;
-  // console.log(car.angle);
-  if (cursors.up.isDown) {
-    game.physics.arcade.velocityFromAngle(car.angle, 300, car.body.velocity);
 
+  function leftRight() {
     if (cursors.left.isDown) {
       car.body.angularVelocity = -200;
     } else if (cursors.right.isDown) {
       car.body.angularVelocity = 200;
     }
   }
-  // {
-  //     //  Move to the left
-  //     car.body.velocity.x = -150;
-  //
-  //     // car.animations.play('left');
-  // }
-  // else if (cursors.right.isDown)
-  // {
-  //     //  Move to the right
-  //     car.body.velocity.x = 150;
-  //
-  //     // car.animations.play('right');
-  // } else if (cursors.down.isDown) {
-  //   car.body.velocity.y = 150;
-  // } else if (cursors.up.isDown) {
-  //   car.body.velocity.y = -150;
-  // }
-  // {
-      //  Stand still
-      car.animations.stop();
-      car.frame = 4;
 
+  if (cursors.up.isDown) {
+    game.physics.arcade.velocityFromAngle(car.angle, 300, car.body.velocity);
+    leftRight();
+  } else if (cursors.down.isDown) {
+    game.physics.arcade.velocityFromAngle(car.angle, -100, car.body.velocity);
+    leftRight();
+  }
 }
 
 function render() {
-
-    // game.debug.geom(new Phaser.Point(car.x, car.y), '#ffff00');
-    // game.debug.geom(new Phaser.Point(arrow2.x, arrow2.y), '#ffff00');
-    // game.debug.geom(new Phaser.Point(arrow3.x, arrow3.y), '#ffff00');
-    // game.debug.geom(new Phaser.Point(arrow4.x, arrow4.y), '#ffff00');
-
 }
