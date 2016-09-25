@@ -99,6 +99,19 @@ describe('userCommand reducer function', function() {
       var result = userCommand(state, action);
       expect(result).to.deep.equal(state);
     })
+
+    it('should contain a growing array of user commands', () => {
+      var action = {
+        type: 'INPUT_COMMAND',
+        level: 4,
+        command: 'Here is a command'
+      }
+      var result;
+      for (var i = 0; i < 3; i++) {
+        result = userCommand(result, action);
+      };
+      expect(result[4]).to.have.lengthOf(3);
+    })
   })
 
 })
