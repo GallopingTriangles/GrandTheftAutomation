@@ -45,6 +45,7 @@ function update() {
   //   game.physics.p2.velocityFromAngle(car.angle, -100, car.body.velocity);
   //   leftRight(false);
   // }
+  console.log(car.body.rotateLeft)
 }
 
 function render() {
@@ -61,5 +62,5 @@ function leftRight(forward) {
 }
 
 function decomposeVelocity(velocity, angle) {
-
+  
 }
