@@ -14,8 +14,6 @@ class App extends Component {
         <Nav />
         <p>Hey mang</p>
         <p>Grand Theft Automation</p>
-        <button onClick={ this.props.click }>click</button>
-        <p>{ this.props.command }</p>
         <Console />
       </div>
     )
@@ -29,22 +27,17 @@ var mapStateToProps = state => {
   }
 };
 
-// inject dispatch method into props of App
-var mapDispatchToProps = dispatch => {
-  return {
-    click: () => {
-      dispatch({
-        type: 'INPUT_COMMAND',
-        command: 'clicked!'
-      });
-    }
-  }
-}
-
-App.propTypes = {
-  command: PropTypes.string,
-  click: PropTypes.func
-}
+// // inject dispatch method into props of App
+// var mapDispatchToProps = dispatch => {
+//   return {
+//     click: () => {
+//       dispatch({
+//         type: 'INPUT_COMMAND',
+//         command: 'clicked!'
+//       });
+//     }
+//   }
+// }
 
 // connect() provides a link between this component and the store through the props
 export default connect(mapStateToProps, mapDispatchToProps)(App);

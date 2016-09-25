@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import createCommand from '../actions/UserCommandAction.js';
 
 class CommandLine extends Component {
   constructor(props) {
@@ -15,23 +17,40 @@ class CommandLine extends Component {
     })
   }
 
-  sendCommand() {
-    // tell's the store to change the command
-    this.props.dispatchCommand(this.state.input);
+  sendCommand(e) {
+    e.preventDefault();
+    // tell the store to change the command
+    this.props.sendCommand(this.state.input);
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={ this.props.sendCommand } >
+        <form onSubmit={ this.sendCommand.bind(this) } >
           <p>>>><input onChange={ this.updateInput.bind(this) } ></input></p>
         </form>
         <p>
-          { this.props.userCommand }
+          { this.props.command }
         </p>
       </div>
     )
   }
 }
 
-export default CommandLine;
+// inject state from store into props of App
+var mapStateToProps = state => {
+  return {
+    command: state.userCommand.command
+  }
+}
+
+// inject dispatch method into props of App
+var mapDispatchToProps = dispatch => {
+  return {
+    sendCommand: (command) => {
+      dispatch(createCommand(command));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommandLine);
