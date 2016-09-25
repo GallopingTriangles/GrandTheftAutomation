@@ -1,10 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Log from './Log.jsx';
 
-const Log = props => (
-  <div>
-    { props.text }
-  </div>
-)
 
 class Logs extends Component {
   constructor(props) {
@@ -16,10 +12,12 @@ class Logs extends Component {
       <div>
         { this.props.commands.map(command => {
           return (
-            <div>hi</div>
+            <Log command={command} />
           )
         })}
       </div>
     )
   }
 }
+
+export default Logs;
