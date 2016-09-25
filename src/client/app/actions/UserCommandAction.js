@@ -1,6 +1,7 @@
-const createCommand = command => {
+const createCommand = (level, command) => {
   return {
     type: 'INPUT_COMMAND',
+    level,
     command
   };
 }

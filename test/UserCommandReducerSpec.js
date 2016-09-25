@@ -85,17 +85,17 @@ describe('userCommand reducer function', function() {
 
   })
 
-  xdescribe('adding a command', () => {
+  describe('adding a command', () => {
 
     it('should handle "INPUT_COMMAND" actions', () => {
-      var action = createCommand('New command');
+      var action = createCommand(0, 'New command');
       var result = userCommand(undefined, action);
-      expect(result).to.deep.equal({ command: 'New command' });
+      expect(result).to.deep.equal({ 0: ['New command'] });
     })
 
     it('should return original state for invalid action types', () => {
       var action = { type: 'INCREMENT', value: 0 };
-      var state = { command: 'Hello, World!' };
+      var state = { 0: ['Hello, World!'] };
       var result = userCommand(state, action);
       expect(result).to.deep.equal(state);
     })
