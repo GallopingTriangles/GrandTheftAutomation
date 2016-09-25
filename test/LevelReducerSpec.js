@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import level from '../src/client/app/reducers/Level';
 
-describe('Level switch reducer', () => {
+describe('Level change reducer', () => {
 
   it('should default to level 0 for invalid actions', () => {
     var action = {
@@ -12,9 +12,9 @@ describe('Level switch reducer', () => {
     expect(result).to.equal(0);
   })
 
-  it('should accept an action with type "SWITCH_LEVEL"', () => {
+  it('should accept an action with type "CHANGE_LEVEL"', () => {
     var action = {
-      type: "SWITCH_LEVEL",
+      type: "CHANGE_LEVEL",
       level: 1
     }
     var result = level(undefined, action);
@@ -23,7 +23,7 @@ describe('Level switch reducer', () => {
 
   it('should change the level corresponding to the action', () => {
     var action = {
-      type: 'SWITCH_LEVEL',
+      type: 'CHANGE_LEVEL',
       level: 1
     }
     var result = level(undefined, action);
@@ -33,11 +33,11 @@ describe('Level switch reducer', () => {
   it('should change the level in response to multiple actions', () => {
     var result;
     var action_1 = {
-      type: 'SWITCH_LEVEL',
+      type: 'CHANGE_LEVEL',
       level: 1
     };
     var action_2 = {
-      type: 'SWITCH_LEVEL',
+      type: 'CHANGE_LEVEL',
       level: 2
     }
     result = level(result, action_1);

@@ -1,6 +1,6 @@
 const level = (state = 0, action) => {
   switch (action.type) {
-    case 'SWITCH_LEVEL':
+    case 'CHANGE_LEVEL':
       return action.level;
     default:
       return state;
