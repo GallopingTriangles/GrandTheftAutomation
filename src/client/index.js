@@ -7,9 +7,9 @@ import reducer from './app/reducers/reducer.js';
 
 
 /*
-** Create a Redux store that will keep track of the state of all components.
+** Create a Redux store that will keep track of the state for all components.
 ** The reducer will handle updating store when an action has been dispatched.
-** Components subscribed to the store will re-render upon a change to the state-tree
+** Components subscribed to the store will re-render upon a change to the state-tree.
 */
 var store = createStore(reducer);
 
@@ -18,7 +18,7 @@ var store = createStore(reducer);
 ** Child components can access the store through context
 */
 var render = () => {
-  console.log(store.getState().userCommand);
+  console.dir(store.getState());
   ReactDOM.render(
     <Provider store={ store } >
       <App />
