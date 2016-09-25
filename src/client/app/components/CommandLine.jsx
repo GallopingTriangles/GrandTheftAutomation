@@ -40,14 +40,14 @@ class CommandLine extends Component {
   }
 }
 
-// inject state from store into props of App
+// maps the user command from store into props of App
 var mapStateToProps = state => {
   return {
     command: state.userCommand.command
   }
 }
 
-// inject dispatch method into props of App
+// changes the command value in the store to the user's input
 var mapDispatchToProps = dispatch => {
   return {
     sendCommand: (command) => {
