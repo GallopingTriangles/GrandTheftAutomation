@@ -31,12 +31,13 @@ function update() {
   // car.body.velocity.x = 0;
   // car.body.velocity.y = 0;
   // car.body.angularVelocity = 0;
+  car.body.angle = -90;
 
   if (cursors.left.isDown) {car.body.rotateLeft(100);}   //car movement
     else if (cursors.right.isDown){car.body.rotateRight(100);}
     else {car.body.setZeroRotation();}
-    if (cursors.up.isDown){car.body.thrust(400);}
-    else if (cursors.down.isDown){car.body.reverse(400);}
+    if (cursors.up.isDown){car.body.moveForward(400);}
+    else if (cursors.down.isDown){car.body.moveBackward(400);}
 
   // if (cursors.up.isDown) {
   //   game.physics.p2.velocityFromAngle(car.angle, 300, car.body.velocity);
@@ -45,7 +46,7 @@ function update() {
   //   game.physics.p2.velocityFromAngle(car.angle, -100, car.body.velocity);
   //   leftRight(false);
   // }
-  console.log(car.body.rotateLeft)
+  // console.log(car.body.rotateLeft)
 }
 
 function render() {
@@ -62,5 +63,5 @@ function leftRight(forward) {
 }
 
 function decomposeVelocity(velocity, angle) {
-  
+  return velocity * Math.random;
 }
