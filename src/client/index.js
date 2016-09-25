@@ -18,6 +18,7 @@ var store = createStore(reducer);
 ** Child components can access the store through context
 */
 var render = () => {
+  console.log(store.getState().userCommand);
   ReactDOM.render(
     <Provider store={ store } >
       <App />

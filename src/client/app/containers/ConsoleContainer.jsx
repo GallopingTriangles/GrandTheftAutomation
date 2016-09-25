@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CommandLine from '../components/CommandLine.jsx';
+import styles from '../../styles/ConsoleContainerStyles.js';
 
 class Console extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class Console extends Component {
 
   render() {
     return (
-      <div>
+      <div style={ styles.container } >
         <CommandLine />
       </div>
     )
