@@ -21,13 +21,16 @@ class CommandLine extends Component {
     e.preventDefault();
     // tell the store to change the command
     this.props.sendCommand(this.state.input);
+    this.setState({
+      input: ''
+    })
   }
 
   render() {
     return (
       <div>
         <form onSubmit={ this.sendCommand.bind(this) } >
-          <p>>>><input onChange={ this.updateInput.bind(this) } ></input></p>
+          <p>>>><input onChange={ this.updateInput.bind(this) } value={ this.state.input }></input></p>
         </form>
         <p>
           { this.props.command }
