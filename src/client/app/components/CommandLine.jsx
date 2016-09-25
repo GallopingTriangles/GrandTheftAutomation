@@ -40,7 +40,7 @@ class CommandLine extends Component {
   }
 }
 
-// maps the user command from store into props of App
+// maps the user's previous commands from store into props of App
 var mapStateToProps = state => {
   return {
     level: state.level,
@@ -48,7 +48,7 @@ var mapStateToProps = state => {
   }
 }
 
-// changes the command value in the store to the user's input
+// adds the user's command to the array of previous commands
 var mapDispatchToProps = dispatch => {
   return {
     sendCommand: (level, command) => {
