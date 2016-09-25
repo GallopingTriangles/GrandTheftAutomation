@@ -9,6 +9,7 @@ describe('userCommand reducer function', function() {
     it('should return an object', function() {
       var action = {
         type: 'INPUT_COMMAND',
+        level: 0,
         command: 'Hello, World!'
       };
       var result = userCommand({}, action);
@@ -18,34 +19,73 @@ describe('userCommand reducer function', function() {
     it('should return an initial state object if state is undefined', function() {
       var action = {
         type: 'INPUT_COMMAND',
+        level: 0,
         command: 'Hello, World!'
       };
       var result = userCommand(undefined, action);
       expect(result).to.be.an('object');
     })
 
-    it('should have a command property', function() {
+    it('should have a property corresponding to the level', function() {
       var action = {
         type: 'INPUT_COMMAND',
+        level: 0,
         command: 'Hello, World!'
       };
       var result = userCommand(undefined, action);
-      expect(result.command).to.not.be.undefined;
+      expect(result[action.level]).to.not.be.undefined;
+    })
+
+    it('should create new properties corresponding to different levels', function() {
+      var action_1 = {
+        type: 'INPUT_COMMAND',
+        level: 0,
+        command: 'Hello, World!'
+      };
+      var action_2 = {
+        type: 'INPUT_COMMAND',
+        level: 1,
+        command: 'Initializing level 1'
+      };
+      var firstState = userCommand(undefined, action_1);
+      var secondState = userCommand(firstState, action_2);
+      expect(secondState).to.have.property(0);
+      expect(secondState).to.have.property(1);
     })
 
     it('should not mutate the original state', function() {
-      var state = { command: 'Sup foo' };
+      var state = { 1: ['Sup foo'] };
       var action = {
         type: 'INPUT_COMMAND',
+        level: 0,
         command: 'Hello, World!'
       }
       var result = userCommand(state, action);
       expect(state).to.not.equal(result);
-      expect(state).to.deep.equal({ command: 'Sup foo' });
+      expect(state).to.deep.equal({ 1: ['Sup foo'] });
     });
+
+    it('should store multiple commands', function() {
+      var action_1 = {
+        type: 'INPUT_COMMAND',
+        level: 0,
+        command: 'Hello, World!'
+      };
+      var action_2 = {
+        type: 'INPUT_COMMAND',
+        level: 0,
+        command: 'Coding is fun!'
+      };
+      var firstState = userCommand(undefined, action_1);
+      expect(firstState[0]).to.have.lengthOf(1);
+      var secondState = userCommand(firstState, action_2);
+      expect(secondState[0]).to.have.lengthOf(2);
+      expect(secondState[0]).to.deep.equal(['Hello, World!', 'Coding is fun!']);
+    })
+
   })
 
-  describe('adding a command', () => {
+  xdescribe('adding a command', () => {
 
     it('should handle "INPUT_COMMAND" actions', () => {
       var action = createCommand('New command');
