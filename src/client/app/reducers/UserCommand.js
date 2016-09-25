@@ -1,7 +1,13 @@
 const addCommand = (state = [], action) => {
   switch (action.type) {
     case 'INPUT_COMMAND':
-      return [...state, action.command];
+      if (action.command) {
+        return [...state, action.command];
+      } else {
+        return state;
+      }
+    default: 
+      return state;
   }
 }
 

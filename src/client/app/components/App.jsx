@@ -12,7 +12,6 @@ class App extends Component {
     return (
       <div>
         <Nav />
-        <p>Hey mang</p>
         <p>Grand Theft Automation</p>
         <Console />
       </div>

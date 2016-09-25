@@ -20,7 +20,7 @@ class CommandLine extends Component {
   sendCommand(e) {
     e.preventDefault();
     // tell the store to change the command
-    this.props.sendCommand(this.state.input);
+    this.props.sendCommand(this.props.level, this.state.input);
     this.setState({
       input: ''
     })
@@ -33,7 +33,7 @@ class CommandLine extends Component {
           <p>>>><input onChange={ this.updateInput.bind(this) } value={ this.state.input }></input></p>
         </form>
         <p>
-          { this.props.command }
+          { this.props.commands[this.props.level] }
         </p>
       </div>
     )
@@ -43,15 +43,16 @@ class CommandLine extends Component {
 // maps the user command from store into props of App
 var mapStateToProps = state => {
   return {
-    command: state.userCommand.command
+    level: state.level,
+    commands: state.userCommand
   }
 }
 
 // changes the command value in the store to the user's input
 var mapDispatchToProps = dispatch => {
   return {
-    sendCommand: (command) => {
-      dispatch(createCommand(command));
+    sendCommand: (level, command) => {
+      dispatch(createCommand(level, command));
     }
   }
 }
