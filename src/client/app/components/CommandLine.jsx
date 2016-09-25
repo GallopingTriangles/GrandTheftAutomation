@@ -32,9 +32,6 @@ class CommandLine extends Component {
         <form onSubmit={ this.sendCommand.bind(this) } >
           <p>>>><input onChange={ this.updateInput.bind(this) } value={ this.state.input }></input></p>
         </form>
-        <p>
-          { this.props.commands[this.props.level] }
-        </p>
       </div>
     )
   }

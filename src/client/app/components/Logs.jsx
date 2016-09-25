@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Log from './Log.jsx';
 
-
 class Logs extends Component {
   constructor(props) {
     super(props);
@@ -11,9 +10,7 @@ class Logs extends Component {
     return (
       <div>
         { this.props.commands.map(command => {
-          return (
-            <Log command={command} />
-          )
+          return <Log command={ command } />
         })}
       </div>
     )
