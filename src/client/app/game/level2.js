@@ -17,7 +17,7 @@ function create() {
   game.stage.backgroundColor = '#3e5f96';
 
   // CAR SPRITE
-  car = game.add.sprite(400, 300, 'car');
+  car = game.add.sprite(440, 520, 'car');
   //
   car.anchor.setTo(0.3, 0.5);
 
@@ -28,19 +28,28 @@ function create() {
   // Initialize user control with the keyboard
   cursors = game.input.keyboard.createCursorKeys();
 
-  static1 = game.add.sprite(200, 200, 'grass');
-  static2 = game.add.sprite(500, 500, 'grass');
+  static1 = game.add.sprite(0, 200, 'grass');
+  static2 = game.add.sprite(500, 495, 'grass');
+  static3 = game.add.sprite(300, 495, 'grass');
+  static4 = game.add.sprite(0, 250, 'grass');
 
-  console.log('border body', static1.body.angle);
-  static1.scale.setTo(.1, .1);
-  static2.scale.setTo(.1, .1);
+
+  static1.scale.setTo(1, .1);
+  static2.scale.setTo(.63, .1);
+  static3.scale.setTo(.63, .1);
+  static4.scale.setTo(.63, .1);
+
 
   //  Enable if for physics. This creates a default rectangular body.
-  game.physics.p2.enable( [ static1, static2 ]);
+  game.physics.p2.enable( [ static1, static2, static3, static4 ]);
+  static2.body.angle = (90);
+  static3.body.angle = (90);
 
   //  Make static
   static1.body.static = true;
 	static2.body.static = true;
+	static3.body.static = true;
+	static4.body.static = true;
 }
 
 function update() {
