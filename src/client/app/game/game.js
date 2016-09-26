@@ -1,7 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
-  game.load.image('car', './assets/car-top-view.png');
+  game.load.image('car', './assets/car-top-view-small.png');
   game.load.image('panda', './assets/panda.png')
 }
 
@@ -10,11 +10,11 @@ var car;
 function create() {
   // Use the p2 physics system
   game.physics.startSystem(Phaser.Physics.P2JS);
+  game.physics.p2.setImpactEvents(true);
   game.stage.backgroundColor = '#3e5f96';
 
   // CAR SPRITE
   car = game.add.sprite(400, 300, 'car');
-  car.scale.setTo(.2, .2);
   car.anchor.setTo(.3, .5);
   // enable physics on the car
   game.physics.p2.enable(car);
@@ -23,9 +23,11 @@ function create() {
   // Initialize user control with the keyboard
   cursors = game.input.keyboard.createCursorKeys();
 
+  var pandaCollisionGroup = game.physics.p2.createCollisionGroup();
+  var playerCollisionGroup = game.physics.p2.createCollisionGroup();
+  
   var pandas = game.add.group();
     pandas.enableBody = true;
-    pandas.scale.setTo(.1, .1)
     pandas.physicsBodyType = Phaser.Physics.P2JS;
 
   for (var i = 0; i < 4; i++) {
