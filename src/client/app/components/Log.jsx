@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import styles from '../../styles/Log.css.js';
 
 const Log = props => (
-  <div>
-    <span>></span>{ props.command }
+  <div style={ styles.container } >
+    <span style={ styles.prompt } >></span>{ props.command }
   </div>
 )
 
