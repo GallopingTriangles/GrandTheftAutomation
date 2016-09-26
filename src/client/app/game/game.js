@@ -24,24 +24,15 @@ function create() {
   // Initialize user control with the keyboard
   cursors = game.input.keyboard.createCursorKeys();
 
-  var pandaCollisionGroup = game.physics.p2.createCollisionGroup();
-  var playerCollisionGroup = game.physics.p2.createCollisionGroup();
+  static1 = game.add.sprite(200, 200, 'grass');
+  static2 = game.add.sprite(500, 500, 'grass');
 
-  var pandas = game.add.group();
-    pandas.enableBody = true;
-    pandas.physicsBodyType = Phaser.Physics.P2JS;
+  //  Enable if for physics. This creates a default rectangular body.
+  game.physics.p2.enable( [ static1, static2 ]);
 
-  for (var i = 0; i < 4; i++) {
-    var panda = pandas.create(game.world.randomX, game.world.randomY, 'panda');
-    panda.body.setRectangle(40, 40);
-
-    //  Tell the panda to use the pandaCollisionGroup
-    panda.body.setCollisionGroup(pandaCollisionGroup);
-
-    //  Pandas will collide against themselves and the player
-    //  If you don't set this they'll not collide with anything.
-    //  The first parameter is either an array or a single collision group.
-    panda.body.collides([pandaCollisionGroup, playerCollisionGroup]);
+  //  Make static
+  static1.body.static = true;
+	static2.body.static = true;
   }
 }
 
