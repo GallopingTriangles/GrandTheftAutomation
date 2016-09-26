@@ -3,7 +3,7 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload:
 function preload() {
   game.load.image('car', './assets/car-top-view-small.png');
   game.load.image('panda', './assets/panda.png');
-  game.load.image('grass', './assets/grass.png')
+  game.load.image('grass', './assets/grass.jpg');
 }
 
 var car;
@@ -27,13 +27,15 @@ function create() {
   static1 = game.add.sprite(200, 200, 'grass');
   static2 = game.add.sprite(500, 500, 'grass');
 
+  static1.scale.setTo(.1, .1);
+  static2.scale.setTo(.1, .1);
+
   //  Enable if for physics. This creates a default rectangular body.
   game.physics.p2.enable( [ static1, static2 ]);
 
   //  Make static
   static1.body.static = true;
 	static2.body.static = true;
-  }
 }
 
 function update() {
