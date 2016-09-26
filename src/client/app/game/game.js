@@ -18,7 +18,6 @@ function create() {
 
   // CAR SPRITE
   car = game.add.sprite(400, 300, 'car');
-  car.scale.setTo(.2, .2);
   //
   car.anchor.setTo(0.3, 0.5);
 
