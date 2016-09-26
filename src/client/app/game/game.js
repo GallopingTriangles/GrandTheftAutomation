@@ -7,6 +7,8 @@ function preload() {
 }
 
 var car;
+var static1;
+var static2;
 
 function create() {
   // Use the p2 physics system
