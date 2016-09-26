@@ -30,8 +30,8 @@ function create() {
 
   static1 = game.add.sprite(0, 200, 'grass');
   static2 = game.add.sprite(500, 495, 'grass');
-  static3 = game.add.sprite(300, 495, 'grass');
-  static4 = game.add.sprite(0, 250, 'grass');
+  static3 = game.add.sprite(300, 650, 'grass');
+  static4 = game.add.sprite(0, 350, 'grass');
 
 
   static1.scale.setTo(1, .1);
