@@ -25,4 +25,5 @@ var mapStateToProps = state => {
   }
 }
 
+// connect() provides a link between the store and the component through the props
 export default connect(mapStateToProps)(Console);

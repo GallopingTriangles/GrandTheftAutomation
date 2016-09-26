@@ -12,31 +12,10 @@ class App extends Component {
     return (
       <div>
         <Nav />
-        <p>Grand Theft Automation</p>
         <Console />
       </div>
     )
   }
 }
 
-// inject state from store into props of App
-var mapStateToProps = state => {
-  return {
-    command: state.userCommand.command,
-  }
-};
-
-// // inject dispatch method into props of App
-// var mapDispatchToProps = dispatch => {
-//   return {
-//     click: () => {
-//       dispatch({
-//         type: 'INPUT_COMMAND',
-//         command: 'clicked!'
-//       });
-//     }
-//   }
-// }
-
-// connect() provides a link between this component and the store through the props
-export default connect(mapStateToProps)(App);
+export default App;
