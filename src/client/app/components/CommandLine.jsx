@@ -35,6 +35,7 @@ class CommandLine extends Component {
             style={ styles.input } 
             onChange={ this.updateInput.bind(this) } 
             value={ this.state.input }
+            maxLength={ 50 }
             placeholder={ `Command Line` } >
           </input>
         </form>
@@ -43,11 +44,10 @@ class CommandLine extends Component {
   }
 }
 
-// maps the current level and user's previous commands from store into the props
+// maps the current level from store into the props
 var mapStateToProps = state => {
   return {
     level: state.level,
-    commands: state.userCommand
   }
 }
 
