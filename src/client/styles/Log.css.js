@@ -1,7 +1,8 @@
 export default {
   container: {
     fontFamily: 'Arial',
-    fontSize: '16px'
+    fontSize: '16px',
+    marginBottom: '3px'
   },
   prompt: {
     fontWeight: 'bold',
