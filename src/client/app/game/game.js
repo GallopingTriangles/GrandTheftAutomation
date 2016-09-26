@@ -9,7 +9,7 @@ function preload() {
 var car;
 var static1;
 var static2;
-
+var cursors;
 function create() {
   // Use the p2 physics system
   game.physics.startSystem(Phaser.Physics.P2JS);
@@ -18,7 +18,9 @@ function create() {
 
   // CAR SPRITE
   car = game.add.sprite(400, 300, 'car');
-  car.anchor.setTo(.3, .5);
+  //
+  car.anchor.setTo(0.3, 0.5);
+
   // enable physics on the car
   game.physics.p2.enable(car);
   car.body.collideWorldBounds = true;
