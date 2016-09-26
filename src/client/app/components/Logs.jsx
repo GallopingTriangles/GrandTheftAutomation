@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Log from './Log.jsx';
+import styles from '../../styles/Logs.css.js';
 
 class Logs extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class Logs extends Component {
 
   render() {
     return (
-      <div>
+      <div style={ styles.container } >
         { this.props.commands.map(command => {
           return <Log command={ command } />
         })}
