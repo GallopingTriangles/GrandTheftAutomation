@@ -13,12 +13,12 @@ var cursors;
 function create() {
   // Use the p2 physics system
   game.physics.startSystem(Phaser.Physics.P2JS);
+  // Turn on impact events for the world, to allow collision callbacks
   game.physics.p2.setImpactEvents(true);
   game.stage.backgroundColor = '#3e5f96';
 
   // CAR SPRITE
   car = game.add.sprite(400, 300, 'car');
-  //
   car.anchor.setTo(0.3, 0.5);
 
   // enable physics on the car
@@ -44,8 +44,8 @@ function create() {
 
 function update() {
   //  Reset the cars velocity before rendering next frame;
-  car.body.velocity.x = 0;
-  car.body.velocity.y = 0;
+  // car.body.velocity.x = 0;
+  // car.body.velocity.y = 0;
   car.body.angularVelocity = 0;
 
   if (cursors.up.isDown) {
