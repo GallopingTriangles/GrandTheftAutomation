@@ -30,15 +30,20 @@ class CommandLine extends Component {
   render() {
     return (
       <div style={ styles.container } >
-        <form style={ styles.form } onSubmit={ this.sendCommand.bind(this) } >
-          <p><span style={ styles.input }>>>></span><input onChange={ this.updateInput.bind(this) } value={ this.state.input }></input></p>
+        <form onSubmit={ this.sendCommand.bind(this) } >
+          <input 
+            style={ styles.input } 
+            onChange={ this.updateInput.bind(this) } 
+            value={ this.state.input }
+            placeholder={ `Command Line` } >
+          </input>
         </form>
       </div>
     )
   }
 }
 
-// maps the user's previous commands from store into props of App
+// maps the current level and user's previous commands from store into the props
 var mapStateToProps = state => {
   return {
     level: state.level,

@@ -2,14 +2,17 @@ export default {
   container: {
     paddingBottom: '10px',
     fontFamily: 'Arial',
-    fontSize: '12px'
-  },
-  form: {
-    border: '1px solid black',
-    margin: '5px'
+    marginLeft: '5px',
+    marginTop: '5px'
   },
   input: {
-    margin: '0px',
-    marginRight: '8px'
-  }
+    height: '20px',
+    border: 'none',
+    borderLeft: '8px solid black',
+    width: '450px',
+    paddingLeft: '5px',
+    display: 'block',
+    fontSize: '16px',
+    outline: 'none'
+  },
 }
