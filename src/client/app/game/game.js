@@ -2,6 +2,7 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload:
 
 function preload() {
   game.load.image('car', './assets/car-top-view.png');
+  game.load.image('panda', './assets/panda.png')
 }
 
 var car;
@@ -21,6 +22,24 @@ function create() {
 
   // Initialize user control with the keyboard
   cursors = game.input.keyboard.createCursorKeys();
+
+  var pandas = game.add.group();
+    pandas.enableBody = true;
+    pandas.scale.setTo(.1, .1)
+    pandas.physicsBodyType = Phaser.Physics.P2JS;
+
+  for (var i = 0; i < 4; i++) {
+    var panda = pandas.create(game.world.randomX, game.world.randomY, 'panda');
+    panda.body.setRectangle(40, 40);
+
+    //  Tell the panda to use the pandaCollisionGroup
+    panda.body.setCollisionGroup(pandaCollisionGroup);
+
+    //  Pandas will collide against themselves and the player
+    //  If you don't set this they'll not collide with anything.
+    //  The first parameter is either an array or a single collision group.
+    panda.body.collides([pandaCollisionGroup, playerCollisionGroup]);
+  }
 }
 
 function update() {
