@@ -20,10 +20,11 @@ class Nav extends Component {
 //   store: PropTypes.object
 // }
 
-var mapStateToProps = (state) => {
-  return {
-    store: state
-  }
-}
+// var mapStateToProps = (state) => {
+//   return {
+//     store: state
+//   }
+// }
 
-export default connect(mapStateToProps)(Nav);
+// export default connect(mapStateToProps)(Nav);
+export default Nav;

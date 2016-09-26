@@ -15,7 +15,7 @@ describe('userCommandActionCreator', () => {
     });
 
     it('should return an object', () => {
-      expect(createCommand(text)).to.be.a('object');
+      expect(createCommand(0, text)).to.be.a('object');
     });
 
     it('should return an object with an "INPUT_COMMAND" type', () => {
@@ -24,9 +24,14 @@ describe('userCommandActionCreator', () => {
     });
 
     it('should return an object with a "command" property', () => {
-      var action = createCommand(text);
+      var action = createCommand(0, text);
       expect(action.command).to.equal('Sample text');
     });
+
+    it('should return an object with a numeric property for the level', () => {
+      var action = createCommand(0, text);
+      expect(action.level).to.equal(0);
+    })
     
   });
 
