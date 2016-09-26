@@ -28,24 +28,24 @@ function create() {
 
 function update() {
   //  Reset the cars velocity before rendering next frame;
-  // car.body.velocity.x = 0;
-  // car.body.velocity.y = 0;
-  // car.body.angularVelocity = 0;
-  car.body.angle = -90;
+  car.body.velocity.x = 0;
+  car.body.velocity.y = 0;
+  car.body.angularVelocity = 0;
+  // car.body.angle = -90;
 
-  if (cursors.left.isDown) {car.body.rotateLeft(100);}   //car movement
-    else if (cursors.right.isDown){car.body.rotateRight(100);}
-    else {car.body.setZeroRotation();}
-    if (cursors.up.isDown){car.body.moveForward(400);}
-    else if (cursors.down.isDown){car.body.moveBackward(400);}
+  // if (cursors.left.isDown) {car.body.rotateLeft(100);}   //car movement
+  //   else if (cursors.right.isDown){car.body.rotateRight(100);}
+  //   else {car.body.setZeroRotation();}
+  //   if (cursors.up.isDown){car.body.moveForward(400);}
+  //   else if (cursors.down.isDown){car.body.moveBackward(400);}
 
-  // if (cursors.up.isDown) {
-  //   game.physics.p2.velocityFromAngle(car.angle, 300, car.body.velocity);
-  //   leftRight(true);
-  // } else if (cursors.down.isDown) {
-  //   game.physics.p2.velocityFromAngle(car.angle, -100, car.body.velocity);
-  //   leftRight(false);
-  // }
+  if (cursors.up.isDown) {
+    car.body.moveForward(300);
+    leftRight(true);
+  } else if (cursors.down.isDown) {
+    car.body.moveBackward(-100);
+    leftRight(false);
+  }
   // console.log(car.body.rotateLeft)
 }
 
@@ -55,13 +55,16 @@ function render() {
 // HELPER FUNCTIONS
 
 function leftRight(forward) {
-  if (cursors.left.isDown) {
-    car.body.angularVelocity = forward ? -200 : -100;
-  } else if (cursors.right.isDown) {
-    car.body.angularVelocity = forward ? 200 : 100;
+  var speed;
+  if (forward) {
+    speed = 200;
+  } else {
+    speed = 100;
   }
-}
 
-function decomposeVelocity(velocity, angle) {
-  return velocity * Math.random;
+  if (cursors.left.isDown) {
+    car.body.rotateLeft(speed)
+  } else if (cursors.right.isDown) {
+    car.body.rotateRight(speed);
+  }
 }
