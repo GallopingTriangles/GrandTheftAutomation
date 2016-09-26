@@ -11,19 +11,16 @@ function create() {
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.stage.backgroundColor = '#3e5f96';
 
+  // CAR SPRITE
   car = game.add.sprite(400, 300, 'car');
   car.scale.setTo(.2, .2);
-
-  //
-  // car.anchor.setTo(.3, .5);
-
+  car.anchor.setTo(.3, .5);
   // enable physics on the car
   game.physics.p2.enable(car);
-  console.log('Car body: ', car.body);
   car.body.collideWorldBounds = true;
 
+  // Initialize user control with the keyboard
   cursors = game.input.keyboard.createCursorKeys();
-
 }
 
 function update() {
@@ -31,22 +28,14 @@ function update() {
   car.body.velocity.x = 0;
   car.body.velocity.y = 0;
   car.body.angularVelocity = 0;
-  // car.body.angle = -90;
-
-  // if (cursors.left.isDown) {car.body.rotateLeft(100);}   //car movement
-  //   else if (cursors.right.isDown){car.body.rotateRight(100);}
-  //   else {car.body.setZeroRotation();}
-  //   if (cursors.up.isDown){car.body.moveForward(400);}
-  //   else if (cursors.down.isDown){car.body.moveBackward(400);}
 
   if (cursors.up.isDown) {
     car.body.moveForward(300);
     leftRight(true);
   } else if (cursors.down.isDown) {
-    car.body.moveBackward(-100);
+    car.body.moveBackward(100);
     leftRight(false);
   }
-  // console.log(car.body.rotateLeft)
 }
 
 function render() {
@@ -55,16 +44,17 @@ function render() {
 // HELPER FUNCTIONS
 
 function leftRight(forward) {
-  var speed;
+  var angularVelocity;
+
   if (forward) {
-    speed = 200;
+    angularVelocity = 90;
   } else {
-    speed = 100;
+    angularVelocity = 30;
   }
 
   if (cursors.left.isDown) {
-    car.body.rotateLeft(speed)
+    car.body.rotateLeft(angularVelocity)
   } else if (cursors.right.isDown) {
-    car.body.rotateRight(speed);
+    car.body.rotateRight(angularVelocity);
   }
 }
