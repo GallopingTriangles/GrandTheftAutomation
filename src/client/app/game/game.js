@@ -2,7 +2,8 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload:
 
 function preload() {
   game.load.image('car', './assets/car-top-view-small.png');
-  game.load.image('panda', './assets/panda.png')
+  game.load.image('panda', './assets/panda.png');
+  game.load.image('grass', './assets/grass.png')
 }
 
 var car;
@@ -25,7 +26,7 @@ function create() {
 
   var pandaCollisionGroup = game.physics.p2.createCollisionGroup();
   var playerCollisionGroup = game.physics.p2.createCollisionGroup();
-  
+
   var pandas = game.add.group();
     pandas.enableBody = true;
     pandas.physicsBodyType = Phaser.Physics.P2JS;
