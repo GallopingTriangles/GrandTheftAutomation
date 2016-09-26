@@ -25,5 +25,4 @@ var mapStateToProps = state => {
   }
 }
 
-// export default Console;
 export default connect(mapStateToProps)(Console);

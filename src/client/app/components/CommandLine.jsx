@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import createCommand from '../actions/UserCommandAction.js';
+import styles from '../../styles/CommandLineStyles.css.js';
 
 class CommandLine extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class CommandLine extends Component {
 
   sendCommand(e) {
     e.preventDefault();
-    // tell the store to change the command
+    // tell the store to add the command
     this.props.sendCommand(this.props.level, this.state.input);
     this.setState({
       input: ''
@@ -28,9 +29,9 @@ class CommandLine extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={ this.sendCommand.bind(this) } >
-          <p>>>><input onChange={ this.updateInput.bind(this) } value={ this.state.input }></input></p>
+      <div style={ styles.container } >
+        <form style={ styles.form } onSubmit={ this.sendCommand.bind(this) } >
+          <p><span style={ styles.input }>>>></span><input onChange={ this.updateInput.bind(this) } value={ this.state.input }></input></p>
         </form>
       </div>
     )
