@@ -80,7 +80,7 @@ describe('userCommand reducer function', function() {
       expect(firstState[0]).to.have.lengthOf(1);
       var secondState = userCommand(firstState, action_2);
       expect(secondState[0]).to.have.lengthOf(2);
-      expect(secondState[0]).to.deep.equal(['Hello, World!', 'Coding is fun!']);
+      expect(secondState[0]).to.deep.equal(['Coding is fun!', 'Hello, World!']);
     })
 
   })

@@ -2,7 +2,7 @@ const addCommand = (state = [], action) => {
   switch (action.type) {
     case 'INPUT_COMMAND':
       if (action.command) {
-        return [...state, action.command];
+        return [action.command, ...state];
       } else {
         return state;
       }
