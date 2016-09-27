@@ -6,7 +6,7 @@ var createGame = () => {
     game.load.image('car', './assets/car-top-view-small.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
-    game.load.image('sensor', './assets/circle.png')
+    game.load.image('sensor', './assets/sensor.png')
   }
 
   var car;
@@ -28,8 +28,8 @@ var createGame = () => {
     static2 = game.add.sprite(500, 500, 'grass');
 
     car.anchor.setTo(0.3, 0.5);
-    sensor.anchor.setTo(.5, .5);
-    sensor.scale.setTo(.1, .1);
+    sensor.anchor.setTo(1, 1);
+    sensor.scale.setTo(.3, .3);
     static1.scale.setTo(.1, .1);
     static2.scale.setTo(.1, .1);
 
