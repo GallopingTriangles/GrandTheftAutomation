@@ -36,6 +36,8 @@ var createGame = () => {
 
     game.physics.p2.enable([car, sensor, static1, static2]);
 
+    sensor.body.angle = 45;
+
     car.body.collideWorldBounds = true;
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -48,6 +50,8 @@ var createGame = () => {
     //  Make static
     static1.body.static = true;
   	static2.body.static = true;
+    console.log(car.body)
+
   }
 
   function update() {
@@ -84,6 +88,12 @@ var createGame = () => {
     } else if (cursors.right.isDown) {
       car.body.rotateRight(angularVelocity);
     }
+  }
+
+  function attachSensor(sensor, carX, carY, carAngle) {
+    sensor.body.x = carX;
+    sensor.body.y = carY;
+    sensor.body.angle = carAngle;
   }
 
 }
