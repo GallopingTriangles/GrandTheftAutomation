@@ -7,12 +7,16 @@ class Nav extends Component {
   render() {
     return (
       <nav className="navbar navbar-default">
-        <h2>Grand Theft Automation</h2>
-        <ul className="nav navbar-nav navbar-right">
-          <li><button>Logout</button></li>
-          <li><button>Profile</button></li>
-          <li><button>Home</button></li>
-        </ul>
+        <div className="container-fluid">
+          <div className='navbar-header'>
+            <a className='navbar-brand'>Grand Theft Automation</a>
+          </div>
+          <ul className="nav navbar-nav navbar-right">
+            <li><a href='#'>Logout</a></li>
+            <li><a href='#'>Profile</a></li>
+            <li><a href='#'>Home</a></li>
+          </ul>
+        </div>
       </nav>
     )
   }
