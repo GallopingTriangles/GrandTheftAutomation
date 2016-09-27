@@ -4,6 +4,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './app/components/App.jsx';
 import reducer from './app/reducers/reducer.js';
+import createGame from './app/game/game.js';
 
 
 /*
@@ -27,5 +28,7 @@ var render = () => {
   )
 }
 
+createGame();
 render();
 store.subscribe(render); // App will re-render when the store has been updated
+
