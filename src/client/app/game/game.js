@@ -88,4 +88,6 @@ var createGame = () => {
 
 }
 
-export default createGame;
+createGame();
+
+// export default createGame;f
