@@ -6,12 +6,14 @@ var createGame = () => {
     game.load.image('car', './assets/car-top-view-small.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
+    game.load.image('sensor', './assets/circle.png')
   }
 
   var car;
   var static1;
   var static2;
   var cursors;
+
   function create() {
     // Use the p2 physics system
     game.physics.startSystem(Phaser.Physics.P2JS);
@@ -19,25 +21,29 @@ var createGame = () => {
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = '#3e5f96';
 
-    // CAR SPRITE
-    car = game.add.sprite(game.world.randomX, game.world.randomY, 'car');
-    car.anchor.setTo(0.3, 0.5);
-
-    // enable physics on the car
-    game.physics.p2.enable(car);
-    car.body.collideWorldBounds = true;
-
-    // Initialize user control with the keyboard
-    cursors = game.input.keyboard.createCursorKeys();
-
+    // Add sprites
+    car = game.add.sprite(400, 300, 'car');
+    sensor = game.add.sprite(400, 300, 'sensor');
     static1 = game.add.sprite(200, 200, 'grass');
     static2 = game.add.sprite(500, 500, 'grass');
 
+    car.anchor.setTo(0.3, 0.5);
+    sensor.anchor.setTo(.5, .5);
+    sensor.scale.setTo(.1, .1);
     static1.scale.setTo(.1, .1);
     static2.scale.setTo(.1, .1);
 
-    //  Enable if for physics. This creates a default rectangular body.
-    game.physics.p2.enable( [ static1, static2 ]);
+
+    game.physics.p2.enable([car, sensor, static1, static2]);
+
+    car.body.collideWorldBounds = true;
+
+    var carCollisionGroup = game.physics.p2.createCollisionGroup();
+    game.physics.p2.updateBoundsCollisionGroup();
+    car.body.setCollisionGroup(carCollisionGroup);
+
+    // Initialize user control with the keyboard
+    cursors = game.input.keyboard.createCursorKeys();
 
     //  Make static
     static1.body.static = true;
@@ -46,8 +52,8 @@ var createGame = () => {
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
-    // car.body.velocity.x = 0;
-    // car.body.velocity.y = 0;
+    car.body.velocity.x = 0;
+    car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
 
     if (cursors.up.isDown) {
@@ -70,7 +76,7 @@ var createGame = () => {
     if (forward) {
       angularVelocity = 90;
     } else {
-      angularVelocity = 30;
+      angularVelocity = -30;
     }
 
     if (cursors.left.isDown) {
@@ -79,7 +85,7 @@ var createGame = () => {
       car.body.rotateRight(angularVelocity);
     }
   }
-  
+
 }
 
 export default createGame;
