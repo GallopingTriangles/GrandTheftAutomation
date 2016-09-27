@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --recursive --reporter spec",
     "test:watch": "npm run test -- --watch",
-    "start": "nodemon bin/www",
+    "start": "node bin/www",
+    "nodem": "nodemon bin/www",
     "build": "webpack -w",
     "rebase": "git pull --rebase upstream master && git push origin master"
   },
