@@ -13,7 +13,8 @@ var app = express();
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.urlencoded({ extended: true }));             // parse application/x-www-form-urlencoded
 app.use(morgan('dev'));                                         // log every request to the console
-app.use(express.static(path.join(__dirname, '../../dist')));    // set static files location
+app.use(express.static(path.join(__dirname, '../../dist')));    // serve static files
+app.use('/lib', (express.static(path.join(__dirname, '../../node_modules'))));
 
 // == routes ===================================================
 
