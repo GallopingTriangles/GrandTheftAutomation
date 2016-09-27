@@ -19,7 +19,8 @@ var userController = {
   },
 
   signup: (req, res, next) => {
-    res.json('Signing up');
+    console.log(req.body);
+    res.json(req.body);
   },
 
   logout: (req, res, next) => {

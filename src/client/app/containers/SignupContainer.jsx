@@ -10,21 +10,36 @@ class SignupContainer extends Component {
     };
   }
 
-  updateForm(form, e) {
-    
+  updateForm(form, e) { // tracks the inputs on email, username, password form
+    e.preventDefault();
+    var creds = {};
+    creds[form] = e.target.value;
+    this.setState(creds);
   }
 
-  createUser(event) {
-    event.preventDefault();
+  createUser(e) { // POST request to create a server
+    e.preventDefault();
+    console.log(this.state);
+    fetch('/users/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    }).then(res => {
+      res.json().then(result => {
+        console.log(result);
+      })
+    })
   }
 
   render() {
     return (
       <div>
         <form onSubmit={ this.createUser.bind(this) } >
-          <p>Email: <input required/></p><br/>
-          <p>Username: <input required/></p><br/>
-          <p>Password: <input type='password' required/></p><br/>
+          <p>Email: <input onChange={ (e) => this.updateForm('email', e) } required/></p><br/>
+          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } required/></p><br/>
+          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } type='password' required/></p><br/>
           <input type='submit' />
         </form>
       </div>

@@ -10,8 +10,8 @@ var userController = require('./controllers/userController.js');
 var app = express();
 
 // == configuration ============================================
-app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.urlencoded({ extended: true }));             // parse application/x-www-form-urlencoded
+app.use(bodyParser.json());                                     // parse application/json
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(express.static(path.join(__dirname, '../../dist')));    // serve static files
 app.use('/lib', (express.static(path.join(__dirname, '../../node_modules'))));
