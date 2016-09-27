@@ -23,7 +23,7 @@ var createGame = () => {
 
     // Add sprites
     car = game.add.sprite(400, 300, 'car');
-    sensor = game.add.sprite(400, 300, 'sensor');
+    sensor = game.add.sprite(500, 400, 'sensor');
     static1 = game.add.sprite(200, 200, 'grass');
     static2 = game.add.sprite(500, 500, 'grass');
 
@@ -34,7 +34,7 @@ var createGame = () => {
     static2.scale.setTo(.1, .1);
 
 
-    game.physics.p2.enable([car, sensor, static1, static2]);
+    game.physics.p2.enable([car, static1, static2]);
 
     car.body.collideWorldBounds = true;
 
@@ -48,11 +48,13 @@ var createGame = () => {
     //  Make static
     static1.body.static = true;
   	static2.body.static = true;
+
+    text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
   }
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
-    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+    // attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
 
     car.body.velocity.x = 0;
     car.body.velocity.y = 0;
@@ -66,7 +68,6 @@ var createGame = () => {
       leftRight(false);
     }
     console.log("car.body.x: ", car.body.x);
-    console.log("sensor.body.x: ", sensor.body.x);
   }
 
   function render() {
@@ -91,9 +92,9 @@ var createGame = () => {
   }
 
   function attachSensor(sensor, carX, carY, carAngle) {
-    sensor.body.x = carX;
-    sensor.body.y = carY;
-    sensor.body.angle = carAngle;
+    sensor.x = carX;
+    sensor.y = carY;
+    sensor.angle = carAngle;
   }
 
 }
