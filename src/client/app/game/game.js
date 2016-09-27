@@ -10,8 +10,6 @@ var createGame = () => {
   }
 
   var car;
-  var static1;
-  var static2;
   var cursors;
 
   function create() {
@@ -24,17 +22,13 @@ var createGame = () => {
     // Add sprites
     car = game.add.sprite(400, 300, 'car');
     sensor = game.add.sprite(200, 300, 'sensor');
-    static1 = game.add.sprite(200, 200, 'grass');
-    static2 = game.add.sprite(500, 500, 'grass');
 
     car.anchor.setTo(0.3, 0.5);
     sensor.anchor.setTo(.5, .5);
     sensor.scale.setTo(.3, .3);
-    static1.scale.setTo(.1, .1);
-    static2.scale.setTo(.1, .1);
 
-
-    game.physics.p2.enable([car, static1, static2]);
+    game.physics.p2.enable(car);
+    car.body.setRectangle(car.width, car.height);
 
     car.body.collideWorldBounds = true;
 
@@ -59,12 +53,10 @@ var createGame = () => {
       obstacle.body.static = true;
     }
 
+    car.body.setCollisionGroup(carCollisionGroup);
+    car.body.collides([carCollisionGroup, obstacleCollisionGroup]);
     // Initialize user control with the keyboard
     cursors = game.input.keyboard.createCursorKeys();
-
-    //  Make static
-    static1.body.static = true;
-  	static2.body.static = true;
 
     text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
   }
