@@ -5,6 +5,14 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var CopyWebpackPluginConfig = new CopyWebpackPlugin([
+  {
+    from: __dirname + '/src/client/app/game/assets',
+    to: 'assets'
+  }
+])
+
 module.exports = {
   entry: __dirname + '/src/client/index.js',
   output: {
@@ -30,6 +38,7 @@ module.exports = {
     ]
   },
   plugins: [
-    HtmlWebpackPluginConfig
+    HtmlWebpackPluginConfig,
+    CopyWebpackPluginConfig
   ]
 }
