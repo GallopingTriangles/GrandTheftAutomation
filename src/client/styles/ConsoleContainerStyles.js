@@ -1,9 +1,9 @@
 export default {
   container: {
-    border: '2px solid black',
+    border: '2px solid #272822',
   },
   phaser: {
-  	backgroundColor: 'black',
+  	backgroundColor: '#272822',
   	height: '100%'
   }
 }
