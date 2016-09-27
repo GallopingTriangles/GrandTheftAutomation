@@ -2,8 +2,8 @@ var mysql = require('mysql');
 
 // == CREATES MYSQL DATABASE ==============================================
 var connection = mysql.createConnection({
-  user: 'admin',
-  password: 'wasted',
+  user: 'root',
+  password: 'root',
   database: 'gta'
 });
 

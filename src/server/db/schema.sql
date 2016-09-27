@@ -2,7 +2,7 @@ CREATE DATABASE gta;
 
 USE gta;
 
-CREATE TABLE user (
+CREATE TABLE users (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   username TEXT,
   password TEXT,
@@ -11,9 +11,9 @@ CREATE TABLE user (
 
 CREATE TABLE logs (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  level INT
+  level INT,
   solution TEXT,
-  username_id INT,
-  FOREIGN KEY(user_id),
-    REFERENCES user(id)
+  user_id INT,
+  FOREIGN KEY(user_id)
+    REFERENCES users(id)
 );
