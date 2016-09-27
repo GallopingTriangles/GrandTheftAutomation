@@ -6,7 +6,7 @@ var createGame = () => {
     game.load.image('car', './assets/car-top-view-small.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
-    game.load.image('sensor', './assets/sensor.png')
+    game.load.image('sensor', './assets/circle.svg')
   }
 
   var car;
@@ -36,8 +36,6 @@ var createGame = () => {
 
     game.physics.p2.enable([car, sensor, static1, static2]);
 
-    sensor.body.angle = 45;
-
     car.body.collideWorldBounds = true;
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -54,6 +52,8 @@ var createGame = () => {
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
+    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+
     car.body.velocity.x = 0;
     car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
@@ -65,8 +65,8 @@ var createGame = () => {
       car.body.moveBackward(100);
       leftRight(false);
     }
-
-    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+    console.log("car.body.x: ", car.body.x);
+    console.log("sensor.body.x: ", sensor.body.x);
   }
 
   function render() {
@@ -91,7 +91,6 @@ var createGame = () => {
   }
 
   function attachSensor(sensor, carX, carY, carAngle) {
-
     sensor.body.x = carX;
     sensor.body.y = carY;
     sensor.body.angle = carAngle;
