@@ -6,12 +6,18 @@ import styles from '../../styles/Nav.css.js';
 class Nav extends Component {
   render() {
     return (
-      <div style={ styles.container } >
-        <h2 style={ styles.header } >Grand Theft Automation</h2>
-        <button style={ styles.button } >Logout</button>
-        <button style={ styles.button } >Profile</button>
-        <button style={ styles.button } >Home</button>
-      </div>
+      <nav className="navbar navbar-default">
+        <div className="container-fluid">
+          <div className='navbar-header'>
+            <a className='navbar-brand'>Grand Theft Automation</a>
+          </div>
+          <ul className="nav navbar-nav navbar-right">
+            <li><a href='#'>Logout</a></li>
+            <li><a href='#'>Profile</a></li>
+            <li><a href='#'>Home</a></li>
+          </ul>
+        </div>
+      </nav>
     )
   }
 }

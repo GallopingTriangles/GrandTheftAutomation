@@ -1,0 +1,20 @@
+{
+  "name": "gtautomation",
+  "description": "",
+  "main": "webpack.config.js",
+  "authors": [
+    "LorenzoE KevinC ChrisC AlexP"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/lorenzoengelen/GrandTheftAutomation",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
