@@ -6,8 +6,8 @@ var port = process.env.PORT || 8080;													  // set the port
 var path = require('path');
 var session = require('express-session');
 var routes = require('./routes/routes');
-// == initializes mysql databse ================================
-var db = require('./db')
+// == initializes mysql database ================================
+var db = require('./db');
 
 var app = express();
 
