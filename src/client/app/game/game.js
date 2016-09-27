@@ -50,8 +50,6 @@ var createGame = () => {
     //  Make static
     static1.body.static = true;
   	static2.body.static = true;
-    console.log(car.body)
-
   }
 
   function update() {
@@ -67,6 +65,8 @@ var createGame = () => {
       car.body.moveBackward(100);
       leftRight(false);
     }
+
+    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
   }
 
   function render() {
@@ -91,6 +91,7 @@ var createGame = () => {
   }
 
   function attachSensor(sensor, carX, carY, carAngle) {
+
     sensor.body.x = carX;
     sensor.body.y = carY;
     sensor.body.angle = carAngle;
