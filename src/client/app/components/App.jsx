@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Nav from './Nav.jsx';
 import Console from '../containers/ConsoleContainer.jsx';
+import SignupContainer from '../containers/SignupContainer.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <SignupContainer />
         <Nav />
         <Console />
       </div>
