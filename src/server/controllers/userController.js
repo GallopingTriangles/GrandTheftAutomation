@@ -4,6 +4,11 @@ var db = require('../db/index.js'); // retrieve and write to mySQL database
 var router = require('express').Router(); // routes for '/users' endpoint
 var bcrypt = require('bcrypt'); //encryption module for hash and salt
 var jwt = require('jsonwebtoken'); //module for generating web tokens
+var config = require('../config.js');
+
+var token = function(payload, secret) {
+  return jwt.sign(payload, secret);
+};
 
 var userController = {
   verify: (req, res, next) => {
@@ -21,7 +26,26 @@ var userController = {
   },
 
   login: (req, res, next) => {
-
+    //find user in database to retrieve salt and hashed password
+    db.User.findOne({ username: req.body.username })
+      .then(function(user) {
+        //compare submitted password 
+        bcrypt.compare(req.body.password, user.password, function(err, response) {
+          if (err) {
+            res.status(400).json({ message: 'Incorrect password.' })
+          } else {
+            console.log('success response from bcrypt.compare: ', response);
+            var userToken = token(req.body, config.secret);
+            res.cookie('accessToken', userToken, { expires: new Date(Date.now() + 7200000) })
+              .status(200)
+              .json({ message: 'User is now logged in with token.' })
+          }
+        })
+      })
+      //if user is not found, respond with error
+      .catch(function(err) {
+        res.status(400).json({ message: 'Username does not exist.' })
+      })
   },
 
   signup: (req, res, next) => {
@@ -47,7 +71,7 @@ var userController = {
             //on failure, respond with status 404
             .catch(function(err) {
               console.log('error creating new user: ', err);
-              res.sendStatus(404);
+              res.sendStatus(400);
             })
         })
       })
