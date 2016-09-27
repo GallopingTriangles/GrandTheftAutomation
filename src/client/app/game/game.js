@@ -23,7 +23,7 @@ var createGame = () => {
 
     // Add sprites
     car = game.add.sprite(400, 300, 'car');
-    sensor = game.add.sprite(400, 300, 'sensor');
+    sensor = game.add.sprite(200, 300, 'sensor');
     static1 = game.add.sprite(200, 200, 'grass');
     static2 = game.add.sprite(500, 500, 'grass');
 
@@ -39,8 +39,25 @@ var createGame = () => {
     car.body.collideWorldBounds = true;
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
+    var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
+
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
+
+    var obstacles = game.add.group();
+    obstacles.enableBody = true;
+    obstacles.physicsBodyType = Phaser.Physics.P2JS;
+
+    for (var i = 0; i < 3; i++) {
+      // create an obstacle
+      var obstacle = obstacles.create(300, 50+200*i, 'grass');
+      obstacle.scale.setTo(0.1, 0.1);
+      obstacle.body.setRectangle(obstacle.width, obstacle.height);
+      // assign a collision group to the obstacles
+      obstacle.body.setCollisionGroup(obstacleCollisionGroup);
+      obstacle.body.collides([carCollisionGroup, obstacleCollisionGroup]);
+      obstacle.body.static = true;
+    }
 
     // Initialize user control with the keyboard
     cursors = game.input.keyboard.createCursorKeys();
