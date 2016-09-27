@@ -19,7 +19,6 @@ class SignupContainer extends Component {
 
   createUser(e) { // POST request to create a server
     e.preventDefault();
-    console.log(this.state);
     fetch('/users/signup', {
       method: 'POST',
       headers: {
@@ -27,9 +26,12 @@ class SignupContainer extends Component {
       },
       body: JSON.stringify(this.state)
     }).then(res => {
+      console.log('signup status: ', res.status);
       res.json().then(result => {
         console.log(result);
       })
+    }).catch(err => {
+      console.log('Error in signup request');
     })
   }
 
