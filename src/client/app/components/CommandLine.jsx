@@ -11,6 +11,14 @@ class CommandLine extends Component {
     }
   }
 
+  componentDidMount() {
+    var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+      lineNumbers: true,
+      mode:  'javascript',
+      theme: 'monokai'
+    });
+  }
+
   updateInput(e) {
     e.preventDefault();
     this.setState({
@@ -27,20 +35,23 @@ class CommandLine extends Component {
     })
   }
 
-  render() {
+  render() { 
     return (
-      <div style={ styles.container } >
-        <form onSubmit={ this.sendCommand.bind(this) } >
-          <input 
-            style={ styles.input } 
-            onChange={ this.updateInput.bind(this) } 
-            value={ this.state.input }
-            maxLength={ 50 }
-            placeholder={ `Command Line` } >
-          </input>
-        </form>
-      </div>
-    )
+      <textarea id='editor'></textarea>
+    );
+    // return (
+    //   <div style={ styles.container } >
+    //     <form onSubmit={ this.sendCommand.bind(this) } >
+    //       <input 
+    //         style={ styles.input } 
+    //         onChange={ this.updateInput.bind(this) } 
+    //         value={ this.state.input }
+    //         maxLength={ 50 }
+    //         placeholder={ `Command Line` } >
+    //       </input>
+    //     </form>
+    //   </div>
+    // )
   }
 }
 
