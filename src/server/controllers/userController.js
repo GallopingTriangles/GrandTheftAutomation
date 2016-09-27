@@ -1,13 +1,38 @@
-// == AUTHORIZATION ==============================================
-exports.login = (req, res) => {
-	console.log('in login');
-	res.send('login');
-};
+// == User requests and Authorization ==============================================
 
-exports.signup = (req, res) => {
-	res.send('signup');
-};
+var db = require('../db/index.js'); // retrieve and write to mySQL database
+var router = require('express').Router(); // routes for '/users' endpoint
 
-exports.logout = (req, res) => {
-	res.send('logout');
-};
+var userController = {
+  verify: (req, res, next) => {
+    /* verify if the user is a valid user */
+    next();
+  },
+
+  getState: (req, res, next) => {
+    /* sends the logs and other information specific to that user */
+    res.json('Sends the state');
+  },
+
+  login: (req, res, next) => {
+    res.json('Logging in');
+  },
+
+  signup: (req, res, next) => {
+    res.json('Signing up');
+  },
+
+  logout: (req, res, next) => {
+    res.json('Loggin out');
+  }
+}
+
+router.get('/', userController.verify, userController.getState); // returns user's saved stuff after verification
+
+router.post('/login', userController.login); // authenticates the user when loggin in
+
+router.post('/signup', userController.signup); // checks and creates a new user to the database
+
+router.get('/logout', userController.logout); // wipes the session and logs the user out
+
+module.exports = router;
