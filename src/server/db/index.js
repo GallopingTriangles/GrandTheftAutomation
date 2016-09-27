@@ -1,20 +1,32 @@
-var mysql = require('mysql');
-
-// == CREATES MYSQL DATABASE ==============================================
-var connection = mysql.createConnection({
-  user: 'root',
-  password: 'root',
-  database: 'gta'
-});
-
-// == ESTABLISHES A CONNECTION W/ MYSQL DATABASE ==========================
-connection.connect(function(err) {
-  if (err) {
-    console.log('error connecting to MySQL: ', err);
-  } else {
-    console.log('Connected as ID: ', connection.threadId);
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('gta', 'root', 'root', { //Parameters: database name, username, password
+  host: 'localhost', /* Will need to change once server is deployed */
+  dialect: 'mysql',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
   }
+}); 
+
+var User = sequelize.define('User', {
+  username: Sequelize.STRING,
+  password: Sequelize.STRING,
+  email: Sequelize.STRING
 });
 
-module.exports = connection;
+var Log = sequelize.define('Log', {
+  level: Sequelize.INTEGER,
+  solution: Sequelize.STRING
+});
+
+//Creates a userId FOREIGN KEY in Log table
+User.hasMany(Log); 
+Log.belongsTo(User);
+
+//Creates table if table does not exist
+User.sync();
+Log.sync();
+
+module.exports = { User, Log };
 
