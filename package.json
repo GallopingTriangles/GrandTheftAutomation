@@ -11,7 +11,9 @@
     "rebase": "git pull --rebase upstream master && git push origin master"
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
   },
   "repository": {
     "type": "git",
@@ -41,6 +43,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "morgan": "^1.7.0",
+    "mysql": "^2.11.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
