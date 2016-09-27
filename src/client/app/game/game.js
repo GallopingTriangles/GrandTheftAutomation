@@ -23,12 +23,12 @@ var createGame = () => {
 
     // Add sprites
     car = game.add.sprite(400, 300, 'car');
-    sensor = game.add.sprite(500, 400, 'sensor');
+    sensor = game.add.sprite(400, 300, 'sensor');
     static1 = game.add.sprite(200, 200, 'grass');
     static2 = game.add.sprite(500, 500, 'grass');
 
     car.anchor.setTo(0.3, 0.5);
-    sensor.anchor.setTo(1, 1);
+    sensor.anchor.setTo(.5, .5);
     sensor.scale.setTo(.3, .3);
     static1.scale.setTo(.1, .1);
     static2.scale.setTo(.1, .1);
@@ -68,6 +68,15 @@ var createGame = () => {
       leftRight(false);
     }
     console.log("car.body.x: ", car.body.x);
+
+    if (checkOverlap(car, sensor))
+    {
+        text.text = 'Move the car. Sensor overlap: true';
+    }
+    else
+    {
+        text.text = 'Move the car. Sensor overlap: false';
+    }
   }
 
   function render() {
@@ -95,6 +104,15 @@ var createGame = () => {
     sensor.x = carX;
     sensor.y = carY;
     sensor.angle = carAngle;
+  }
+
+  function checkOverlap(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
   }
 
 }
