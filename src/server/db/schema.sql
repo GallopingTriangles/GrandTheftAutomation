@@ -1,0 +1,3 @@
+CREATE DATABASE gta;
+
+USE gta;
