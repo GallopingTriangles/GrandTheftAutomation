@@ -19,7 +19,8 @@ class CommandLine extends Component {
       tabSize: 2,
       autoCloseBrackets: true,
       lint: true,
-      matchBrackets: true
+      matchBrackets: true,
+      viewportMargin: Infinity
     });
 
     editor.setValue("// turn the engine on\n\nvar engine = 'off';");

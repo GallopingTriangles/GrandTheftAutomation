@@ -1,0 +1,11 @@
+html, body {
+	height: 100%;
+}
+
+.CodeMirror {
+	width:100%;
+	height: calc(100vh - 100px);
+}
+
+
+
