@@ -11,6 +11,7 @@ var createGame = () => {
 
   var car;
   var cursors;
+  var obstacles;
 
   function create() {
     // Use the p2 physics system
@@ -38,7 +39,7 @@ var createGame = () => {
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
 
-    var obstacles = game.add.group();
+    obstacles = game.add.group();
     obstacles.enableBody = true;
     obstacles.physicsBodyType = Phaser.Physics.P2JS;
 
@@ -63,7 +64,21 @@ var createGame = () => {
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
-    // attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+
+    var overlap = false;
+    obstacles.forEach(function(obstacle) {
+
+      if (checkOverlap(obstacle, sensor)) {
+        overlap = true;
+      };
+
+      if (overlap) {
+        text.text = 'Remind me not to let you drive.'
+      } else {
+        text.text = 'Sensors do not detect any danger.'
+      }
+    });
 
     car.body.velocity.x = 0;
     car.body.velocity.y = 0;
@@ -75,16 +90,6 @@ var createGame = () => {
     } else if (cursors.down.isDown) {
       car.body.moveBackward(100);
       leftRight(false);
-    }
-    console.log("car.body.x: ", car.body.x);
-
-    if (checkOverlap(car, sensor))
-    {
-        text.text = 'Move the car. Sensor overlap: true';
-    }
-    else
-    {
-        text.text = 'Move the car. Sensor overlap: false';
     }
   }
 
@@ -128,4 +133,4 @@ var createGame = () => {
 
 createGame();
 
-// export default createGame;f
+// export default createGame;
