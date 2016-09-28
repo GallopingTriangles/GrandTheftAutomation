@@ -12,6 +12,8 @@ var createGame = () => {
   var car;
   var cursors;
   var obstacles;
+  var text;
+  var sensor;
 
   function create() {
     // Use the p2 physics system
@@ -134,7 +136,6 @@ var createGame = () => {
 
 }
 
-createGame();
 
 
-// export default createGame;
+export default createGame;
