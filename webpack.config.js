@@ -10,6 +10,10 @@ var CopyWebpackPluginConfig = new CopyWebpackPlugin([
   {
     from: __dirname + '/src/client/app/game/assets',
     to: 'assets'
+  },
+  {
+    from: __dirname + '/src/client/styles/styles.css',
+    to: 'assets/css'
   }
 ])
 

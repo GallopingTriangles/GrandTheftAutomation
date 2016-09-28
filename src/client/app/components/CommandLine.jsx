@@ -11,6 +11,21 @@ class CommandLine extends Component {
     }
   }
 
+  componentDidMount() {
+    var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+      lineNumbers: true,
+      mode:  'javascript',
+      theme: 'monokai',
+      tabSize: 2,
+      autoCloseBrackets: true,
+      lint: true,
+      matchBrackets: true,
+      viewportMargin: Infinity
+    });
+
+    editor.setValue("// turn the engine on\n\nvar engine = 'off';");
+  }
+
   updateInput(e) {
     e.preventDefault();
     this.setState({
@@ -27,20 +42,33 @@ class CommandLine extends Component {
     })
   }
 
-  render() {
+  render() { 
     return (
-      <div style={ styles.container } >
-        <form onSubmit={ this.sendCommand.bind(this) } >
-          <input 
-            style={ styles.input } 
-            onChange={ this.updateInput.bind(this) } 
-            value={ this.state.input }
-            maxLength={ 50 }
-            placeholder={ `Command Line` } >
-          </input>
-        </form>
+      <div className='editor'>
+        <div className='editor-header'>
+          <div className='editor-title'>car.js</div>
+        </div>
+        <div className='editor-container'>
+          <textarea id='editor'></textarea>
+        </div>
+        <div className='editor-footer'>
+          <button className='btn btn-primary'>Run</button>
+        </div>
       </div>
-    )
+    );
+    // return (
+    //   <div style={ styles.container } >
+    //     <form onSubmit={ this.sendCommand.bind(this) } >
+    //       <input 
+    //         style={ styles.input } 
+    //         onChange={ this.updateInput.bind(this) } 
+    //         value={ this.state.input }
+    //         maxLength={ 50 }
+    //         placeholder={ `Command Line` } >
+    //       </input>
+    //     </form>
+    //   </div>
+    // )
   }
 }
 
