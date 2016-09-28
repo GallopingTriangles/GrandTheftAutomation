@@ -1,7 +1,6 @@
 // == User requests and Authorization ==============================================
 
 var db = require('../db/index.js'); // retrieve and write to mySQL database
-var router = require('express').Router(); // routes for '/users' endpoint
 var bcrypt = require('bcrypt'); //encryption module for hash and salt
 var jwt = require('jsonwebtoken'); //module for generating web tokens
 var config = require('../config.js');
@@ -12,11 +11,11 @@ var token = function(payload, secret) {
 
 var userController = {
   verify: (req, res, next) => {
-    /* verify if the user is a valid user */
+    /* verify if the user is a valid user
     //check if username is found
     //compare passwords
       // on success, next()
-      // on failure, redirect to /login
+      // on failure, redirect to /login */
     next();
   },
 
@@ -33,7 +32,7 @@ var userController = {
           res.status(400).json({ message: 'Username does not exist.' })
         } else {
           bcrypt.compare(req.body.password, user.password, function(err, response) {
-            if (err) {
+            if (err || !response) {
               res.status(400).json({ message: 'Incorrect password.' })
             } else {
               console.log('success response from bcrypt.compare: ', response);
@@ -68,7 +67,7 @@ var userController = {
                 .then(function(createdUser) {
                   res.status(201).json({ message: 'User successfully created!' });
                 })
-                //on failure, respond with status 404
+                //on failure, respond with status 400
                 .catch(function(err) {
                   console.log('error creating new user: ', err);
                   res.sendStatus(400);
@@ -82,16 +81,11 @@ var userController = {
   },
 
   logout: (req, res, next) => {
+    /* wipe the session */
+    /* wipe the tokens  */
+    /* wipe your ass    */
     res.json('Loggin out');
   }
 }
 
-router.get('/', userController.verify, userController.getState); // returns user's saved stuff after verification
-
-router.post('/login', userController.login); // authenticates the user when loggin in
-
-router.post('/signup', userController.signup); // checks and creates a new user to the database
-
-router.get('/logout', userController.logout); // wipes the session and logs the user out
-
-module.exports = router;
+module.exports = userController;

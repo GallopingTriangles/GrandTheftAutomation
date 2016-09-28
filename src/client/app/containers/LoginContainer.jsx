@@ -28,7 +28,9 @@ class LoginContainer extends Component {
       console.log('login status: ', res.status);
       res.json().then(result => {
         /* decide response base on status codes */
-        console.log(result);
+        /* 200 for successfully signing in      */
+        /* 400 for invalid sign in creds        */
+        console.log(result.message);
       })
     }).catch(err => {
       console.log('Error in signup request');

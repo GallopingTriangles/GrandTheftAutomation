@@ -5,7 +5,7 @@ var morgan = require('morgan');																	// log requests to the console
 var port = process.env.PORT || 8080;													  // set the port
 var path = require('path');
 var session = require('express-session');
-var userController = require('./controllers/userController.js');
+var userRoutes = require('./routes/userRoutes.js');
 
 var app = express();
 
@@ -18,7 +18,7 @@ app.use('/lib', (express.static(path.join(__dirname, '../../node_modules'))));
 
 // == routes ===================================================
 
-app.use('/users', userController);                              // handles all requests to '/users'
+app.use('/users', userRoutes);                              // handles all requests to '/users'
 
 // == listen ===================================================
 

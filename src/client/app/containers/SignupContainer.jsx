@@ -32,7 +32,7 @@ class SignupContainer extends Component {
         /* 201 for creating a new user successfully */
         /* 200 for pre-existing user error          */
         /* 400 for error in user                    */
-        console.log(result);
+        console.log(result.message);
       })
     }).catch(err => {
       console.log('Error in signup request');
