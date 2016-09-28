@@ -6,48 +6,77 @@ var createGame = () => {
     game.load.image('car', './assets/car-top-view-small.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
+    game.load.image('sensor', './assets/round.png')
   }
 
   var car;
-  var static1;
-  var static2;
+  var obstacles;
   var cursors;
+  var text;
+  var sensor;
+  var startingX = 400;
+  var startingY = 600;
+  var backgroundColor = '#3e5f96';
+
   function create() {
-    // Use the p2 physics system
+    // Set initial state of the game
     game.physics.startSystem(Phaser.Physics.P2JS);
-    // Turn on impact events for the world, to allow collision callbacks
     game.physics.p2.setImpactEvents(true);
-    game.stage.backgroundColor = '#3e5f96';
-
-    // CAR SPRITE
-    car = game.add.sprite(game.world.randomX, game.world.randomY, 'car');
-    car.anchor.setTo(0.3, 0.5);
-
-    // enable physics on the car
-    game.physics.p2.enable(car);
-    car.body.collideWorldBounds = true;
-
-    // Initialize user control with the keyboard
+    game.stage.backgroundColor = backgroundColor;
     cursors = game.input.keyboard.createCursorKeys();
 
-    static1 = game.add.sprite(200, 200, 'grass');
-    static2 = game.add.sprite(500, 500, 'grass');
+    // Declare sensor first so it doesn't overwrite the car.
+    createSensor();
+    createCar();
 
-    static1.scale.setTo(.1, .1);
-    static2.scale.setTo(.1, .1);
+    var carCollisionGroup = game.physics.p2.createCollisionGroup();
+    var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
 
-    //  Enable if for physics. This creates a default rectangular body.
-    game.physics.p2.enable( [ static1, static2 ]);
+    game.physics.p2.updateBoundsCollisionGroup();
+    car.body.setCollisionGroup(carCollisionGroup);
 
-    //  Make static
-    static1.body.static = true;
-  	static2.body.static = true;
+    obstacles = game.add.group();
+    obstacles.enableBody = true;
+    obstacles.physicsBodyType = Phaser.Physics.P2JS;
+
+    for (var i = 0; i < 3; i++) {
+      // create an obstacle
+      var obstacle = obstacles.create(300, 50+200*i, 'grass');
+      obstacle.scale.setTo(0.1, 0.1);
+      obstacle.body.setRectangle(obstacle.width, obstacle.height);
+      // assign a collision group to the obstacles
+      obstacle.body.setCollisionGroup(obstacleCollisionGroup);
+      obstacle.body.collides([carCollisionGroup, obstacleCollisionGroup]);
+      obstacle.body.static = true;
+    }
+
+    car.body.collides([carCollisionGroup, obstacleCollisionGroup]);
+
+    text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
   }
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
-    // car.body.velocity.x = 0;
-    // car.body.velocity.y = 0;
+    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+
+    var overlap = false;
+    obstacles.forEach(function(obstacle) {
+
+      if (checkOverlap(obstacle, sensor)) {
+        overlap = true;
+      };
+
+      if (overlap) {
+        text.text = 'Remind me not to let you drive.'
+        sensor.alpha = 1;
+      } else {
+        text.text = 'Sensors do not detect any danger.'
+        sensor.alpha = .1;
+      }
+    });
+
+    car.body.velocity.x = 0;
+    car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
 
     if (cursors.up.isDown) {
@@ -62,7 +91,7 @@ var createGame = () => {
   function render() {
   }
 
-  // HELPER FUNCTIONS
+  /*** HELPER FUNCTIONS ***/
 
   function leftRight(forward) {
     var angularVelocity;
@@ -70,7 +99,7 @@ var createGame = () => {
     if (forward) {
       angularVelocity = 90;
     } else {
-      angularVelocity = 30;
+      angularVelocity = -30;
     }
 
     if (cursors.left.isDown) {
@@ -79,7 +108,40 @@ var createGame = () => {
       car.body.rotateRight(angularVelocity);
     }
   }
-  
+
+  function attachSensor(sensor, carX, carY, carAngle) {
+    sensor.x = carX;
+    sensor.y = carY;
+    sensor.angle = carAngle;
+  }
+
+  function checkOverlap(spriteA, spriteB) {
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+  }
+
+  function createCar() {
+    // Appearance
+    car = game.add.sprite(startingX, startingY, 'car');
+    car.anchor.setTo(.3, .5);
+
+    // Physics
+    game.physics.p2.enable(car);
+    car.body.setRectangle(car.width, car.height);
+    car.body.collideWorldBounds = true;
+  }
+
+  function createSensor() {
+    // Appearace
+    sensor = game.add.sprite(startingX, startingY, 'sensor');
+    sensor.alpha = .1;
+    sensor.anchor.setTo(.5, .5);
+    sensor.scale.setTo(.5, .5);
+  }
+
+
 }
 
 export default createGame;
