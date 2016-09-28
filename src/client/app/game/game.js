@@ -6,7 +6,7 @@ var createGame = () => {
     game.load.image('car', './assets/car-top-view-small.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
-    game.load.image('sensor', './assets/circle.svg')
+    game.load.image('sensor', './assets/round.png')
   }
 
   var car;
@@ -21,8 +21,8 @@ var createGame = () => {
     game.stage.backgroundColor = '#3e5f96';
 
     // Add sprites
-    car = game.add.sprite(400, 300, 'car');
     sensor = game.add.sprite(200, 300, 'sensor');
+    car = game.add.sprite(400, 300, 'car');
 
     car.anchor.setTo(0.3, 0.5);
     sensor.anchor.setTo(.5, .5);
