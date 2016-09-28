@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Nav from './Nav.jsx';
+import Signup from '../containers/SignupContainer.jsx';
+import Login from '../containers/LoginContainer.jsx';
+import Game from '../containers/GameContainer.jsx';
 import Console from '../containers/ConsoleContainer.jsx';
-import SignupContainer from '../containers/SignupContainer.jsx';
-import LoginContainer from '../containers/LoginContainer.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -13,9 +14,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <SignupContainer />
-        <LoginContainer />
         <Nav />
+        <Signup />
+        <Login />
+        <Game />
         <Console />
       </div>
     )

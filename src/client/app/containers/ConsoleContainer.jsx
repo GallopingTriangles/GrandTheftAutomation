@@ -11,12 +11,9 @@ class Console extends Component {
 
   render() {
     return (
-      <div>
-        <div className='col-md-7' id='phaser_game' style={ styles.phaser }></div>
-        <div className='col-md-5' style={ styles.container } >
-          <CommandLine />
-          <LogsContainer level={ this.props.level } />
-        </div>
+      <div className='col-md-5' style={ styles.container } >
+        <CommandLine />
+        <LogsContainer level={ this.props.level } />
       </div>
     )
   }
