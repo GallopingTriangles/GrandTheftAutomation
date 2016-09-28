@@ -25,17 +25,18 @@ var createGame = () => {
 
     // Add sprites
     sensor = game.add.sprite(200, 300, 'sensor');
-    sensor.alpha = .1;
-    car = game.add.sprite(400, 300, 'car');
 
-    car.anchor.setTo(0.3, 0.5);
+    sensor.alpha = .1;
+
+    createCar();
+    // car.anchor.setTo(0.3, 0.5);
     sensor.anchor.setTo(.5, .5);
     sensor.scale.setTo(.5, .5);
 
-    game.physics.p2.enable(car);
-    car.body.setRectangle(car.width, car.height);
-
-    car.body.collideWorldBounds = true;
+    // game.physics.p2.enable(car);
+    // car.body.setRectangle(car.width, car.height);
+    //
+    // car.body.collideWorldBounds = true;
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
     var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -127,15 +128,27 @@ var createGame = () => {
   }
 
   function checkOverlap(spriteA, spriteB) {
-
     var boundsA = spriteA.getBounds();
     var boundsB = spriteB.getBounds();
 
     return Phaser.Rectangle.intersects(boundsA, boundsB);
-
   }
 
-  function createCar(game, startingX, startingY, sensor, forwardVelocity, backwardVelocity, forwardAngularVelocity, backwardAngularVelocity)
+  function createCar() {
+    // Appearance
+    car = game.add.sprite(startingX, startingY, 'car');
+    car.anchor.setTo(.3, .5);
+
+    // Physics
+    game.physics.p2.enable(car);
+    car.body.setRectangle(car.width, car.height);
+    car.body.collideWorldBounds = true;
+  }
+
+  function createSensor() {
+    sesnor = game.add.sprite(startingX, startingY,)
+  }
+
 
 }
 
