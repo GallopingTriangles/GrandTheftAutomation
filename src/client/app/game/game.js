@@ -22,11 +22,12 @@ var createGame = () => {
 
     // Add sprites
     sensor = game.add.sprite(200, 300, 'sensor');
+    sensor.alpha = .2;
     car = game.add.sprite(400, 300, 'car');
 
     car.anchor.setTo(0.3, 0.5);
     sensor.anchor.setTo(.5, .5);
-    sensor.scale.setTo(.3, .3);
+    sensor.scale.setTo(.5, .5);
 
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
@@ -75,8 +76,10 @@ var createGame = () => {
 
       if (overlap) {
         text.text = 'Remind me not to let you drive.'
+        sensor.alpha = 1;
       } else {
         text.text = 'Sensors do not detect any danger.'
+        sensor.alpha = .1;
       }
     });
 
