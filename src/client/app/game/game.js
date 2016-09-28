@@ -23,15 +23,11 @@ var createGame = () => {
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = backgroundColor;
 
-    // Add sprites
-    sensor = game.add.sprite(200, 300, 'sensor');
-
-    sensor.alpha = .1;
-
+    createSensor();
     createCar();
     // car.anchor.setTo(0.3, 0.5);
-    sensor.anchor.setTo(.5, .5);
-    sensor.scale.setTo(.5, .5);
+    // sensor.anchor.setTo(.5, .5);
+    // sensor.scale.setTo(.5, .5);
 
     // game.physics.p2.enable(car);
     // car.body.setRectangle(car.width, car.height);
@@ -146,7 +142,11 @@ var createGame = () => {
   }
 
   function createSensor() {
-    sesnor = game.add.sprite(startingX, startingY,)
+    // Appearace
+    sensor = game.add.sprite(startingX, startingY, 'sensor');
+    sensor.alpha = .1;
+    sensor.anchor.setTo(.5, .5);
+    sensor.scale.setTo(.5, .5);
   }
 
 
