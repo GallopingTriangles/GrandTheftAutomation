@@ -44,10 +44,18 @@ html, body {
 	border-color: #43AA8B;
 	border-radius: 0px;
 }
-
 .btn-primary:hover {
 	background-color: #254441;
 	border-color: #254441;
 }
 
+.btn-default {
+	background-color: ;
+	border-width: 0px;
+	border-radius: 0px;
+}
+.btn-default:hover {
+	color: #FFF;
+	background-color: #B2B09B;
+}
 
