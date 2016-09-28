@@ -28,6 +28,10 @@ class SignupContainer extends Component {
     }).then(res => {
       console.log('signup status: ', res.status);
       res.json().then(result => {
+        /* process result based on the status code  */
+        /* 201 for creating a new user successfully */
+        /* 200 for pre-existing user error          */
+        /* 400 for error in user                    */
         console.log(result);
       })
     }).catch(err => {
