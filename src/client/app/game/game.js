@@ -19,20 +19,15 @@ var createGame = () => {
   var backgroundColor = '#3e5f96';
 
   function create() {
+    // Set initial state of the game
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = backgroundColor;
+    cursors = game.input.keyboard.createCursorKeys();
 
+    // Declare sensor first so it doesn't overwrite the car.
     createSensor();
     createCar();
-    // car.anchor.setTo(0.3, 0.5);
-    // sensor.anchor.setTo(.5, .5);
-    // sensor.scale.setTo(.5, .5);
-
-    // game.physics.p2.enable(car);
-    // car.body.setRectangle(car.width, car.height);
-    //
-    // car.body.collideWorldBounds = true;
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
     var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -55,10 +50,7 @@ var createGame = () => {
       obstacle.body.static = true;
     }
 
-    car.body.setCollisionGroup(carCollisionGroup);
     car.body.collides([carCollisionGroup, obstacleCollisionGroup]);
-    // Initialize user control with the keyboard
-    cursors = game.input.keyboard.createCursorKeys();
 
     text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
   }
