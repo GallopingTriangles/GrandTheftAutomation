@@ -16,7 +16,7 @@ class LoginContainer extends Component {
     this.setState(creds);
   }
 
-  createUser(e) { // POST request to create a server
+  loginUser(e) { // POST request to create a server
     e.preventDefault();
     fetch('/users/login', {
       method: 'POST',
@@ -41,7 +41,7 @@ class LoginContainer extends Component {
     return (
       <div>
         <h4>Log in</h4>
-        <form onSubmit={ this.createUser.bind(this) } >
+        <form onSubmit={ this.loginUser.bind(this) } >
           <p>Username: <input onChange={ (e) => this.updateForm('username', e) } required/></p><br/>
           <p>Password: <input onChange={ (e) => this.updateForm('password', e) } type='password' required/></p><br/>
           <input type='submit' />
