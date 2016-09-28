@@ -85,6 +85,11 @@ class CommandLine extends Component {
               <i className="fa fa-code" aria-hidden="true"></i> Code
               </a>
             </li>
+            <li>
+              <a href='#' className="btn btn-default btn-lg">
+              <i className="fa fa-bug" aria-hidden="true"></i> Bug Report
+              </a>
+            </li>
           </ul>
         </div>
         <div className='editor-container'>
