@@ -46,7 +46,23 @@ class CommandLine extends Component {
     return (
       <div className='editor'>
         <div className='editor-header'>
-          <div className='editor-title'>car.js</div>
+          <ul className="list-inline">
+            <li>
+              <a href='#' className="btn btn-default btn-lg">
+              <i className="fa fa-book" aria-hidden="true"></i> Learn
+              </a>
+            </li>
+            <li>
+              <a href='#' className="btn btn-default btn-lg">
+              <i className="fa fa-check-square-o" aria-hidden="true"></i> Instructions
+              </a>
+            </li>
+            <li>
+              <a href='#' className="btn btn-default btn-lg">
+              <i className="fa fa-code" aria-hidden="true"></i> Code
+              </a>
+            </li>
+          </ul>
         </div>
         <div className='editor-container'>
           <textarea id='editor'></textarea>
