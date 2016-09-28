@@ -44,7 +44,17 @@ class CommandLine extends Component {
 
   render() { 
     return (
-      <textarea id='editor'></textarea>
+      <div className='editor'>
+        <div className='editor-header'>
+          <div className='editor-title'>car.js</div>
+        </div>
+        <div className='editor-container'>
+          <textarea id='editor'></textarea>
+        </div>
+        <div className='editor-footer'>
+          <button className='btn btn-primary'>Run</button>
+        </div>
+      </div>
     );
     // return (
     //   <div style={ styles.container } >

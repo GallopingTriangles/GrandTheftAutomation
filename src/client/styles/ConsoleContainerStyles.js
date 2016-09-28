@@ -3,7 +3,7 @@ export default {
     border: '2px solid #272822',
   },
   phaser: {
-  	backgroundColor: '#272822',
-  	height: '100%'
+  	backgroundColor: '',
+  	// height: 'calc(100vh - 100px)'
   }
 }
