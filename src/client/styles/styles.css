@@ -1,11 +1,53 @@
 html, body {
 	height: 100%;
+	background-color: #D6D6D6;
 }
 
+/* == NAVBAR =========================================== */
+.navbar-default {
+	background-color: #FFF;
+	border-color: #FFF;
+	border-radius: 0px;
+}
+
+/* == CODE EDITOR ====================================== */
 .CodeMirror {
 	width:100%;
-	height: calc(100vh - 100px);
+	height: calc(100vh - 145px);
+	/*background: #354551;*/
 }
 
+.editor {
+	margin-top: 5px;
+}
+
+.editor-header {
+	height: 45px;
+	background-color: #FFF;
+}
+
+.editor-title {
+	height: 100%;
+  width: 100%;
+  max-width: 200px;
+  margin-left: 45px;
+  background-color: #272822;
+}
+
+.editor-footer {
+	background-color: #FFF;
+}
+
+/* == BUTTONS  ========================================= */
+.btn-primary {
+	background-color: #43AA8B;
+	border-color: #43AA8B;
+	border-radius: 0px;
+}
+
+.btn-primary:hover {
+	background-color: #254441;
+	border-color: #254441;
+}
 
 
