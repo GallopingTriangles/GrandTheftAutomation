@@ -15,8 +15,14 @@ class CommandLine extends Component {
     var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
       lineNumbers: true,
       mode:  'javascript',
-      theme: 'monokai'
+      theme: 'monokai',
+      tabSize: 2,
+      autoCloseBrackets: true,
+      lint: true,
+      matchBrackets: true
     });
+
+    editor.setValue("// turn the engine on\n\nvar engine = 'off';");
   }
 
   updateInput(e) {
