@@ -4,9 +4,24 @@ module.exports = {
 
   getGameState: (req, res, next) => {
     /* handles a GET request */
-    /* returns the state of the game for that particular level and user */
+    /* returns the state of the game (ALL level solutions) for that particular user */
     console.log('Received GET request to get game state');
     res.json('Received GET request to get game state'); // status code 200 for success
+
+
+    
+    var username = req.body.username;
+    db.User.findOne({ where: { username: username }}).then(user => {
+      if (!user) {
+        // user not logged in?
+        res.status(404).json('Processing error. Try again');
+      } else {
+        var userId = user.dataValues.id;
+        db.Log.findAll({ where: {
+
+        }})
+      }
+    })
   },
 
   saveGameState: (req, res, next) => {
