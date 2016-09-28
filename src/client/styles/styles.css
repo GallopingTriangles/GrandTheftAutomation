@@ -49,6 +49,12 @@ html, body {
 	border-color: #254441;
 }
 
+.btn-danger {
+	background-color: #FF6F59;
+	border-color: #FF6F59;
+	border-radius: 0px;
+}
+
 .btn-default {
 	background-color: ;
 	border-width: 0px;

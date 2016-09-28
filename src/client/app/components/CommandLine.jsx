@@ -4,6 +4,7 @@ import createCommand from '../actions/UserCommandAction.js';
 import styles from '../../styles/CommandLineStyles.css.js';
 
 class CommandLine extends Component {
+  // == REACT METHODS =================================================================
   constructor(props) {
     super(props);
     this.state = {
@@ -11,8 +12,31 @@ class CommandLine extends Component {
     }
   }
 
-  componentDidMount() {
-    var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+  componentWillMount() { // invoked before initial rendering occurs
+    this.getLearn();
+    this.getInstructions();
+    this.getCode();
+  }
+
+  componentDidMount() {  // invoked after components are rendered
+    this.createEditor();
+  }
+
+  // == CUSTOM FUNCTIONS ==============================================================
+  getLearn() {           // fetch level specific learnings from server
+  }
+
+  getInstructions() {    // fetch level specific instructions from server
+  }
+
+  getCode() {            // fetch level specific code from server
+    var code = "// turn the engine on\n\nvar engine = 'off';"; // REFACTOR!!
+    this.setState({input: code});
+  }
+
+  createEditor() {       // converts textarea into code editor after components are rendered 
+    var textarea = document.getElementById('editor');
+    var editor = CodeMirror.fromTextArea(textarea, {
       lineNumbers: true,
       mode:  'javascript',
       theme: 'monokai',
@@ -22,26 +46,25 @@ class CommandLine extends Component {
       matchBrackets: true,
       viewportMargin: Infinity
     });
+    editor.setValue(this.state.input);
 
-    editor.setValue("// turn the engine on\n\nvar engine = 'off';");
-  }
-
-  updateInput(e) {
-    e.preventDefault();
-    this.setState({
-      input: e.target.value
-    })
+    // change input state when editor changes
+    editor.on('change', function() {
+      this.setState({input: editor.getValue()});
+    }.bind(this));
   }
 
   sendCommand(e) {
     e.preventDefault();
     // tell the store to add the command
-    this.props.sendCommand(this.props.level, this.state.input);
-    this.setState({
-      input: ''
-    })
+    console.log(this.state.input);
+    // this.props.sendCommand(this.props.level, this.state.input);
+    // this.setState({
+    //   input: ''
+    // })
   }
 
+  // == CODE EDITOR ===================================================================
   render() { 
     return (
       <div className='editor'>
@@ -68,26 +91,15 @@ class CommandLine extends Component {
           <textarea id='editor'></textarea>
         </div>
         <div className='editor-footer'>
-          <button className='btn btn-primary'>Run</button>
+          <button className='btn btn-primary' onClick={this.sendCommand.bind(this)}>Run</button>
+          <button className='btn btn-danger'>Reset</button>
         </div>
       </div>
     );
-    // return (
-    //   <div style={ styles.container } >
-    //     <form onSubmit={ this.sendCommand.bind(this) } >
-    //       <input 
-    //         style={ styles.input } 
-    //         onChange={ this.updateInput.bind(this) } 
-    //         value={ this.state.input }
-    //         maxLength={ 50 }
-    //         placeholder={ `Command Line` } >
-    //       </input>
-    //     </form>
-    //   </div>
-    // )
   }
 }
 
+// == REDUX =========================================================================
 // maps the current level from store into the props
 var mapStateToProps = state => {
   return {
