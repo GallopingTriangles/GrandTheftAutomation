@@ -1,7 +1,8 @@
 var Sequelize = require('sequelize');
+var config = require('../config.js');
 
 //Initializes MySQL database through instance of sequelize 
-var sequelize = new Sequelize('gta', 'root', 'root', { //Parameters: database name, username, password
+var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, { 
   host: 'localhost', /* Will need to change once server is deployed */
   dialect: 'mysql',
   port: 3306,
