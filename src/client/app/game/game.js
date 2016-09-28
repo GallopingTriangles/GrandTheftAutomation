@@ -10,21 +10,22 @@ var createGame = () => {
   }
 
   var car;
-  var cursors;
   var obstacles;
+  var cursors;
   var text;
   var sensor;
+  var startingX = 400;
+  var startingY = 600;
+  var backgroundColor = '#3e5f96';
 
   function create() {
-    // Use the p2 physics system
     game.physics.startSystem(Phaser.Physics.P2JS);
-    // Turn on impact events for the world, to allow collision callbacks
     game.physics.p2.setImpactEvents(true);
-    game.stage.backgroundColor = '#3e5f96';
+    game.stage.backgroundColor = backgroundColor;
 
     // Add sprites
     sensor = game.add.sprite(200, 300, 'sensor');
-    sensor.alpha = .2;
+    sensor.alpha = .1;
     car = game.add.sprite(400, 300, 'car');
 
     car.anchor.setTo(0.3, 0.5);
@@ -101,7 +102,7 @@ var createGame = () => {
   function render() {
   }
 
-  // HELPER FUNCTIONS
+  /*** HELPER FUNCTIONS ***/
 
   function leftRight(forward) {
     var angularVelocity;
@@ -134,8 +135,8 @@ var createGame = () => {
 
   }
 
+  function createCar(game, startingX, startingY, sensor, forwardVelocity, backwardVelocity, forwardAngularVelocity, backwardAngularVelocity)
+
 }
-
-
 
 export default createGame;
