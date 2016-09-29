@@ -24,7 +24,10 @@ class CommandLine extends Component {
   }
 
   componentDidMount() {  // invoked after components are rendered
-    this.createEditor();
+    // this.createEditor();
+    /******************** NOTE *********************/
+    /***********************************************/
+    /* invoking createEditor in componentWillMount */
   }
 
   // == CUSTOM FUNCTIONS ==============================================================
@@ -53,11 +56,14 @@ class CommandLine extends Component {
         var code = solutions.filter(solution => {
           return solution.level === this.props.level;
         })[0].solution;
-        
+
         /* Store the saved solution onto the component's state */
         this.setState({
           input: code
         })
+
+        /* Fills out the code editor with the saved solution   */
+        this.createEditor();
       })
     }).catch(err => {
       console.log('error fetching code: ', err);
