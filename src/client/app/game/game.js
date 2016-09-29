@@ -1,4 +1,4 @@
-var createGame = () => {
+var createGame = (userInput) => {
 
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
@@ -23,10 +23,15 @@ var createGame = () => {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = backgroundColor;
-    cursors = game.input.keyboard.createCursorKeys();
+
+    if (userInput.engine) {
+      cursors = game.input.keyboard.createCursorKeys();
+    }
 
     // Declare sensor first so it doesn't overwrite the car.
-    createSensor();
+    if (userInput.sensor) {
+      createSensor();
+    }
     createCar();
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
