@@ -74,6 +74,7 @@ class CommandLine extends Component {
     createGame();
 
 
+    console.log(this.state.input);
     // POST request
     // saves the user's code to the database after stringifying it
     fetch('/game', {
@@ -81,17 +82,26 @@ class CommandLine extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {
+      body: JSON.stringify({
+        /******* WARNING ************ WARNING ************* WARNING ********/
+        /*********** the username is hardcoded as 'test' for now ***********/
+        /* this won't work unless you have 'test' username in the database */
         username: 'test',
+        /*******************************************************************/
+        /*******************************************************************/
         level: this.props.level,
-        solution: this.state.input
-      }
+        log: this.state.input
+      })
     }).then(res => {
-      
+      res.json().then(response => {
+        // acting weird for some reasone
+        // but it still is being saved into DB correctly
+        // dunno why it throws a weirdass error
+        console.log('response: ', response);
+      })
     }).catch(err => {
-
+      console.log('Error saving input: ', err);
     });
-    console.log(this.state.input.length);
   }
 
   // == CODE EDITOR ===================================================================
