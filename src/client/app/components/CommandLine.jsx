@@ -56,10 +56,13 @@ class CommandLine extends Component {
         var level = this.props.level;
         var code;
         if (solutions.length) {
+          /* If the server finds the user's saved solution     */
+          /* then set the state with that code                 */
           code = solutions.filter(solution => {
             return solution.level === this.props.level;
           })[0].solution;
         } else {
+          /* otherwise write a default message to the editor   */
           code = '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n';
         }
 
