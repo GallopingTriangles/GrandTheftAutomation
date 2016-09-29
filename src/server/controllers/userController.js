@@ -39,7 +39,7 @@ var userController = {
               var userToken = token(req.body, config.secret);
               res.cookie('accessToken', userToken, { expires: new Date(Date.now() + 7200000) })
                 .status(200)
-                .json({ message: 'User is now logged in with token.' })
+                .json({ message: 'User is now logged in with token.' });
             }
           })
         }
