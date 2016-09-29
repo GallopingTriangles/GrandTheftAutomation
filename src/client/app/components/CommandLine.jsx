@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import createCommand from '../actions/UserCommandAction.js';
 import styles from '../../styles/CommandLineStyles.css.js';
+import createGame from '../game/game.js';
+import $ from 'jquery';
+
+/*************************************  TODO  ****************************************/
+/********* connect level switch dispatch to props that will change the level *********/
 
 class CommandLine extends Component {
   // == REACT METHODS =================================================================
@@ -55,21 +60,48 @@ class CommandLine extends Component {
   }
 
   sendCommand(e) {
+    /* No need to save the user's code to the store        */
+    /* Just need to send it to the server to be translated */
+    /* And then run createGame() based on the response to 
+         generate a custom game built by the user's code   */
+    /* This removes the need to re-hydrate the store       */
     e.preventDefault();
-    // POST request
-    fetch('', {
 
-    }).then(res => {
+    // remove the current running game from the DOM
+    $('canvas').remove();
+    // generate a modified game based on the user's code
+    // needs to be fetch callback in response to server response object
+    createGame();
 
-    }).catch(err => {
 
-    });
-    // tell the store to add the command
     console.log(this.state.input);
-    // this.props.sendCommand(this.props.level, this.state.input);
-    // this.setState({
-    //   input: ''
-    // })
+    // POST request
+    // saves the user's code to the database after stringifying it
+    fetch('/game', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        /******* WARNING ************ WARNING ************* WARNING ********/
+        /*********** the username is hardcoded as 'test' for now ***********/
+        /* this won't work unless you have 'test' username in the database */
+        username: 'test',
+        /*******************************************************************/
+        /*******************************************************************/
+        level: this.props.level,
+        log: this.state.input
+      })
+    }).then(res => {
+      res.json().then(response => {
+        // acting weird for some reasone
+        // but it still is being saved into DB correctly
+        // dunno why it throws a weirdass error
+        console.log('response: ', response);
+      })
+    }).catch(err => {
+      console.log('Error saving input: ', err);
+    });
   }
 
   // == CODE EDITOR ===================================================================

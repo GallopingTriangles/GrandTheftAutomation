@@ -62,7 +62,7 @@ module.exports = {
               solution: solution,
               UserId: userId
             }).then(log => {
-              res.status(200).json('User log successfully saved.');
+              res.status(200).json({ message: 'User log successfully saved.' });
             }).catch(err => {
               console.log('Error saving solution: ', err);
               res.status(404).json('Processing error. Try again.');

@@ -15,7 +15,7 @@ var createGame = () => {
   var text;
   var sensor;
   var startingX = 400;
-  var startingY = 600;
+  var startingY = 300;
   var backgroundColor = '#3e5f96';
 
   function create() {
