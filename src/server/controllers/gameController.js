@@ -12,7 +12,7 @@ module.exports = {
     db.User.findOne({ where: { username: username }}).then(user => {
       if (!user) {
         // user not logged in?
-        res.status(404).json('Processing error. Try again');
+        res.send({message: 'Processing error. Try again'});
       } else {
         var userId = user.dataValues.id;
         db.Log.findAll({ where: {
@@ -24,11 +24,10 @@ module.exports = {
               solution: log.dataValues.solution
             }
           });
-          console.log('List of logs: ', logsList);
-          res.status(200).json(logsList); // status code 200 for success
+          res.send(logsList); // status code 200 for success
         }).catch(err => {
           console.log('error: ', err);
-          res.status(404).json('Error getting game state');
+          res.send({message:'Error getting game state'});
         })
       }
     }).catch(err => {
@@ -47,7 +46,7 @@ module.exports = {
       if (!user) { 
         // handle error, but user should NOT be null since they must be logged in to save a solution
         console.log('Cannot find user');
-        res.status(404).json('Processing error. Try again.');
+        res.status(404).send({message: 'Processing error. Try again.'});
       } else {
         var userId = user.dataValues.id;
         db.Log.find({
@@ -61,11 +60,11 @@ module.exports = {
               level: level,
               solution: solution,
               UserId: userId
-            }).then(log => {
-              res.status(200).json({ message: 'User log successfully saved.' });
+            }).then(() => {
+              res.send({ type: 'save', message: 'User log successfully saved.' });
             }).catch(err => {
               console.log('Error saving solution: ', err);
-              res.status(404).json('Processing error. Try again.');
+              res.status(404).send({message: 'Processing error. Try again.'});
             });
           } else { // if it does exist, then update it
             module.exports.updateGameState(req, res, next);
@@ -75,7 +74,7 @@ module.exports = {
         })
       }
     }).catch(err => {
-      res.status(404).json('Processing error. Try again.');
+      res.status(404).send({message: 'Processing error. Try again.'});
     })
   },
 
@@ -89,7 +88,7 @@ module.exports = {
     db.User.findOne({ where: { username: username }}).then(user => {
       if (!user) {
         // this error should never occur because a user should be logged in
-        res.status(404).json('Processing error. Try again');
+        res.status(404).send({message: 'Processing error. Try again'});
       } else {
         var userId = user.dataValues.id;
         // find the log corresponding to the user
@@ -105,24 +104,24 @@ module.exports = {
               solution: solution
             }).then(() => {
               console.log('Updated log: ', log.dataValues);
-              res.status(204).json('Updated solution');
+              res.send({type: 'update', message: 'Updated solution'});
             }).catch(err => {
               console.log('Error updating log: ', err);
-              res.status(404).json('Error updating solution');
+              res.status(404).send({message: 'Error updating solution'});
             })
           } else {
             // log didn't exist
             console.log('Log did not exist.. weird');
-            res.status(404).json('Error updating solution');
+            res.status(404).send({message: 'Error updating solution'});
           }
         }).catch(err => {
           console.log('Error updating log: ', err);
-          res.status(404).json('Error updating solution');
+          res.status(404).send({message: 'Error updating solution'});
         })
       }
     }).catch(err => {
       console.log('Error looking for user: ', err);
-      res.status(404).json('Processing error. Try again.');
+      res.status(404).send({message: 'Processing error. Try again.'});
     })
   }
 }
