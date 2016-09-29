@@ -19,7 +19,10 @@ module.exports = {
           UserId: userId
         }}).then(logs => {
           var logsList = logs.map(log => {
-            return log.dataValues;
+            return {
+              level: log.dataValues.level,
+              solution: log.dataValues.solution
+            }
           });
           console.log('List of logs: ', logsList);
           res.status(200).json(logsList); // status code 200 for success
