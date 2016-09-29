@@ -63,7 +63,7 @@ class CommandLine extends Component {
           })[0].solution;
         } else {
           /* otherwise write a default message to the editor   */
-          code = '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n';
+          code = '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n';
         }
 
         /* Store the saved solution onto the component's state */
