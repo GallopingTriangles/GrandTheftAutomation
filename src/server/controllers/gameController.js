@@ -6,11 +6,9 @@ module.exports = {
     /* handles a GET request */
     /* returns the state of the game (ALL level solutions) for that particular user */
     console.log('Received GET request to get game state');
-    res.json('Received GET request to get game state'); // status code 200 for success
 
-
-    
-    var username = req.body.username;
+    /* GET request must come with the username under params! */
+    var username = req.query.username;
     db.User.findOne({ where: { username: username }}).then(user => {
       if (!user) {
         // user not logged in?
@@ -18,9 +16,20 @@ module.exports = {
       } else {
         var userId = user.dataValues.id;
         db.Log.findAll({ where: {
-
-        }})
+          UserId: userId
+        }}).then(logs => {
+          var logsList = logs.map(log => {
+            return log.dataValues;
+          });
+          console.log('List of logs: ', logsList);
+          res.status(200).json(logsList); // status code 200 for success
+        }).catch(err => {
+          console.log('error: ', err);
+          res.status(404).json('Error getting game state');
+        })
       }
+    }).catch(err => {
+      console.log('Error getting game state');
     })
   },
 
