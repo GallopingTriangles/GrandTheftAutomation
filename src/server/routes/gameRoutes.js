@@ -1,9 +1,10 @@
 var router = require('express').Router();
 var gameController = require('../controllers/gameController.js');
+var sandbox = require('../middleware/sandbox.js');
 
-router.route('/')
-  .get(gameController.getGameState) // gets the user's saved game state of the code editor
-  .post(gameController.saveGameState); // saves the user's game state of the code editor
+router.get('/', gameController.getGameState); // gets the user's saved game state of the code editor
+
+router.post('/', sandbox, gameController.saveGameState); // saves the user's game state of the code editor
 
 // router.put('/', gameController.updateGameState); // updates the user's game state of the code editor
 /****************************************************************************
