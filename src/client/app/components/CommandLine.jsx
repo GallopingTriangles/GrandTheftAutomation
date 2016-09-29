@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import createCommand from '../actions/UserCommandAction.js';
 import styles from '../../styles/CommandLineStyles.css.js';
+import createGame from '../game/game.js';
+import $ from 'jquery';
 
 class CommandLine extends Component {
   // == REACT METHODS =================================================================
@@ -56,6 +58,8 @@ class CommandLine extends Component {
 
   sendCommand(e) {
     e.preventDefault();
+    $('canvas').remove();
+    createGame();
     // POST request
     fetch('', {
 
