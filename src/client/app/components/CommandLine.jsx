@@ -5,6 +5,9 @@ import styles from '../../styles/CommandLineStyles.css.js';
 import createGame from '../game/game.js';
 import $ from 'jquery';
 
+/*************************************  TODO  ****************************************/
+/********* connect level switch dispatch to props that will change the level *********/
+
 class CommandLine extends Component {
   // == REACT METHODS =================================================================
   constructor(props) {
@@ -73,10 +76,18 @@ class CommandLine extends Component {
 
     // POST request
     // saves the user's code to the database after stringifying it
-    fetch('', {
-
+    fetch('/game', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {
+        username: 'test',
+        level: this.props.level,
+        solution: this.state.input
+      }
     }).then(res => {
-
+      
     }).catch(err => {
 
     });
