@@ -20,7 +20,7 @@ class CommandLine extends Component {
   componentWillMount() { // invoked before initial rendering occurs
     this.getLearn();
     this.getInstructions();
-    this.getCode();
+    this.getCode(); // populate the editor with the appropriate code
   }
 
   componentDidMount() {  // invoked after components are rendered
