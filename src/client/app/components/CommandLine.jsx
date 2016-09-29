@@ -57,10 +57,22 @@ class CommandLine extends Component {
   }
 
   sendCommand(e) {
+    /* No need to save the user's code to the store        */
+    /* Just need to send it to the server to be translated */
+    /* And then run createGame() based on the response to 
+         generate a custom game built by the user's code   */
+    /* This removes the need to re-hydrate the store       */
     e.preventDefault();
+
+    // remove the current running game from the DOM
     $('canvas').remove();
+    // generate a modified game based on the user's code
+    // needs to be fetch callback in response to server response object
     createGame();
+
+
     // POST request
+    // saves the user's code to the database after stringifying it
     fetch('', {
 
     }).then(res => {
@@ -68,12 +80,7 @@ class CommandLine extends Component {
     }).catch(err => {
 
     });
-    // tell the store to add the command
-    console.log(this.state.input);
-    // this.props.sendCommand(this.props.level, this.state.input);
-    // this.setState({
-    //   input: ''
-    // })
+    console.log(this.state.input.length);
   }
 
   // == CODE EDITOR ===================================================================
