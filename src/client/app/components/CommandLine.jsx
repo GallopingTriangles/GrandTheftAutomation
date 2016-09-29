@@ -39,7 +39,8 @@ class CommandLine extends Component {
 
   getCode() {            // fetch level specific code from server
 
-    // construct the url with the username as a query param
+    /* construct the url with the username as a query param */
+    /* username currently hardcoded as "test" FIX LATER!!!! */
     var url = `/game?username=${'test'}`
 
     fetch(url, {
@@ -53,9 +54,14 @@ class CommandLine extends Component {
         /* saved solutions for every level.                    */
         /* We will grab the solution for the current level.    */
         var level = this.props.level;
-        var code = solutions.filter(solution => {
-          return solution.level === this.props.level;
-        })[0].solution;
+        var code;
+        if (solutions.length) {
+          code = solutions.filter(solution => {
+            return solution.level === this.props.level;
+          })[0].solution;
+        } else {
+          code = '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n';
+        }
 
         /* Store the saved solution onto the component's state */
         this.setState({
