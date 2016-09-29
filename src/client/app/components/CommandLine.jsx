@@ -20,11 +20,14 @@ class CommandLine extends Component {
   componentWillMount() { // invoked before initial rendering occurs
     this.getLearn();
     this.getInstructions();
-    this.getCode();
+    this.getCode(); // populate the editor with the appropriate code
   }
 
   componentDidMount() {  // invoked after components are rendered
-    this.createEditor();
+    // this.createEditor();
+    /******************** NOTE *********************/
+    /***********************************************/
+    /* invoking createEditor in componentWillMount */
   }
 
   // == CUSTOM FUNCTIONS ==============================================================
@@ -35,8 +38,45 @@ class CommandLine extends Component {
   }
 
   getCode() {            // fetch level specific code from server
-    var code = "// turn the engine on\n\nvar engine = 'off';"; // REFACTOR!!
-    this.setState({input: code});
+
+    /* construct the url with the username as a query param */
+    /* username currently hardcoded as "test" FIX LATER!!!! */
+    var url = `/game?username=${'test'}`
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      response.json().then(solutions => {
+        /* The server returns an array that contain the user's */
+        /* saved solutions for every level.                    */
+        /* We will grab the solution for the current level.    */
+        var level = this.props.level;
+        var code;
+        if (solutions.length) {
+          /* If the server finds the user's saved solution     */
+          /* then set the state with that code                 */
+          code = solutions.filter(solution => {
+            return solution.level === this.props.level;
+          })[0].solution;
+        } else {
+          /* otherwise write a default message to the editor   */
+          code = '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n';
+        }
+
+        /* Store the saved solution onto the component's state */
+        this.setState({
+          input: code
+        })
+
+        /* Fills out the code editor with the saved solution   */
+        this.createEditor();
+      })
+    }).catch(err => {
+      console.log('error fetching code: ', err);
+    })
   }
 
   createEditor() {       // converts textarea into code editor after components are rendered 
@@ -80,7 +120,7 @@ class CommandLine extends Component {
     fetch('/game', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         /******* WARNING ************ WARNING ************* WARNING ********/
@@ -93,6 +133,7 @@ class CommandLine extends Component {
         log: this.state.input
       })
     }).then(res => {
+      console.log('res: ', res);
       res.json().then(response => {
         // acting weird for some reasone
         // but it still is being saved into DB correctly
