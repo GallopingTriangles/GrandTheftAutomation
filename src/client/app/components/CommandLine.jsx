@@ -56,6 +56,14 @@ class CommandLine extends Component {
 
   sendCommand(e) {
     e.preventDefault();
+    // POST request
+    fetch('', {
+
+    }).then(res => {
+
+    }).catch(err => {
+
+    });
     // tell the store to add the command
     console.log(this.state.input);
     // this.props.sendCommand(this.props.level, this.state.input);
