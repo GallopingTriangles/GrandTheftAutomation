@@ -6,6 +6,7 @@ var port = process.env.PORT || 8080;													  // set the port
 var path = require('path');
 var session = require('express-session');
 var userRoutes = require('./routes/userRoutes.js');
+var gameRoutes = require('./routes/gameRoutes.js');
 
 var app = express();
 
@@ -19,6 +20,7 @@ app.use('/lib', (express.static(path.join(__dirname, '../../node_modules'))));
 // == routes ===================================================
 
 app.use('/users', userRoutes);                              // handles all requests to '/users'
+app.use('/game', gameRoutes);                               // handles all requests to '/game'
 
 // == listen ===================================================
 
