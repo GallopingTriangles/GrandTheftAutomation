@@ -1,6 +1,6 @@
 var createGame = (userInput) => {
   console.log('User input: ', userInput)
-  
+
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   function preload() {
@@ -62,7 +62,8 @@ var createGame = (userInput) => {
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
-    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+    if (userInput.sensor) {
+      attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
 
     var overlap = false;
     obstacles.forEach(function(obstacle) {
@@ -79,17 +80,20 @@ var createGame = (userInput) => {
         sensor.alpha = .1;
       }
     });
+  }
 
     car.body.velocity.x = 0;
     car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
 
-    if (cursors.up.isDown) {
-      car.body.moveForward(300);
-      leftRight(true);
-    } else if (cursors.down.isDown) {
-      car.body.moveBackward(100);
-      leftRight(false);
+    if (userInput.engine) {
+      if (cursors.up.isDown) {
+        car.body.moveForward(200);
+        leftRight(true);
+      } else if (cursors.down.isDown) {
+        car.body.moveBackward(100);
+        leftRight(false);
+      }
     }
   }
 
@@ -102,7 +106,7 @@ var createGame = (userInput) => {
     var angularVelocity;
 
     if (forward) {
-      angularVelocity = 90;
+      angularVelocity = 60;
     } else {
       angularVelocity = -30;
     }
