@@ -172,6 +172,15 @@ var createGame = (userInput) => {
       case 'panda':
         game.load.image('car', './assets/panda.png');
         break;
+      case 'black':
+        game.load.image('car', './assets/car-black.psd');
+        break;
+      case 'red':
+        game.load.image('car', './assets/car-red.png');
+        break;
+      case 'blue':
+        game.load.image('car', './assets/car-blue.png');
+        break;
     }
   }
 }
