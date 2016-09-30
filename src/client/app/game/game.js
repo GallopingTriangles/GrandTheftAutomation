@@ -4,7 +4,7 @@ var createGame = (userInput) => {
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   function preload() {
-    game.load.image('car', './assets/car-top-view-extra-small.png');
+    setCarColor();
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
@@ -18,6 +18,10 @@ var createGame = (userInput) => {
   var startingX = 400;
   var startingY = 300;
   var backgroundColor = '#3e5f96';
+  var carForwardSpeed = 200;
+  var carBackwardSpeed = 100;
+  var forwardReverseMultiplier = 1 / 2;
+  var userSpeedMultiplier = 4;
 
   function create() {
     // Set initial state of the game
@@ -29,10 +33,10 @@ var createGame = (userInput) => {
     }
 
     // Declare sensor first so it doesn't overwrite the car.
-    if (userInput.sensor) {
-      createSensor();
-    }
+
+    createSensor();
     createCar();
+    setSpeed();
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
     var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -88,10 +92,10 @@ var createGame = (userInput) => {
 
     if (userInput.engine) {
       if (cursors.up.isDown) {
-        car.body.moveForward(200);
+        car.body.moveForward(carForwardSpeed);
         leftRight(true);
       } else if (cursors.down.isDown) {
-        car.body.moveBackward(100);
+        car.body.moveBackward(carBackwardSpeed);
         leftRight(false);
       }
     }
@@ -106,9 +110,9 @@ var createGame = (userInput) => {
     var angularVelocity;
 
     if (forward) {
-      angularVelocity = 60;
+      angularVelocity = carForwardSpeed / 3;
     } else {
-      angularVelocity = -30;
+      angularVelocity = -carBackwardSpeed / 3;
     }
 
     if (cursors.left.isDown) {
@@ -143,14 +147,33 @@ var createGame = (userInput) => {
   }
 
   function createSensor() {
-    // Appearace
-    sensor = game.add.sprite(startingX, startingY, 'sensor');
-    sensor.alpha = .1;
-    sensor.anchor.setTo(.5, .5);
-    sensor.scale.setTo(.5, .5);
+    // Check to make sure the user has turned the sensor on
+    if (userInput.sensor) {
+      // Appearace
+      sensor = game.add.sprite(startingX, startingY, 'sensor');
+      sensor.alpha = .1;
+      sensor.anchor.setTo(.5, .5);
+      sensor.scale.setTo(.5, .5);
+    }
   }
 
+  function setSpeed() {
+    if (userInput.speed) {
+      carForwardSpeed = userInput.speed * userSpeedMultiplier;
+      carBackwardSpeed = carForwardSpeed * forwardReverseMultiplier;
+    }
+  }
 
+  function setCarColor() {
+    switch(userInput.color) {
+      case 'white':
+        game.load.image('car', './assets/car-top-view-extra-small.png');
+        break;
+      case 'panda':
+        game.load.image('car', './assets/panda.png');
+        break;
+    }
+  }
 }
 
 export default createGame;
