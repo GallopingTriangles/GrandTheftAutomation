@@ -18,7 +18,8 @@ var createGame = (userInput) => {
   var startingX = 400;
   var startingY = 300;
   var backgroundColor = '#3e5f96';
-  var carVelocity;
+  var carForwardSpeed = 200;
+  var carBackwardSpeed = carForwardSpeed / 2;
 
   function create() {
     // Set initial state of the game
@@ -33,6 +34,7 @@ var createGame = (userInput) => {
 
     createSensor();
     createCar();
+    setSpeed();
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
     var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -88,10 +90,10 @@ var createGame = (userInput) => {
 
     if (userInput.engine) {
       if (cursors.up.isDown) {
-        car.body.moveForward(userInput.speed || 200);
+        car.body.moveForward(carForwardSpeed);
         leftRight(true);
       } else if (cursors.down.isDown) {
-        car.body.moveBackward(100);
+        car.body.moveBackward(carBackwardSpeed);
         leftRight(false);
       }
     }
@@ -106,9 +108,9 @@ var createGame = (userInput) => {
     var angularVelocity;
 
     if (forward) {
-      angularVelocity = 60;
+      angularVelocity = carForwardSpeed / 3;
     } else {
-      angularVelocity = -30;
+      angularVelocity = -carBackwardSpeed / 3;
     }
 
     if (cursors.left.isDown) {
@@ -150,6 +152,12 @@ var createGame = (userInput) => {
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
       sensor.scale.setTo(.5, .5);
+    }
+  }
+
+  function setSpeed() {
+    if (userInput.speed) {
+      carForwardSpeed = userInput.speed * 4;
     }
   }
 }
