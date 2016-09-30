@@ -4,7 +4,7 @@ var createGame = (userInput) => {
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   function preload() {
-    game.load.image('car', './assets/car-top-view-extra-small.png');
+    setCarColor();
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
@@ -163,7 +163,14 @@ var createGame = (userInput) => {
   }
 
   function setCarColor() {
-    
+    switch(userInput.color) {
+      case 'white':
+        game.load.image('car', './assets/car-top-view-extra-small.png');
+        break;
+      case 'panda':
+        game.load.image('car', './assets/panda.png');
+        break;
+    }
   }
 }
 
