@@ -28,7 +28,6 @@ var render = () => {
   )
 }
 
-createGame();
+createGame({engine: false, sensor: false});
 render();
 store.subscribe(render); // App will re-render when the store has been updated
-

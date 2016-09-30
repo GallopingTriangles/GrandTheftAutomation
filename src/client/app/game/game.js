@@ -1,9 +1,10 @@
 var createGame = (userInput) => {
-
+  console.log('User input: ', userInput)
+  
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   function preload() {
-    game.load.image('car', './assets/car-top-view-small.png');
+    game.load.image('car', './assets/car-top-view-extra-small.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
@@ -23,7 +24,6 @@ var createGame = (userInput) => {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = backgroundColor;
-
     if (userInput.engine) {
       cursors = game.input.keyboard.createCursorKeys();
     }
