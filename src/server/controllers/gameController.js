@@ -71,8 +71,9 @@ module.exports = {
               level: level,
               solution: solution,
               UserId: userId
-            }).then(() => {
-              res.send({ type: 'save', message: 'User log successfully saved.' });
+            }).then(log => {
+              // respond with phaser object and bug report
+              res.status(200).json({phaser: req.body.phaser, bugs: req.body.bugs});
             }).catch(err => {
               console.log('Error saving solution: ', err);
               res.status(404).send({message: 'Processing error. Try again.'});
