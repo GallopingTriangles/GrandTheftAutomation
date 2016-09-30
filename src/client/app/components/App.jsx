@@ -7,13 +7,7 @@ import Signup from '../containers/SignupContainer.jsx';
 import Login from '../containers/LoginContainer.jsx';
 import Game from '../containers/GameContainer.jsx';
 import Console from '../containers/ConsoleContainer.jsx';
-
-const Container = props => (
-  <div>
-    <Nav />
-    { props.children }
-  </div>
-)
+import PageContainer from '../../views/PageContainer.jsx';
 
 const LandingPage = props => (
   <div>
@@ -27,15 +21,6 @@ const GamePage = props => (
     <Game />
     <Console />
   </div>
-)
-
-const AllRoutes = props => (
-  <Router history={ hashHistory }>
-    <Route path='/' component={ Container }>
-      <IndexRoute component={ LandingPage } />
-      <Route path='game' component={ GamePage } />
-    </Route>
-  </Router>
 )
 
 class App extends Component {
@@ -53,7 +38,12 @@ class App extends Component {
     //   </div>
     // )
     return (
-      <AllRoutes />
+      <Router history={ hashHistory }>
+        <Route path='/' component={ PageContainer }>
+          <IndexRoute component={ LandingPage } />
+          <Route path='game' component={ GamePage } />
+        </Route>
+      </Router>
     )
   }
 }
