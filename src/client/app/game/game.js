@@ -20,6 +20,7 @@ var createGame = (userInput) => {
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = 100;
+  var carScale = .5;
   var forwardReverseMultiplier = 1 / 2;
   var userSpeedMultiplier = 4;
 
@@ -139,6 +140,7 @@ var createGame = (userInput) => {
     // Appearance
     car = game.add.sprite(startingX, startingY, 'car');
     car.anchor.setTo(.3, .5);
+    car.scale.setTo(carScale);
 
     // Physics
     game.physics.p2.enable(car);
@@ -167,13 +169,13 @@ var createGame = (userInput) => {
   function setCarColor() {
     switch(userInput.color) {
       case 'white':
-        game.load.image('car', './assets/car-top-view-extra-small.png');
+        game.load.image('car', './assets/car-top-view-small.png');
         break;
       case 'panda':
         game.load.image('car', './assets/panda.png');
         break;
       case 'black':
-        game.load.image('car', './assets/car-black.psd');
+        game.load.image('car', './assets/car-black.png');
         break;
       case 'red':
         game.load.image('car', './assets/car-red.png');
