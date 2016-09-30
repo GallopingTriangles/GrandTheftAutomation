@@ -4,7 +4,9 @@ var sandbox = require('../middleware/sandbox.js');
 
 router.get('/', gameController.getGameState); // gets the user's saved game state of the code editor
 
-router.post('/', sandbox, gameController.saveGameState); // saves the user's game state of the code editor
+// saves the user's game state of the code editor
+// sandbox middleware parses user input and adds it to req.body
+router.post('/', sandbox, gameController.saveGameState); 
 
 // router.put('/', gameController.updateGameState); // updates the user's game state of the code editor
 /****************************************************************************
