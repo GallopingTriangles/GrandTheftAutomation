@@ -54,6 +54,7 @@ class CommandLine extends Component {
       }
     }).then(response => {
       response.json().then(solutions => {
+        console.log('fetched user solutions: ', solutions);
         /* The server returns an array that contain the user's */
         /* saved solutions for every level.                    */
         /* We will grab the solution for the current level.    */
@@ -74,7 +75,6 @@ class CommandLine extends Component {
         this.setState({
           input: code
         })
-
         /* Fills out the code editor with the saved solution   */
         this.createEditor();
       })
