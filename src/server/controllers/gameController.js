@@ -116,7 +116,7 @@ module.exports = {
               solution: solution
             }).then(() => {
               console.log('Updated log: ', log.dataValues);
-              res.send({type: 'update', message: 'Updated solution'});
+              res.send({phaser: req.body.phaser, bugs: req.body.bugs});
             }).catch(err => {
               console.log('Error updating log: ', err);
               res.status(404).send({message: 'Error updating solution'});
