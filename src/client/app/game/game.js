@@ -18,6 +18,7 @@ var createGame = (userInput) => {
   var startingX = 400;
   var startingY = 300;
   var backgroundColor = '#3e5f96';
+  var carVelocity;
 
   function create() {
     // Set initial state of the game
@@ -29,9 +30,8 @@ var createGame = (userInput) => {
     }
 
     // Declare sensor first so it doesn't overwrite the car.
-    if (userInput.sensor) {
-      createSensor();
-    }
+
+    createSensor();
     createCar();
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -88,7 +88,7 @@ var createGame = (userInput) => {
 
     if (userInput.engine) {
       if (cursors.up.isDown) {
-        car.body.moveForward(200);
+        car.body.moveForward(userInput.speed || 200);
         leftRight(true);
       } else if (cursors.down.isDown) {
         car.body.moveBackward(100);
@@ -143,14 +143,15 @@ var createGame = (userInput) => {
   }
 
   function createSensor() {
-    // Appearace
-    sensor = game.add.sprite(startingX, startingY, 'sensor');
-    sensor.alpha = .1;
-    sensor.anchor.setTo(.5, .5);
-    sensor.scale.setTo(.5, .5);
+    // Check to make sure the user has turned the sensor on
+    if (userInput.sensor) {
+      // Appearace
+      sensor = game.add.sprite(startingX, startingY, 'sensor');
+      sensor.alpha = .1;
+      sensor.anchor.setTo(.5, .5);
+      sensor.scale.setTo(.5, .5);
+    }
   }
-
-
 }
 
 export default createGame;

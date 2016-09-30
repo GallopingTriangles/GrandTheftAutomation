@@ -117,7 +117,7 @@ class CommandLine extends Component {
     // needs to be fetch callback in response to server response object
 
     // This params object will be passed in by the user from the params
-    createGame({engine: true, sensor: true});
+    createGame({engine: true, sensor: true, speed: 400});
 
 
     console.log(this.state.input);
