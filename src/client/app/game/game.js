@@ -20,6 +20,7 @@ var createGame = (userInput) => {
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = carForwardSpeed / 2;
+  var userSpeedMultiplier = 4;
 
   function create() {
     // Set initial state of the game
@@ -157,8 +158,12 @@ var createGame = (userInput) => {
 
   function setSpeed() {
     if (userInput.speed) {
-      carForwardSpeed = userInput.speed * 4;
+      carForwardSpeed = userInput.speed * userSpeedMultiplier;
     }
+  }
+
+  function setCarColor() {
+    
   }
 }
 
