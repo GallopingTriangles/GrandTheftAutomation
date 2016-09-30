@@ -5,6 +5,11 @@ import { connect } from 'react-redux';
 import styles from '../../styles/Nav.css.js';
 
 class Nav extends Component {
+
+  /************************* TODO *************************/
+  /* The buttons should route users to appropriate places */
+  /********************************************************/
+
   render() {
     return (
       <nav className="navbar navbar-default" style={styles.navbar}>
