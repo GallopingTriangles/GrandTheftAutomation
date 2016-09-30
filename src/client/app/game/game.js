@@ -1,9 +1,10 @@
-var createGame = () => {
+var createGame = (userInput) => {
+  console.log('User input: ', userInput)
 
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   function preload() {
-    game.load.image('car', './assets/car-top-view-small.png');
+    game.load.image('car', './assets/car-top-view-extra-small.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
@@ -23,10 +24,14 @@ var createGame = () => {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = backgroundColor;
-    cursors = game.input.keyboard.createCursorKeys();
+    if (userInput.engine) {
+      cursors = game.input.keyboard.createCursorKeys();
+    }
 
     // Declare sensor first so it doesn't overwrite the car.
-    createSensor();
+    if (userInput.sensor) {
+      createSensor();
+    }
     createCar();
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -57,7 +62,8 @@ var createGame = () => {
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
-    attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+    if (userInput.sensor) {
+      attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
 
     var overlap = false;
     obstacles.forEach(function(obstacle) {
@@ -74,17 +80,20 @@ var createGame = () => {
         sensor.alpha = .1;
       }
     });
+  }
 
     car.body.velocity.x = 0;
     car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
 
-    if (cursors.up.isDown) {
-      car.body.moveForward(300);
-      leftRight(true);
-    } else if (cursors.down.isDown) {
-      car.body.moveBackward(100);
-      leftRight(false);
+    if (userInput.engine) {
+      if (cursors.up.isDown) {
+        car.body.moveForward(200);
+        leftRight(true);
+      } else if (cursors.down.isDown) {
+        car.body.moveBackward(100);
+        leftRight(false);
+      }
     }
   }
 
@@ -97,7 +106,7 @@ var createGame = () => {
     var angularVelocity;
 
     if (forward) {
-      angularVelocity = 90;
+      angularVelocity = 60;
     } else {
       angularVelocity = -30;
     }

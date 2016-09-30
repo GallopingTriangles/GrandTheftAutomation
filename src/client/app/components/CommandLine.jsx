@@ -79,7 +79,7 @@ class CommandLine extends Component {
     })
   }
 
-  createEditor() {       // converts textarea into code editor after components are rendered 
+  createEditor() {       // converts textarea into code editor after components are rendered
     var textarea = document.getElementById('editor');
     var editor = CodeMirror.fromTextArea(textarea, {
       lineNumbers: true,
@@ -102,7 +102,7 @@ class CommandLine extends Component {
   sendCommand(e) {
     /* No need to save the user's code to the store        */
     /* Just need to send it to the server to be translated */
-    /* And then run createGame() based on the response to 
+    /* And then run createGame() based on the response to
          generate a custom game built by the user's code   */
     /* This removes the need to re-hydrate the store       */
     e.preventDefault();
@@ -111,7 +111,9 @@ class CommandLine extends Component {
     $('canvas').remove();
     // generate a modified game based on the user's code
     // needs to be fetch callback in response to server response object
-    createGame();
+
+    // This params object will be passed in by the user from the params
+    createGame({engine: true, sensor: true});
 
 
     console.log(this.state.input);
@@ -146,7 +148,7 @@ class CommandLine extends Component {
   }
 
   // == CODE EDITOR ===================================================================
-  render() { 
+  render() {
     return (
       <div className='editor'>
         <div className='editor-header'>
