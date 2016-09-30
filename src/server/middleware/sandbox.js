@@ -45,13 +45,13 @@ var sandbox = (req, res, next) => {
 var color = (context) => {
 	var color = context.color;
 	if (color === undefined) {
-    return ['blue', 'color is not defined'];
+    return ['white', 'color is not defined'];
 	} else if (typeof color !== 'string') {
-		return ['blue', 'color needs to be a "string"'];
-	} else if (color === 'red' || color === 'green' || color === 'blue') {
+		return ['white', 'color needs to be a "string"'];
+	} else if (color === 'red' || color === 'blue' || color === 'black' || color === 'white') {
 		return [color];
 	} else {
-		return ['blue', 'color can only be "green", "red" or "green"'];
+		return ['white', 'color can only be "green", "red" or "green"'];
 	}
 };
 
@@ -73,11 +73,12 @@ var engine = (context) => {
 var speed = (context) => {
 	var speed = context.speed;
   if (speed === undefined) {
-    return [0, 'speed is not defined'];
+    return [false, 'speed is not defined'];
   } else if (typeof speed !== 'number') {
-  	return [0, 'speed needs to be a "number"'];
+  	return [false, 'speed needs to be a "number"'];
+  } else if (speed < 0) {
+    return [false, 'speed needs to be a "positive number"'];
   } else if (speed > 25) {
-  	speed = Math.min(speed, 35);
   	return [speed, 'the speed limit is "25" miles per hour'];
   } else {
   	return [speed];
