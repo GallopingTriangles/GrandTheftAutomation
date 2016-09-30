@@ -2,7 +2,6 @@ var router = require('express').Router();
 var userController = require('../controllers/userController.js');
 
 router.route('/')
-  .all(userController.verify)
   .get(userController.getState); // returns user's saved stuff after verification
 
 router.route('/login')

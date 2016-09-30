@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
-var config = require('../config.js');
+var config = require('../config/config.js');
+// var passportLocalSequelize = require('passport-local-sequelize');
 
 //Initializes MySQL database through instance of sequelize 
 var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, { 
@@ -23,7 +24,7 @@ sequelize.authenticate()
     console.log('error connecting to db: ', err);
   })
 
-//Creates table schemas/models
+//Creates table schemas/models for User
 var User = sequelize.define('User', {
   username: Sequelize.STRING,
   password: Sequelize.STRING,
@@ -31,6 +32,15 @@ var User = sequelize.define('User', {
   email: Sequelize.STRING
 });
 
+// //Attaches sequelize User schema/model to passport
+// passportLocalSequelize.attachToUser(User, {
+//   usernameField: 'username',
+//   passwordField: 'password',
+//   saltField: 'salt',
+//   emailField: 'email'
+// });
+
+//Creates table schemas/models for User
 var Log = sequelize.define('Log', {
   level: Sequelize.INTEGER,
   solution: Sequelize.TEXT('long')
