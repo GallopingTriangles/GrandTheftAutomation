@@ -8,14 +8,8 @@ import Login from '../containers/LoginContainer.jsx';
 import Game from '../containers/GameContainer.jsx';
 import Console from '../containers/ConsoleContainer.jsx';
 import PageContainer from '../../views/PageContainer.jsx';
+import LandingPage from '../../views/LandingPage.jsx';
 import GamePage from '../../views/GamePage.jsx';
-
-const LandingPage = props => (
-  <div>
-    <Signup />
-    <Login />
-  </div>
-)
 
 class App extends Component {
   constructor(props) {
