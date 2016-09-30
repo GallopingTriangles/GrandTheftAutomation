@@ -51,7 +51,7 @@ var color = (context) => {
 	} else if (color === 'red' || color === 'blue' || color === 'black' || color === 'white') {
 		return [color];
 	} else {
-		return ['white', 'color can only be "green", "red" or "green"'];
+		return ['white', 'color can only be "red", "blue", "black" or "white"'];
 	}
 };
 
