@@ -2,6 +2,17 @@ var db = require('../db/index.js');
 
 module.exports = {
 
+  checkAuth: (req, res, next) => {
+    if (req.session.user.username === req.headers.username) { 
+      //needs logic to check if req.session.use === actual client, not just any user
+      //** MAYBE SEND THROUGH HEADER FROM CLIENT (ACTUAL CLIENT)
+      return next();
+    } else {
+      // console.log('THIS IS REQ: ', req);
+      res.status(401).json({ message: 'User is not authorized. Please log in.' });
+    }
+  },
+
   getGameState: (req, res, next) => {
     /* handles a GET request */
     /* returns the state of the game (ALL level solutions) for that particular user */
