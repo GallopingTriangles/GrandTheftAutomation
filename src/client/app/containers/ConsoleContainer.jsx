@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import CommandLine from '../components/CommandLine.jsx';
 import Editor from '../components/Editor.jsx';
 import LogsContainer from './LogsContainer.jsx';
+import _ from 'underscore';
 
 class Console extends Component {
   // == REACT METHODS ====================================================================
@@ -10,8 +11,33 @@ class Console extends Component {
     super(props);
     this.state = {
       tab: 'learn',
-      input: '// code here\nvar engine = false'
+      input: '// code here\nvar engine = false;'
     };
+  }
+
+  componentWillMount() {
+    this.fetchSolutions();
+  }
+
+  // == FETCH FROM SERVER ================================================================
+  fetchSolutions() {
+    var url = `/game?username=${this.props.user}`;
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      response.json().then(solutions => {
+        var solution = (_.filter(solutions, (el) => {
+          return el.level === this.props.level;
+        }))[0].solution;
+        this.setState({input: solution});
+      });
+    }).catch(err => {
+      console.log('error fetching code: ', err);
+    });
   }
 
   // == TOGGLE STATE =====================================================================
@@ -45,7 +71,7 @@ class Console extends Component {
   }
 
   codeReset() {
-    console.log('reset code');
+    this.setState({input: '// code here\nvar engine = false;'});
   }
 
   // == RENDER FUNCTIONS =================================================================
@@ -61,7 +87,7 @@ class Console extends Component {
 
   // == RENDER COMPONENTS ================================================================
   render() {
-    console.log('nieuwe staat',this.state.input);
+    console.log(this.props);
     return (
       <div className='col-md-5'>
         <div className='console'>
