@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import changeUser from '../actions/changeUser.js';
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -27,9 +29,10 @@ class LoginContainer extends Component {
     }).then(res => {
       console.log('login status: ', res.status);
       res.json().then(result => {
-        /* decide response base on status codes */
-        /* 200 for successfully signing in      */
-        /* 400 for invalid sign in creds        */
+
+        /* Dispatch an action to change the current user in the store */
+        this.props.changeUser(this.state.username);
+
         console.log(result.message);
       })
     }).catch(err => {
@@ -51,4 +54,19 @@ class LoginContainer extends Component {
   }
 }
 
-export default LoginContainer;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUser: (user) => {
+      dispatch(changeUser(user));
+    }
+  }
+}
+
+// export default LoginContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
