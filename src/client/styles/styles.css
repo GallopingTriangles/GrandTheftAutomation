@@ -22,6 +22,17 @@ html, body {
   color: white;
 }
 
+/* == CONSOLE ========================================== */
+.console {
+	/*width: calc(50vw);*/
+	/*height: calc(100vh - 180px);*/ 
+}
+
+.console-header {
+	width: 100%;
+	background-color: #FFF;
+}
+
 /* == CODE EDITOR ====================================== */
 .CodeMirror {
 	width:100%;
