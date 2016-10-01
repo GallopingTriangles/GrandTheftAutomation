@@ -121,7 +121,7 @@ class CommandLine extends Component {
     // createGame({engine: true, sensor: false, speed: 50, color: 'black'});
 
 
-    console.log(this.state.input);
+    console.log('Code editor input: ', this.state.input);
     // POST request
     // saves the user's code to the database after stringifying it
     fetch('/game', {
@@ -138,7 +138,7 @@ class CommandLine extends Component {
         /*******************************************************************/
 
 
-        user: this.props.user,
+        username: this.props.user,
         level: this.props.level,
         log: this.state.input
       })

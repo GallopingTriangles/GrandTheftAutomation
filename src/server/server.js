@@ -88,7 +88,7 @@ app.use(session({                                               // configures ex
 // == routes ===================================================
 
 app.use('/users', userRoutes);                              // handles all requests to '/users'
-app.use('/game',gameController.checkAuth, gameRoutes);      // handles all requests to '/game'
+app.use('/game', gameController.checkAuth, gameRoutes);      // handles all requests to '/game'
 
 // == listen ===================================================
 
