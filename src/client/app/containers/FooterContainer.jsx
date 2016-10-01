@@ -7,8 +7,15 @@ class Footer extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
-      <div>footer</div>   
+      <footer className='footer'>
+        <div className='container'>
+          <button className='btn btn-primary col-md-1' disabled>Back</button>
+          <h5 className='col-md-10 text-center'>1 / 4</h5>
+          <button className='btn btn-primary col-md-1'>Next</button>
+        </div>
+      </footer>  
     );
   }
 }
