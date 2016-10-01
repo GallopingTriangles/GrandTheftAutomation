@@ -7,12 +7,14 @@ import App from './app/components/App.jsx';
 import reducer from './app/reducers/reducer.js';
 import createGame from './app/game/game.js';
 
+const persistedState = loadState();
+
 /*
 ** Create a Redux store that will keep track of the state for all components.
 ** The reducer will handle updating store when an action has been dispatched.
 ** Components subscribed to the store will re-render upon a change to the state-tree.
 */
-var store = createStore(reducer);
+var store = createStore(reducer, persistedState);
 
 /*
 ** Wrap the root component in a Provider
@@ -29,6 +31,8 @@ var render = () => {
 }
 
 
-// createGame({engine: true, sensor: true, speed: 50, color: 'blue'});
 render();
 store.subscribe(render); // App will re-render when the store has been updated
+store.subscribe(() => {
+  saveState(store.getState());
+})
