@@ -24,16 +24,13 @@ var createGame = (userInput) => {
   var carScale = .5;
   var forwardReverseMultiplier = 1 / 2;
   var userSpeedMultiplier = 4;
-  var sprite;
+  var explosion;
 
   function create() {
-    sprite = game.add.sprite(40, 100, 'explosion');
 
-    sprite.animations.add('walk');
+    // game.add.tween(sprite).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
 
-    sprite.animations.play('walk', 50, true);
 
-    game.add.tween(sprite).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
 
 
 
@@ -206,7 +203,12 @@ var createGame = (userInput) => {
   }
 
   function gameOver() {
+    explosion = game.add.sprite(400, 300, 'explosion');
+    
+    explosion.anchor.setTo(.5, .5);
+    explosion.animations.add('explode');
 
+    explosion.animations.play('explode', 24, false);
   }
 }
 
