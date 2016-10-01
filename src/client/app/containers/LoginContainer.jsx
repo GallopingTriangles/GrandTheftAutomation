@@ -30,12 +30,15 @@ class LoginContainer extends Component {
         password: this.state.password
       })
     }).then(res => {
-      console.log('login status: ', res.status);
       res.json().then(result => {
+
+        this.setState({
+          username: '',
+          password: ''
+        })
 
         /* Dispatch an action to change the current user in the store */
         this.props.changeUser(this.state.username);
-
         console.log(result.message);
       })
     }).catch(err => {
@@ -48,8 +51,8 @@ class LoginContainer extends Component {
       <div>
         <h4>Log in</h4>
         <form onSubmit={ this.loginUser.bind(this) } >
-          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } required/></p><br/>
-          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } type='password' required/></p><br/>
+          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } value={ this.state.username }  required/></p><br/>
+          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
           <input type='submit' />
         </form>
       </div>
