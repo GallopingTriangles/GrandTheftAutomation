@@ -16,7 +16,8 @@ class Console extends Component {
     super(props);
     this.state = {
       tab: 'editor',
-      input: ''
+      input: '',
+      bugs: []
     };
   }
 
@@ -61,6 +62,7 @@ class Console extends Component {
       console.log('res: ', res);
       res.json().then(response => {
         createGame(response.phaser);
+        this.setState({bugs: response.bugs});
       })
     }).catch(err => {
       console.log('Error saving input: ', err);
@@ -109,7 +111,7 @@ class Console extends Component {
       case 'learn': return <Learn />;
       case 'instructions': return <Instructions />;
       case 'editor': return <Editor code={this.state.input} inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
-      case 'bugs': return <Bugs />;
+      case 'bugs': return <Bugs bugs={this.state.bugs} />;
       default: return <div>ERROR</div>;
     }
   }
@@ -143,7 +145,7 @@ class Console extends Component {
                 type='button' 
                 className='btn btn-default' 
                 onClick={this.stateBugs.bind(this)}>
-                <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>2</span>
+                <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{this.state.bugs.length}</span>
               </button>
             </div>
           </div>
