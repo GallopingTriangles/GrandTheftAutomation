@@ -49,11 +49,7 @@ class CommandLine extends Component {
     fetch(url, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        /******* WARNING ************ WARNING ************* WARNING ********/
-        /*********** the username is hardcoded as 'test' for now ***********/
-        /* this won't work unless you have 'test' username in the database */
-        'username': 'test'
+        'Content-Type': 'application/json'
       }
     }).then(response => {
       response.json().then(solutions => {
@@ -129,11 +125,7 @@ class CommandLine extends Component {
     fetch('/game', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        /******* WARNING ************ WARNING ************* WARNING ********/
-        /*********** the username is hardcoded as 'test' for now ***********/
-        /* this won't work unless you have 'test' username in the database */
-        'username': 'test'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         /******* WARNING ************ WARNING ************* WARNING ********/
