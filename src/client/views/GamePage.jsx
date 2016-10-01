@@ -19,12 +19,17 @@ class GamePage extends Component {
   }
 
   componentWillMount() {
+    /* Redirect client to Landing Page if a user is not logged in */
+    /* Doing it here handles the case that the user manually      */
+    /* tries to access this page by typing in the url             */
     if (!this.props.user) {
       this.props.router.push('/');
     }
   }
 
   render() {
+    /* Need a conditional otherwise a game may render itself onto the */
+    /* landing page if a redirect occurs before the component mounts  */
     return this.props.user ? (
       <div>
         <Game />
@@ -41,4 +46,5 @@ const mapStateToProps = state => {
   }
 }
 
+/* React-Router's 'withRouter' allows manual redirection */
 export default withRouter(connect(mapStateToProps)(GamePage));
