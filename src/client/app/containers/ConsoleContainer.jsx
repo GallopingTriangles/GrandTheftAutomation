@@ -5,6 +5,7 @@ import Editor from '../components/Editor.jsx';
 import LogsContainer from './LogsContainer.jsx';
 
 class Console extends Component {
+  // == REACT METHODS ====================================================================
   constructor(props) {
     super(props);
     this.state = {
@@ -88,9 +89,16 @@ class Console extends Component {
   }
 }
 
+// == REDUX ============================================================================
 var mapStateToProps = state => {
   return {
-    level: state.level
+    level: state.level,
+    user: state.user
+  }
+}
+
+var mapDispatchToProps = dispatch => {
+  return {
   }
 }
 

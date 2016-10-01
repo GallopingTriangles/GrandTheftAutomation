@@ -33,7 +33,10 @@ class Editor extends Component {
 		return (
 			<div>
 			  <Codemirror value={'// code'} onChange={this.updateCode.bind(this)} options={options} />
-			  <div>Hello</div>
+			  <div className='editor-footer'>
+			    <button className='btn btn-primary'>Run</button>
+			    <button className='btn btn-danger'>Reset</button>
+			  </div>
 			</div>
 		);
 	}
