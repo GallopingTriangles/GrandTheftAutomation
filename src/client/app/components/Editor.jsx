@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Codemirror from 'react-codemirror';
+require('codemirror/mode/javascript/javascript');    // JavaScript mode
+require('codemirror/addon/edit/closebrackets');      // automatically close brackets
+require('codemirror/addon/edit/matchbrackets');      // highlight brackets
+require('codemirror/addon/lint/javascript-lint.js'); // LINTER IS NOT WORKING!!!
 import createGame from '../game/game.js';
 
 class Editor extends Component {
@@ -8,9 +12,29 @@ class Editor extends Component {
 		super(props);
 	}
 
+	updateCode(newCode) {
+		console.log(newCode);
+	} 
+
+  // == CODEMIRROR ==================================================================
 	render() {
+		// codemirror options
+		var options = {
+			lineNumbers: true,
+			mode:  'javascript',
+			theme: 'monokai',
+			tabSize: 2,
+			autoCloseBrackets: true,
+			lint: true,
+			matchBrackets: true,
+			viewportMargin: Infinity
+		}
+		// return codemirror
 		return (
-			<Codemirror value={'// code'} />
+			<div>
+			  <Codemirror value={'// code'} onChange={this.updateCode.bind(this)} options={options} />
+			  <div>Hello</div>
+			</div>
 		);
 	}
 }
