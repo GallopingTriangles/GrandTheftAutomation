@@ -41,6 +41,9 @@ class CommandLine extends Component {
 
     /* construct the url with the username as a query param */
     /* username currently hardcoded as "test" FIX LATER!!!! */
+    /* Perhaps store username in the local storage and 
+       fetch that from the store... so user can stay logged
+       in after refreshing the page                         */
     var url = `/game?username=${'test'}`
 
     fetch(url, {
