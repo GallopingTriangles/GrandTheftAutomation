@@ -3,7 +3,9 @@ var db = require('../db/index.js');
 module.exports = {
 
   checkAuth: (req, res, next) => {
-    if (req.session.user.username === req.headers.username) { 
+    console.log('req.session.user: ', req.session.user);
+    console.log('req.headers: ', req.headers);
+    if (req.session.user && (req.session.user.username === req.headers.username)) { 
       //needs logic to check if req.session.use === actual client, not just any user
       //** MAYBE SEND THROUGH HEADER FROM CLIENT (ACTUAL CLIENT)
       return next();
@@ -20,6 +22,7 @@ module.exports = {
 
     /* GET request must come with the username under params! */
     var username = req.query.username;
+    console.log('username: ', req.query.username);
     db.User.findOne({ where: { username: username }}).then(user => {
       if (!user) {
         // user not logged in?
