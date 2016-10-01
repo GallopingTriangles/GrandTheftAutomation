@@ -5,7 +5,7 @@ import changeUser from '../actions/changeUser.js';
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { // altering this state requires altering the POST request FYI
+    this.state = {
       username: '',
       password: ''
     };
@@ -25,7 +25,10 @@ class LoginContainer extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
     }).then(res => {
       console.log('login status: ', res.status);
       res.json().then(result => {
