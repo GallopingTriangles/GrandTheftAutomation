@@ -14,7 +14,7 @@ const LandingPage = props => {
   return (
     <div>
       <div>
-        <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="4000" data-wrap="true">
+        <div id="landing-carousel" className="carousel slide" data-ride="carousel" data-interval="4000" data-wrap="true">
           
           <ol className="carousel-indicators">
             <li data-target="#carousel-example-generic" data-slide-to="0" className="active"></li>
@@ -59,15 +59,15 @@ const LandingPage = props => {
 
       <div className="container">
         <div className="row white-text" style={{textAlign: 'center'}}>
-          <h2 className="horizontal-divider">Welcome to Grand Theft Automation</h2>
+          <h3 className="horizontal-divider">Welcome to Grand Theft Automation</h3>
         </div>
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
-            <h3>Coding</h3>
+            <h4 className="horizontal-divider">Coding</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           </div>
           <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
-            <h3>Autonomous Vehicles</h3>
+            <h4 className="horizontal-divider">Autonomous Vehicles</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
           </div>
           <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style={{marginTop: '15px'}}>
