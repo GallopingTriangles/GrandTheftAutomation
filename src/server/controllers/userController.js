@@ -25,7 +25,7 @@ var userController = {
 
     //check if user is already logged in
     if (req.session.user) {
-      res.json({ message: 'User is already logged in.' })
+      res.json({ message: 'A user is already logged in.' })
     } else {
       //find user in database to retrieve salt and hashed password
       db.User.findOne({ where: { username: req.body.username } })
@@ -43,6 +43,7 @@ var userController = {
                 // console.log('HERE IS THE MOFUCKIN USER: ', user.dataValues);
                 //save user profile object into session
                 req.session.user = user.dataValues;
+                req.session.save();
                 res.status(200).json({ message: 'User is now logged in with session id.' });
               }
             })
@@ -89,10 +90,12 @@ var userController = {
     req.session.destroy(function(err) {
       if (err) {
         res.status(409).json({ message: 'Error destroying session...' }); 
-      } 
+      } else {
+        console.log('req.session is: ', req.session);
+        res.status(202).json({ message: 'Session destroyed.' });
+      }
     })
-    console.log('req.session is: ', req.session);
-    res.status(202).json({ message: 'Session destroyed.' });
+    
   }
 }
 
