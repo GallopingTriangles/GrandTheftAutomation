@@ -49,12 +49,12 @@ class SignupContainer extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={ this.createUser.bind(this) } >
-          <p className="white-text">Email: <input className="black-text" onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } required/></p><br/>
-          <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p><br/>
+      <div style={{float: 'left'}}>
+        <form className="landing-form" onSubmit={ this.createUser.bind(this) } >
+          <p className="white-text">Email: <input className="black-text" onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } required/></p>
+          <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p>
           <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
-          <button className="btn btn-landing" type="submit">Sign Up</button>
+          <button className="btn btn-landing" type="submit">Submit</button>
         </form>
       </div>
     )
