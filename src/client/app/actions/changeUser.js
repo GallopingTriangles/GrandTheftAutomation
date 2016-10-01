@@ -1,6 +1,6 @@
 const changeUser = user => ({
   type: 'CHANGE_USER',
-  level
+  user
 })
 
 export default changeUser;
