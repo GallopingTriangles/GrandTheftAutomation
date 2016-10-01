@@ -12,8 +12,17 @@ class Editor extends Component {
 		super(props);
 	}
 
+  // == COMMUNICATE WITH CONTAINER ==================================================
 	updateCode(newCode) {
-		console.log(newCode);
+		this.props.inputChange(newCode);
+	}
+
+	runCode() {
+    this.props.runInput();
+	}
+
+	resetCode() {
+    this.props.resetInput();
 	} 
 
   // == CODEMIRROR ==================================================================
@@ -34,8 +43,8 @@ class Editor extends Component {
 			<div>
 			  <Codemirror value={'// code'} onChange={this.updateCode.bind(this)} options={options} />
 			  <div className='editor-footer'>
-			    <button className='btn btn-primary'>Run</button>
-			    <button className='btn btn-danger'>Reset</button>
+			    <button className='btn btn-primary' onClick={this.runCode.bind(this)}>Run</button>
+			    <button className='btn btn-danger' onClick={this.resetCode.bind(this)}>Reset</button>
 			  </div>
 			</div>
 		);
