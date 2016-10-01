@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Game from '../app/containers/GameContainer.jsx';
 import Console from '../app/containers/ConsoleContainer.jsx';
 import Footer from '../app/containers/FooterContainer.jsx';
@@ -10,12 +12,33 @@ import Footer from '../app/containers/FooterContainer.jsx';
 /* (3) The footer container                            */
 /*******************************************************/
 
-const GamePage = props => (
-  <div>
-    <Game />
-    <Console />
-    <Footer />
-  </div>
-)
+class GamePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-export default GamePage;
+  componentWillMount() {
+    if (!this.props.user) {
+      this.props.router.push('/');
+    }
+  }
+
+  render() {
+    return this.props.user ? (
+      <div>
+        <Game />
+        <Console />
+        <Footer />
+      </div>
+    ) : null
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(GamePage));
