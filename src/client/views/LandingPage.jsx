@@ -58,17 +58,17 @@ const LandingPage = props => {
       </div>
 
       <div className="container">
-        <div className="row white-text" style={{textAlign: 'center'}}>
-          <h3 className="horizontal-divider">Welcome to Grand Theft Automation</h3>
-        </div>
+        <br />
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
+            <img className="landing-image" src="https://www.expats.com.mt/wp-content/uploads/2016/01/learn-to-code.jpg" />
             <h4 className="horizontal-divider">Coding</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
           <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
+            <img className="landing-image" src="http://core0.staticworld.net/images/article/2013/08/edmunds_rides_self_driving_car_diagram_connected_car-100049056-orig.jpg" />
             <h4 className="horizontal-divider">Autonomous Vehicles</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
           <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style={{marginTop: '15px'}}>
             <ul className="nav nav-tabs" role="tablist">
