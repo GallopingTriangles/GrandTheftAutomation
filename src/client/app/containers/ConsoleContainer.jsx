@@ -74,7 +74,7 @@ class Console extends Component {
                 className='btn btn-default' 
                 onClick={this.stateBugs.bind(this)}>
                 <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>2</span>
-                </button>
+              </button>
             </div>
           </div>
           <div className='console-content'>
@@ -87,15 +87,6 @@ class Console extends Component {
     )
   }
 }
-
-// REMOVED COMMANDLINE
-// render() {
-//   return (
-//       <div className='col-md-5'>
-//         <CommandLine />
-//       </div>
-//   )
-// } 
 
 var mapStateToProps = state => {
   return {

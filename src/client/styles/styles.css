@@ -138,4 +138,9 @@ html, body {
   text-align: right;
 }
 
+/* == BADGE  =========================================== */
+.badge {
+	font-size: 5pt;
+	/*width: 5px;*/
+}
 
