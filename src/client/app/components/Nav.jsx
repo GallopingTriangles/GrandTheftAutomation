@@ -10,6 +10,19 @@ class Nav extends Component {
   /* The buttons should route users to appropriate places */
   /********************************************************/
 
+  logout() {
+    fetch('/users/logout', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(data => {
+
+    }).catch(err => {
+      
+    })
+  }
+
   render() {
     return (
       <nav className="navbar navbar-default" style={styles.navbar}>
@@ -20,7 +33,7 @@ class Nav extends Component {
           <ul className="nav navbar-nav navbar-right">
             <li><Link to='/'> Landing </Link></li>
             <li><Link to='/game'> Game </Link></li>
-            <li><a href='#'>Logout</a></li>
+            <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
             <li><a href='#'>Profile</a></li>
             <li><a href='#'>Home</a></li>
           </ul>
