@@ -41,7 +41,9 @@ app.use(session({                                               // configures ex
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: new Date(Date.now() + 7200000)
+    expires: new Date(Date.now() + 7200000),
+    httpOnly: true,
+    secure: false
   }
 }));
 // == passport/authentication ===============================================
@@ -86,7 +88,7 @@ app.use(session({                                               // configures ex
 // == routes ===================================================
 
 app.use('/users', userRoutes);                              // handles all requests to '/users'
-app.use('/game',/*gameController.checkAuth,*/ gameRoutes);      // handles all requests to '/game'
+app.use('/game',gameController.checkAuth, gameRoutes);      // handles all requests to '/game'
 
 // == listen ===================================================
 

@@ -58,5 +58,5 @@ Log.belongsTo(User);
 User.sync();
 Log.sync();
 
-module.exports = { User, Log };
+module.exports = { sequelize, User, Log };
 

@@ -23,29 +23,33 @@ var userController = {
     /*********************************************************************/
     /*********************************************************************/
 
-
-
-    //find user in database to retrieve salt and hashed password
-    db.User.findOne({ where: { username: req.body.username } })
-      .then(function(user) {
-        //if user does not exist, user returns null
-        if (user === null) {
-          res.status(400).json({ message: 'Username does not exist.' })
-        } else {
-          //if user exists, compare supplied plaintext password and encrypted password via bcrypt
-          bcrypt.compare(req.body.password, user.dataValues.password, function(err, response) {
-            //if error or response returns 'false'
-            if (err || !response) {
-              res.status(400).json({ message: 'Incorrect password.' })
-            } else {
-              //save user profile object into session
-              console.log('HERE IS THE MOFUCKIN USER: ', user.dataValues);
-              req.session.user = user.dataValues.username;
-              res.status(200).json({ message: 'User is now logged in with session id.' });
-            }
-          })
-        }
-      })
+    //check if user is already logged in
+    if (req.session.user) {
+      res.json({ message: 'A user is already logged in.' })
+    } else {
+      //find user in database to retrieve salt and hashed password
+      db.User.findOne({ where: { username: req.body.username } })
+        .then(function(user) {
+          //if user does not exist, user returns null
+          if (user === null) {
+            res.json({ message: 'Username does not exist.' })
+          } else {
+            //if user exists, compare supplied plaintext password and encrypted password via bcrypt
+            bcrypt.compare(req.body.password, user.dataValues.password, function(err, response) {
+              //if error or response returns 'false'
+              if (err || !response) {
+                res.status(400).json({ message: 'Incorrect password.' })
+              } else {
+                // console.log('HERE IS THE MOFUCKIN USER: ', user.dataValues);
+                //save user profile object into session
+                req.session.user = user.dataValues;
+                req.session.save();
+                res.status(200).json({ message: 'User is now logged in with session id.' });
+              }
+            })
+          }
+        })
+    }   
   },
 
   signup: (req, res, next) => {
@@ -83,10 +87,15 @@ var userController = {
   },
 
   logout: (req, res, next) => {
-    /* wipe the session */
-    /* wipe the tokens  */
-    /* wipe your ass    */
-    res.json('Loggin out');
+    req.session.destroy(function(err) {
+      if (err) {
+        res.status(409).json({ message: 'Error destroying session...' }); 
+      } else {
+        console.log('req.session is: ', req.session);
+        res.status(202).json({ message: 'Session destroyed.' });
+      }
+    })
+    
   }
 }
 

@@ -1,8 +1,5 @@
 import { assert, expect } from 'chai';
 
-var assert = chai.assert;
-var expect = chai.expect;
-
 
 describe('Array', function() {
 

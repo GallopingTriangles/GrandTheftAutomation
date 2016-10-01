@@ -1,16 +1,21 @@
 var db = require('../db/index.js');
+var sequelize = require('../db/index.js').sequelize;
+var config = require('../config/config.js');
+var cookieParser = require('cookie-parser')
 
 module.exports = {
 
   checkAuth: (req, res, next) => {
-    if (req.session.user.username === req.headers.username) { 
-      //needs logic to check if req.session.use === actual client, not just any user
-      //** MAYBE SEND THROUGH HEADER FROM CLIENT (ACTUAL CLIENT)
-      return next();
-    } else {
-      // console.log('THIS IS REQ: ', req);
-      res.status(401).json({ message: 'User is not authorized. Please log in.' });
-    }
+    console.log('REQUEST: ', req.sessionID);
+    sequelize.query("select * from sessions where session_id = '" + req.sessionID + "'")
+      .then(function(result) {
+        // var user = JSON.parse(result[0][0].data);
+        return next();
+      })
+      .catch(function(err) {
+        console.log('ERROR: ', err);
+        res.status(401).json({ message: 'User is not authorized. Please log in.' })
+      })
   },
 
   getGameState: (req, res, next) => {
@@ -20,6 +25,7 @@ module.exports = {
 
     /* GET request must come with the username under params! */
     var username = req.query.username;
+    console.log('username: ', req.query.username);
     db.User.findOne({ where: { username: username }}).then(user => {
       if (!user) {
         // user not logged in?
@@ -50,6 +56,7 @@ module.exports = {
     /* handles a POST request                             */
     /* store the state of the code editor into the db     */
     /* req should contain the level and user and commands */
+    console.log('session: ', req.session);
     var username = req.body.username;
     var level = req.body.level;
     var solution = req.body.log;
