@@ -29,20 +29,6 @@ var createGame = (userInput) => {
   var wasted;
 
   function create() {
-
-    // game.add.tween(sprite).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
-
-
-
-
-
-
-
-
-
-
-
-
     // Set initial state of the game
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
@@ -52,11 +38,9 @@ var createGame = (userInput) => {
     }
 
     // Declare sensor first so it doesn't overwrite the car.
-
     createSensor();
     createCar();
     setSpeed();
-    // gameOver();
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
     var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -218,9 +202,7 @@ var createGame = (userInput) => {
     sensor.kill();
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
-
   }
-
 }
 
 export default createGame;
