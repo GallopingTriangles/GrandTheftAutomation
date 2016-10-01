@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { loadState, saveState } from './localStorage.js';
 import App from './app/components/App.jsx';
 import reducer from './app/reducers/reducer.js';
 import createGame from './app/game/game.js';
-
 
 /*
 ** Create a Redux store that will keep track of the state for all components.
