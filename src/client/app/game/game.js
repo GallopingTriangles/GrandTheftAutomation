@@ -25,6 +25,7 @@ var createGame = (userInput) => {
   var forwardReverseMultiplier = 1 / 2;
   var userSpeedMultiplier = 4;
   var explosion;
+  var wasted;
 
   function create() {
 
@@ -54,6 +55,7 @@ var createGame = (userInput) => {
     createSensor();
     createCar();
     setSpeed();
+    // gameOver();
 
     var carCollisionGroup = game.physics.p2.createCollisionGroup();
     var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -76,7 +78,7 @@ var createGame = (userInput) => {
       obstacle.body.static = true;
     }
 
-    car.body.collides([carCollisionGroup, obstacleCollisionGroup]);
+    car.body.collides(obstacleCollisionGroup, gameOver, this);
 
     text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
   }
@@ -116,6 +118,7 @@ var createGame = (userInput) => {
         leftRight(false);
       }
     }
+
   }
 
   function render() {
@@ -204,11 +207,14 @@ var createGame = (userInput) => {
 
   function gameOver() {
     explosion = game.add.sprite(400, 300, 'explosion');
-    
+    explosion.x = car.x;
+    explosion.y = car.y;
     explosion.anchor.setTo(.5, .5);
     explosion.animations.add('explode');
-
     explosion.animations.play('explode', 24, false);
+    text.kill();
+    car.kill();
+    
   }
 }
 
