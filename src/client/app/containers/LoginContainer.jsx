@@ -51,15 +51,9 @@ class LoginContainer extends Component {
     return (
       <div>
         <form onSubmit={ this.loginUser.bind(this) } >
-<<<<<<< 6911c3951d5c382187bc14e5b7d33b22c7868817
-          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } value={ this.state.username }  required/></p><br/>
-          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
-          <input type='submit' />
-=======
-          <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } required/></p><br/>
-          <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } type='password' required/></p><br/>
+          <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p><br/>
+          <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
           <button className="btn btn-landing" type="submit">Login</button>
->>>>>>> Implements landing page with modified signup and login forms, and associated styles
         </form>
       </div>
     )
