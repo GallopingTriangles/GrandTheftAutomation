@@ -24,13 +24,18 @@ html, body {
 
 /* == CONSOLE ========================================== */
 .console {
-	/*width: calc(50vw);*/
-	/*height: calc(100vh - 180px);*/ 
+	width: 100%;
+	height: calc(100vh - 100px);
+	background-color: #F5F5F5;
+	margin-top: 5px;
 }
 
 .console-header {
 	width: 100%;
 	background-color: #FFF;
+}
+
+.console-footer {
 }
 
 /* == CODE EDITOR ====================================== */
