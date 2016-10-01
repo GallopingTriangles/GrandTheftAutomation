@@ -13,7 +13,6 @@ class Console extends Component {
     return (
         <div className='col-md-5'>
           <CommandLine />
-          <LogsContainer level={ this.props.level } />
         </div>
     )
   }
