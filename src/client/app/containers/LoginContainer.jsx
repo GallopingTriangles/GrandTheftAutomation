@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import changeUser from '../actions/changeUser.js';
 
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { // altering this state requires altering the POST request FYI
+    this.state = {
       username: '',
       password: ''
     };
@@ -23,14 +25,22 @@ class LoginContainer extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
     }).then(res => {
-      console.log('login status: ', res.status);
       res.json().then(result => {
-        /* decide response base on status codes */
-        /* 200 for successfully signing in      */
-        /* 400 for invalid sign in creds        */
+
+        /* Dispatch an action to change the current user in the store */
+        this.props.changeUser(this.state.username);
         console.log(result.message);
+        
+        // clear the form
+        this.setState({
+          username: '',
+          password: ''
+        })
       })
     }).catch(err => {
       console.log('Error in signup request');
@@ -42,8 +52,8 @@ class LoginContainer extends Component {
       <div>
         <h4>Log in</h4>
         <form onSubmit={ this.loginUser.bind(this) } >
-          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } required/></p><br/>
-          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } type='password' required/></p><br/>
+          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } value={ this.state.username }  required/></p><br/>
+          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
           <input type='submit' />
         </form>
       </div>
@@ -51,4 +61,18 @@ class LoginContainer extends Component {
   }
 }
 
-export default LoginContainer;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUser: (user) => {
+      dispatch(changeUser(user));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

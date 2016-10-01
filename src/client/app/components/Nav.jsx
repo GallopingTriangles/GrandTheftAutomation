@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import changeUser from '../actions/changeUser.js';
 
 import styles from '../../styles/Nav.css.js';
 
@@ -9,6 +10,22 @@ class Nav extends Component {
   /************************* TODO *************************/
   /* The buttons should route users to appropriate places */
   /********************************************************/
+
+  logout() {
+    fetch('/users/logout', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(data => {
+      data.json().then(response => {
+        this.props.eraseUser();
+        console.log('Logging out: ', response);
+      })
+    }).catch(err => {
+      console.log('Error logging out: ', err);
+    })
+  }
 
   render() {
     return (
@@ -19,10 +36,9 @@ class Nav extends Component {
           </div>
           <ul className="nav navbar-nav navbar-right">
             <li><Link to='/'> Landing </Link></li>
-            <li><Link to='/game'> Game </Link></li>
-            <li><a href='#'>Logout</a></li>
-            <li><a href='#'>Profile</a></li>
-            <li><a href='#'>Home</a></li>
+            <li><Link to={ this.props.user ? '/game' : '/' }> Game </Link></li>
+            <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
+            { this.props.user ? <li><a>Logged in as { `Logged in as ${this.props.user}`}</a></li> : null }
           </ul>
         </div>
       </nav>
@@ -30,15 +46,18 @@ class Nav extends Component {
   }
 }
 
-// Nav.contextTypes = {
-//   store: PropTypes.object
-// }
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+};
 
-// var mapStateToProps = (state) => {
-//   return {
-//     store: state
-//   }
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    eraseUser: () => {
+      dispatch(changeUser(''));
+    }
+  }
+}
 
-// export default connect(mapStateToProps)(Nav);
-export default Nav;
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

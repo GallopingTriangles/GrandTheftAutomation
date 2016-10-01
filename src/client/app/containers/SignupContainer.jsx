@@ -32,6 +32,14 @@ class SignupContainer extends Component {
         /* 201 for creating a new user successfully */
         /* 200 for pre-existing user error          */
         /* 400 for error in user                    */
+
+        // clear the form
+        this.setState({
+          email: '',
+          username: '',
+          password: ''
+        })
+
         console.log(result.message);
       })
     }).catch(err => {
@@ -44,9 +52,9 @@ class SignupContainer extends Component {
       <div>
         <h4>Sign up</h4>
         <form onSubmit={ this.createUser.bind(this) } >
-          <p>Email: <input onChange={ (e) => this.updateForm('email', e) } required/></p><br/>
-          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } required/></p><br/>
-          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } type='password' required/></p><br/>
+          <p>Email: <input onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } required/></p><br/>
+          <p>Username: <input onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p><br/>
+          <p>Password: <input onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
           <input type='submit' />
         </form>
       </div>
