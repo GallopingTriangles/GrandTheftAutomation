@@ -40,7 +40,6 @@ var userController = {
               if (err || !response) {
                 res.status(400).json({ message: 'Incorrect password.' })
               } else {
-                // console.log('HERE IS THE MOFUCKIN USER: ', user.dataValues);
                 //save user profile object into session
                 req.session.user = user.dataValues;
                 req.session.save();
