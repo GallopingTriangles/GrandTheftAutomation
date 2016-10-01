@@ -32,6 +32,7 @@ class LoginContainer extends Component {
     }).then(res => {
       res.json().then(result => {
 
+        // clear the form
         this.setState({
           username: '',
           password: ''

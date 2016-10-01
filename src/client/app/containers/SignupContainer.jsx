@@ -33,6 +33,7 @@ class SignupContainer extends Component {
         /* 200 for pre-existing user error          */
         /* 400 for error in user                    */
 
+        // clear the form
         this.setState({
           email: '',
           username: '',

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import changeUser from '../actions/changeUser.js';
 
 import styles from '../../styles/Nav.css.js';
 
@@ -18,6 +19,7 @@ class Nav extends Component {
       }
     }).then(data => {
       data.json().then(response => {
+        this.props.eraseUser();
         console.log('Logging out: ', response);
       })
     }).catch(err => {
@@ -44,15 +46,18 @@ class Nav extends Component {
   }
 }
 
-// Nav.contextTypes = {
-//   store: PropTypes.object
-// }
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+};
 
-// var mapStateToProps = (state) => {
-//   return {
-//     store: state
-//   }
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    eraseUser: () => {
+      dispatch(changeUser(''));
+    }
+  }
+}
 
-// export default connect(mapStateToProps)(Nav);
-export default Nav;
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);
