@@ -4,14 +4,16 @@ import CommandLine from '../components/CommandLine.jsx';
 import Editor from '../components/Editor.jsx';
 import LogsContainer from './LogsContainer.jsx';
 import _ from 'underscore';
+import createGame from '../game/game.js';
+import $ from 'jquery';
 
 class Console extends Component {
   // == REACT METHODS ====================================================================
   constructor(props) {
     super(props);
     this.state = {
-      tab: 'learn',
-      input: '// code here\nvar engine = false;'
+      tab: 'editor',
+      input: ''
     };
   }
 
@@ -37,6 +39,28 @@ class Console extends Component {
       });
     }).catch(err => {
       console.log('error fetching code: ', err);
+    });
+  }
+
+  postSolution() {
+    $('canvas').remove();
+    fetch('/game', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.props.user,
+        level: this.props.level,
+        log: this.state.input
+      })
+    }).then(res => {
+      console.log('res: ', res);
+      res.json().then(response => {
+        createGame(response.phaser);
+      })
+    }).catch(err => {
+      console.log('Error saving input: ', err);
     });
   }
 
@@ -67,11 +91,13 @@ class Console extends Component {
   }
 
   codeFetch() {
-    console.log('fetch code');
+    this.postSolution();
   }
 
   codeReset() {
-    this.setState({input: '// code here\nvar engine = false;'});
+    // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
+    this.setState({input: '// code here\nvar engine = false;'}); // REFACTOR REFACTOR REFACTOR
+    // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
   }
 
   // == RENDER FUNCTIONS =================================================================
@@ -81,13 +107,12 @@ class Console extends Component {
       case 'instructions': return <div>INSTRUCTIONS</div>;
       case 'editor': return <Editor code={this.state.input} inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
       case 'bugs': return <div>BUGS</div>;
-      default: return <div>EDITOR</div>;
+      default: return <div>ERROR</div>;
     }
   }
 
   // == RENDER COMPONENTS ================================================================
   render() {
-    console.log(this.props);
     return (
       <div className='col-md-5'>
         <div className='console'>
@@ -140,6 +165,9 @@ var mapStateToProps = state => {
 
 var mapDispatchToProps = dispatch => {
   return {
+    postSolution: (level, command) => {
+      dispatch(createCommand(level, command));
+    }
   }
 }
 
