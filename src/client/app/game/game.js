@@ -5,6 +5,7 @@ var createGame = (userInput) => {
 
   function preload() {
     setCarColor();
+    game.load.image('wasted', './assets/wasted.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
@@ -214,8 +215,12 @@ var createGame = (userInput) => {
     explosion.animations.play('explode', 24, false);
     text.kill();
     car.kill();
-    
+    sensor.kill();
+    wasted = game.add.sprite(400, 300, 'wasted');
+    wasted.anchor.setTo(.5, .5);
+
   }
+
 }
 
 export default createGame;
