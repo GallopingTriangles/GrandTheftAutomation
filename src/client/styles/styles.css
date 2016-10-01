@@ -22,6 +22,28 @@ html, body {
   color: white;
 }
 
+/* == CONSOLE ========================================== */
+.console {
+	width: 100%;
+	height: calc(100vh - 100px);
+	background-color: #F5F5F5;
+	margin-top: 5px;
+}
+
+.console-header {
+	width: 100%;
+	background-color: #FFF;
+}
+
+.console-footer {
+}
+
+/* == NEW CODE EDITOR ================================== */
+.editor-footer {
+	background-color: #272822;
+	height: 100%;
+}
+
 /* == CODE EDITOR ====================================== */
 .CodeMirror {
 	width:100%;
@@ -44,10 +66,6 @@ html, body {
   max-width: 200px;
   margin-left: 45px;
   background-color: #272822;
-}
-
-.editor-footer {
-	background-color: #FFF;
 }
 
 /* == FOOTER  ========================================== */
@@ -122,4 +140,9 @@ html, body {
   text-align: right;
 }
 
+/* == BADGE  =========================================== */
+.badge {
+	font-size: 5pt;
+	/*width: 5px;*/
+}
 
