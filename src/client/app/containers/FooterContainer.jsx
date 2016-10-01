@@ -15,22 +15,20 @@ class Footer extends Component {
   // == CUSTOM FUNCTIONS ====================================================
   previousLevel(e) {
     e.preventDefault();
-    if (this.state.level > 1) {
-      changeLevel(this.state.level - 1);
+    if (this.props.level > 1) {
+      this.props.changeLevel(this.props.level - 1);
     }
   }
 
   nextLevel(e) {                                                              // go to next level
     e.preventDefault();
-    if (this.state.level < 4) {
-      console.log('hey');
-      changeLevel(2);
+    if (this.props.level < 4) {
+      this.props.changeLevel(this.props.level + 1);
     }
   }
 
   // == RENDER FOOTER =======================================================
   render() {
-    console.log('props',this.props)
     return (
       <footer className='footer'>
         <div className='container'>
@@ -40,7 +38,7 @@ class Footer extends Component {
           >
           Back
           </button>
-          <h5 className='col-xs-10 text-center'>{this.state.level} / 4</h5>
+          <h5 className='col-xs-10 text-center'>{this.props.level} / 4</h5>
           <button 
             className='btn btn-primary col-xs-1'
             onClick={this.nextLevel.bind(this)}
@@ -61,16 +59,8 @@ var mapStateToProps = state => {
 
 var mapDispatchToProps = dispatch => {
   return {
-    // previousLevel: (level) => {
-    //   // dispatch(changeLevel(level));
-    // },
-    // nextLevel: (level) => {
-    //   // dispatch(changeLevel(level));
-    // }
-    // sendCommand: (level, command) => {
-    //   dispatch(createCommand(level, command));
-    // }
     changeLevel: (level) => {
+      console.log('change level', level);
       dispatch(changeLevel(level));
     }
   }
