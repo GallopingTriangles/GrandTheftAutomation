@@ -13,7 +13,7 @@ class Console extends Component {
     };
   }
 
-  // == CHANGE STATE =====================================================================
+  // == TOGGLE STATE =====================================================================
   stateLearn(e) {
     e.preventDefault();
     this.setState({tab: 'learn'});
@@ -34,12 +34,25 @@ class Console extends Component {
     this.setState({tab: 'bugs'})
   }
 
+  // == EDITOR INPUT =====================================================================
+  codeChange(newCode) {
+    console.log('inputChange', newCode);
+  }
+
+  codeFetch() {
+    console.log('fetch code');
+  }
+
+  codeReset() {
+    console.log('reset code');
+  }
+
   // == RENDER FUNCTIONS =================================================================
   renderContent() {
     switch (this.state.tab) {
       case 'learn': return <div>LEARN</div>;
       case 'instructions': return <div>INSTRUCTIONS</div>;
-      case 'editor': return <Editor />;
+      case 'editor': return <Editor inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
       case 'bugs': return <div>BUGS</div>;
       default: return <div>EDITOR</div>;
     }
