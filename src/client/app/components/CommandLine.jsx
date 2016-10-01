@@ -41,7 +41,7 @@ class CommandLine extends Component {
 
     /* construct the url with the username as a query param */
     /* username currently hardcoded as "test" FIX LATER!!!! */
-    /* Perhaps store username in the local storage and 
+    /* Perhaps store username in the local storage and
        fetch that from the store... so user can stay logged
        in after refreshing the page                         */
     var url = `/game?username=${'test'}`
@@ -120,7 +120,7 @@ class CommandLine extends Component {
     // needs to be fetch callback in response to server response object
 
     // This params object will be passed in by the user from the params
-    createGame({engine: true, sensor: false, speed: 300, color: 'black'});
+    createGame({engine: true, sensor: false, speed: 50, color: 'black'});
 
 
     console.log(this.state.input);

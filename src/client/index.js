@@ -29,6 +29,6 @@ var render = () => {
 }
 
 
-createGame({engine: true, sensor: true, speed: 50, color: 'blue'});
+// createGame({engine: true, sensor: true, speed: 50, color: 'blue'});
 render();
 store.subscribe(render); // App will re-render when the store has been updated

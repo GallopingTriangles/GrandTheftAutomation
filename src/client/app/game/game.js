@@ -199,7 +199,9 @@ var createGame = (userInput) => {
     explosion.animations.play('explode', 24, false);
     text.kill();
     car.kill();
-    sensor.kill();
+    if (sensor) {
+      sensor.kill();
+    }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
   }
