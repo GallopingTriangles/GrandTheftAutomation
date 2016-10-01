@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, '../../dist')));    // serve static 
 app.use('/lib', (express.static(path.join(__dirname, '../../node_modules'))));
 
 // == middleware ============================================
-app.use(cookieParser(config.secret));
+// app.use(cookieParser(config.secret));
 app.use(bodyParser.urlencoded({ extended: true }));             // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(morgan('dev'));                                         // log every request to the console
@@ -41,9 +41,7 @@ app.use(session({                                               // configures ex
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: new Date(Date.now() + 7200000),
-    httpOnly: true,
-    secure: false
+    maxAge: 7200000
   }
 }));
 // == passport/authentication ===============================================
