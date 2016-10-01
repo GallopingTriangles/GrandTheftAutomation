@@ -5,6 +5,7 @@ export default class Bugs extends Component {
 		return (
       <div>
       	<i className='fa fa-bug' aria-hidden='true'></i>
+      	{this.props.bugs}
       </div>
 		);
 	}
