@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import changeUser from '../actions/changeUser.js';
 
 class LoginContainer extends Component {
@@ -41,6 +42,7 @@ class LoginContainer extends Component {
           username: '',
           password: ''
         })
+        this.props.router.push('/game');
       })
     }).catch(err => {
       console.log('Error in signup request');
@@ -74,4 +76,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginContainer));

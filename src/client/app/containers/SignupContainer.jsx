@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 
 class SignupContainer extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class SignupContainer extends Component {
           username: '',
           password: ''
         })
-
+        this.props.router.push('/game');
         console.log(result.message);
       })
     }).catch(err => {
@@ -61,4 +62,4 @@ class SignupContainer extends Component {
   }
 }
 
-export default SignupContainer;
+export default withRouter(SignupContainer);
