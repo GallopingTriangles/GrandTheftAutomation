@@ -5,9 +5,11 @@ var createGame = (userInput) => {
 
   function preload() {
     setCarColor();
+    game.load.image('wasted', './assets/wasted.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
+    game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
   }
 
   var car;
@@ -20,8 +22,11 @@ var createGame = (userInput) => {
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = 100;
+  var carScale = .5;
   var forwardReverseMultiplier = 1 / 2;
   var userSpeedMultiplier = 4;
+  var explosion;
+  var wasted;
 
   function create() {
     // Set initial state of the game
@@ -33,7 +38,6 @@ var createGame = (userInput) => {
     }
 
     // Declare sensor first so it doesn't overwrite the car.
-
     createSensor();
     createCar();
     setSpeed();
@@ -59,7 +63,7 @@ var createGame = (userInput) => {
       obstacle.body.static = true;
     }
 
-    car.body.collides([carCollisionGroup, obstacleCollisionGroup]);
+    car.body.collides(obstacleCollisionGroup, gameOver, this);
 
     text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
   }
@@ -99,6 +103,7 @@ var createGame = (userInput) => {
         leftRight(false);
       }
     }
+
   }
 
   function render() {
@@ -139,6 +144,7 @@ var createGame = (userInput) => {
     // Appearance
     car = game.add.sprite(startingX, startingY, 'car');
     car.anchor.setTo(.3, .5);
+    car.scale.setTo(carScale);
 
     // Physics
     game.physics.p2.enable(car);
@@ -167,12 +173,37 @@ var createGame = (userInput) => {
   function setCarColor() {
     switch(userInput.color) {
       case 'white':
-        game.load.image('car', './assets/car-top-view-extra-small.png');
+        game.load.image('car', './assets/car-top-view-small.png');
         break;
       case 'panda':
         game.load.image('car', './assets/panda.png');
         break;
+      case 'black':
+        game.load.image('car', './assets/car-black.png');
+        break;
+      case 'red':
+        game.load.image('car', './assets/car-red.png');
+        break;
+      case 'blue':
+        game.load.image('car', './assets/car-blue.png');
+        break;
     }
+  }
+
+  function gameOver() {
+    explosion = game.add.sprite(400, 300, 'explosion');
+    explosion.x = car.x;
+    explosion.y = car.y;
+    explosion.anchor.setTo(.5, .5);
+    explosion.animations.add('explode');
+    explosion.animations.play('explode', 24, false);
+    text.kill();
+    car.kill();
+    if (sensor) {
+      sensor.kill();
+    }
+    wasted = game.add.sprite(400, 300, 'wasted');
+    wasted.anchor.setTo(.5, .5);
   }
 }
 
