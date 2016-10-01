@@ -44,7 +44,9 @@ class CommandLine extends Component {
     /* Perhaps store username in the local storage and
        fetch that from the store... so user can stay logged
        in after refreshing the page                         */
-    var url = `/game?username=${'test'}`
+    // var url = `/game?username=${'test'}`
+
+    var url = `/game?username=${ this.props.user }`
 
     fetch(url, {
       method: 'GET',
@@ -131,9 +133,12 @@ class CommandLine extends Component {
         /******* WARNING ************ WARNING ************* WARNING ********/
         /*********** the username is hardcoded as 'test' for now ***********/
         /* this won't work unless you have 'test' username in the database */
-        username: 'test',
+        // username: 'test',
         /*******************************************************************/
         /*******************************************************************/
+
+
+        user: this.props.user,
         level: this.props.level,
         log: this.state.input
       })
@@ -196,6 +201,7 @@ class CommandLine extends Component {
 var mapStateToProps = state => {
   return {
     level: state.level,
+    user: state.user
   }
 }
 
