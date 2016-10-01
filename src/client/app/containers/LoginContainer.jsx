@@ -32,15 +32,15 @@ class LoginContainer extends Component {
     }).then(res => {
       res.json().then(result => {
 
+        /* Dispatch an action to change the current user in the store */
+        this.props.changeUser(this.state.username);
+        console.log(result.message);
+        
         // clear the form
         this.setState({
           username: '',
           password: ''
         })
-
-        /* Dispatch an action to change the current user in the store */
-        this.props.changeUser(this.state.username);
-        console.log(result.message);
       })
     }).catch(err => {
       console.log('Error in signup request');
@@ -75,5 +75,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-// export default LoginContainer;
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

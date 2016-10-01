@@ -36,8 +36,7 @@ class Nav extends Component {
           </div>
           <ul className="nav navbar-nav navbar-right">
             <li><Link to='/'> Landing </Link></li>
-            <li><Link to='/game'> Game </Link></li>
-            <li><a href='#'>Profile</a></li>
+            <li><Link to={ this.props.user ? '/game' : '/' }> Game </Link></li>
             <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
           </ul>
         </div>
