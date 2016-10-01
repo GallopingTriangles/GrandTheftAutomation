@@ -9,7 +9,8 @@ class Console extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 'learn'
+      tab: 'learn',
+      input: '// code here\nvar engine = false'
     };
   }
 
@@ -36,7 +37,7 @@ class Console extends Component {
 
   // == EDITOR INPUT =====================================================================
   codeChange(newCode) {
-    console.log('inputChange', newCode);
+    this.setState({input: newCode});
   }
 
   codeFetch() {
@@ -52,7 +53,7 @@ class Console extends Component {
     switch (this.state.tab) {
       case 'learn': return <div>LEARN</div>;
       case 'instructions': return <div>INSTRUCTIONS</div>;
-      case 'editor': return <Editor inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
+      case 'editor': return <Editor code={this.state.input} inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
       case 'bugs': return <div>BUGS</div>;
       default: return <div>EDITOR</div>;
     }
@@ -60,6 +61,7 @@ class Console extends Component {
 
   // == RENDER COMPONENTS ================================================================
   render() {
+    console.log('nieuwe staat',this.state.input);
     return (
       <div className='col-md-5'>
         <div className='console'>
