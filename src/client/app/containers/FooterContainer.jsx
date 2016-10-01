@@ -60,7 +60,6 @@ var mapStateToProps = state => {
 var mapDispatchToProps = dispatch => {
   return {
     changeLevel: (level) => {
-      console.log('change level', level);
       dispatch(changeLevel(level));
     }
   }
