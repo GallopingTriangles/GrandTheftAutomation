@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CommandLine from '../components/CommandLine.jsx';
 import Editor from '../components/Editor.jsx';
+import Learn from '../components/Learn.jsx';
+import Instructions from '../components/Instructions.jsx';
+import Bugs from '../components/Bugs.jsx';
 import LogsContainer from './LogsContainer.jsx';
 import _ from 'underscore';
 import createGame from '../game/game.js';
@@ -103,10 +106,10 @@ class Console extends Component {
   // == RENDER FUNCTIONS =================================================================
   renderContent() {
     switch (this.state.tab) {
-      case 'learn': return <div>LEARN</div>;
-      case 'instructions': return <div>INSTRUCTIONS</div>;
+      case 'learn': return <Learn />;
+      case 'instructions': return <Instructions />;
       case 'editor': return <Editor code={this.state.input} inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
-      case 'bugs': return <div>BUGS</div>;
+      case 'bugs': return <Bugs />;
       default: return <div>ERROR</div>;
     }
   }
@@ -171,5 +174,4 @@ var mapDispatchToProps = dispatch => {
   }
 }
 
-// connect() provides a link between the store and the component through the props
-export default connect(mapStateToProps)(Console);
+export default connect(mapStateToProps, mapDispatchToProps)(Console);
