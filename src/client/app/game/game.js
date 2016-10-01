@@ -8,6 +8,7 @@ var createGame = (userInput) => {
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
+    game.load.spritesheet('explosion', './assets/explosion-spritesheet.png')
   }
 
   var car;
@@ -184,6 +185,10 @@ var createGame = (userInput) => {
         game.load.image('car', './assets/car-blue.png');
         break;
     }
+  }
+
+  function gameOver() {
+
   }
 }
 
