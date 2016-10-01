@@ -8,7 +8,7 @@ var createGame = (userInput) => {
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
-    game.load.spritesheet('explosion', './assets/explosion-spritesheet.png')
+    game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
   }
 
   var car;
@@ -24,8 +24,26 @@ var createGame = (userInput) => {
   var carScale = .5;
   var forwardReverseMultiplier = 1 / 2;
   var userSpeedMultiplier = 4;
+  var sprite;
 
   function create() {
+    sprite = game.add.sprite(40, 100, 'explosion');
+
+    sprite.animations.add('walk');
+
+    sprite.animations.play('walk', 50, true);
+
+    game.add.tween(sprite).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
+
+
+
+
+
+
+
+
+
+
     // Set initial state of the game
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
