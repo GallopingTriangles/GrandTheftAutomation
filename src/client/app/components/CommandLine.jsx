@@ -120,7 +120,7 @@ class CommandLine extends Component {
     // needs to be fetch callback in response to server response object
 
     // This params object will be passed in by the user from the params
-    createGame({engine: true, sensor: false, speed: 50, color: 'black'});
+    // createGame({engine: true, sensor: false, speed: 50, color: 'black'});
 
 
     console.log(this.state.input);
@@ -152,6 +152,7 @@ class CommandLine extends Component {
         // but it still is being saved into DB correctly
         // dunno why it throws a weirdass error
         console.log('response: ', response);
+        createGame(response.phaser);
       })
     }).catch(err => {
       console.log('Error saving input: ', err);

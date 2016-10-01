@@ -48,7 +48,7 @@ var color = (context) => {
     return ['white', 'color is not defined'];
 	} else if (typeof color !== 'string') {
 		return ['white', 'color needs to be a "string"'];
-	} else if (color === 'red' || color === 'blue' || color === 'black' || color === 'white') {
+	} else if (color === 'red' || color === 'blue' || color === 'black' || color === 'white' || color === 'panda') {
 		return [color];
 	} else {
 		return ['white', 'color can only be "red", "blue", "black" or "white"'];
