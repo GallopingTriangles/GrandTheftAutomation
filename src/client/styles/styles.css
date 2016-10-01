@@ -18,9 +18,14 @@ html, body {
   color: white;
 }
 
+.navbar-default .navbar-brand:hover {
+  color: #388ff2;
+}
+
 .navbar-default .navbar-nav > li > a{
   color: white;
 }
+
 
 /* == CONSOLE ========================================== */
 .console {
@@ -42,6 +47,14 @@ html, body {
 .editor-footer {
 	background-color: #272822;
 	height: 100%;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+  color: #388ff2;
+}
+
+.navbar-default .navbar-nav>li>a:focus{
+  color: #388ff2;
 }
 
 /* == CODE EDITOR ====================================== */
@@ -107,7 +120,6 @@ html, body {
 /* == LANDING PAGE  ==================================== */
 
 .carousel-inner > .item > img {
-  max-width: 800px;
   max-height: 300px;
   height: auto;
   width: auto;
@@ -140,9 +152,15 @@ html, body {
   text-align: right;
 }
 
+.landing-image {
+  max-height: 200px;
+  width: 100%;
+}
+
 /* == BADGE  =========================================== */
 .badge {
 	font-size: 5pt;
 	/*width: 5px;*/
 }
+
 
