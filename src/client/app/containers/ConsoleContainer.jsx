@@ -12,25 +12,35 @@ class Console extends Component {
     };
   }
 
-  // == RENDER FUNCTIONS =================================================================
-  renderLearn(e) {
+  // == CHANGE STATE =====================================================================
+  stateLearn(e) {
     e.preventDefault();
     this.setState({tab: 'learn'});
   }
 
-  renderInstructions(e) {
+  stateInstructions(e) {
     e.preventDefault();
     this.setState({tab: 'instructions'});
   }
 
-  renderEditor(e) {
+  stateEditor(e) {
     e.preventDefault();
     this.setState({tab: 'editor'});
   }
 
-  renderBugs(e) {
+  stateBugs(e) {
     e.preventDefault();
     this.setState({tab: 'bugs'})
+  }
+
+  // == RENDER FUNCTIONS =================================================================
+  renderContent() {
+    switch (this.state.tab) {
+      case 'learn': return <div>LEARN</div>;
+      case 'instructions': return <div>INSTRUCTIONS</div>;
+      case 'editor': return <div>EDITOR</div>;
+      case 'bugs': return <div>BUGS</div>;
+    }
   }
 
   // == RENDER COMPONENTS ================================================================
@@ -40,14 +50,14 @@ class Console extends Component {
       <div className='console col-md-5'>
         <div className='console-header'>
           <div className='btn-group' role='group'>
-            <button type='button' className='btn btn-default' onClick={this.renderLearn.bind(this)}><i className='fa fa-book' aria-hidden='true'></i> Learn</button>
-            <button type='button' className='btn btn-default' onClick={this.renderInstructions.bind(this)}><i className='fa fa-check-square-o' aria-hidden='true'></i> Instruction</button>
-            <button type='button' className='btn btn-default' onClick={this.renderEditor.bind(this)}><i className='fa fa-code' aria-hidden='true'></i> Code</button>
-            <button type='button' className='btn btn-default' onClick={this.renderBugs.bind(this)}><i className='fa fa-bug' aria-hidden='true'></i> Bug Report</button>
+            <button type='button' className='btn btn-default' onClick={this.stateLearn.bind(this)}><i className='fa fa-book' aria-hidden='true'></i> Learn</button>
+            <button type='button' className='btn btn-default' onClick={this.stateInstructions.bind(this)}><i className='fa fa-check-square-o' aria-hidden='true'></i> Instruction</button>
+            <button type='button' className='btn btn-default' onClick={this.stateEditor.bind(this)}><i className='fa fa-code' aria-hidden='true'></i> Code</button>
+            <button type='button' className='btn btn-default' onClick={this.stateBugs.bind(this)}><i className='fa fa-bug' aria-hidden='true'></i> Bug Report</button>
           </div>
         </div>
         <div className='console-content'>
-          
+          { this.renderContent() }
         </div>
         <div className='console-footer'>
         </div>
