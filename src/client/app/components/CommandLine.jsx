@@ -130,14 +130,6 @@ class CommandLine extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        /******* WARNING ************ WARNING ************* WARNING ********/
-        /*********** the username is hardcoded as 'test' for now ***********/
-        /* this won't work unless you have 'test' username in the database */
-        // username: 'test',
-        /*******************************************************************/
-        /*******************************************************************/
-
-
         username: this.props.user,
         level: this.props.level,
         log: this.state.input
