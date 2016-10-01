@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CommandLine from '../components/CommandLine.jsx';
-import styles from '../../styles/ConsoleContainerStyles.js';
+import Editor from '../components/Editor.jsx';
 import LogsContainer from './LogsContainer.jsx';
 
 class Console extends Component {
@@ -38,7 +38,7 @@ class Console extends Component {
     switch (this.state.tab) {
       case 'learn': return <div>LEARN</div>;
       case 'instructions': return <div>INSTRUCTIONS</div>;
-      case 'editor': return <CommandLine />;
+      case 'editor': return <Editor />;
       case 'bugs': return <div>BUGS</div>;
       default: return <div>EDITOR</div>;
     }
