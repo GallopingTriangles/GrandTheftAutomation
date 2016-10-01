@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Codemirror from 'react-codemirror';
 import createGame from '../game/game.js';
 
 class Editor extends Component {
@@ -9,7 +10,7 @@ class Editor extends Component {
 
 	render() {
 		return (
-			<div>Hello</div>
+			<Codemirror value={'// code'} />
 		);
 	}
 }
