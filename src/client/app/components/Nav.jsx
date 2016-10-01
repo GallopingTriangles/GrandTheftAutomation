@@ -17,9 +17,11 @@ class Nav extends Component {
         'Content-Type': 'application/json'
       }
     }).then(data => {
-
+      data.json().then(response => {
+        console.log('Logging out: ', response);
+      })
     }).catch(err => {
-      
+      console.log('Error logging out: ', err);
     })
   }
 
@@ -33,9 +35,8 @@ class Nav extends Component {
           <ul className="nav navbar-nav navbar-right">
             <li><Link to='/'> Landing </Link></li>
             <li><Link to='/game'> Game </Link></li>
-            <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
             <li><a href='#'>Profile</a></li>
-            <li><a href='#'>Home</a></li>
+            <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
           </ul>
         </div>
       </nav>
