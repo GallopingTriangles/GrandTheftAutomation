@@ -7,7 +7,7 @@ require('codemirror/addon/edit/matchbrackets');      // highlight brackets
 require('codemirror/addon/lint/javascript-lint.js'); // LINTER IS NOT WORKING!!!
 import createGame from '../game/game.js';
 
-class Editor extends Component {
+export default class Editor extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -41,7 +41,7 @@ class Editor extends Component {
 		// return codemirror
 		return (
 			<div>
-			  <Codemirror value={'// code'} onChange={this.updateCode.bind(this)} options={options} />
+			  <Codemirror value={this.props.code} onChange={this.updateCode.bind(this)} options={options} />
 			  <div className='editor-footer'>
 			    <button className='btn btn-primary' onClick={this.runCode.bind(this)}>Run</button>
 			    <button className='btn btn-danger' onClick={this.resetCode.bind(this)}>Reset</button>
@@ -50,19 +50,3 @@ class Editor extends Component {
 		);
 	}
 }
-
-// == REDUX =========================================================================
-var mapStateToProps = state => {
-  return {
-    level: state.level,
-    user: state.user
-  }
-}
-
-var mapDispatchToProps = dispatch => {
-  return {
-
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
