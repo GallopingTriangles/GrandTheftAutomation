@@ -14,7 +14,7 @@ const LandingPage = props => {
   return (
     <div>
       <div>
-        <div id="landing-carousel" className="carousel slide" data-ride="carousel" data-interval="4000" data-wrap="true">
+        <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="4000" data-wrap="true">
           
           <ol className="carousel-indicators">
             <li data-target="#carousel-example-generic" data-slide-to="0" className="active"></li>
