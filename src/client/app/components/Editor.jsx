@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Codemirror from 'react-codemirror';
-require('codemirror/mode/javascript/javascript');    // JavaScript mode
-require('codemirror/addon/edit/closebrackets');      // automatically close brackets
-require('codemirror/addon/edit/matchbrackets');      // highlight brackets
-require('codemirror/addon/lint/javascript-lint.js'); // LINTER IS NOT WORKING!!!
+import 'codemirror/mode/javascript/javascript';    // JavaScript mode
+import 'codemirror/addon/edit/closebrackets';      // automatically close brackets
+import 'codemirror/addon/edit/matchbrackets';      // highlight brackets
+import 'codemirror/addon/lint/javascript-lint.js'; // LINTER IS NOT WORKING!!!
 import createGame from '../game/game.js';
 
 export default class Editor extends Component {
