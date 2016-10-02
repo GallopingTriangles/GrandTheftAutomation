@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CommandLine from '../components/CommandLine.jsx';
+// import CommandLine from '../components/CommandLine.jsx';
 import Editor from '../components/Editor.jsx';
 import Learn from '../components/Learn.jsx';
 import Instructions from '../components/Instructions.jsx';
@@ -38,8 +38,10 @@ class Console extends Component {
       response.json().then(solutions => {
         var solution = (_.filter(solutions, (el) => {
           return el.level === this.props.level;
-        }))[0].solution;
-        this.setState({input: solution});
+        }))[0];
+        this.setState({
+          input: solution ? solution.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n'
+        });
       });
     }).catch(err => {
       console.log('error fetching code: ', err);

@@ -17,6 +17,7 @@ class Footer extends Component {
     e.preventDefault();
     if (this.props.level > 1) {
       this.props.changeLevel(this.props.level - 1);
+      console.log('footerclick: ', this.props.level);
     }
   }
 
@@ -24,11 +25,8 @@ class Footer extends Component {
     e.preventDefault();
     if (this.props.level < 4) {
       this.props.changeLevel(this.props.level + 1);
+      console.log('footerclick: ', this.props.level);
     }
-  }
-
-  refresh() {
-    
   }
 
   // == RENDER FOOTER =======================================================
