@@ -27,6 +27,10 @@ class Footer extends Component {
     }
   }
 
+  refresh() {
+    
+  }
+
   // == RENDER FOOTER =======================================================
   render() {
     return (
@@ -34,15 +38,13 @@ class Footer extends Component {
         <div className='container'>
           <button 
             className='btn btn-primary col-xs-1'
-            onClick={this.previousLevel.bind(this)} 
-          >
+            onClick={ this.previousLevel.bind(this) } >
           Back
           </button>
-          <h5 className='col-xs-10 text-center'>{this.props.level} / 4</h5>
+          <h5 className='col-xs-10 text-center'>{ this.props.level } / 4</h5>
           <button 
             className='btn btn-primary col-xs-1'
-            onClick={this.nextLevel.bind(this)}
-          >
+            onClick={ this.nextLevel.bind(this) } >
           Next
           </button>
         </div>
