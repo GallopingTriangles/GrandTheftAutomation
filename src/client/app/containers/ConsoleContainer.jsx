@@ -92,7 +92,7 @@ class Console extends Component {
 
   // == EDITOR INPUT =====================================================================
   codeChange(newCode) {
-    this.setState({input: newCode});
+    this.setState({ input: newCode });
   }
 
   codeFetch() {
@@ -110,8 +110,12 @@ class Console extends Component {
     switch (this.state.tab) {
       case 'learn': return <Learn />;
       case 'instructions': return <Instructions />;
-      case 'editor': return <Editor code={this.state.input} inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
-      case 'bugs': return <Bugs bugs={this.state.bugs} />;
+      case 'editor': return <Editor 
+                            code={ this.state.input } 
+                            inputChange={ this.codeChange.bind(this) } 
+                            runInput={ this.codeFetch.bind(this) } 
+                            resetInput={ this.codeReset.bind(this) } />;
+      case 'bugs': return <Bugs bugs={ this.state.bugs } />;
       default: return <div>ERROR</div>;
     }
   }
@@ -126,26 +130,26 @@ class Console extends Component {
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateLearn.bind(this)}>
+                onClick={ this.stateLearn.bind(this) }>
                 <i className='fa fa-book' aria-hidden='true'></i> Learn
               </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateInstructions.bind(this)}>
+                onClick={ this.stateInstructions.bind(this) }>
                 <i className='fa fa-check-square-o' aria-hidden='true'></i> Instruction
                 </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateEditor.bind(this)}>
+                onClick={ this.stateEditor.bind(this) }>
                 <i className='fa fa-code' aria-hidden='true'></i> Code
                 </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateBugs.bind(this)}>
-                <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{this.state.bugs.length}</span>
+                onClick={ this.stateBugs.bind(this) }>
+                <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{ this.state.bugs.length }</span>
               </button>
             </div>
           </div>
