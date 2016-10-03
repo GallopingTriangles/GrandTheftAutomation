@@ -18,9 +18,6 @@ var createGame = (userInput) => {
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
 
     game.load.tilemap('level1', './assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
-
-    //  Next we load the tileset. This is just an image, loaded in via the normal way we load images:
-
     game.load.image('tiles', './assets/map.jpg');
   }
 
@@ -50,11 +47,14 @@ var createGame = (userInput) => {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = backgroundColor;
+
+
     if (userInput.engine) {
       cursors = game.input.keyboard.createCursorKeys();
     }
 
     // Declare sensor first so it doesn't overwrite the car.
+    createMap();
     createSensor();
     createCar();
     setSpeed();
@@ -85,24 +85,6 @@ var createGame = (userInput) => {
     text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
 
 
-
-
-    game.stage.backgroundColor = '#787878';
-
-    //  The 'mario' key here is the Loader key given in game.load.tilemap
-    map = game.add.tilemap('level1');
-
-    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
-    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
-    map.addTilesetImage('Roads', 'tiles');
-
-    //  Creates a layer from the World1 layer in the map data.
-    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-    roadLayer = map.createLayer('Tile Layer 1');
-    collisionLayer = map.createLayer('collisionLayer')
-
-    //  This resizes the game world to match the roadLayer dimensions
-    roadLayer.resizeWorld();
   }
 
   function update() {
@@ -241,6 +223,20 @@ var createGame = (userInput) => {
     }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
+  }
+
+  function createMap() {
+    //  The 'level1' key here is the Loader key given in game.load.tilemap
+    map = game.add.tilemap('level1');
+
+    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
+    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
+    map.addTilesetImage('Roads', 'tiles');
+
+    //  Creates a layer from the Tile Layer 1 layer in the map data.
+    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
+    roadLayer = map.createLayer('Tile Layer 1');
+    collisionLayer = map.createLayer('collisionLayer')
   }
 }
 
