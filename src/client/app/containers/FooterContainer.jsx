@@ -8,25 +8,34 @@ class Footer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      level: this.props.level
+      // level: this.props.level
     };
   }
 
   // == CUSTOM FUNCTIONS ====================================================
-  previousLevel(e) {
-    e.preventDefault();
-    if (this.props.level > 1) {
-      this.props.changeLevel(this.props.level - 1);
-      console.log('footerclick: ', this.props.level);
-    }
-  }
+  // previousLevel(e) {
+  //   e.preventDefault();
+  //   if (this.props.level > 1) {
+  //     this.props.changeLevel(this.props.level - 1);
+  //   }
+  // }
 
-  nextLevel(e) {                                                              // go to next level
+  // nextLevel(e) {                                                              // go to next level
+  //   e.preventDefault();
+  //   if (this.props.level < 4) {
+  //     this.props.changeLevel(this.props.level + 1);
+  //   }
+  // }
+
+  changeLevel(e, level) {
+    /*  */
     e.preventDefault();
-    if (this.props.level < 4) {
-      this.props.changeLevel(this.props.level + 1);
-      console.log('footerclick: ', this.props.level);
+    if (level >= 1 && level <= 4) {
+      this.props.changeLevel(level);
+    } else {
+      this.props.changeLevel(0);
     }
+    this.props.getCode();
   }
 
   // == RENDER FOOTER =======================================================
@@ -34,17 +43,21 @@ class Footer extends Component {
     return (
       <footer className='footer'>
         <div className='container'>
+
           <button 
             className='btn btn-primary col-xs-1'
-            onClick={ this.previousLevel.bind(this) } >
+            onClick={ (e) => this.changeLevel(e, this.props.level - 1) } >
           Back
           </button>
+
           <h5 className='col-xs-10 text-center'>{ this.props.level } / 4</h5>
+
           <button 
             className='btn btn-primary col-xs-1'
-            onClick={ this.nextLevel.bind(this) } >
+            onClick={ (e) => this.changeLevel(e, this.props.level + 1) } >
           Next
           </button>
+
         </div>
       </footer>  
     );

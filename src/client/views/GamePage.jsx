@@ -43,7 +43,7 @@ class GamePage extends Component {
           return solution.level === this.props.level;
         })[0];
         var solution = result ? result.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n';
-        this.setCode(solution);
+        this.props.setCode(solution);
       })
     }).catch(err => {
       console.log('Error fetching solution code: ', err);
@@ -57,7 +57,7 @@ class GamePage extends Component {
       <div>
         <Game />
         <Console />
-        <Footer />
+        <Footer getCode={ this.getCode.bind(this) } />
       </div>
     ) : null
   }
