@@ -103,7 +103,7 @@ class Console extends Component {
 
   codeReset() {
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
-    this.setState({input: '// code here\nvar engine = false;'}); // REFACTOR REFACTOR REFACTOR
+    this.setState({input: '// Input your code here\n\nvar engine = false;'}); // REFACTOR REFACTOR REFACTOR
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
   }
 
@@ -127,6 +127,7 @@ class Console extends Component {
     return (
       <div className='col-md-5'>
         <div className='console'>
+
           <div className='console-header'>
             <div className='btn-group' role='group'>
               <button 
@@ -155,11 +156,14 @@ class Console extends Component {
               </button>
             </div>
           </div>
+
           <div className='console-content'>
             { this.renderContent() }
           </div>
+
           <div className='console-footer'>
           </div>
+
         </div>
       </div>
     )
@@ -176,9 +180,9 @@ var mapStateToProps = state => {
 
 var mapDispatchToProps = dispatch => {
   return {
-    postSolution: (level, command) => {
-      dispatch(createCommand(level, command));
-    }
+    // postSolution: (level, command) => {
+    //   dispatch(createCommand(level, command));
+    // }
   }
 }
 

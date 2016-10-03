@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import createCommand from '../actions/UserCommandAction.js';
+// import createCommand from '../actions/UserCommandAction.js';
 import changeLevel from '../actions/changeLevel.js';
 
 class Footer extends Component {
