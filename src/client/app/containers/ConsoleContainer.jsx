@@ -88,24 +88,30 @@ class Console extends Component {
   }
 
   // == TOGGLE STATE =====================================================================
-  stateLearn(e) {
-    e.preventDefault();
-    this.setState({tab: 'learn'});
-  }
+  
+  // stateLearn(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'learn'});
+  // }
 
-  stateInstructions(e) {
-    e.preventDefault();
-    this.setState({tab: 'instructions'});
-  }
+  // stateInstructions(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'instructions'});
+  // }
 
-  stateEditor(e) {
-    e.preventDefault();
-    this.setState({tab: 'editor'});
-  }
+  // stateEditor(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'editor'});
+  // }
 
-  stateBugs(e) {
+  // stateBugs(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'bugs'})
+  // }
+
+  setTab(e, tab) {
     e.preventDefault();
-    this.setState({tab: 'bugs'})
+    this.setState({ tab })
   }
 
   // == EDITOR INPUT =====================================================================
@@ -149,25 +155,25 @@ class Console extends Component {
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={ this.stateLearn.bind(this) }>
+                onClick={ (e) => this.setTab(e, 'learn') } >
                 <i className='fa fa-book' aria-hidden='true'></i> Learn
               </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={ this.stateInstructions.bind(this) }>
+                onClick={ (e) => this.setTab(e, 'instructions') }>
                 <i className='fa fa-check-square-o' aria-hidden='true'></i> Instruction
                 </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={ this.stateEditor.bind(this) }>
+                onClick={ (e) => this.setTab(e, 'editor') }>
                 <i className='fa fa-code' aria-hidden='true'></i> Code
                 </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={ this.stateBugs.bind(this) }>
+                onClick={ (e) => this.setTab(e, 'bugs') }>
                 <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{ this.state.bugs.length }</span>
               </button>
             </div>
