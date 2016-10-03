@@ -1,6 +1,5 @@
 var createGame = (userInput) => {
-  console.log('User input: ', userInput)
-
+  var userInput = {engine: true, sensor: true, color: 'black', speed: 60}
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;
