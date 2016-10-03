@@ -32,11 +32,13 @@ class Footer extends Component {
     e.preventDefault();
     if (level >= 1 && level <= 4) {
       this.props.changeLevel(level);
-    } else {
-    /* Error handling if the level is ever out of bounds: default to 0    */
-      this.props.changeLevel(0);
     }
-    
+
+    /* Error handling if the level is ever out of bounds: default to 1    */
+    if (this.props.level > 4 || this.props.level < 1) {
+      this.props.changeLevel(1);
+    }
+
     /* Fetches and renders the user's code for that level into the editor */
     this.props.getCode();
   }

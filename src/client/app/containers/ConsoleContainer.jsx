@@ -23,30 +23,34 @@ class Console extends Component {
 
   componentWillMount() {
     // this.fetchSolutions();
+    this.setState({
+      input: this.props.currentCode
+    })
+
   }
 
   // == FETCH FROM SERVER ================================================================
-  fetchSolutions() {
-    var url = `/game?username=${this.props.user}`;
+  // fetchSolutions() {
+  //   var url = `/game?username=${this.props.user}`;
 
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      response.json().then(solutions => {
-        var solution = (_.filter(solutions, (el) => {
-          return el.level === this.props.level;
-        }))[0];
-        this.setState({
-          input: solution ? solution.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n'
-        });
-      });
-    }).catch(err => {
-      console.log('error fetching code: ', err);
-    });
-  }
+  //   fetch(url, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then(response => {
+  //     response.json().then(solutions => {
+  //       var solution = (_.filter(solutions, (el) => {
+  //         return el.level === this.props.level;
+  //       }))[0];
+  //       this.setState({
+  //         input: solution ? solution.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n'
+  //       });
+  //     });
+  //   }).catch(err => {
+  //     console.log('error fetching code: ', err);
+  //   });
+  // }
 
   postSolution() {
     $('canvas').remove();
@@ -113,7 +117,7 @@ class Console extends Component {
       case 'learn': return <Learn />;
       case 'instructions': return <Instructions />;
       case 'editor': return <Editor 
-                            code={ this.props.currentCode } 
+                            code={ this.state.input } 
                             inputChange={ this.codeChange.bind(this) } 
                             runInput={ this.codeFetch.bind(this) } 
                             resetInput={ this.codeReset.bind(this) } />;
