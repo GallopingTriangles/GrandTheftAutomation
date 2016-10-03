@@ -16,6 +16,7 @@ class Console extends Component {
     super(props);
     this.state = {
       tab: 'editor',
+      // input: '',
       input: '',
       bugs: []
     };
@@ -23,10 +24,21 @@ class Console extends Component {
 
   componentWillMount() {
     // this.fetchSolutions();
-    this.setState({
-      input: this.props.currentCode
-    })
 
+    /*************************************************************/
+    /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
+    /* This sends the Console component context up to the parent */
+    /* So the parent can set the 'currentCode' into this state   */
+    /*   because the console wasn't refreshing on its own,       */
+    /*   even though the store's state was changing              */
+    /*   and the store's currentCode is mapped to props...       */
+    /*                                                           */
+    /* Why we doing this?? To get the editor to change when      */
+    /*  switching levels from the footer                         */
+    /*************************************************************/
+
+    var childContext = this;
+    this.props.setConsole(childContext);
   }
 
   // == FETCH FROM SERVER ================================================================

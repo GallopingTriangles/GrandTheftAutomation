@@ -16,7 +16,9 @@ import setCode from '../app/actions/setCode.js';
 class GamePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      console: {}
+    };
   }
 
   componentWillMount() {
@@ -44,9 +46,36 @@ class GamePage extends Component {
         })[0];
         var solution = result ? result.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n';
         this.props.setCode(solution);
+
+        /*************************************************************/
+        /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
+        /* This sets the state of the CONSOLE                        */
+        /*   to make the console re-render itself                    */
+        /*   since it wasn't re-rendering on its own                 */
+        /* We're forcing it to re-render from up here                */
+        /*************************************************************/
+        this.state.console.setState({
+          input: solution
+        })
+
+        // return solution for promise chaining
+        return solution;
       })
     }).catch(err => {
       console.log('Error fetching solution code: ', err);
+    })
+  }
+
+  setConsole (context) {
+    /*************************************************************/
+    /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
+    /* This stores the Console component context to the state    */
+    /* So we can set the console's state from up here            */
+    /*   to force it to re-render, since it wasn't working       */
+    /*   from the child (console) component                      */
+    /*************************************************************/
+    this.setState({
+      console: context
     })
   }
 
@@ -56,7 +85,7 @@ class GamePage extends Component {
     return this.props.user ? (
       <div>
         <Game />
-        <Console />
+        <Console setConsole={ this.setConsole.bind(this) } />
         <Footer getCode={ this.getCode.bind(this) } />
       </div>
     ) : null
