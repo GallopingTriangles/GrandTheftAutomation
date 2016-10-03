@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import changeUser from '../actions/changeUser.js';
+import changeLevel from '../actions/changeLevel.js';
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class LoginContainer extends Component {
 
         /* Dispatch an action to change the current user in the store */
         this.props.changeUser(this.state.username);
+        this.props.resetLevel();
         console.log(result.message);
         
         // clear the form
@@ -72,6 +74,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeUser: (user) => {
       dispatch(changeUser(user));
+    },
+    resetLevel: () => {
+      dispatch(changeLevel(1));
     }
   }
 }

@@ -7,7 +7,7 @@ import 'codemirror/addon/edit/matchbrackets';      // highlight brackets
 import 'codemirror/addon/lint/javascript-lint.js'; // LINTER IS NOT WORKING!!!
 import createGame from '../game/game.js';
 
-export default class Editor extends Component {
+class Editor extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -23,7 +23,7 @@ export default class Editor extends Component {
 
 	resetCode() {
     this.props.resetInput();
-	} 
+	}
 
   // == CODEMIRROR ==================================================================
 	render() {
@@ -50,3 +50,5 @@ export default class Editor extends Component {
 		);
 	}
 }
+
+export default Editor;

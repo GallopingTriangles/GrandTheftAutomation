@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CommandLine from '../components/CommandLine.jsx';
+// import CommandLine from '../components/CommandLine.jsx';
 import Editor from '../components/Editor.jsx';
 import Learn from '../components/Learn.jsx';
 import Instructions from '../components/Instructions.jsx';
@@ -16,35 +16,53 @@ class Console extends Component {
     super(props);
     this.state = {
       tab: 'editor',
+      // input: '',
       input: '',
       bugs: []
     };
   }
 
   componentWillMount() {
-    this.fetchSolutions();
+    // this.fetchSolutions();
+
+    /*************************************************************/
+    /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
+    /* This sends the Console component context up to the parent */
+    /* So the parent can set the 'currentCode' into this state   */
+    /*   because the console wasn't refreshing on its own,       */
+    /*   even though the store's state was changing              */
+    /*   and the store's currentCode is mapped to props...       */
+    /*                                                           */
+    /* Why we doing this?? To get the editor to change when      */
+    /*  switching levels from the footer                         */
+    /*************************************************************/
+
+    var childContext = this;
+    this.props.setConsole(childContext);
   }
 
   // == FETCH FROM SERVER ================================================================
-  fetchSolutions() {
-    var url = `/game?username=${this.props.user}`;
+  // fetchSolutions() {
+  //   var url = `/game?username=${this.props.user}`;
 
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      response.json().then(solutions => {
-        var solution = (_.filter(solutions, (el) => {
-          return el.level === this.props.level;
-        }))[0].solution;
-        this.setState({input: solution});
-      });
-    }).catch(err => {
-      console.log('error fetching code: ', err);
-    });
-  }
+  //   fetch(url, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then(response => {
+  //     response.json().then(solutions => {
+  //       var solution = (_.filter(solutions, (el) => {
+  //         return el.level === this.props.level;
+  //       }))[0];
+  //       this.setState({
+  //         input: solution ? solution.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n'
+  //       });
+  //     });
+  //   }).catch(err => {
+  //     console.log('error fetching code: ', err);
+  //   });
+  // }
 
   postSolution() {
     $('canvas').remove();
@@ -70,29 +88,35 @@ class Console extends Component {
   }
 
   // == TOGGLE STATE =====================================================================
-  stateLearn(e) {
-    e.preventDefault();
-    this.setState({tab: 'learn'});
-  }
+  
+  // stateLearn(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'learn'});
+  // }
 
-  stateInstructions(e) {
-    e.preventDefault();
-    this.setState({tab: 'instructions'});
-  }
+  // stateInstructions(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'instructions'});
+  // }
 
-  stateEditor(e) {
-    e.preventDefault();
-    this.setState({tab: 'editor'});
-  }
+  // stateEditor(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'editor'});
+  // }
 
-  stateBugs(e) {
+  // stateBugs(e) {
+  //   e.preventDefault();
+  //   this.setState({tab: 'bugs'})
+  // }
+
+  setTab(e, tab) {
     e.preventDefault();
-    this.setState({tab: 'bugs'})
+    this.setState({ tab })
   }
 
   // == EDITOR INPUT =====================================================================
   codeChange(newCode) {
-    this.setState({input: newCode});
+    this.setState({ input: newCode });
   }
 
   codeFetch() {
@@ -101,7 +125,7 @@ class Console extends Component {
 
   codeReset() {
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
-    this.setState({input: '// code here\nvar engine = false;'}); // REFACTOR REFACTOR REFACTOR
+    this.setState({input: '// Input your code here\n\nvar engine = false;'}); // REFACTOR REFACTOR REFACTOR
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
   }
 
@@ -110,8 +134,12 @@ class Console extends Component {
     switch (this.state.tab) {
       case 'learn': return <Learn />;
       case 'instructions': return <Instructions />;
-      case 'editor': return <Editor code={this.state.input} inputChange={this.codeChange.bind(this)} runInput={this.codeFetch.bind(this)} resetInput={this.codeReset.bind(this)} />;
-      case 'bugs': return <Bugs bugs={this.state.bugs} />;
+      case 'editor': return <Editor 
+                            code={ this.state.input } 
+                            inputChange={ this.codeChange.bind(this) } 
+                            runInput={ this.codeFetch.bind(this) } 
+                            resetInput={ this.codeReset.bind(this) } />;
+      case 'bugs': return <Bugs bugs={ this.state.bugs } />;
       default: return <div>ERROR</div>;
     }
   }
@@ -121,39 +149,43 @@ class Console extends Component {
     return (
       <div className='col-md-5'>
         <div className='console'>
+
           <div className='console-header'>
             <div className='btn-group' role='group'>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateLearn.bind(this)}>
+                onClick={ (e) => this.setTab(e, 'learn') } >
                 <i className='fa fa-book' aria-hidden='true'></i> Learn
               </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateInstructions.bind(this)}>
+                onClick={ (e) => this.setTab(e, 'instructions') }>
                 <i className='fa fa-check-square-o' aria-hidden='true'></i> Instruction
                 </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateEditor.bind(this)}>
+                onClick={ (e) => this.setTab(e, 'editor') }>
                 <i className='fa fa-code' aria-hidden='true'></i> Code
                 </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={this.stateBugs.bind(this)}>
-                <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{this.state.bugs.length}</span>
+                onClick={ (e) => this.setTab(e, 'bugs') }>
+                <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{ this.state.bugs.length }</span>
               </button>
             </div>
           </div>
+
           <div className='console-content'>
             { this.renderContent() }
           </div>
+
           <div className='console-footer'>
           </div>
+
         </div>
       </div>
     )
@@ -164,15 +196,16 @@ class Console extends Component {
 var mapStateToProps = state => {
   return {
     level: state.level,
-    user: state.user
+    user: state.user,
+    currentCode: state.currentCode
   }
 }
 
 var mapDispatchToProps = dispatch => {
   return {
-    postSolution: (level, command) => {
-      dispatch(createCommand(level, command));
-    }
+    // postSolution: (level, command) => {
+    //   dispatch(createCommand(level, command));
+    // }
   }
 }
 
