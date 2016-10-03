@@ -28,13 +28,16 @@ class Footer extends Component {
   // }
 
   changeLevel(e, level) {
-    /*  */
+    /* Updates the store with the appropriate level                       */
     e.preventDefault();
     if (level >= 1 && level <= 4) {
       this.props.changeLevel(level);
     } else {
+    /* Error handling if the level is ever out of bounds: default to 0    */
       this.props.changeLevel(0);
     }
+    
+    /* Fetches and renders the user's code for that level into the editor */
     this.props.getCode();
   }
 
