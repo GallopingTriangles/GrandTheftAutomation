@@ -214,4 +214,6 @@ var createGame = (userInput) => {
   }
 }
 
-export default createGame;
+
+createGame();
+// export default createGame;
