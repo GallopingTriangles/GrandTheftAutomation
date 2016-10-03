@@ -16,6 +16,12 @@ var createGame = (userInput) => {
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
+
+    game.load.tilemap('level1', './assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
+
+    //  Next we load the tileset. This is just an image, loaded in via the normal way we load images:
+
+    game.load.image('tiles', './assets/map.jpg');
   }
 
   var car;
@@ -33,6 +39,11 @@ var createGame = (userInput) => {
   var userSpeedMultiplier = 4;
   var explosion;
   var wasted;
+
+
+  var roadLayer;
+  var map;
+  var collisionLayer;
 
   function create() {
     // Set initial state of the game
@@ -72,6 +83,26 @@ var createGame = (userInput) => {
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
     text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
+
+
+
+
+    game.stage.backgroundColor = '#787878';
+
+    //  The 'mario' key here is the Loader key given in game.load.tilemap
+    map = game.add.tilemap('level1');
+
+    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
+    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
+    map.addTilesetImage('Roads', 'tiles');
+
+    //  Creates a layer from the World1 layer in the map data.
+    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
+    roadLayer = map.createLayer('Tile Layer 1');
+    collisionLayer = map.createLayer('collisionLayer')
+
+    //  This resizes the game world to match the roadLayer dimensions
+    roadLayer.resizeWorld();
   }
 
   function update() {
