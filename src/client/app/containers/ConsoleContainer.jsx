@@ -22,7 +22,7 @@ class Console extends Component {
   }
 
   componentWillMount() {
-    this.fetchSolutions();
+    // this.fetchSolutions();
   }
 
   // == FETCH FROM SERVER ================================================================
@@ -113,7 +113,7 @@ class Console extends Component {
       case 'learn': return <Learn />;
       case 'instructions': return <Instructions />;
       case 'editor': return <Editor 
-                            code={ this.state.input } 
+                            code={ this.props.currentCode } 
                             inputChange={ this.codeChange.bind(this) } 
                             runInput={ this.codeFetch.bind(this) } 
                             resetInput={ this.codeReset.bind(this) } />;
@@ -174,7 +174,8 @@ class Console extends Component {
 var mapStateToProps = state => {
   return {
     level: state.level,
-    user: state.user
+    user: state.user,
+    currentCode: state.currentCode
   }
 }
 

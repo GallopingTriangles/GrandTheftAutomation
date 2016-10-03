@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import Game from '../app/containers/GameContainer.jsx';
 import Console from '../app/containers/ConsoleContainer.jsx';
 import Footer from '../app/containers/FooterContainer.jsx';
+import setCode from '../app/actions/setCode.js';
 
 /*******************************************************/
 /* Renders the game page that consists of:             */
@@ -25,6 +26,28 @@ class GamePage extends Component {
     if (!this.props.user) {
       this.props.router.push('/');
     }
+    this.getCode();
+  }
+
+  getCode() {
+    var url = `/game?username=${ this.props.user }`;
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      response.json().then(solutions => {
+        var result = solutions.filter(solution => {
+          return solution.level === this.props.level;
+        })[0];
+        var solution = result ? result.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n';
+        this.setCode(solution);
+      })
+    }).catch(err => {
+      console.log('Error fetching solution code: ', err);
+    })
   }
 
   render() {
@@ -42,9 +65,19 @@ class GamePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    level: state.level,
+    currentCode: state.currentCode
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCode: (code) => {
+      dispatch(setCode(code));
+    }
   }
 }
 
 /* React-Router's 'withRouter' allows manual redirection */
-export default withRouter(connect(mapStateToProps)(GamePage));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GamePage));
