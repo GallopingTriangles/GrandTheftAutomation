@@ -32,6 +32,7 @@ describe('Reducer function', function() {
   });
 
   describe('Store state', () => {
+    
     var store;
     beforeEach(() => {
       store = createStore(reducer);
@@ -45,7 +46,7 @@ describe('Reducer function', function() {
     it('should be updated by "CHANGE_LEVEL" actions', () => {
       var action_1 = changeLevel(4);
       var action_2 = changeLevel(2);
-      expect(store.level).to.equal(0); // default level
+      expect(store.getState().level).to.equal(0); // default level
 
       store.dispatch(action_1);
       var result_1 = store.getState();
@@ -59,8 +60,38 @@ describe('Reducer function', function() {
     });
 
     it('should be updated by "CHANGE_USER" actions', () => {
+      var action_1 = changeUser('Bob');
+      var action_2 = changeUser('Tom');
+      expect(store.getState().user).to.equal(''); // default user
 
+      store.dispatch(action_1);
+      var result_1 = store.getState();
+      expect(result_1.user).to.equal('Bob');
+
+      store.dispatch(action_2);
+      var result_2 = store.getState();
+      expect(result_2.user).to.equal('Tom');
+
+      expect(result_1).to.not.deep.equal(result_2);
+    });
+
+    it('should be updated by "SET_CODE" actions', () => {
+      var action_1 = setCode('Hello World');
+      var action_2 = setCode('Goodbye Cruel World');
+      expect(store.getState().currentCode).to.equal(''); // default currentCode
+
+      store.dispatch(action_1);
+      var result_1 = store.getState();
+      expect(result_1.currentCode).to.equal('Hello World');
+
+      store.dispatch(action_2);
+      var result_2 = store.getState();
+      expect(result_2.currentCode).to.equal('Goodbye Cruel World');
+
+      expect(result_1).to.not.deep.equal(result_2);
     })
+
+
 
     it('should not be affected by invalid actions', () => {
       var result = store.getState();
