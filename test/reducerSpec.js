@@ -31,15 +31,29 @@ describe('Reducer function', function() {
       .that.is.a('string');
   });
 
-  describe('Store created by the reducer', () => {
+  describe('Store state', () => {
     var store;
     beforeEach(() => {
       store = createStore(reducer);
     })
 
 
-    it('should handle dispatched actions', () => {
+    it('should be an object', () => {
+      expect(store.getState()).to.be.an('object');
+    })
 
+    it('should not be mutated by invalid actions', () => {
+      var result = store.getState();
+      store.dispatch({ type: 'DUMMY_ACTION' });
+      expect(result).to.equal(store.getState());
+    })
+
+    it('should not be mutated by valid actions', () => {
+      var result = store.getState();
+      store.dispatch(setCode('Hello World'));
+      expect(result).to.not.equal(store.getState());
+      expect(result.user).to.not.equal('Hello World');
+      expect(result.user).to.equal('');
     })
 
   })
