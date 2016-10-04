@@ -32,7 +32,7 @@ describe('Reducer function', function() {
   });
 
   describe('Store state', () => {
-    
+
     var store;
     beforeEach(() => {
       store = createStore(reducer);
@@ -41,6 +41,14 @@ describe('Reducer function', function() {
 
     it('should be an object', () => {
       expect(store.getState()).to.be.an('object');
+    })
+
+    it('should have default properties set by reducers', () => {
+      expect(store.getState()).to.deep.equal({
+        user: '',
+        level: 0,
+        currentCode: ''
+      });
     })
 
     it('should be updated by "CHANGE_LEVEL" actions', () => {
@@ -91,7 +99,20 @@ describe('Reducer function', function() {
       expect(result_1).to.not.deep.equal(result_2);
     })
 
-
+    it('should be updated by varying commands', () => {
+      store.dispatch(changeUser('Bob'));
+      store.dispatch(changeLevel(10));
+      store.dispatch(changeUser('Chris'));
+      store.dispatch(setCode('Hello World!'));
+      store.dispatch(setCode('Sup foo'));
+      store.dispatch(changeLevel(420));
+      var result = store.getState();
+      expect(result).to.deep.equal({
+        user: 'Chris',
+        level: 420,
+        currentCode: 'Sup foo'
+      });
+    })
 
     it('should not be affected by invalid actions', () => {
       var result = store.getState();
