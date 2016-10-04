@@ -1,6 +1,4 @@
 var createGame = (userInput) => {
-  console.log('User input: ', userInput)
-
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;
@@ -8,7 +6,7 @@ var createGame = (userInput) => {
   var gameHeight = gameWidth * (6 / 8);
 
   // original width = 800, height = 600
-  var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
+  var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   function preload() {
     setCarColor();
@@ -35,22 +33,32 @@ var createGame = (userInput) => {
   var explosion;
   var wasted;
 
+
+  var roadLayer;
+  var map;
+  var collisionLayer;
+  var tilesCollisionGroup;
+  var carCollisionGroup;
+  var obstacleCollisionGroup;
+  var tile;
+
   function create() {
     // Set initial state of the game
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.stage.backgroundColor = backgroundColor;
+
+
     if (userInput.engine) {
       cursors = game.input.keyboard.createCursorKeys();
     }
 
-    // Declare sensor first so it doesn't overwrite the car.
     createSensor();
     createCar();
     setSpeed();
 
-    var carCollisionGroup = game.physics.p2.createCollisionGroup();
-    var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
+    carCollisionGroup = game.physics.p2.createCollisionGroup();
+    obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
 
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
@@ -73,6 +81,8 @@ var createGame = (userInput) => {
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
     text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
+
+
   }
 
   function update() {
@@ -213,5 +223,6 @@ var createGame = (userInput) => {
     wasted.anchor.setTo(.5, .5);
   }
 }
+
 
 export default createGame;
