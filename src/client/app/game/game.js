@@ -1,10 +1,9 @@
 var createGame = (userInput) => {
-  var userInput = {engine: true, sensor: true, color: 'black', speed: 60}
   // change width depends on window width, no dynamically resizing yet
-  // var width = window.innerWidth;
-  // var height = window.innerHeight;
-  // var gameWidth = width * (7 / 12) - 10;
-  // var gameHeight = gameWidth * (6 / 8);
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+  var gameWidth = width * (7 / 12) - 10;
+  var gameHeight = gameWidth * (6 / 8);
 
   // original width = 800, height = 600
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
