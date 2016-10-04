@@ -16,9 +16,6 @@ var createGame = (userInput) => {
     game.load.image('grass', './assets/grass.jpg');
     game.load.image('sensor', './assets/round.png')
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
-
-    game.load.tilemap('level1', './assets/collision.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles', './assets/map.jpg');
   }
 
   var car;
@@ -57,14 +54,6 @@ var createGame = (userInput) => {
       cursors = game.input.keyboard.createCursorKeys();
     }
 
-
-    // tiles = game.add.group();
-    // tiles.enableBody = true;
-    // tiles.physicsBodyType = Phaser.Physics.P2JS;
-    // console.log(tiles);
-
-    // Declare sensor first so it doesn't overwrite the car.
-    createMap();
     createSensor();
     createCar();
     setSpeed();
@@ -75,20 +64,20 @@ var createGame = (userInput) => {
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
 
-    // obstacles = game.add.group();
-    // obstacles.enableBody = true;
-    // obstacles.physicsBodyType = Phaser.Physics.P2JS;
-    //
-    // for (var i = 0; i < 3; i++) {
-    //   // create an obstacle
-    //   var obstacle = obstacles.create(300, 50+200*i, 'grass');
-    //   obstacle.scale.setTo(0.1, 0.1);
-    //   obstacle.body.setRectangle(obstacle.width, obstacle.height);
-    //   // assign a collision group to the obstacles
-    //   obstacle.body.setCollisionGroup(obstacleCollisionGroup);
-    //   obstacle.body.collides([carCollisionGroup, obstacleCollisionGroup]);
-    //   obstacle.body.static = true;
-    // }
+    obstacles = game.add.group();
+    obstacles.enableBody = true;
+    obstacles.physicsBodyType = Phaser.Physics.P2JS;
+
+    for (var i = 0; i < 3; i++) {
+      // create an obstacle
+      var obstacle = obstacles.create(300, 50+200*i, 'grass');
+      obstacle.scale.setTo(0.1, 0.1);
+      obstacle.body.setRectangle(obstacle.width, obstacle.height);
+      // assign a collision group to the obstacles
+      obstacle.body.setCollisionGroup(obstacleCollisionGroup);
+      obstacle.body.collides([carCollisionGroup, obstacleCollisionGroup]);
+      obstacle.body.static = true;
+    }
 
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
@@ -102,21 +91,21 @@ var createGame = (userInput) => {
     if (userInput.sensor) {
       attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
 
-    // var overlap = false;
-    // obstacles.forEach(function(obstacle) {
-    //
-    //   if (checkOverlap(obstacle, sensor)) {
-    //     overlap = true;
-    //   };
-    //
-    //   if (overlap) {
-    //     text.text = 'Remind me not to let you drive.'
-    //     sensor.alpha = 1;
-    //   } else {
-    //     text.text = 'Sensors do not detect any danger.'
-    //     sensor.alpha = .1;
-    //   }
-    // });
+    var overlap = false;
+    obstacles.forEach(function(obstacle) {
+
+      if (checkOverlap(obstacle, sensor)) {
+        overlap = true;
+      };
+
+      if (overlap) {
+        text.text = 'Remind me not to let you drive.'
+        sensor.alpha = 1;
+      } else {
+        text.text = 'Sensors do not detect any danger.'
+        sensor.alpha = .1;
+      }
+    });
   }
 
     car.body.velocity.x = 0;
@@ -234,38 +223,7 @@ var createGame = (userInput) => {
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
   }
-
-  function createMap() {
-    //  The 'level1' key here is the Loader key given in game.load.tilemap
-    map = game.add.tilemap('level1');
-    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
-    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
-    map.addTilesetImage('Roads', 'tiles');
-
-    //  Creates a layer from the Tile Layer 1 layer in the map data.
-    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-    // roadLayer = map.createLayer('Tile Layer 1');
-    collisionLayer = map.createLayer('collisionLayer');
-    collisionLayer.resizeWorld();
-
-    map.setCollisionBetween(1, 1000, true, 'collisionLayer');
-
-    game.physics.p2.convertTilemap(map, 'collisionLayer');
-
-    // var rows = collisionLayer.layer.data;
-    // for (var i = 0; i < rows.length; i ++) {
-    //   for (var j = 0; j < rows[i].length; j ++) {
-    //     var tile = rows[i][j];
-    //     tile.enableBody = true;
-    //
-    //     console.log('Here is the tile: ', tile);
-    //     tile.body.setCollisionGroup(tilesCollisionGroup);
-    //     tile.body.collides(carCollisionGroup);
-    //   }
-    // }
-  }
 }
 
 
-createGame();
-// export default createGame;
+export default createGame;
