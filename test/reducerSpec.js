@@ -42,7 +42,27 @@ describe('Reducer function', function() {
       expect(store.getState()).to.be.an('object');
     })
 
-    it('should not be mutated by invalid actions', () => {
+    it('should be updated by "CHANGE_LEVEL" actions', () => {
+      var action_1 = changeLevel(4);
+      var action_2 = changeLevel(2);
+      expect(store.level).to.equal(0); // default level
+
+      store.dispatch(action_1);
+      var result_1 = store.getState();
+      expect(result_1.level).to.equal(4);
+
+      store.dispatch(action_2);
+      var result_2 = store.getState();
+      expect(result_2.level).to.equal(2);
+
+      expect(result_1).to.not.deep.equal(result_2);
+    });
+
+    it('should be updated by "CHANGE_USER" actions', () => {
+
+    })
+
+    it('should not be affected by invalid actions', () => {
       var result = store.getState();
       store.dispatch({ type: 'DUMMY_ACTION' });
       expect(result).to.equal(store.getState());
