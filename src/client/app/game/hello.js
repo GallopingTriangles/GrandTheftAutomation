@@ -1,13 +1,12 @@
-
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 
-    game.load.tilemap('map', '../assets/tilemaps/maps/collision_test.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('ground_1x1', '../assets/tilemaps/tiles/ground_1x1.png');
-    game.load.image('walls_1x2', '../assets/tilemaps/tiles/walls_1x2.png');
-    game.load.image('tiles2', '../assets/tilemaps/tiles/tiles2.png');
-    game.load.image('ship', '../assets/sprites/thrust_ship2.png');
+    game.load.tilemap('map', './assets/tilemaps/collision_test.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('ground_1x1', './assets/tilemaps/ground_1x1.png');
+    game.load.image('walls_1x2', './assets/tilemaps/walls_1x2.png');
+    game.load.image('tiles2', './assets/tilemaps/tiles2.png');
+    game.load.image('ship', './assets/car-blue.png');
 
 }
 
@@ -24,6 +23,7 @@ function create() {
 
     map = game.add.tilemap('map');
 
+
     map.addTilesetImage('ground_1x1');
     map.addTilesetImage('walls_1x2');
     map.addTilesetImage('tiles2');
@@ -31,6 +31,7 @@ function create() {
     layer = map.createLayer('Tile Layer 1');
 
     layer.resizeWorld();
+
 
     //  Set the tiles for collision.
     //  Do this BEFORE generating the p2 bodies below.
