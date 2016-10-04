@@ -2,10 +2,10 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 
 function preload() {
 
-    game.load.tilemap('map', './assets/tilemaps/collision_test.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('ground_1x1', './assets/tilemaps/ground_1x1.png');
-    game.load.image('walls_1x2', './assets/tilemaps/walls_1x2.png');
-    game.load.image('tiles2', './assets/tilemaps/tiles2.png');
+    game.load.tilemap('map', './assets/collision.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('Roads', './assets/map.jpg');
+    // game.load.image('walls_1x2', './assets/tilemaps/walls_1x2.png');
+    // game.load.image('tiles2', './assets/tilemaps/tiles2.png');
     game.load.image('ship', './assets/car-blue.png');
 
 }
@@ -24,18 +24,18 @@ function create() {
     map = game.add.tilemap('map');
 
 
-    map.addTilesetImage('ground_1x1');
-    map.addTilesetImage('walls_1x2');
-    map.addTilesetImage('tiles2');
+    map.addTilesetImage('Roads');
+    // map.addTilesetImage('walls_1x2');
+    // map.addTilesetImage('tiles2');
 
-    layer = map.createLayer('Tile Layer 1');
+    layer = map.createLayer('collisionLayer');
 
     layer.resizeWorld();
 
 
     //  Set the tiles for collision.
     //  Do this BEFORE generating the p2 bodies below.
-    map.setCollisionBetween(1, 12);
+    map.setCollisionBetween(1, 500);
 
     //  Convert the tilemap layer into bodies. Only tiles that collide (see above) are created.
     //  This call returns an array of body objects which you can perform addition actions on if
@@ -43,6 +43,7 @@ function create() {
     game.physics.p2.convertTilemap(map, layer);
 
     ship = game.add.sprite(200, 200, 'ship');
+    ship.scale.setTo(.2, .2);
     game.physics.p2.enable(ship);
 
     game.camera.follow(ship);
