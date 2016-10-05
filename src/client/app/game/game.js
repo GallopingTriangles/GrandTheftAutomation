@@ -204,6 +204,8 @@ var createGame = (userInput) => {
       case 'blue':
         game.load.image('car', './assets/car-blue.png');
         break;
+      default:
+        game.load.image('car', './assets/car-top-view-small.png');
     }
   }
 
