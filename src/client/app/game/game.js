@@ -142,6 +142,7 @@ var createGame = (userInput) => {
     ** and collisions can be specific for certain tiles in certain layers.
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
     */
+    map = game.add.tilemap('map');
     map.addTilesetImage('tmw_desert_spacing');
 
     /*
@@ -151,6 +152,66 @@ var createGame = (userInput) => {
     */
     layer_1 = map.createLayer('Tile Layer 1');
     layer_2 = map.createLayer('Tile Layer 2');
+
+    /*
+    ** Set the appropriate tiles of a certain layer to be collideable
+    ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
+    */
+    map.setCollision(34, true, 'Tile Layer 1');
+
+    /*
+    ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
+    ** that collide are created. This returns an array of body objects that can be
+    ** controlled by additional actions.
+    ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.html#convertTilemap
+    */
+    collisionBodies = game.physics.p2.convertTilemap(map, layer_1);
+
+    /*
+    ** Initiates the car sensor, the car body, and sets the speed
+    */
+    createSensor();
+    createCar();
+    setSpeed();
+
+    /////////
+    /*
+    ** Create collision two collision groups. One for the car and one for everything else.
+    ** A collision will be detected for items in collision groups.
+    */
+    carCollisionGroup = game.physics.p2.createCollisionGroup();
+    obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
+
+    game.physics.p2.updateBoundsCollisionGroup();
+    car.body.setCollisionGroup(carCollisionGroup);
+
+    // /*
+    // ** Create a p2 group that will hold all collideable objects as "obstacles"
+    // */
+    // obstacles = game.add.group();
+    // obstacles.enableBody = true;
+    // obstacles.physicsBodyType = Phaser.Physics.P2JS;
+
+    /*
+    ** Assign each tile from the collisionBodies into the obstacleCollisionGroup.
+    ** These tiles will be set to collide with other tile bodies and the car.
+    ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
+    */
+    collisionBodies.forEach(function(collisionBody, i) {
+      collisionBody.setCollisionGroup(obstacleCollisionGroup);
+      collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
+    })
+
+    /*
+    ** The gameOver callback is called when a collision is detected
+    ** between the car and any body in the obstacleCollisionGroup (the tiles).
+    */
+    car.body.collides(obstacleCollisionGroup, gameOver, this);
+
+    /*
+    ** Enables the user to have control over the car through their cursor keys
+    */
+    cursors = game.input.keyboard.createCursorKeys();
   }
 
   function update() {
