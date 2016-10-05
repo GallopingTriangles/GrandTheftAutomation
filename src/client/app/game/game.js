@@ -185,13 +185,6 @@ var createGame = (userInput) => {
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
 
-    // /*
-    // ** Create a p2 group that will hold all collideable objects as "obstacles"
-    // */
-    // obstacles = game.add.group();
-    // obstacles.enableBody = true;
-    // obstacles.physicsBodyType = Phaser.Physics.P2JS;
-
     /*
     ** Assign each tile from the collisionBodies into the obstacleCollisionGroup.
     ** These tiles will be set to collide with other tile bodies and the car.
@@ -220,19 +213,25 @@ var createGame = (userInput) => {
       attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
 
     var overlap = false;
-    obstacles.forEach(function(obstacle) {
+    collisionBodies.forEach(function(obstacle) {
 
-      if (checkOverlap(obstacle, sensor)) {
-        overlap = true;
-      };
+      /***************************** TODO ***********************************/
+      /*                                                                    */
+      /* CHECK ANY OVERLAP OVER THE COLLISION BODIES AND CHANGE TEXT/SENSOR */
+      /*                                                                    */
+      /***************************** TODO ***********************************/
 
-      if (overlap) {
-        text.text = 'Remind me not to let you drive.'
-        sensor.alpha = 1;
-      } else {
-        text.text = 'Sensors do not detect any danger.'
-        sensor.alpha = .1;
-      }
+      // if (checkOverlap(obstacle, sensor)) {
+      //   overlap = true;
+      // };
+
+      // if (overlap) {
+      //   text.text = 'Remind me not to let you drive.'
+      //   sensor.alpha = 1;
+      // } else {
+      //   text.text = 'Sensors do not detect any danger.'
+      //   sensor.alpha = .1;
+      // }
     });
   }
 
