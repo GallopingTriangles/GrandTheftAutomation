@@ -9,7 +9,7 @@ var createGame = (userInput) => {
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   /*
-  ** The preload function runs before the game initially renders.
+  ** The preload() function runs before the game initially renders.
   ** It loads up all the necessary assets the game needs while running
   */
   function preload() {
@@ -58,47 +58,99 @@ var createGame = (userInput) => {
   var obstacleCollisionGroup;
   var tile;
 
+  /*
+  ** An array of collision bodies that the car can collide with.
+  ** A callback will be invoked upon collisions.
+  */
+  var collisionBodies;
+
+  /*
+  ** The layers that correspond to the tile layers exported as the JSON tilemap file.
+  ** These will be set in the create() function.
+  */
+  var layer_1;
+  var layer_2;
+
+
+  /*************************************** OLD STUFF *************************************/
+  /*************************************** OLD STUFF *************************************/
+  /*************************************** OLD STUFF *************************************/
+  /*************************************** OLD STUFF *************************************/
+
+  ///////////////// function create() {
+  /////////////////   // Set initial state of the game
+  /////////////////   game.physics.startSystem(Phaser.Physics.P2JS);
+  /////////////////   game.physics.p2.setImpactEvents(true);
+  /////////////////   game.stage.backgroundColor = backgroundColor;
+
+
+  /////////////////   if (userInput.engine) {
+  /////////////////     cursors = game.input.keyboard.createCursorKeys();
+  /////////////////   }
+
+  /////////////////   createSensor();
+  /////////////////   createCar();
+  /////////////////   setSpeed();
+
+  /////////////////   carCollisionGroup = game.physics.p2.createCollisionGroup();
+  /////////////////   obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
+
+  /////////////////   game.physics.p2.updateBoundsCollisionGroup();
+  /////////////////   car.body.setCollisionGroup(carCollisionGroup);
+
+  /////////////////   obstacles = game.add.group();
+  /////////////////   obstacles.enableBody = true;
+  /////////////////   obstacles.physicsBodyType = Phaser.Physics.P2JS;
+
+  /////////////////   for (var i = 0; i < 3; i++) {
+  /////////////////     // create an obstacle
+  /////////////////     var obstacle = obstacles.create(300, 50+200*i, 'grass');
+  /////////////////     obstacle.scale.setTo(0.1, 0.1);
+  /////////////////     obstacle.body.setRectangle(obstacle.width, obstacle.height);
+  /////////////////     // assign a collision group to the obstacles
+  /////////////////     obstacle.body.setCollisionGroup(obstacleCollisionGroup);
+  /////////////////     obstacle.body.collides([carCollisionGroup, obstacleCollisionGroup]);
+  /////////////////     obstacle.body.static = true;
+  /////////////////   }
+
+  /////////////////   car.body.collides(obstacleCollisionGroup, gameOver, this);
+
+  /////////////////   text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
+
+
+  ///////////////// }
+
+  /*************************************** OLD STUFF *************************************/
+  /*************************************** OLD STUFF *************************************/
+  /*************************************** OLD STUFF *************************************/
+  /*************************************** OLD STUFF *************************************/
+
+
+  /*
+  ** The create() function is called automatically after preload() has finished.
+  ** Sprite, particles, and most everything else can be created here that has access to
+  ** the assets initialized from the preload(). The create() function contains the bulk
+  ** of the set-up code, such as creating game objects.
+  */
   function create() {
-    // Set initial state of the game
+    // Set the initial state and physics engine for the game
     game.physics.startSystem(Phaser.Physics.P2JS);
-    game.physics.p2.setImpactEvents(true);
-    game.stage.backgroundColor = backgroundColor;
 
+    /*
+    ** Set the tilemap for the game, which creates a grid system.
+    ** Tiles can be added on top in different layers,
+    ** and collisions can be specific for certain tiles in certain layers.
+    ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
+    */
+    map.addTilesetImage('tmw_desert_spacing');
 
-    if (userInput.engine) {
-      cursors = game.input.keyboard.createCursorKeys();
-    }
-
-    createSensor();
-    createCar();
-    setSpeed();
-
-    carCollisionGroup = game.physics.p2.createCollisionGroup();
-    obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
-
-    game.physics.p2.updateBoundsCollisionGroup();
-    car.body.setCollisionGroup(carCollisionGroup);
-
-    obstacles = game.add.group();
-    obstacles.enableBody = true;
-    obstacles.physicsBodyType = Phaser.Physics.P2JS;
-
-    for (var i = 0; i < 3; i++) {
-      // create an obstacle
-      var obstacle = obstacles.create(300, 50+200*i, 'grass');
-      obstacle.scale.setTo(0.1, 0.1);
-      obstacle.body.setRectangle(obstacle.width, obstacle.height);
-      // assign a collision group to the obstacles
-      obstacle.body.setCollisionGroup(obstacleCollisionGroup);
-      obstacle.body.collides([carCollisionGroup, obstacleCollisionGroup]);
-      obstacle.body.static = true;
-    }
-
-    car.body.collides(obstacleCollisionGroup, gameOver, this);
-
-    text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
-
-
+    /*
+    ** Set the layers and their respective tile IDs for collision.
+    ** Needs to be done before generating the p2 bodies below.
+    ** The layer names must correspond to the layers from the JSON tilemap file
+    */
+    layer_1 = map.createLayer('Tile Layer 1');
+    layer_2 = map.createLayer('Tile Layer 2');
   }
 
   function update() {
