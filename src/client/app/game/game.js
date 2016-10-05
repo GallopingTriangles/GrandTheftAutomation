@@ -20,7 +20,7 @@ var createGame = (userInput) => {
     game.load.image('sensor', './assets/round.png');
 
     /*
-    ** A spritesheet contains a bunch of frames stitched togethr to create an animation effect
+    ** A spritesheet contains a bunch of frames stitched together to create an animation effect
     */
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
 
@@ -65,8 +65,10 @@ var createGame = (userInput) => {
   var collisionBodies;
 
   /*
-  ** The layers that correspond to the tile layers exported as the JSON tilemap file.
+  ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
+  ** layer_1 contains the tiles to be set in collisionBodies that are collideable with the player
+  ** layer_2 contains the tiles that are not collideable with the player
   */
   var layer_1;
   var layer_2;
@@ -168,16 +170,37 @@ var createGame = (userInput) => {
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1);
 
     /*
-    ** Initiates the car sensor, the car body, and sets the speed
+    ** Gather all tiles from layer_1 into an array of tiles,
+    ** and assign a callback function to when these tiles are hit by anything.
+    */
+    var collisionTiles = layer_1.getTiles(0, 0, 800, 600);
+    console.log('collisionTiles', collisionTiles);
+    collisionTiles.forEach(function(tile) { //////////////////////////// fail
+      tile.setCollisionCallback(function() {
+        console.log('This tile has been hit.');
+      }, this);
+    })
+
+    /*
+    **
+    */
+    obstacles = game.add.group();
+    // map.createFromObjects('Collision Layer 1', 34, 'block', 0, true, false, obstacles);
+
+    /*
+    ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
     createSensor();
     createCar();
     setSpeed();
 
-    /////////
+    collisionTiles.forEach(function(tile) {
+      console.log('sensor overlapping tile', sensor.overlap(tile));
+    })
+
     /*
-    ** Create collision two collision groups. One for the car and one for everything else.
-    ** A collision will be detected for items in collision groups.
+    ** Create two collision groups. One for the car and one for everything else.
+    ** A collision will be detected for items in collision groups, which will invoke a callback.
     */
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -193,6 +216,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody, i) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
+      console.log('collisionBody Bounds: ' /*********************/)
     })
 
     /*
@@ -205,6 +229,10 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
+    console.log('car: ', car);
+    console.log('layer_1: ', layer_1);
+    console.log('collisionBodies: ', collisionBodies);
+    console.log('overlap: ', layer_1.overlap(car));
   }
 
   function update() {
@@ -213,7 +241,13 @@ var createGame = (userInput) => {
       attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
 
     var overlap = false;
+
+    game.physics.p2.collide
+
+    // checkOverlap(layer_1, sensor);
+
     collisionBodies.forEach(function(obstacle) {
+    // obstacles.forEach(function(obstacle){
 
       /***************************** TODO ***********************************/
       /*                                                                    */
@@ -270,6 +304,12 @@ var createGame = (userInput) => {
     } else if (cursors.right.isDown) {
       car.body.rotateRight(angularVelocity);
     }
+
+    // angle is 0 going straight up
+    // clockwise positive up to 180
+    // counterclockwise negative up to -180
+    // console.log(car.body.angle);
+
   }
 
   function attachSensor(sensor, carX, carY, carAngle) {
@@ -338,6 +378,7 @@ var createGame = (userInput) => {
   }
 
   function gameOver() {
+    console.log('yo');
     explosion = game.add.sprite(400, 300, 'explosion');
     explosion.x = car.x;
     explosion.y = car.y;
