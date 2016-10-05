@@ -8,13 +8,29 @@ var createGame = (userInput) => {
   // original width = 800, height = 600
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
+  /*
+  ** The preload function runs before the game initially renders.
+  ** It loads up all the necessary assets the game needs while running
+  */
   function preload() {
     setCarColor();
     game.load.image('wasted', './assets/wasted.png');
     game.load.image('panda', './assets/panda.png');
     game.load.image('grass', './assets/grass.jpg');
-    game.load.image('sensor', './assets/round.png')
+    game.load.image('sensor', './assets/round.png');
+
+    /*
+    ** A spritesheet contains a bunch of frames stitched togethr to create an animation effect
+    */
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
+
+    /* 
+    ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
+    ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
+    */
+    game.load.tilemap('map', './assets/gameMaps/TestMap_1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('tmw_desert_spacing', './assets/gameMaps/tmw_desert_spacing.png');
+
   }
 
   var car;
