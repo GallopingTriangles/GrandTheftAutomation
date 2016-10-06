@@ -10,7 +10,12 @@ var assertions = {
   	}
   },
 
-  
+  assertEqual: function(expected, actual) {
+		this.assertTrue(
+			expected == actual, 
+			'Expected to equal ' + expected + ', but got: ' + actual
+		);
+	},
 };
 
 var runTestSuite = function(testSuiteConstructor, options) {
