@@ -16,6 +16,19 @@ var assertions = {
 			'Expected to equal ' + expected + ', but got: ' + actual
 		);
 	},
+
+	assertThrow: function(expectedMessage, action) {
+		var hasThrown = false;
+		try {
+			action();
+		} catch (error) {
+			hasThrown = true;
+			this.assertEqual(expectedMessage, error.message);
+		}
+		this.assertTrue(hasThrown, 'Expected to throw an error, but nothing was thrown');
+	},
+
+	
 };
 
 var runTestSuite = function(testSuiteConstructor, options) {
