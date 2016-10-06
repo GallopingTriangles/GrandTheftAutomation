@@ -11,7 +11,7 @@ var assertions = {
   	}
   },
   
-  // check if variable is present/defined
+  // check if input is present/defined
   assertDefined: function(variable, name) {
     this.assertTrue(
       variable !== undefined,
@@ -25,6 +25,14 @@ var assertions = {
 			'Expected to equal ' + expected + ', but got: ' + actual
 		);
 	},
+
+  // check if input is equal to expected type
+  assertType: function(variable, type, name) {
+    this.assertTrue(
+      typeof variable === type,
+      'Expected variable ' + name + ' to be ' + type + ', but got: ' + typeof variable
+    );
+  },
 
 	assertThrow: function(expectedMessage, action) {
 		var hasThrown = false;
