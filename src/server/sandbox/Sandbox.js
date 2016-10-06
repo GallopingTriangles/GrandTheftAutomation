@@ -44,7 +44,7 @@ var Sandbox = function(req, res, next) {
         t.assertString(color, 'color');
 	    };
 	    this.testColorWhiteRedBlueBlack = function() {
-
+        // TODO
 	    };
     });
 
@@ -53,6 +53,9 @@ var Sandbox = function(req, res, next) {
     	var speed = context.speed;
       this.testSpeedDefined = function() {
         t.assertDefined(speed, 'speed');
+      };
+      this.testSpeedNumber = function() {
+        t.assertNumber(speed, 'speed');
       };
     });
 
