@@ -68,6 +68,9 @@ var Sandbox = function(req, res, next) {
       this.testSensorDefined = function() {
         t.assertDefined(sensor, 'sensor');
       };
+      this.testSensorBoolean = function() {
+        t.assertBoolean(sensor, 'sensor');
+	    };
     });
 
 	});
