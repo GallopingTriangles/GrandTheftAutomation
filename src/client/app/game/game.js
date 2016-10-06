@@ -173,7 +173,7 @@ var createGame = (userInput) => {
     ** controlled by additional actions.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.html#convertTilemap
     */
-    collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, true);
+    collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, false);
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
@@ -217,6 +217,8 @@ var createGame = (userInput) => {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
+      game.add.sprite(collisionBody.x, collisionBody.y, 'object');
+      console.log(collisionBody.x, collisionBody.y);
     })
 
     /*
@@ -231,7 +233,7 @@ var createGame = (userInput) => {
     */
     cursors = game.input.keyboard.createCursorKeys();
 
-    game.physics.p2.setPostBroadphaseCallback(sensorDetection, this);
+    // game.physics.p2.setPostBroadphaseCallback(sensorDetection, this);
   }
 
 
@@ -278,7 +280,7 @@ var createGame = (userInput) => {
     if (overlap) {
       sensor.alpha = 1;
     } else {
-      sensor.alpha = 1;
+      sensor.alpha = 0.1;
     }
   }
 
@@ -349,8 +351,9 @@ var createGame = (userInput) => {
         sensor.alpha = 1;
         return true;
       } else {
+        console.log('NO HIT');
         sensor.alpha = 0.1;
-        return false;
+        return true;
       }
     } else if (body2.sprite && !body1.sprite) {
       if (body2.sprite.key === 'sensor') {
@@ -358,12 +361,12 @@ var createGame = (userInput) => {
         sensor.alpha = 1;
         return true;
       } else {
+        console.log('NO HIT');
         sensor.alpha = 0.1;
-        return false;
+        return true;
       }
     } else {
-      sensor.alpha = 0.1;
-      return false;
+      return true;
     }
   }
 
