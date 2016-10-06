@@ -175,9 +175,6 @@ var createGame = (userInput) => {
     */
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1);
 
-    // collisionBodies.forEach(function(body) {
-    // });
-
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
     ** and assign a callback function to when these tiles are hit by anything.
@@ -200,7 +197,6 @@ var createGame = (userInput) => {
     */
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
-
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
 
@@ -209,7 +205,7 @@ var createGame = (userInput) => {
     ** These tiles will be set to collide with other tile bodies and the car.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
-    collisionBodies.forEach(function(collisionBody, i) {
+    collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
@@ -226,9 +222,8 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
-    console.log('layer_1: ', layer_1);
+    console.log('collisionBodies Length: ', collisionBodies.length);
     console.log('collisionBodies: ', collisionBodies);
-    console.log('overlap: ', layer_1.overlap(car));
   }
 
   function update() {
@@ -240,7 +235,7 @@ var createGame = (userInput) => {
 
 
 
-    collisionBodies.forEach(function(obstacle) {
+    // collisionBodies.forEach(function(obstacle) {
     // obstacles.forEach(function(obstacle){
 
       /***************************** TODO ***********************************/
@@ -260,7 +255,19 @@ var createGame = (userInput) => {
       //   text.text = 'Sensors do not detect any danger.'
       //   sensor.alpha = .1;
       // }
+    // });
+
+    collisionBodies.forEach(function(tileBody) {
+      if (checkOverlap(sensor, tileBody)) {
+        overlap = true;
+      }
     });
+
+    if (overlap) {
+      sensor.alpha = 1;
+    } else {
+      sensor.alpha = 1;
+    }
   }
 
     car.body.velocity.x = 0;
@@ -307,16 +314,20 @@ var createGame = (userInput) => {
   }
 
   function attachSensor(sensor, carX, carY, carAngle) {
-    sensor.x = carX;
-    sensor.y = carY;
-    sensor.angle = carAngle;
+    sensor.body.x = carX;
+    sensor.body.y = carY;
+    sensor.body.angle = carAngle;
   }
 
-  function checkOverlap(spriteA, spriteB) {
-    var boundsA = spriteA.getBounds();
-    var boundsB = spriteB.getBounds();
+  // function checkOverlap(spriteA, spriteB) {
+  //   var boundsA = spriteA.getBounds();
+  //   var boundsB = spriteB.getBounds();
 
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
+  //   return Phaser.Rectangle.intersects(boundsA, boundsB);
+  // }
+
+  function checkOverlap(carSensor, tileBody) {
+    return carSensor.getBounds().contains(null, tileBody.x, tileBody.y);
   }
 
   function createCar() {
@@ -336,10 +347,10 @@ var createGame = (userInput) => {
     if (userInput.sensor) {
       // Appearace
       sensor = game.add.sprite(startingX, startingY, 'sensor');
+      game.physics.p2.enable(sensor);
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
       sensor.scale.setTo(.5, .5);
-
     }
     
   }
