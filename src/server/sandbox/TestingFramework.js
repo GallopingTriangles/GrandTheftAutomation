@@ -6,15 +6,16 @@ var assertions = {
   		errorMessage = message;
   	}
   	if (!condition) {
-      throw new Error(errorMessage);
+      // throw new Error(errorMessage);
+      console.log('ERROR:', errorMessage);
   	}
   },
   
   // check if variable is present/defined
-  assertDefined: function(variable) {
+  assertDefined: function(variable, name) {
     this.assertTrue(
       variable !== undefined,
-      'Expected variable to be defined, but got undefined'
+      'Expected variable "' + name + '" to be defined, but got undefined'
     );
   },
 
