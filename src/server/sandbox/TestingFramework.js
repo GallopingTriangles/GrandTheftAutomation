@@ -39,6 +39,11 @@ var assertions = {
     this.assertType(variable, 'boolean', name);
   },
 
+  // check if variable is equal to STRING
+  assertString: function(variable, name) {
+    this.assertType(variable, 'string', name);
+  },
+
 	assertThrow: function(expectedMessage, action) {
 		var hasThrown = false;
 		try {
