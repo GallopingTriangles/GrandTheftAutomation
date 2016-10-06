@@ -13,7 +13,15 @@ var nums = [
 ]
 
 const LevelList = (props) => (
-  <LevelListEntry nums={nums}/>
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Best Time</th>
+    </tr>
+    {nums.map(function(levelData) {
+      return <LevelListEntry levelData={levelData}/>
+    })}
+  </table>
 )
 
 export default LevelList;
