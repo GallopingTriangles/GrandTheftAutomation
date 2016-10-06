@@ -9,10 +9,18 @@ var assertions = {
       throw new Error(errorMessage);
   	}
   },
+  
+  // check if variable is present/defined
+  assertDefined: function(variable) {
+    this.assertTrue(
+      variable !== undefined,
+      'Expected variable to be defined, but got undefined'
+    );
+  },
 
   assertEqual: function(expected, actual) {
 		this.assertTrue(
-			expected == actual, 
+			expected === actual, 
 			'Expected to equal ' + expected + ', but got: ' + actual
 		);
 	},
