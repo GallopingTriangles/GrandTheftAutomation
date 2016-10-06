@@ -36,7 +36,18 @@ var assertions = {
 	  }
 	},
 
-	
+	spy: function() {
+		var that = function() {
+			that.called = true;
+		};
+		that.assertNotCalled = function() {
+			assertions.assertTrue(!that.called, 'Expected not to be called');
+		};
+		that.assertCalled = function() {
+      assertions.assertTrue(that.called, 'Expected to be called');
+		};
+		return that;
+	}
 };
 
 var runTestSuite = function(testSuiteConstructor, options) {
