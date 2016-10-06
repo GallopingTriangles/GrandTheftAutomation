@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 
 const LevelListEntry = (props) => (
   <div>
-    <p>We are in LevelListEntry</p>
-  </div>  
+    <tr>
+      <td>{props.nums[0].level}</td>
+      <td>{props.nums[0].time}</td>
+    </tr>
+  </div>
 )
 
 

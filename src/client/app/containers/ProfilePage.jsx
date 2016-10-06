@@ -18,4 +18,5 @@ class ProfilePage extends Component {
   }
 }
 
+
 export default ProfilePage;
