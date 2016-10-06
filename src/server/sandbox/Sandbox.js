@@ -57,6 +57,9 @@ var Sandbox = function(req, res, next) {
       this.testSpeedNumber = function() {
         t.assertNumber(speed, 'speed');
       };
+      this.testSpeedPositive = function() {
+        t.assertTrue(speed >= 0, 'Expected speed to be a positive number, but got a negative number');
+      };
     });
 
     // ** SENSOR TESTS ** //
