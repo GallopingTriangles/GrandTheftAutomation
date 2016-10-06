@@ -221,16 +221,17 @@ var createGame = (userInput) => {
     ** These tiles will be set to collide with other tile bodies and the car.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
+    var context = this;
     collisionBodies.forEach(function(collisionBody, i) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
-      collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
+      collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
     })
 
     /*
     ** The gameOver callback is called when a collision is detected
     ** between the car and any body in the obstacleCollisionGroup (the tiles).
     */
-    car.body.collides(obstacleCollisionGroup, gameOver, car);
+    car.body.collides(obstacleCollisionGroup, gameOver, this);
 
 
     /*
@@ -239,7 +240,7 @@ var createGame = (userInput) => {
     cursors = game.input.keyboard.createCursorKeys();
     console.log('car: ', car);
     console.log('layer_1: ', layer_1);
-    // console.log('collisionBodies: ', collisionBodies);
+    console.log('collisionBodies: ', collisionBodies);
     console.log('overlap: ', layer_1.overlap(car));
   }
 
