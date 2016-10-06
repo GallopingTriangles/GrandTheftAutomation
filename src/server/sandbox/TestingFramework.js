@@ -50,6 +50,26 @@ var assertions = {
 	}
 };
 
+function SimpleReporter() {
+	this.reportTestSuite = function(name) {
+	  process.stdout.write('\n' + name + '\n');
+	};
+	this.reportTest = function(name) {
+	  process.stdout.write('\t' + name + '\n');
+	};
+};
+
+var getTestSuiteName = function(testSuiteConstructor, testSuitePrototype) {
+  if (typeof(testSuitePrototype.getTestSuiteName) !== 'function') {
+  	return testSuiteConstructor.name;
+  }
+  return testSuitePrototype.getTestSuiteName();
+};
+
+var createTestSuite = function(testSuiteConstructor) {
+  return new testSuiteConstructor(assertions);
+};
+
 var runTestSuite = function(testSuiteConstructor, options) {
 	var options = options || {};
 	var reporter = options.reporter || new SimpleReporter();
@@ -70,3 +90,4 @@ var runTestSuite = function(testSuiteConstructor, options) {
 };
 
 module.exports = runTestSuite;
+module.exports.SimpleReporter = SimpleReporter;
