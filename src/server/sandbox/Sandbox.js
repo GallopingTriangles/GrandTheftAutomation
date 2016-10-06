@@ -71,6 +71,9 @@ var Sandbox = function(req, res, next) {
       this.testSensorBoolean = function() {
         t.assertBoolean(sensor, 'sensor');
 	    };
+	    this.testSensorTrue = function() {
+        t.assertTrue(sensor, 'Expected sensor to equal true, but got false');
+	    };
     });
 
 	});
