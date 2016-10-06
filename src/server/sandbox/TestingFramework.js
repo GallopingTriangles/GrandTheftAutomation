@@ -26,12 +26,17 @@ var assertions = {
 		);
 	},
 
-  // check if input is equal to expected type
+  // check if variable is equal to expected type
   assertType: function(variable, type, name) {
     this.assertTrue(
       typeof variable === type,
       'Expected variable ' + name + ' to be ' + type + ', but got: ' + typeof variable
     );
+  },
+
+  // check if variable is equal to BOOLEAN
+  assertBoolean: function(variable, name) {
+    this.assertType(variable, 'boolean', name);
   },
 
 	assertThrow: function(expectedMessage, action) {
