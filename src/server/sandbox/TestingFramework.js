@@ -28,6 +28,14 @@ var assertions = {
 		);
 	},
 
+  // check if the actual input equals one of the options
+	assertOptions: function(options, actual) {
+    this.assertTrue(
+      options.indexOf(actual) >= 0,
+      'Expected to equal ' + options + ', but got: ' + actual
+    );
+	},
+
   // check if variable is equal to expected type
   assertType: function(variable, type, name) {
     this.assertTrue(
