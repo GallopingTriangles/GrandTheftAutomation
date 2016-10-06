@@ -28,6 +28,14 @@ var assertions = {
 		this.assertTrue(hasThrown, 'Expected to throw an error, but nothing was thrown');
 	},
 
+	assertNotThrow: function (action) {
+	  try {
+	    action();
+	  } catch (error) {
+	    throw new Error('Expected not to throw error, but thrown "' + error.message + '"');
+	  }
+	},
+
 	
 };
 
