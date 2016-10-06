@@ -20,6 +20,7 @@ var Sandbox = function(req, res, next) {
 	// == TESTING USER INPUT ===============================
 	runTestSuite(function UserInputTest(t) {
     
+    // ** ENGINE TESTS ** //
     runTestSuite(function EngineInputTest(t) {
     	var engine = context.engine;
 	    this.testEngineDefined = function() {
@@ -33,13 +34,21 @@ var Sandbox = function(req, res, next) {
 	    };
     }); 
 
+    // ** COLOR TESTS ** //
     runTestSuite(function ColorInputTest(t) {
     	var color = context.color;
 	    this.testColorDefined = function() {
 	      t.assertDefined(color, 'color');
 	    };
+	    this.testColorString = function() {
+        t.assertString(color, 'color');
+	    };
+	    this.testColorWhiteRedBlueBlack = function() {
+
+	    };
     });
 
+    // ** SPEED TESTS ** //
     runTestSuite(function SpeedInputTest(t) {
     	var speed = context.speed;
       this.testSpeedDefined = function() {
@@ -47,6 +56,7 @@ var Sandbox = function(req, res, next) {
       };
     });
 
+    // ** SENSOR TESTS ** //
     runTestSuite(function SensorInputTest(t) {
       var sensor = context.sensor;
       this.testSensorDefined = function() {
