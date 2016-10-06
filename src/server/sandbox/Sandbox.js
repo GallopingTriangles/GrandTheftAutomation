@@ -26,7 +26,10 @@ var Sandbox = function(req, res, next) {
 	      t.assertDefined(engine, 'engine');
 	    };
 	    this.testEngineBoolean = function() {
-        t.assertType(engine, 'boolean', 'engine');
+        t.assertBoolean(engine, 'engine');
+	    };
+	    this.testEngineTrue = function() {
+        t.assertTrue(engine, 'Expected engine to equal true, but got false');
 	    };
     }); 
 
