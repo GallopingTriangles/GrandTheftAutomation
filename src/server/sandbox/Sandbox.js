@@ -44,7 +44,7 @@ var Sandbox = function(req, res, next) {
         t.assertString(color, 'color');
 	    };
 	    this.testColorWhiteRedBlueBlack = function() {
-        // TODO
+        t.assertOptions(['white', 'black', 'red', 'blue'], color);
 	    };
     });
 
