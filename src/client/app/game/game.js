@@ -166,7 +166,6 @@ var createGame = (userInput) => {
     */
     map.setCollision(34, true, 'Tile Layer 1');
 
-
     /*
     ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
     ** that collide are created. This returns an array of body objects that can be
@@ -207,11 +206,10 @@ var createGame = (userInput) => {
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
 
-    // obstacles.forEach(function(obstacle) {
-    //   obstacle.setCollisionGroup(obstacleCollisionGroup);
-    //   obstacle.collides([carCollisionGroup, obstacleCollisionGroup]);
-    //   console.log(obstacle);
-    // })
+    obstacles.forEach(function(obstacle) {
+      obstacle.setCollisionGroup(obstacleCollisionGroup);
+      obstacle.collides([carCollisionGroup, obstacleCollisionGroup]);
+    })
 
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
@@ -221,10 +219,11 @@ var createGame = (userInput) => {
     ** These tiles will be set to collide with other tile bodies and the car.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
-    var context = this;
     collisionBodies.forEach(function(collisionBody, i) {
+      collisionBody.setRectangle(32, 32);
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
+      collisionBody.static = true;
     })
 
     /*
@@ -238,7 +237,6 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
-    console.log('car: ', car);
     console.log('layer_1: ', layer_1);
     console.log('collisionBodies: ', collisionBodies);
     console.log('overlap: ', layer_1.overlap(car));
