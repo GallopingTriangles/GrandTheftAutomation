@@ -191,12 +191,13 @@ var createGame = (userInput) => {
     createCar();
     setSpeed();
     if (sensor) {
-      console.log('sensor x: ', sensor.getBounds().x);
-      console.log('sensor y: ', sensor.getBounds().y);
+      console.log('sensor x: ', sensor.body.x);
+      console.log('sensor y: ', sensor.body.y);
       console.log('sensor width: ', sensor.getBounds().width);
       console.log('sensor height: ', sensor.getBounds().height);
       console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
     }
+
 
     /*
     ** Create two collision groups. One for the car and one for everything else.
@@ -216,7 +217,6 @@ var createGame = (userInput) => {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
-      console.log(collisionBody.x, collisionBody.y);
     })
 
     /*
@@ -343,8 +343,28 @@ var createGame = (userInput) => {
   }
 
   function sensorDetection(body1, body2) {
-    console.log('body1: ', body1);
-    console.log('body2: ', body2);
+    if (body1.sprite && !body2.sprite) {
+      if (body1.sprite.key === 'sensor') {
+        console.log('hit');
+        sensor.alpha = 1;
+        return true;
+      } else {
+        sensor.alpha = 0.1;
+        return false;
+      }
+    } else if (body2.sprite && !body1.sprite) {
+      if (body2.sprite.key === 'sensor') {
+        console.log('hit');
+        sensor.alpha = 1;
+        return true;
+      } else {
+        sensor.alpha = 0.1;
+        return false;
+      }
+    } else {
+      sensor.alpha = 0.1;
+      return false;
+    }
   }
 
   function createCar() {
@@ -364,10 +384,11 @@ var createGame = (userInput) => {
     if (userInput.sensor) {
       // Appearace
       sensor = game.add.sprite(startingX, startingY, 'sensor');
+      sensor.scale.setTo(.5, .5);
       game.physics.p2.enable(sensor);
+      sensor.body.setRectangle(100, 200);
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
-      sensor.scale.setTo(.5, .5);
     }
     
   }
