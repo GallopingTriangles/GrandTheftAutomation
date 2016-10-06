@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import LevelListEntry from '../components/LevelListEntry.jsx';
 
 const LevelList = (props) => (
-  <div>
-    <p>Hello Everyone</p>
-  </div>
+  <LevelListEntry />
 )
 
 export default LevelList;

@@ -24,7 +24,7 @@ var createGame = (userInput) => {
     */
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
 
-    /* 
+    /*
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
@@ -135,6 +135,7 @@ var createGame = (userInput) => {
   function create() {
     // Set the initial state and physics engine for the game
     game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.setImpactEvents(true);
 
     /*
     ** Set the tilemap for the game, which creates a grid system.
@@ -344,7 +345,7 @@ var createGame = (userInput) => {
     explosion.anchor.setTo(.5, .5);
     explosion.animations.add('explode');
     explosion.animations.play('explode', 24, false);
-    text.kill();
+    // text.kill();
     car.kill();
     if (sensor) {
       sensor.kill();

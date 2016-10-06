@@ -10,7 +10,7 @@ import Console from '../containers/ConsoleContainer.jsx';
 import PageContainer from '../../views/PageContainer.jsx';
 import LandingPage from '../../views/LandingPage.jsx';
 import GamePage from '../../views/GamePage.jsx';
-import ProfilePage from '../../views/ProfilePage.jsx';
+import ProfilePage from '../containers/ProfilePage.jsx';
 
 class App extends Component {
   constructor(props) {
