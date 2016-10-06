@@ -25,6 +25,9 @@ var Sandbox = function(req, res, next) {
 	    this.testEngineDefined = function() {
 	      t.assertDefined(engine, 'engine');
 	    };
+	    this.testEngineBoolean = function() {
+        t.assertType(engine, 'boolean', 'engine');
+	    };
     }); 
 
     runTestSuite(function ColorInputTest(t) {
