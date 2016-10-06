@@ -65,6 +65,11 @@ var createGame = (userInput) => {
   var collisionBodies;
 
   /*
+  ** An array of tiles from a tilemap layer that should contain collideable tiles
+  */
+  var collisionTiles;
+
+  /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
   ** layer_1 contains the tiles to be set in collisionBodies that are collideable with the player
@@ -161,6 +166,7 @@ var createGame = (userInput) => {
     */
     map.setCollision(34, true, 'Tile Layer 1');
 
+
     /*
     ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
     ** that collide are created. This returns an array of body objects that can be
@@ -169,17 +175,16 @@ var createGame = (userInput) => {
     */
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1);
 
+    collisionBodies.forEach(function(body) {
+    });
+
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
     ** and assign a callback function to when these tiles are hit by anything.
     */
-    var collisionTiles = layer_1.getTiles(0, 0, 800, 600);
-    console.log('collisionTiles', collisionTiles);
-    collisionTiles.forEach(function(tile) { //////////////////////////// fail
-      tile.setCollisionCallback(function() {
-        console.log('This tile has been hit.');
-      }, this);
-    })
+    collisionTiles = layer_1.getTiles(0, 0, 800, 600).filter(function(tile) {
+      return tile.index > 0;
+    });
 
     /*
     **
@@ -194,9 +199,6 @@ var createGame = (userInput) => {
     createCar();
     setSpeed();
 
-    collisionTiles.forEach(function(tile) {
-      console.log('sensor overlapping tile', sensor.overlap(tile));
-    })
 
     /*
     ** Create two collision groups. One for the car and one for everything else.
@@ -204,6 +206,12 @@ var createGame = (userInput) => {
     */
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
+
+    // obstacles.forEach(function(obstacle) {
+    //   obstacle.setCollisionGroup(obstacleCollisionGroup);
+    //   obstacle.collides([carCollisionGroup, obstacleCollisionGroup]);
+    //   console.log(obstacle);
+    // })
 
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
@@ -216,14 +224,14 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody, i) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      console.log('collisionBody Bounds: ' /*********************/)
     })
 
     /*
     ** The gameOver callback is called when a collision is detected
     ** between the car and any body in the obstacleCollisionGroup (the tiles).
     */
-    car.body.collides(obstacleCollisionGroup, gameOver, this);
+    car.body.collides(obstacleCollisionGroup, gameOver, car);
+
 
     /*
     ** Enables the user to have control over the car through their cursor keys
@@ -231,7 +239,7 @@ var createGame = (userInput) => {
     cursors = game.input.keyboard.createCursorKeys();
     console.log('car: ', car);
     console.log('layer_1: ', layer_1);
-    console.log('collisionBodies: ', collisionBodies);
+    // console.log('collisionBodies: ', collisionBodies);
     console.log('overlap: ', layer_1.overlap(car));
   }
 
@@ -242,9 +250,9 @@ var createGame = (userInput) => {
 
     var overlap = false;
 
-    game.physics.p2.collide
 
-    // checkOverlap(layer_1, sensor);
+
+    checkOverlap(layer_1, sensor);
 
     collisionBodies.forEach(function(obstacle) {
     // obstacles.forEach(function(obstacle){
@@ -345,7 +353,9 @@ var createGame = (userInput) => {
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
       sensor.scale.setTo(.5, .5);
+
     }
+    
   }
 
   function setSpeed() {
@@ -378,7 +388,7 @@ var createGame = (userInput) => {
   }
 
   function gameOver() {
-    console.log('yo');
+    console.log('gameOver');
     explosion = game.add.sprite(400, 300, 'explosion');
     explosion.x = car.x;
     explosion.y = car.y;
@@ -397,3 +407,25 @@ var createGame = (userInput) => {
 
 
 export default createGame;
+
+// EXAMPLE
+//  buildMaze : function() {    
+
+//   this.map = this.add.tilemap('level_02');    
+//   this.map.addTilesetImage('tile_set_2','floor',50,50);    
+//   this.layer = this.map.createLayer('Floor');        
+//   this.map.setCollisionByIndex([1,2,3,4,5],true,this.map.currentLayer,true);        
+//   this.map.setTileIndexCallback(3,function(){console.log('collide 3');},this);        
+//   this.layer.debug = true;    
+//   this.layer.resizeWorld();  
+// }
+
+// setUpPlayer : function() {    
+//   this.player = this.add.sprite(this.world.width/2-50, this.world.height/2, 'player');    
+//   this.player.anchor.set(0.5);    
+//   this.physics.enable(this.player,Phaser.Physics.ARCADE);    
+//   this.player.body.drag.set(1000,1000);    
+//   this.player.body.collideWorldBounds = true;  
+// },
+
+//  this.physics.arcade.collide(this.player, this.map.currentLayer);
