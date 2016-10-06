@@ -10,7 +10,7 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className='white-text'>
         <Avatar />
         <LevelList />
       </div>
