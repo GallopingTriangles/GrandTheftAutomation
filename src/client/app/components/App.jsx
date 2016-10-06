@@ -30,6 +30,7 @@ class App extends Component {
         <Route path='/' component={ PageContainer }>
           <IndexRoute component={ LandingPage } />
           <Route path='game' component={ GamePage } />
+          <Route path='profile' component={ GamePage } />
         </Route>
       </Router>
     )

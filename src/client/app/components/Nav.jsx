@@ -38,7 +38,7 @@ class Nav extends Component {
             <li><Link to='/'> Landing </Link></li>
             <li><Link to={ this.props.user ? '/game' : '/' }> Game </Link></li>
             <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
-            { this.props.user ? <li><a>Logged in as { `Logged in as ${this.props.user}`}</a></li> : null }
+            { this.props.user ? <li><Link to='/profile'>Logged in as { this.props.user }</Link></li> : null }
           </ul>
         </div>
       </nav>
