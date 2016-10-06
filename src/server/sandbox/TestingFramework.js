@@ -1,5 +1,6 @@
 // TESTING FRAMEWORK
 var assertions = {
+	// check if condition is true
   assertTrue: function(condition, message) {
   	var errorMessage = 'Expected to be true, but got false';
   	if (message) {
@@ -19,6 +20,7 @@ var assertions = {
     );
   },
 
+  // check if actual input equals expected input
   assertEqual: function(expected, actual) {
 		this.assertTrue(
 			expected === actual, 
@@ -34,14 +36,19 @@ var assertions = {
     );
   },
 
-  // check if variable is equal to BOOLEAN
+  // check if variable type is equal to BOOLEAN
   assertBoolean: function(variable, name) {
     this.assertType(variable, 'boolean', name);
   },
 
-  // check if variable is equal to STRING
+  // check if variable type is equal to STRING
   assertString: function(variable, name) {
     this.assertType(variable, 'string', name);
+  },
+
+  // check if variable type is equal to NUMBER
+  assertNumber: function(variable, name) {
+    this.assertType(variable, 'number', name);
   },
 
 	assertThrow: function(expectedMessage, action) {
