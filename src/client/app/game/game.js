@@ -173,7 +173,7 @@ var createGame = (userInput) => {
     ** controlled by additional actions.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.html#convertTilemap
     */
-    collisionBodies = game.physics.p2.convertTilemap(map, layer_1);
+    collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, true);
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
@@ -190,6 +190,13 @@ var createGame = (userInput) => {
     createSensor();
     createCar();
     setSpeed();
+    if (sensor) {
+      console.log('sensor x: ', sensor.getBounds().x);
+      console.log('sensor y: ', sensor.getBounds().y);
+      console.log('sensor width: ', sensor.getBounds().width);
+      console.log('sensor height: ', sensor.getBounds().height);
+      console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
+    }
 
     /*
     ** Create two collision groups. One for the car and one for everything else.
@@ -209,6 +216,7 @@ var createGame = (userInput) => {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
+      console.log(collisionBody.x, collisionBody.y);
     })
 
     /*
@@ -222,9 +230,13 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
-    console.log('collisionBodies Length: ', collisionBodies.length);
-    console.log('collisionBodies: ', collisionBodies);
+
+    game.physics.p2.setPostBroadphaseCallback(sensorDetection, this);
   }
+
+
+
+
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
@@ -328,6 +340,11 @@ var createGame = (userInput) => {
 
   function checkOverlap(carSensor, tileBody) {
     return carSensor.getBounds().contains(null, tileBody.x, tileBody.y);
+  }
+
+  function sensorDetection(body1, body2) {
+    console.log('body1: ', body1);
+    console.log('body2: ', body2);
   }
 
   function createCar() {
