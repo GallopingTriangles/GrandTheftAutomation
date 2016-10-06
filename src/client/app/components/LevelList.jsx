@@ -15,11 +15,11 @@ var nums = [
 const LevelList = (props) => (
   <div  className='col-xs-12 col-md-8'>
     <table>
-      <tbody>
+      <tbody class="table-hover">
         <tr>
-        <th>Level</th>
-        <th>Best Time</th>
-        <th>Times wasted</th>
+        <th class="text-left">Level</th>
+        <th class="text-left">Best Time</th>
+        <th class="text-left">Times wasted</th>
         </tr>
         {nums.map(function(levelData, index) {
           return <LevelListEntry levelData={levelData} key={index}/>
