@@ -23,28 +23,28 @@ var Sandbox = function(req, res, next) {
     runTestSuite(function EngineInputTest(t) {
     	var engine = context.engine;
 	    this.testEngineDefined = function() {
-	      t.assertEqual(true, engine);
+	      t.assertDefined(engine, 'engine');
 	    };
     }); 
 
     runTestSuite(function ColorInputTest(t) {
     	var color = context.color;
 	    this.testColorDefined = function() {
-	      t.assertEqual('white', color);
+	      t.assertDefined(color, 'color');
 	    };
     });
 
     runTestSuite(function SpeedInputTest(t) {
     	var speed = context.speed;
       this.testSpeedDefined = function() {
-        t.assertEqual(25, speed);
+        t.assertDefined(speed, 'speed');
       };
     });
 
     runTestSuite(function SensorInputTest(t) {
       var sensor = context.sensor;
       this.testSensorDefined = function() {
-        t.assertEqual(true, sensor);
+        t.assertDefined(sensor, 'sensor');
       };
     });
 
