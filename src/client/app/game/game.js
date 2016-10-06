@@ -142,6 +142,7 @@ var createGame = (userInput) => {
   function create() {
     // Set the initial state and physics engine for the game
     game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.setImpactEvents(true);
 
     /*
     ** Set the tilemap for the game, which creates a grid system.
@@ -174,22 +175,17 @@ var createGame = (userInput) => {
     */
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1);
 
-    collisionBodies.forEach(function(body) {
-    });
+    // collisionBodies.forEach(function(body) {
+    // });
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
     ** and assign a callback function to when these tiles are hit by anything.
     */
-    collisionTiles = layer_1.getTiles(0, 0, 800, 600).filter(function(tile) {
-      return tile.index > 0;
-    });
+    // collisionTiles = layer_1.getTiles(0, 0, 800, 600).filter(function(tile) {
+    //   return tile.index > 0;
+    // });
 
-    /*
-    **
-    */
-    obstacles = game.add.group();
-    // map.createFromObjects('Collision Layer 1', 34, 'block', 0, true, false, obstacles);
 
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
@@ -198,18 +194,12 @@ var createGame = (userInput) => {
     createCar();
     setSpeed();
 
-
     /*
     ** Create two collision groups. One for the car and one for everything else.
     ** A collision will be detected for items in collision groups, which will invoke a callback.
     */
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
-
-    obstacles.forEach(function(obstacle) {
-      obstacle.setCollisionGroup(obstacleCollisionGroup);
-      obstacle.collides([carCollisionGroup, obstacleCollisionGroup]);
-    })
 
     game.physics.p2.updateBoundsCollisionGroup();
     car.body.setCollisionGroup(carCollisionGroup);
@@ -220,7 +210,6 @@ var createGame = (userInput) => {
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
     collisionBodies.forEach(function(collisionBody, i) {
-      collisionBody.setRectangle(32, 32);
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
@@ -250,8 +239,6 @@ var createGame = (userInput) => {
     var overlap = false;
 
 
-
-    checkOverlap(layer_1, sensor);
 
     collisionBodies.forEach(function(obstacle) {
     // obstacles.forEach(function(obstacle){
@@ -387,14 +374,13 @@ var createGame = (userInput) => {
   }
 
   function gameOver() {
-    console.log('gameOver');
     explosion = game.add.sprite(400, 300, 'explosion');
     explosion.x = car.x;
     explosion.y = car.y;
     explosion.anchor.setTo(.5, .5);
     explosion.animations.add('explode');
     explosion.animations.play('explode', 24, false);
-    text.kill();
+    // text.kill();
     car.kill();
     if (sensor) {
       sensor.kill();
