@@ -11,9 +11,8 @@ var Sandbox = function(req, res, next) {
 
   // == PHASER OBJECT ====================================
   req.body.phaser = {                                     // default phaser object
-    engine: true,
     color: 'white',
-    speed: 100,
+    speed: false,
     sensor: true,
     level: userLevel
   };
@@ -33,37 +32,60 @@ var Sandbox = function(req, res, next) {
     // ** ENGINE TESTS ** //
     runTestSuite(function EngineInputTest(t) {
     	var engine = context.engine;
+      req.body.phaser.engine = context.engine;
+
+      // if a test fails, set the engine to a default value
+      var setEngineDefault = function(errorMessage) {
+        req.body.phaser.engine = false;
+        req.body.bugs.push(errorMessage);
+      };
+
+      // test if engine is defined
 	    this.testEngineDefined = function() {
-	      t.assertDefined(engine, 'engine', function(errorMessage) {
-          req.body.phaser.engine = false;
-          req.body.bugs.push(errorMessage);
-        });
+	      t.assertDefined(engine, 'engine', setEngineDefault);
 	    };
+      // test if engine is of data type boolean
 	    this.testEngineBoolean = function() {
-        t.assertBoolean(engine, 'engine');
+        t.assertBoolean(engine, 'engine', setEngineDefault);
 	    };
+      // test if engine is equal to true
 	    this.testEngineTrue = function() {
-        t.assertTrue(engine, 'Expected engine to equal true, but got false');
+        t.assertTrue(engine, 'Expected engine to equal true, but got false', setEngineDefault);
 	    };
     }); 
 
     // ** COLOR TESTS ** //
     runTestSuite(function ColorInputTest(t) {
     	var color = context.color;
+      req.body.phaser.color = context.color;
+
+      // if a test fails, set the color to a default value
+      var setColorDefault = function(errorMessage) {
+        req.body.phaser.color = 'white';
+        req.body.bugs.push(errorMessage);
+      };
+
+      // test if color is defined
 	    this.testColorDefined = function() {
-	      t.assertDefined(color, 'color');
+	      t.assertDefined(color, 'color', setColorDefault);
 	    };
+      // test if color is of data type string
 	    this.testColorString = function() {
-        t.assertString(color, 'color');
+        t.assertString(color, 'color', setColorDefault);
 	    };
+      // test if color is equal to white or red or blue or black
 	    this.testColorWhiteRedBlueBlack = function() {
-        t.assertOptions(['white', 'black', 'red', 'blue'], color);
+        t.assertOptions(['white', 'black', 'red', 'blue'], color, setColorDefault);
 	    };
     });
 
     // ** SPEED TESTS ** //
     runTestSuite(function SpeedInputTest(t) {
     	var speed = context.speed;
+      req.body.phaser.speed = context.speed;
+
+      // if a test fails, set the speed to a default value
+
       this.testSpeedDefined = function() {
         t.assertDefined(speed, 'speed');
       };
@@ -89,9 +111,9 @@ var Sandbox = function(req, res, next) {
 	    };
     });
 
-	});
-  
   next();
+  });
+  
 };
 
 module.exports = Sandbox;
