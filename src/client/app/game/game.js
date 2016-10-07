@@ -5,7 +5,6 @@ var createGame = (userInput) => {
   var gameWidth = width * (7 / 12) - 10;
   var gameHeight = gameWidth * (6 / 8);
 
-  // original width = 800, height = 600
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
   /*
@@ -34,7 +33,7 @@ var createGame = (userInput) => {
   }
 
   var car;
-  var obstacles;
+  // var obstacles;
   var cursors;
   var text;
   var sensor;
@@ -50,13 +49,10 @@ var createGame = (userInput) => {
   var wasted;
 
 
-  var roadLayer;
   var map;
   var collisionLayer;
-  var tilesCollisionGroup;
   var carCollisionGroup;
   var obstacleCollisionGroup;
-  var tile;
 
   /*
   ** An array of collision bodies that the car can collide with.
@@ -142,7 +138,10 @@ var createGame = (userInput) => {
   ** of the set-up code, such as creating game objects.
   */
   function create() {
-    // Set the initial state and physics engine for the game
+    /*
+    ** Set the initial state and physics engine for the game.
+    ** Enable impact event handling before any impact events are dispatched.
+    */ 
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
 
@@ -192,20 +191,21 @@ var createGame = (userInput) => {
     createSensor();
     createCar();
     setSpeed();
-    if (sensor) {
-      console.log('sensor x: ', sensor.x);
-      console.log('sensor y: ', sensor.y);
-      console.log('sensor.getBounds().size(): ', sensor.getBounds().size());
-      console.log('sensor width: ', sensor.getBounds().width);
-      console.log('sensor height: ', sensor.getBounds().height);
-      console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
-      console.log('sensor contains: ', sensor.getBounds().contains(10, 100));
-    }
+    // if (sensor) {
+    //   console.log('sensor x: ', sensor.x);
+    //   console.log('sensor y: ', sensor.y);
+    //   console.log('sensor.getBounds().size(): ', sensor.getBounds().size());
+    //   console.log('sensor width: ', sensor.getBounds().width);
+    //   console.log('sensor height: ', sensor.getBounds().height);
+    //   console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
+    //   console.log('sensor contains: ', sensor.getBounds().contains(10, 100));
+    // }
 
 
     /*
     ** Create two collision groups. One for the car and one for everything else.
     ** A collision will be detected for items in collision groups, which will invoke a callback.
+    ** Update Bounds Collision Group will allow objects to collide with the world bounds.
     */
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -214,7 +214,8 @@ var createGame = (userInput) => {
 
     /*
     ** Assign each tile from the collisionBodies into the obstacleCollisionGroup.
-    ** These tiles will be set to collide with other tile bodies and the car.
+    ** These tiles will be set to collide with other tile bodies and the car, since
+    ** the car is set to collide with objects in the obstacleCollisionGroup.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
     collisionBodies.forEach(function(collisionBody) {
@@ -256,15 +257,14 @@ var createGame = (userInput) => {
 
 
   function update() {
-    //  Reset the cars velocity before rendering next frame;
+    /*
+    ** Enable sensor functionality if the user has activated the car sensor.
+    ** If the sensor detects any overlapping collision bodies, it will turn on.
+    */
     if (userInput.sensor) {
       attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
 
-    var overlap = false;
-
-
-
-    // collisionBodies.forEach(function(obstacle) {
+    //////////////// collisionBodies.forEach(function(obstacle) {
 
       /***************************** TODO ***********************************/
       /*                                                                    */
@@ -272,34 +272,43 @@ var createGame = (userInput) => {
       /*                                                                    */
       /***************************** TODO ***********************************/
 
-      // if (checkOverlap(obstacle, sensor)) {
-      //   overlap = true;
-      // };
+      //////////////// if (checkOverlap(obstacle, sensor)) {
+      ////////////////   overlap = true;
+      //////////////// };
 
-      // if (overlap) {
-      //   text.text = 'Remind me not to let you drive.'
-      //   sensor.alpha = 1;
-      // } else {
-      //   text.text = 'Sensors do not detect any danger.'
-      //   sensor.alpha = .1;
-      // }
-    // });
+      //////////////// if (overlap) {
+      ////////////////   text.text = 'Remind me not to let you drive.'
+      ////////////////   sensor.alpha = 1;
+      //////////////// } else {
+      ////////////////   text.text = 'Sensors do not detect any danger.'
+      ////////////////   sensor.alpha = .1;
+      //////////////// }
+    //////////////// });
 
-    // collisionBodies.forEach(function(tileBody) {
-    //   if (checkOverlap(sensor, tileBody)) {
-    //     overlap = true;
-    //   }
-    // });
+    //////////////// collisionBodies.forEach(function(tileBody) {
+    ////////////////   if (checkOverlap(sensor, tileBody)) {
+    ////////////////     overlap = true;
+    ////////////////   }
+    //////////////// });
 
 
-    // console.log(sensor.getBounds());
+    //////////////// console.log(sensor.getBounds());
 
-    // arr.forEach(function(rect) {
-    //   if (checkOverlap(sensor, rect)) {
-    //     overlap = true;
-    //     console.log('overlap');
-    //   }
-    // })
+    //////////////// arr.forEach(function(rect) {
+    ////////////////   if (checkOverlap(sensor, rect)) {
+    ////////////////     overlap = true;
+    ////////////////     console.log('overlap');
+    ////////////////   }
+    //////////////// })
+
+
+    /*
+    ** In every frame of the game, examine every collision body (tile) and check if
+    ** any of its corners are inside the sensor area. This serves as a listener to
+    ** detect overlapping between a sensor and collision bodies. If an overlap is
+    ** detected, set the variable overlap to true.
+    */
+    var overlap = false;
     collisionBodies.forEach(function(body) {
       if (sensor.getBounds().contains(body.x, body.y)
        || sensor.getBounds().contains(body.x + 32, body.y)
@@ -309,18 +318,23 @@ var createGame = (userInput) => {
       }
     })
 
+    /*
+    ** Increase the opacity of the sensor while a collision body is in its area.
+    */
     if (overlap) {
       sensor.alpha = 1;
     } else {
       sensor.alpha = 0.1;
     }
-
   }
 
+    /*
+    ** The car should remain still if no arrow keys are pressed for early levels.
+    ** This resets the car's velocity per frame.
+    */
     car.body.velocity.x = 0;
     car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
-
     if (userInput.engine) {
       if (cursors.up.isDown) {
         car.body.moveForward(carForwardSpeed);
@@ -334,10 +348,28 @@ var createGame = (userInput) => {
   }
 
   function render() {
+    /******* bugs *******/
   }
 
-  /*** HELPER FUNCTIONS ***/
+  /******* HELPER FUNCTIONS **********************/
+  /*********** HELPER FUNCTIONS ******************/
+  /*************** HELPER FUNCTIONS **************/
+  /******************* HELPER FUNCTIONS **********/
 
+
+  /**************************** NOTE ****************************/
+  /* Car angle is accessed by car.body.angle                    */
+  /* The angle of objects is 0 while pointing up                */
+  /* The angle of objects is 180 while pointing down            */
+  /* Clockwise is postive rotation, up to 180 degrees           */
+  /* Counterclockwise is negative rotation, up to -180 degrees  */
+  /**************************** NOTE ****************************/
+
+
+  /*
+  ** Dictates which direction the car should rotate based on if the car
+  ** is moving in a forward or reverse direction.
+  */
   function leftRight(forward) {
     var angularVelocity;
 
@@ -353,62 +385,65 @@ var createGame = (userInput) => {
       car.body.rotateRight(angularVelocity);
     }
 
-    // angle is 0 going straight up
-    // clockwise positive up to 180
-    // counterclockwise negative up to -180
-    // console.log(car.body.angle);
-
   }
 
+  /*
+  ** Attaches a sensor to the coordinate location of the car.
+  */
   function attachSensor(sensor, carX, carY, carAngle) {
     sensor.body.x = carX;
     sensor.body.y = carY;
     sensor.body.angle = carAngle;
   }
 
-  // function checkOverlap(spriteA, spriteB) {
-  //   var boundsA = spriteA.getBounds();
-  //   var boundsB = spriteB.getBounds();
+  ////////////////// function checkOverlap(spriteA, spriteB) {
+  //////////////////   var boundsA = spriteA.getBounds();
+  //////////////////   var boundsB = spriteB.getBounds();
 
-  //   return Phaser.Rectangle.intersects(boundsA, boundsB);
-  // }
+  //////////////////   return Phaser.Rectangle.intersects(boundsA, boundsB);
+  ////////////////// }
 
-  // function checkOverlap(carSensor, tileBody) {
-  //   return carSensor.getBounds().contains(null, tileBody.x, tileBody.y);
-  // }
+  ////////////////// function checkOverlap(carSensor, tileBody) {
+  //////////////////   return carSensor.getBounds().contains(null, tileBody.x, tileBody.y);
+  ////////////////// }
 
-  function checkOverlap(carSensor, rect) {
-    // console.log('overlap');
-    // return Phaser.Rectangle.intersects(carSensor.getBounds(), rect);
-    return carSensor.getBounds().contains(rect.centerX, rect.centerY);
-  }
 
-  // function sensorDetection(body1, body2) {
-  //   if (body1.sprite && !body2.sprite) {
-  //     if (body1.sprite.key === 'sensor') {
-  //       console.log('hit');
-  //       sensor.alpha = 1;
-  //       return true;
-  //     } else {
-  //       console.log('NO HIT');
-  //       sensor.alpha = 0.1;
-  //       return true;
-  //     }
-  //   } else if (body2.sprite && !body1.sprite) {
-  //     if (body2.sprite.key === 'sensor') {
-  //       console.log('hit');
-  //       sensor.alpha = 1;
-  //       return true;
-  //     } else {
-  //       console.log('NO HIT');
-  //       sensor.alpha = 0.1;
-  //       return true;
-  //     }
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  ////////////////// function checkOverlap(carSensor, rect) {
+  //////////////////   return carSensor.getBounds().contains(rect.centerX, rect.centerY);
+  ////////////////// }
 
+  ////////////////// function sensorDetection(body1, body2) {
+  //////////////////   if (body1.sprite && !body2.sprite) {
+  //////////////////     if (body1.sprite.key === 'sensor') {
+  //////////////////       console.log('hit');
+  //////////////////       sensor.alpha = 1;
+  //////////////////       return true;
+  //////////////////     } else {
+  //////////////////       console.log('NO HIT');
+  //////////////////       sensor.alpha = 0.1;
+  //////////////////       return true;
+  //////////////////     }
+  //////////////////   } else if (body2.sprite && !body1.sprite) {
+  //////////////////     if (body2.sprite.key === 'sensor') {
+  //////////////////       console.log('hit');
+  //////////////////       sensor.alpha = 1;
+  //////////////////       return true;
+  //////////////////     } else {
+  //////////////////       console.log('NO HIT');
+  //////////////////       sensor.alpha = 0.1;
+  //////////////////       return true;
+  //////////////////     }
+  //////////////////   } else {
+  //////////////////     return false;
+  //////////////////   }
+  ////////////////// }
+
+
+  /*
+  ** Generates the car as a Phaser sprite object. Enable it to be a Phaser body object.
+  ** Sets a rectangle to the size of the car to interpret collisions.
+  ** Initialize the starting coordinates to match up with the sensor's coordinates.
+  */
   function createCar() {
     // Appearance
     car = game.add.sprite(startingX, startingY, 'car');
@@ -421,19 +456,26 @@ var createGame = (userInput) => {
     car.body.collideWorldBounds = true;
   }
 
+  /*
+  ** If the user has activated the sensor:
+  ** Create the sensor around the car as a sprite. Scale it to an appropriate size,
+  ** and set the anchor point at the center, so it's rotation is relative to that point.
+  ** Initialize the starting coordinates to match up with the car's coordinates.
+  */
   function createSensor() {
-    // Check to make sure the user has turned the sensor on
     if (userInput.sensor) {
-      // Appearace
       sensor = game.add.sprite(startingX, startingY, 'sensor');
       sensor.scale.setTo(.4, .4);
       game.physics.p2.enable(sensor);
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
     }
-    
   }
 
+  /*
+  ** If the user has declared a speed:
+  ** Set the car's speed appropriately.
+  */
   function setSpeed() {
     if (userInput.speed) {
       carForwardSpeed = userInput.speed * userSpeedMultiplier;
@@ -441,6 +483,10 @@ var createGame = (userInput) => {
     }
   }
 
+
+  /*
+  ** Determine which image to load as the car sprite, based on user input.
+  */
   function setCarColor() {
     switch(userInput.color) {
       case 'white':
@@ -463,6 +509,13 @@ var createGame = (userInput) => {
     }
   }
 
+  /*
+  ** Called when the car collides with a collision body (tile)
+  ** The car gloriously bursts into flames while the classic WASTED
+  ** text renders onto the screen. Pure awesomeness.
+  ** How it's done: remove the car from the game, and add the explosion
+  ** spritesheet. Animate it by going through the frames of the spritesheet.
+  */
   function gameOver() {
     explosion = game.add.sprite(400, 300, 'explosion');
     explosion.x = car.x;
@@ -482,25 +535,3 @@ var createGame = (userInput) => {
 
 
 export default createGame;
-
-// EXAMPLE
-//  buildMaze : function() {    
-
-//   this.map = this.add.tilemap('level_02');    
-//   this.map.addTilesetImage('tile_set_2','floor',50,50);    
-//   this.layer = this.map.createLayer('Floor');        
-//   this.map.setCollisionByIndex([1,2,3,4,5],true,this.map.currentLayer,true);        
-//   this.map.setTileIndexCallback(3,function(){console.log('collide 3');},this);        
-//   this.layer.debug = true;    
-//   this.layer.resizeWorld();  
-// }
-
-// setUpPlayer : function() {    
-//   this.player = this.add.sprite(this.world.width/2-50, this.world.height/2, 'player');    
-//   this.player.anchor.set(0.5);    
-//   this.physics.enable(this.player,Phaser.Physics.ARCADE);    
-//   this.player.body.drag.set(1000,1000);    
-//   this.player.body.collideWorldBounds = true;  
-// },
-
-//  this.physics.arcade.collide(this.player, this.map.currentLayer);
