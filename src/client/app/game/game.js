@@ -37,7 +37,11 @@ var createGame = (userInput) => {
   var obstacles;
   var cursors;
   var text;
-  var sensors = [frontSensor, rightSensor, backSensor, leftSensor];
+  var frontSensor;
+  var leftSensor;
+  var backSensor;
+  var rightSensor;
+  var sensors = [frontSensor, leftSensor, backSensor, rightSensor];
   var startingX = 400;
   var startingY = 300;
   var backgroundColor = '#3e5f96';
@@ -293,9 +297,11 @@ var createGame = (userInput) => {
   }
 
   function attachSensors(startingAngle, offset, FLBRArray) {
-    sensor.angle = car.body.angle;
-    sensor.y = (-offset * Math.sin(convertAngle(car.body.angle + startingAngle))) + car.body.y;
-    sensor.x = (offset * Math.cos(convertAngle(car.body.angle + startingAngle))) + car.body.x;
+    sensors.forEach(function(sensor, index) {
+      sensor.angle = car.body.angle;
+      sensor.y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
+      sensor.x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
+    })
   }
 
   function checkOverlap(spriteA, spriteB) {
@@ -321,10 +327,9 @@ var createGame = (userInput) => {
     // Check to make sure the user has turned the sensor on
     if (userInput.sensor) {
       // Appearace
-      frontSensor = game.add.sprite(startingX, startingY, 'sensor');
-      rightSensor = game.add.sprite(startingX, startingY, 'sensor');
-      backSensor= game.add.sprite(startingX, startingY, 'sensor');
-      leftSensor = game.add.sprite(startingX, startingY, 'sensor');
+      sensors.forEach(function(sensor) {
+        
+      }
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
       sensor.scale.setTo(.5, .5);
@@ -369,7 +374,7 @@ var createGame = (userInput) => {
     explosion.animations.play('explode', 24, false);
     // text.kill();
     car.kill();
-    if (sensor) {
+    if (rightSensor) {
       sensor.kill();
     }
     wasted = game.add.sprite(400, 300, 'wasted');
