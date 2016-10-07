@@ -10,6 +10,7 @@ import Console from '../containers/ConsoleContainer.jsx';
 import PageContainer from '../../views/PageContainer.jsx';
 import LandingPage from '../../views/LandingPage.jsx';
 import GamePage from '../../views/GamePage.jsx';
+import ProfilePage from '../containers/ProfilePage.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class App extends Component {
         <Route path='/' component={ PageContainer }>
           <IndexRoute component={ LandingPage } />
           <Route path='game' component={ GamePage } />
+          <Route path='profile' component={ ProfilePage } />
         </Route>
       </Router>
     )
