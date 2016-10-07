@@ -22,7 +22,7 @@ var createGame = (userInput) => {
     /*
     ** A spritesheet contains a bunch of frames stitched together to create an animation effect
     */
-    game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48)
+    game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
     /* 
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
@@ -191,11 +191,13 @@ var createGame = (userInput) => {
     createCar();
     setSpeed();
     if (sensor) {
-      console.log('sensor x: ', sensor.body.x);
-      console.log('sensor y: ', sensor.body.y);
+      console.log('sensor x: ', sensor.x);
+      console.log('sensor y: ', sensor.y);
+      console.log('sensor size: ', sensor.getBounds().size());
       console.log('sensor width: ', sensor.getBounds().width);
       console.log('sensor height: ', sensor.getBounds().height);
       console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
+      console.log('sensor contains: ', sensor.getBounds().contains(null, 400, 300));
     }
 
 
@@ -214,11 +216,11 @@ var createGame = (userInput) => {
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
     collisionBodies.forEach(function(collisionBody) {
+      // collisionBody.setRectangle(32, 32, 16, 16);
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
       game.add.sprite(collisionBody.x, collisionBody.y, 'object');
-      console.log(collisionBody.x, collisionBody.y);
     })
 
     /*
@@ -250,7 +252,6 @@ var createGame = (userInput) => {
 
 
     // collisionBodies.forEach(function(obstacle) {
-    // obstacles.forEach(function(obstacle){
 
       /***************************** TODO ***********************************/
       /*                                                                    */
@@ -278,8 +279,10 @@ var createGame = (userInput) => {
     });
 
     if (overlap) {
+      // console.log('true dat');
       sensor.alpha = 1;
     } else {
+      // console.log('NAW MANG');
       sensor.alpha = 0.1;
     }
   }
@@ -366,7 +369,7 @@ var createGame = (userInput) => {
         return true;
       }
     } else {
-      return true;
+      return false;
     }
   }
 
