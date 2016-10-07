@@ -10,7 +10,6 @@ var levelData = [
   {level: 5, time: '00:00', wasted: 30},
   {level: 6, time: '00:00', wasted: 30},
   {level: 7, time: '00:00', wasted: 30}
-
 ]
 
 class ProfilePage extends Component {
@@ -19,7 +18,7 @@ class ProfilePage extends Component {
   }
 
   componentWillMount() {
-
+    fetch
   }
 
   render() {
