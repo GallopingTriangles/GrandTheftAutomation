@@ -122,18 +122,22 @@ var Sandbox = function(req, res, next) {
         req.body.bugs.push(errorMessage);
       };
 
+      // test if sensor is defined
       this.testSensorDefined = function() {
-        t.assertDefined(sensor, 'sensor');
+        t.assertDefined(sensor, 'sensor', setSensorDefault);
       };
+      // test if sensor is of data type boolean
       this.testSensorBoolean = function() {
-        t.assertBoolean(sensor, 'sensor');
+        t.assertBoolean(sensor, 'sensor', setSensorDefault);
 	    };
+      // test if sensor is equal to true
 	    this.testSensorTrue = function() {
-        t.assertTrue(sensor, 'Expected sensor to equal true, but got false');
+        t.assertTrue(sensor, 'Expected sensor to equal true, but got false', setSensorDefault);
 	    };
     });
 
   next();
+  
   });
   
 };
