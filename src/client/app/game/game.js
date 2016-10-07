@@ -366,9 +366,9 @@ var createGame = (userInput) => {
   }
 
   function attachSensor(sensor, carX, carY, carAngle) {
-    sensor.x = carX;
-    sensor.y = carY;
-    sensor.angle = carAngle;
+    sensor.body.x = carX;
+    sensor.body.y = carY;
+    sensor.body.angle = carAngle;
   }
 
   // function checkOverlap(spriteA, spriteB) {
@@ -432,7 +432,7 @@ var createGame = (userInput) => {
       // Appearace
       sensor = game.add.sprite(startingX, startingY, 'sensor');
       sensor.scale.setTo(.4, .4);
-      // game.physics.p2.enable(sensor);
+      game.physics.p2.enable(sensor);
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
     }
