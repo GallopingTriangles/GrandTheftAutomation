@@ -60,10 +60,13 @@ var createGame = (userInput) => {
   */
   var collisionBodies;
 
-  /*
-  ** An array of tiles from a tilemap layer that should contain collideable tiles
-  */
-  // var collisionTiles;
+  //////////////// /*
+  //////////////// ** An array of tiles from a tilemap layer that should contain collideable tiles
+  //////////////// */
+  //////////////// var collisionTiles;
+
+
+
 
   /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
@@ -191,15 +194,15 @@ var createGame = (userInput) => {
     createSensor();
     createCar();
     setSpeed();
-    // if (sensor) {
-    //   console.log('sensor x: ', sensor.x);
-    //   console.log('sensor y: ', sensor.y);
-    //   console.log('sensor.getBounds().size(): ', sensor.getBounds().size());
-    //   console.log('sensor width: ', sensor.getBounds().width);
-    //   console.log('sensor height: ', sensor.getBounds().height);
-    //   console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
-    //   console.log('sensor contains: ', sensor.getBounds().contains(10, 100));
-    // }
+    ////////////////// if (sensor) {
+    //////////////////   console.log('sensor x: ', sensor.x);
+    //////////////////   console.log('sensor y: ', sensor.y);
+    //////////////////   console.log('sensor.getBounds().size(): ', sensor.getBounds().size());
+    //////////////////   console.log('sensor width: ', sensor.getBounds().width);
+    //////////////////   console.log('sensor height: ', sensor.getBounds().height);
+    //////////////////   console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
+    //////////////////   console.log('sensor contains: ', sensor.getBounds().contains(10, 100));
+    ////////////////// }
 
 
     /*
@@ -237,19 +240,19 @@ var createGame = (userInput) => {
     */
     cursors = game.input.keyboard.createCursorKeys();
 
-    if (sensor) {
-      // arr.forEach(function(rect) {
-      //   console.log('sensor.getBounds(): ', sensor.getBounds());
-      //   console.log(sensor.getBounds().contains(rect.centerX, rect.centerY));
-      // })
+    //////////////// if (sensor) {
+    ////////////////   arr.forEach(function(rect) {
+    ////////////////     console.log('sensor.getBounds(): ', sensor.getBounds());
+    ////////////////     console.log(sensor.getBounds().contains(rect.centerX, rect.centerY));
+    ////////////////   })
 
-      // collisionBodies.forEach(function(body) {
-      //   if (sensor.getBounds().contains(body.x, body.y)) {
-      //     game.add.sprite(body.x, body.y, 'car');
-      //     console.log('hit');
-      //   }
-      // })
-    }
+    ////////////////   collisionBodies.forEach(function(body) {
+    ////////////////     if (sensor.getBounds().contains(body.x, body.y)) {
+    ////////////////       game.add.sprite(body.x, body.y, 'car');
+    ////////////////       console.log('hit');
+    ////////////////     }
+    ////////////////   })
+    //////////////// }
   }
 
 
