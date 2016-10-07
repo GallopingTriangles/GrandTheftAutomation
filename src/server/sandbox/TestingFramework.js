@@ -60,8 +60,8 @@ var assertions = {
   },
 
   // check if variable type is equal to NUMBER
-  assertNumber: function(variable, name) {
-    this.assertType(variable, 'number', name);
+  assertNumber: function(variable, name, failCb) {
+    this.assertType(variable, 'number', name, failCb);
   },
 
 	assertThrow: function(expectedMessage, action) {
