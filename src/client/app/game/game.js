@@ -37,7 +37,7 @@ var createGame = (userInput) => {
   var obstacles;
   var cursors;
   var text;
-  var sensor;
+  var sensors = [frontSensor, rightSensor, backSensor, leftSensor];
   var startingX = 400;
   var startingY = 300;
   var backgroundColor = '#3e5f96';
@@ -207,16 +207,12 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
-    frontSensor =
   }
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
     if (userInput.sensor) {
-      attachSensor(0, 100);
-      attachSensor(90, 100);
-      attachSensor(180, 100);
-      attachSensor(270, 100);
+      attachSensors();
 
     var overlap = false;
     collisionBodies.forEach(function(obstacle) {
@@ -296,7 +292,7 @@ var createGame = (userInput) => {
     return degToRad(90 - angle)
   }
 
-  function attachSensor(startingAngle, offset, sprite) {
+  function attachSensors(startingAngle, offset, FLBRArray) {
     sensor.angle = car.body.angle;
     sensor.y = (-offset * Math.sin(convertAngle(car.body.angle + startingAngle))) + car.body.y;
     sensor.x = (offset * Math.cos(convertAngle(car.body.angle + startingAngle))) + car.body.x;
