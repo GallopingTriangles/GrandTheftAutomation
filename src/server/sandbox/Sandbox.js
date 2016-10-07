@@ -11,8 +11,6 @@ var Sandbox = function(req, res, next) {
 
   // == PHASER OBJECT ====================================
   req.body.phaser = {                                     // default phaser object
-    //engine: true,
-    sensor: true,
     level: userLevel
   };
 
