@@ -29,7 +29,9 @@ var Sandbox = function(req, res, next) {
 	runTestSuite(function UserInputTest(t) {
     
     // ** ENGINE TESTS ** //
+    // set engine on phaser object to context value if it exists
     context.engine ? req.body.phaser.engine = context.engine : req.body.phaser.engine = false;
+    // start engine input test
     runTestSuite(function EngineInputTest(t) {
     	var engine = context.engine;
 
@@ -54,7 +56,9 @@ var Sandbox = function(req, res, next) {
     }); 
 
     // ** COLOR TESTS ** //
+    // set color on phaser object to context value if it exists
     context.color ? req.body.phaser.color = context.color : req.body.phaser.color = 'white';
+    // start color input test
     runTestSuite(function ColorInputTest(t) {
     	var color = context.color;
 
@@ -79,7 +83,9 @@ var Sandbox = function(req, res, next) {
     });
 
     // ** SPEED TESTS ** //
+    // set speed on phaser object to context value if it exists
     context.speed ? req.body.phaser.speed = context.speed : req.body.phaser.speed = false;
+    // start speed input test
     runTestSuite(function SpeedInputTest(t) {
     	var speed = context.speed;
 
@@ -104,8 +110,18 @@ var Sandbox = function(req, res, next) {
     });
 
     // ** SENSOR TESTS ** //
+    // set sensor on phaser object to context value if it exists
+    context.sensor ? req.body.phaser.sensor = context.sensor : req.body.phaser.sensor = false;
+    // start sensor input test
     runTestSuite(function SensorInputTest(t) {
       var sensor = context.sensor;
+
+      // if a test fails, set the sensor value to a default value
+      var setSensorDefault = function(errorMessage) {
+        req.body.phaser.sensor = false;
+        req.body.bugs.push(errorMessage);
+      };
+
       this.testSensorDefined = function() {
         t.assertDefined(sensor, 'sensor');
       };
