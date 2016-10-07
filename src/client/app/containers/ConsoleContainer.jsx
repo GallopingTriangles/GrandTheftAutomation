@@ -122,7 +122,7 @@ class Console extends Component {
       // stop the car and end the game. User wins.
       speed = 0;
     }
-    
+
                                                                             ***********************/
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -176,7 +176,7 @@ class Console extends Component {
   renderContent() {
     switch (this.state.tab) {
       case 'learn': return <Learn />;
-      case 'instructions': return <Instructions />;
+      case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
                             code={ this.state.input } 
                             inputChange={ this.codeChange.bind(this) } 
