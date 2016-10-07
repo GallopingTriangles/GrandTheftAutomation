@@ -1,22 +1,26 @@
 // TESTING FRAMEWORK
 var assertions = {
 	// check if condition is true
-  assertTrue: function(condition, message) {
+  assertTrue: function(condition, message, failCb) {
   	var errorMessage = 'Expected to be true, but got false';
   	if (message) {
   		errorMessage = message;
   	}
   	if (!condition) {
-      // throw new Error(errorMessage);
       console.log('ERROR:', errorMessage);
+      if (failCb) {
+	      failCb(errorMessage);
+      }
   	}
   },
   
   // check if input is present/defined
-  assertDefined: function(variable, name) {
+  assertDefined: function(variable, name, failCb) {
+  	var failCb = failCb || function() {};
     this.assertTrue(
       variable !== undefined,
-      'Expected variable "' + name + '" to be defined, but got undefined'
+      'Expected variable "' + name + '" to be defined, but got undefined',
+      failCb
     );
   },
 
