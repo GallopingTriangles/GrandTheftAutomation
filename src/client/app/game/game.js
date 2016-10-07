@@ -280,7 +280,8 @@ var createGame = (userInput) => {
   // }
 
   function attachSensor(startingAngle, offset) {
-    var theta = startingAngle + car.body.angle;
+    sensor.angle = car.body.angle;
+    var theta = startingAngle;
     sensor.y = -offset * Math.sin(theta) + car.body.y;
     sensor.x = offset * Math.cos(theta) + car.body.x;
   }
