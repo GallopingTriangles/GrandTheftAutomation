@@ -27,8 +27,12 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('map', './assets/gameMaps/TestMap_1.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tmw_desert_spacing', './assets/gameMaps/tmw_desert_spacing.png');
+    game.load.tilemap('level_1', './assets/gameMaps/level_1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
+
+
+    // game.load.tilemap('map', './assets/gameMaps/TestMap_1.json', null, Phaser.Tilemap.TILED_JSON);
+    // game.load.image('tmw_desert_spacing', './assets/gameMaps/tmw_desert_spacing.png');
 
   }
 
@@ -72,11 +76,10 @@ var createGame = (userInput) => {
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
   ** layer_1 contains the tiles to be set in collisionBodies that are collideable with the player
-  ** layer_2 contains the tiles that are not collideable with the player
   */
   var layer_1;
   var layer_2;
-
+  var layer_3;
 
 
 
@@ -154,22 +157,30 @@ var createGame = (userInput) => {
     ** and collisions can be specific for certain tiles in certain layers.
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
     */
-    map = game.add.tilemap('map');
-    map.addTilesetImage('tmw_desert_spacing');
+    map = game.add.tilemap('level_1');
+    map.addTilesetImage('GTA_tileset');
+    
+    // map = game.add.tilemap('map');
+    // map.addTilesetImage('tmw_desert_spacing');
 
     /*
     ** Set the layers and their respective tile IDs for collision.
     ** Needs to be done before generating the p2 bodies below.
     ** The layer names must correspond to the layers from the JSON tilemap file
     */
-    layer_1 = map.createLayer('Tile Layer 1');
-    layer_2 = map.createLayer('Tile Layer 2');
+    layer_1 = map.createLayer('collision_layer');
+    layer_2 = map.createLayer('road_layer');
+    layer_3 = map.createLayer('building_layer');
+
+    // layer_1 = map.createLayer('Tile Layer 1');
+    // layer_2 = map.createLayer('Tile Layer 2');
 
     /*
     ** Set the appropriate tiles of a certain layer to be collideable
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
-    map.setCollision(34, true, 'Tile Layer 1');
+    map.setCollisionBetween(0, 2000, true, 'collision_layer');
+    // map.setCollision(34, true, 'Tile Layer 1');
 
     /*
     ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
