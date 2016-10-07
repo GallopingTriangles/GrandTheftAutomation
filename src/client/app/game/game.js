@@ -211,7 +211,7 @@ var createGame = (userInput) => {
   function update() {
     //  Reset the cars velocity before rendering next frame;
     if (userInput.sensor) {
-      attachSensor(sensor, car.body.x, car.body.y, car.body.angle);
+      attachSensor(0, 100);
 
     var overlap = false;
     collisionBodies.forEach(function(obstacle) {
@@ -281,7 +281,8 @@ var createGame = (userInput) => {
 
   function attachSensor(startingAngle, offset) {
     var theta = startingAngle + car.body.angle;
-    sensor.y = -offset * Math.sin(car.body.angle) + car.body.y
+    sensor.y = -offset * Math.sin(theta) + car.body.y;
+    sensor.x = offset * Math.cos(theta) + car.body.x;
   }
 
   function checkOverlap(spriteA, spriteB) {
