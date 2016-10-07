@@ -117,7 +117,7 @@ class Console extends Component {
       // car to keep turning until the car is in the correct direction.
       turn('right');
     }
-    if (distanceGPS === 0) {
+    if (distanceGPS.distance === 0) {
       // if the distance to destination is 0, then we can
       // stop the car and end the game. User wins.
       speed = 0;
