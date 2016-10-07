@@ -80,7 +80,7 @@ var createGame = (userInput) => {
   var layer_1;
   var layer_2;
   var layer_3;
-
+  var layer_4;
 
 
   /*************************************** OLD STUFF *************************************/
@@ -159,7 +159,7 @@ var createGame = (userInput) => {
     */
     map = game.add.tilemap('level_1');
     map.addTilesetImage('GTA_tileset');
-    
+
     // map = game.add.tilemap('map');
     // map.addTilesetImage('tmw_desert_spacing');
 
@@ -171,6 +171,7 @@ var createGame = (userInput) => {
     layer_1 = map.createLayer('collision_layer');
     layer_2 = map.createLayer('road_layer');
     layer_3 = map.createLayer('building_layer');
+    layer_4 = map.createLayer('street_stuff_layer');
 
     // layer_1 = map.createLayer('Tile Layer 1');
     // layer_2 = map.createLayer('Tile Layer 2');
@@ -336,7 +337,7 @@ var createGame = (userInput) => {
     ** Increase the opacity of the sensor while a collision body is in its area.
     */
     if (overlap) {
-      sensor.alpha = 1;
+      sensor.alpha = 0.8;
     } else {
       sensor.alpha = 0.1;
     }
@@ -479,7 +480,7 @@ var createGame = (userInput) => {
   function createSensor() {
     if (userInput.sensor) {
       sensor = game.add.sprite(startingX, startingY, 'sensor');
-      sensor.scale.setTo(.4, .4);
+      sensor.scale.setTo(.25, .25);
       game.physics.p2.enable(sensor);
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
