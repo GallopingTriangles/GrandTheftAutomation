@@ -67,7 +67,7 @@ var createGame = (userInput) => {
   /*
   ** An array of tiles from a tilemap layer that should contain collideable tiles
   */
-  var collisionTiles;
+  // var collisionTiles;
 
   /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
@@ -80,7 +80,6 @@ var createGame = (userInput) => {
 
 
 
-  var arr;
 
   /*************************************** OLD STUFF *************************************/
   /*************************************** OLD STUFF *************************************/
@@ -218,17 +217,13 @@ var createGame = (userInput) => {
     ** These tiles will be set to collide with other tile bodies and the car.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
-    arr = [];
     collisionBodies.forEach(function(collisionBody) {
-      arr.push(collisionBody.setRectangle(32, 32, 16, 16));
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
-      game.add.sprite(collisionBody.x, collisionBody.y, 'object');
+      // game.add.sprite(collisionBody.x, collisionBody.y, 'object');
     })
 
-    console.log(arr[0]);
-    console.log(collisionBodies[15]);
     /*
     ** The gameOver callback is called when a collision is detected
     ** between the car and any body in the obstacleCollisionGroup (the tiles).
@@ -240,9 +235,6 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
-
-    // game.physics.p2.setPostBroadphaseCallback(sensorDetection, this);
-
 
     if (sensor) {
       // arr.forEach(function(rect) {
@@ -310,9 +302,9 @@ var createGame = (userInput) => {
     // })
     collisionBodies.forEach(function(body) {
       if (sensor.getBounds().contains(body.x, body.y)
-          || sensor.getBounds().contains(body.x + 32, body.y)
-          || sensor.getBounds().contains(body.x, body.y + 32)
-          || sensor.getBounds().contains(body.x + 32, body.y + 32)) {
+       || sensor.getBounds().contains(body.x + 32, body.y)
+       || sensor.getBounds().contains(body.x, body.y + 32)
+       || sensor.getBounds().contains(body.x + 32, body.y + 32)) {
         overlap = true;
       }
     })
