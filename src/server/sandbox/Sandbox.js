@@ -9,15 +9,16 @@ var Sandbox = function(req, res, next) {
 	var userLevel = req.body.level;
 	var userInput = req.body.log;
 
-  // == CREATE PHASER OBJECT =============================
+  // == PHASER OBJECT ====================================
   req.body.phaser = {                                     // default phaser object
-    engine: false,
+    engine: true,
     color: 'white',
-    speed: false,
-    sensor: false
+    speed: 100,
+    sensor: true,
+    level: userLevel
   };
 
-  // == CREATE BUGS ARRAY ================================
+  // == BUGS ARRAY =======================================
   req.body.bugs = [];
 	
   // == VIRTUAL MACHINE ==================================
@@ -33,7 +34,10 @@ var Sandbox = function(req, res, next) {
     runTestSuite(function EngineInputTest(t) {
     	var engine = context.engine;
 	    this.testEngineDefined = function() {
-	      t.assertDefined(engine, 'engine');
+	      t.assertDefined(engine, 'engine', function(errorMessage) {
+          req.body.phaser.engine = false;
+          req.body.bugs.push(errorMessage);
+        });
 	    };
 	    this.testEngineBoolean = function() {
         t.assertBoolean(engine, 'engine');
