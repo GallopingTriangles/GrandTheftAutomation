@@ -328,11 +328,12 @@ var createGame = (userInput) => {
     if (userInput.sensor) {
       // Appearace
       sensors.forEach(function(sensor) {
-        
-      }
-      sensor.alpha = .1;
-      sensor.anchor.setTo(.5, .5);
-      sensor.scale.setTo(.5, .5);
+        // Is there any way to refer to these by name so that I can reference the global variables?
+        sensor = game.add.sprite(startingX, startingY, 'sensor')
+        sensor.alpha = .1;
+        sensor.anchor.setTo(.5, .5);
+        sensor.scale.setTo(.5, .5);
+      });
     }
   }
 
