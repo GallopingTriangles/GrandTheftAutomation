@@ -1,22 +1,25 @@
 // TESTING FRAMEWORK
 var assertions = {
 	// check if condition is true
-  assertTrue: function(condition, message) {
+  assertTrue: function(condition, message, failCb) {
   	var errorMessage = 'Expected to be true, but got false';
   	if (message) {
   		errorMessage = message;
   	}
   	if (!condition) {
-      // throw new Error(errorMessage);
       console.log('ERROR:', errorMessage);
+      if (failCb) {
+	      failCb(errorMessage);
+      }
   	}
   },
   
   // check if input is present/defined
-  assertDefined: function(variable, name) {
+  assertDefined: function(variable, name, failCb) {
     this.assertTrue(
       variable !== undefined,
-      'Expected variable "' + name + '" to be defined, but got undefined'
+      'Expected variable ' + name + ' to be defined, but got undefined',
+      failCb
     );
   },
 
@@ -29,34 +32,36 @@ var assertions = {
 	},
 
   // check if the actual input equals one of the options
-	assertOptions: function(options, actual) {
+	assertOptions: function(options, actual, failCb) {
     this.assertTrue(
       options.indexOf(actual) >= 0,
-      'Expected to equal ' + options + ', but got: ' + actual
+      'Expected to equal ' + options + ', but got: ' + actual,
+      failCb
     );
 	},
 
   // check if variable is equal to expected type
-  assertType: function(variable, type, name) {
+  assertType: function(variable, type, name, failCb) {
     this.assertTrue(
       typeof variable === type,
-      'Expected variable ' + name + ' to be ' + type + ', but got: ' + typeof variable
+      'Expected variable ' + name + ' to be ' + type + ', but got: ' + typeof variable,
+      failCb
     );
   },
 
   // check if variable type is equal to BOOLEAN
-  assertBoolean: function(variable, name) {
-    this.assertType(variable, 'boolean', name);
+  assertBoolean: function(variable, name, failCb) {
+    this.assertType(variable, 'boolean', name, failCb);
   },
 
   // check if variable type is equal to STRING
-  assertString: function(variable, name) {
-    this.assertType(variable, 'string', name);
+  assertString: function(variable, name, failCb) {
+    this.assertType(variable, 'string', name, failCb);
   },
 
   // check if variable type is equal to NUMBER
-  assertNumber: function(variable, name) {
-    this.assertType(variable, 'number', name);
+  assertNumber: function(variable, name, failCb) {
+    this.assertType(variable, 'number', name, failCb);
   },
 
 	assertThrow: function(expectedMessage, action) {

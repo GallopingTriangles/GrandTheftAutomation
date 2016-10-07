@@ -7,7 +7,7 @@ router.get('/', gameController.getGameState); // gets the user's saved game stat
 
 // saves the user's game state of the code editor
 // sandbox middleware parses user input and adds it to req.body
-router.post('/', Sandbox, sandbox, gameController.saveGameState); 
+router.post('/', Sandbox, gameController.saveGameState); 
 
 // router.put('/', gameController.updateGameState); // updates the user's game state of the code editor
 /****************************************************************************
