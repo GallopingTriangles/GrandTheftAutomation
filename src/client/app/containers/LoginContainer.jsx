@@ -38,7 +38,7 @@ class LoginContainer extends Component {
         this.props.changeUser(this.state.username);
         this.props.resetLevel();
         console.log(result.message);
-        
+
         // clear the form
         this.setState({
           username: '',
