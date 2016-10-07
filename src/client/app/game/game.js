@@ -79,6 +79,9 @@ var createGame = (userInput) => {
   var layer_2;
 
 
+
+  var arr;
+
   /*************************************** OLD STUFF *************************************/
   /*************************************** OLD STUFF *************************************/
   /*************************************** OLD STUFF *************************************/
@@ -193,11 +196,11 @@ var createGame = (userInput) => {
     if (sensor) {
       console.log('sensor x: ', sensor.x);
       console.log('sensor y: ', sensor.y);
-      console.log('sensor size: ', sensor.getBounds().size());
+      console.log('sensor.getBounds().size(): ', sensor.getBounds().size());
       console.log('sensor width: ', sensor.getBounds().width);
       console.log('sensor height: ', sensor.getBounds().height);
       console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
-      console.log('sensor contains: ', sensor.getBounds().contains(null, 400, 300));
+      console.log('sensor contains: ', sensor.getBounds().contains(10, 100));
     }
 
 
@@ -215,14 +218,17 @@ var createGame = (userInput) => {
     ** These tiles will be set to collide with other tile bodies and the car.
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.Body.html#setCollisionGroup
     */
+    arr = [];
     collisionBodies.forEach(function(collisionBody) {
-      // collisionBody.setRectangle(32, 32, 16, 16);
+      arr.push(collisionBody.setRectangle(32, 32, 16, 16));
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup], gameOver);
       collisionBody.static = true;
       game.add.sprite(collisionBody.x, collisionBody.y, 'object');
     })
 
+    console.log(arr[0]);
+    console.log(collisionBodies[15]);
     /*
     ** The gameOver callback is called when a collision is detected
     ** between the car and any body in the obstacleCollisionGroup (the tiles).
@@ -236,6 +242,21 @@ var createGame = (userInput) => {
     cursors = game.input.keyboard.createCursorKeys();
 
     // game.physics.p2.setPostBroadphaseCallback(sensorDetection, this);
+
+
+    if (sensor) {
+      // arr.forEach(function(rect) {
+      //   console.log('sensor.getBounds(): ', sensor.getBounds());
+      //   console.log(sensor.getBounds().contains(rect.centerX, rect.centerY));
+      // })
+
+      // collisionBodies.forEach(function(body) {
+      //   if (sensor.getBounds().contains(body.x, body.y)) {
+      //     game.add.sprite(body.x, body.y, 'car');
+      //     console.log('hit');
+      //   }
+      // })
+    }
   }
 
 
@@ -272,19 +293,33 @@ var createGame = (userInput) => {
       // }
     // });
 
-    collisionBodies.forEach(function(tileBody) {
-      if (checkOverlap(sensor, tileBody)) {
+    // collisionBodies.forEach(function(tileBody) {
+    //   if (checkOverlap(sensor, tileBody)) {
+    //     overlap = true;
+    //   }
+    // });
+
+
+    // console.log(sensor.getBounds());
+
+    // arr.forEach(function(rect) {
+    //   if (checkOverlap(sensor, rect)) {
+    //     overlap = true;
+    //     console.log('overlap');
+    //   }
+    // })
+    collisionBodies.forEach(function(body) {
+      if (sensor.getBounds().contains(body.x, body.y)) {
         overlap = true;
       }
-    });
+    })
 
     if (overlap) {
-      // console.log('true dat');
       sensor.alpha = 1;
     } else {
-      // console.log('NAW MANG');
       sensor.alpha = 0.1;
     }
+
   }
 
     car.body.velocity.x = 0;
@@ -331,9 +366,9 @@ var createGame = (userInput) => {
   }
 
   function attachSensor(sensor, carX, carY, carAngle) {
-    sensor.body.x = carX;
-    sensor.body.y = carY;
-    sensor.body.angle = carAngle;
+    sensor.x = carX;
+    sensor.y = carY;
+    sensor.angle = carAngle;
   }
 
   // function checkOverlap(spriteA, spriteB) {
@@ -343,35 +378,41 @@ var createGame = (userInput) => {
   //   return Phaser.Rectangle.intersects(boundsA, boundsB);
   // }
 
-  function checkOverlap(carSensor, tileBody) {
-    return carSensor.getBounds().contains(null, tileBody.x, tileBody.y);
+  // function checkOverlap(carSensor, tileBody) {
+  //   return carSensor.getBounds().contains(null, tileBody.x, tileBody.y);
+  // }
+
+  function checkOverlap(carSensor, rect) {
+    // console.log('overlap');
+    // return Phaser.Rectangle.intersects(carSensor.getBounds(), rect);
+    return carSensor.getBounds().contains(rect.centerX, rect.centerY);
   }
 
-  function sensorDetection(body1, body2) {
-    if (body1.sprite && !body2.sprite) {
-      if (body1.sprite.key === 'sensor') {
-        console.log('hit');
-        sensor.alpha = 1;
-        return true;
-      } else {
-        console.log('NO HIT');
-        sensor.alpha = 0.1;
-        return true;
-      }
-    } else if (body2.sprite && !body1.sprite) {
-      if (body2.sprite.key === 'sensor') {
-        console.log('hit');
-        sensor.alpha = 1;
-        return true;
-      } else {
-        console.log('NO HIT');
-        sensor.alpha = 0.1;
-        return true;
-      }
-    } else {
-      return false;
-    }
-  }
+  // function sensorDetection(body1, body2) {
+  //   if (body1.sprite && !body2.sprite) {
+  //     if (body1.sprite.key === 'sensor') {
+  //       console.log('hit');
+  //       sensor.alpha = 1;
+  //       return true;
+  //     } else {
+  //       console.log('NO HIT');
+  //       sensor.alpha = 0.1;
+  //       return true;
+  //     }
+  //   } else if (body2.sprite && !body1.sprite) {
+  //     if (body2.sprite.key === 'sensor') {
+  //       console.log('hit');
+  //       sensor.alpha = 1;
+  //       return true;
+  //     } else {
+  //       console.log('NO HIT');
+  //       sensor.alpha = 0.1;
+  //       return true;
+  //     }
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   function createCar() {
     // Appearance
@@ -390,9 +431,8 @@ var createGame = (userInput) => {
     if (userInput.sensor) {
       // Appearace
       sensor = game.add.sprite(startingX, startingY, 'sensor');
-      sensor.scale.setTo(.5, .5);
-      game.physics.p2.enable(sensor);
-      sensor.body.setRectangle(100, 200);
+      sensor.scale.setTo(.4, .4);
+      // game.physics.p2.enable(sensor);
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
     }
