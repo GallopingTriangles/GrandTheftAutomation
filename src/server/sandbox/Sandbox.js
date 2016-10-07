@@ -11,8 +11,7 @@ var Sandbox = function(req, res, next) {
 
   // == PHASER OBJECT ====================================
   req.body.phaser = {                                     // default phaser object
-    color: 'white',
-    speed: false,
+    //engine: true,
     sensor: true,
     level: userLevel
   };
@@ -30,9 +29,9 @@ var Sandbox = function(req, res, next) {
 	runTestSuite(function UserInputTest(t) {
     
     // ** ENGINE TESTS ** //
+    context.engine ? req.body.phaser.engine = context.engine : req.body.phaser.engine = false;
     runTestSuite(function EngineInputTest(t) {
     	var engine = context.engine;
-      req.body.phaser.engine = context.engine;
 
       // if a test fails, set the engine to a default value
       var setEngineDefault = function(errorMessage) {
@@ -55,9 +54,9 @@ var Sandbox = function(req, res, next) {
     }); 
 
     // ** COLOR TESTS ** //
+    context.color ? req.body.phaser.color = context.color : req.body.phaser.color = 'white';
     runTestSuite(function ColorInputTest(t) {
     	var color = context.color;
-      req.body.phaser.color = context.color;
 
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
@@ -80,20 +79,27 @@ var Sandbox = function(req, res, next) {
     });
 
     // ** SPEED TESTS ** //
+    context.speed ? req.body.phaser.speed = context.speed : req.body.phaser.speed = false;
     runTestSuite(function SpeedInputTest(t) {
     	var speed = context.speed;
-      req.body.phaser.speed = context.speed;
 
       // if a test fails, set the speed to a default value
+      var setSpeedDefault = function(errorMessage) {
+        req.body.phaser.speed = false;
+        req.body.bugs.push(errorMessage);
+      };
 
+      // test if speed is defined
       this.testSpeedDefined = function() {
-        t.assertDefined(speed, 'speed');
+        t.assertDefined(speed, 'speed', setSpeedDefault);
       };
+      // test if speed is of data type number
       this.testSpeedNumber = function() {
-        t.assertNumber(speed, 'speed');
+        t.assertNumber(speed, 'speed', setSpeedDefault);
       };
+      // test if speed is a positive number
       this.testSpeedPositive = function() {
-        t.assertTrue(speed >= 0, 'Expected speed to be a positive number, but got a negative number');
+        t.assertTrue(speed >= 0, 'Expected speed to be a positive number, but got a negative number', setSpeedDefault);
       };
     });
 
