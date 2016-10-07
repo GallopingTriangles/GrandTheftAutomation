@@ -8,14 +8,23 @@ var runTestSuite = require('./TestingFramework');
 var Sandbox = function(req, res, next) {
 	var userLevel = req.body.level;
 	var userInput = req.body.log;
+
+  // == CREATE PHASER OBJECT =============================
+  req.body.phaser = {                                     // default phaser object
+    engine: false,
+    color: 'white',
+    speed: false,
+    sensor: false
+  };
+
+  // == CREATE BUGS ARRAY ================================
+  req.body.bugs = [];
 	
-	// compile user input
-	var script = new vm.Script(userInput);
-	// create new sandbox and empty context
-	var sandbox = {};
+  // == VIRTUAL MACHINE ==================================
+	var script = new vm.Script(userInput);                  // compile user input
+	var sandbox = {};                                       // create new sandbox and empty context
 	var context = new vm.createContext(sandbox);
-	// run compiled code
-	script.runInContext(context);
+	script.runInContext(context);                           // run compiled code
 
 	// == TESTING USER INPUT ===============================
 	runTestSuite(function UserInputTest(t) {
