@@ -309,7 +309,10 @@ var createGame = (userInput) => {
     //   }
     // })
     collisionBodies.forEach(function(body) {
-      if (sensor.getBounds().contains(body.x, body.y)) {
+      if (sensor.getBounds().contains(body.x, body.y)
+          || sensor.getBounds().contains(body.x + 32, body.y)
+          || sensor.getBounds().contains(body.x, body.y + 32)
+          || sensor.getBounds().contains(body.x + 32, body.y + 32)) {
         overlap = true;
       }
     })
