@@ -5,10 +5,22 @@ import Avatar from '../components/Avatar.jsx';
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      logsList: []
+    };
   }
 
   componentWillMount() {
-    fetch
+    fetch('/game', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(data => {
+      console.log('Response from /game: ', data);
+      data.json()
+    });
   }
 
   render() {

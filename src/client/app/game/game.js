@@ -273,10 +273,15 @@ var createGame = (userInput) => {
     }
   }
 
-  function attachSensor(sensor, carX, carY, carAngle) {
-    sensor.x = carX;
-    sensor.y = carY;
-    sensor.angle = carAngle;
+  // function attachSensor(sensor, carX, carY, carAngle) {
+  //   sensor.x = carX;
+  //   sensor.y = carY;
+  //   sensor.angle = carAngle;
+  // }
+
+  function attachSensor(startingAngle, offset) {
+    var theta = startingAngle + car.body.angle;
+    sensor.y = -offset * Math.sin(car.body.angle) + car.body.y
   }
 
   function checkOverlap(spriteA, spriteB) {
