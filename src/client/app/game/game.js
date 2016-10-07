@@ -194,6 +194,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody, i) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
+      collisionBody.debug = true;
     })
 
     /*
@@ -206,12 +207,16 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
+    frontSensor =
   }
 
   function update() {
     //  Reset the cars velocity before rendering next frame;
     if (userInput.sensor) {
       attachSensor(0, 100);
+      attachSensor(90, 100);
+      attachSensor(180, 100);
+      attachSensor(270, 100);
 
     var overlap = false;
     collisionBodies.forEach(function(obstacle) {
@@ -255,6 +260,9 @@ var createGame = (userInput) => {
   function render() {
     game.debug.spriteInfo(car, 32, 32);
     game.debug.spriteInfo(sensor, 32, 200);
+    // game.debug.spriteBounds(car);
+    car.body.debug = true;
+
   }
 
   /*** HELPER FUNCTIONS ***/
@@ -280,11 +288,18 @@ var createGame = (userInput) => {
   //   sensor.y = carY;
   //   sensor.angle = carAngle;
   // }
+  function degToRad(num) {
+    return num * (Math.PI / 180);
+  }
 
-  function attachSensor(startingAngle, offset) {
+  function convertAngle(angle) {
+    return degToRad(90 - angle)
+  }
+
+  function attachSensor(startingAngle, offset, sprite) {
     sensor.angle = car.body.angle;
-    sensor.y = -offset * Math.sin(car.body.angle + startingAngle) + car.body.y;
-    sensor.x = offset * Math.cos(car.body.angle + startingAngle) + car.body.x;
+    sensor.y = (-offset * Math.sin(convertAngle(car.body.angle + startingAngle))) + car.body.y;
+    sensor.x = (offset * Math.cos(convertAngle(car.body.angle + startingAngle))) + car.body.x;
   }
 
   function checkOverlap(spriteA, spriteB) {
@@ -310,7 +325,10 @@ var createGame = (userInput) => {
     // Check to make sure the user has turned the sensor on
     if (userInput.sensor) {
       // Appearace
-      sensor = game.add.sprite(startingX, startingY, 'sensor');
+      frontSensor = game.add.sprite(startingX, startingY, 'sensor');
+      rightSensor = game.add.sprite(startingX, startingY, 'sensor');
+      backSensor= game.add.sprite(startingX, startingY, 'sensor');
+      leftSensor = game.add.sprite(startingX, startingY, 'sensor');
       sensor.alpha = .1;
       sensor.anchor.setTo(.5, .5);
       sensor.scale.setTo(.5, .5);
