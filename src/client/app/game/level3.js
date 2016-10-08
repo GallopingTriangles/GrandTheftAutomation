@@ -45,7 +45,7 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
 
-  var startingX = 300;
+  var startingX = 280;
   var startingY = 550;
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
@@ -448,12 +448,13 @@ var createGame = (userInput) => {
   }
 
   function turn(endingAngle) {
-    if (car.body.y < 200) {
+    if (car.body.y < 164) {
       if (car.body.angle < endingAngle) {
         car.body.moveForward(userInput.speed * 4);
+        
         car.body.rotateRight(userInput.speed * 4 / 3);
       } else {
-        car.body.angle = 90;
+        car.body.angle = endingAngle;
       }
     }
   }
