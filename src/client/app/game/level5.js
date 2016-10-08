@@ -7,10 +7,10 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     // case: 1, // success left turn
-    case: 2, // success right turn
-    // case: 3, // didnt start engine
-    // case: 4, // crashed straight
-    // case: 5  // stopped at intersection
+    // case: 2, // success right turn
+    // case: 3, // stopped at intersection
+    case: 4, // crashed straight
+    // case: 5  // didn't start engine
   }
   /**********************************************************/
   /**********************************************************/
@@ -279,15 +279,23 @@ var createGame = (userInput) => {
     }
 
     if (FAKE_USER_INPUT.case === 1) {
-      car.body.moveForward(350);
+      car.body.moveForward(400);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
     } else if (FAKE_USER_INPUT.case === 2) {
-      car.body.moveForward(350);
+      car.body.moveForward(400);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 90;
       }
+    } else if (FAKE_USER_INPUT.case === 3) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 50 - car.body.x) < 50 && Math.abs(coord_1[1] - car.body.y) < 50) {
+        car.body.velocity.x = 0;
+        car.body.velocity.y = 0;
+      }
+    } else if (FAKE_USER_INPUT.case === 4) {
+      car.body.moveForward(400);
     }
 
     /*
