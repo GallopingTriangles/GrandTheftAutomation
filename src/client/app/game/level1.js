@@ -283,6 +283,9 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
+    if (userInput.engine) {
+      car.body.moveForward(userInput.speed);
+    }
   }
 
   /*
