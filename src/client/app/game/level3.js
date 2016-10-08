@@ -56,6 +56,9 @@ var createGame = (userInput) => {
   var explosion;
   var wasted;
 
+  /* debugTools */
+  var intersection = false;
+
 
   var map;
   var collisionLayer;
@@ -134,7 +137,7 @@ var createGame = (userInput) => {
     */
 
     /* debugTools */
-    map.setCollisionBetween(0, 2000, true, 'collision_layer');
+    // map.setCollisionBetween(0, 2000, true, 'collision_layer');
     // map.setCollision(34, true, 'Tile Layer 1');
 
     // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
@@ -301,6 +304,7 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
+    /* debugTools */
     // if (userInput.engine) {
     //   car.body.moveForward(userInput.speed * userSpeedMultiplier);
     // }
@@ -439,7 +443,12 @@ var createGame = (userInput) => {
     wasted.anchor.setTo(.5, .5);
   }
 
-  // function
+  function turn90(startingAngle, direction) {
+    
+    if (cursors.up.isDown) {
+      car.body.moveForward(carForwardSpeed);
+      leftRight(true);
+  }
 
 }
 
