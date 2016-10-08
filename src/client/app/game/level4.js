@@ -6,11 +6,11 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
-    // case: 1, // success right turn
+    case: 1, // success right turn
     // case: 2, // fail, crashed into obstacle after right turn
     // case: 3, // fail, crash straight
     // case: 4, // fail, crash left
-    case: 5, // fail, stalls at intersection
+    // case: 5, // fail, stalls at intersection
     // case: 6, // fail, car did not start engine
   }
   /**********************************************************/
@@ -278,26 +278,6 @@ var createGame = (userInput) => {
       //   sensor.alpha = 0.1;
       // }
     }
-
-    // if (FAKE_USER_INPUT.case === 1) {
-    //   car.body.moveForward(400);
-    //   if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
-    //     car.body.angle = -90;
-    //   }
-    // } else if (FAKE_USER_INPUT.case === 2) {
-    //   car.body.moveForward(400);
-    //   if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-    //     car.body.angle = 90;
-    //   }
-    // } else if (FAKE_USER_INPUT.case === 3) {
-    //   car.body.moveForward(400);
-    //   if (Math.abs(coord_1[0] + 50 - car.body.x) < 50 && Math.abs(coord_1[1] - car.body.y) < 50) {
-    //     car.body.velocity.x = 0;
-    //     car.body.velocity.y = 0;
-    //   }
-    // } else if (FAKE_USER_INPUT.case === 4) {
-    //   car.body.moveForward(400);
-    // }
 
     if (FAKE_USER_INPUT.case === 1) { // successful right turn
       car.body.moveForward(400);
