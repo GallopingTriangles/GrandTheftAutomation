@@ -1,4 +1,20 @@
 var createGame = (userInput) => {
+  /**********************************************************/
+  /**********************************************************/
+  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
+  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
+  /**********************************************************/
+  /**********************************************************/
+  var FAKE_USER_INPUT = {
+    // case: 1, // success left turn
+    case: 2, // success right turn
+    // case: 3, // didnt start engine
+    // case: 4, // crashed straight
+    // case: 5  // stopped at intersection
+  }
+  /**********************************************************/
+  /**********************************************************/
+
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;
@@ -27,7 +43,7 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_2', './assets/gameMaps/level_2.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_5', './assets/gameMaps/level_5.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
   }
 
@@ -75,6 +91,10 @@ var createGame = (userInput) => {
   var endZoneBodies;
 
   var completionTiles;
+
+  var intersectionTiles_1;
+  var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
+
   /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
@@ -107,7 +127,7 @@ var createGame = (userInput) => {
     ** and collisions can be specific for certain tiles in certain layers.
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
     */
-    map = game.add.tilemap('level_2');
+    map = game.add.tilemap('level_5');
     map.addTilesetImage('GTA_tileset');
 
     // map = game.add.tilemap('map');
@@ -122,18 +142,15 @@ var createGame = (userInput) => {
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_layer');
+    layer_6 = map.createLayer('intersection_DRL_layer');
     layer_1 = map.createLayer('collision_layer');
 
-    // layer_1 = map.createLayer('Tile Layer 1');
-    // layer_2 = map.createLayer('Tile Layer 2');
 
     /*
     ** Set the appropriate tiles of a certain layer to be collideable
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
-    // map.setCollision(34, true, 'Tile Layer 1');
 
     // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
 
@@ -152,9 +169,19 @@ var createGame = (userInput) => {
     // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
     // console.log(endZoneBodies);
 
-    completionTiles = layer_5.getTiles(0, 0, 1000, 1000).filter(function(tile) {
+
+
+    /*
+    ** Gather the endzone tiles and intersection tiles so a callback can be run when
+    ** the car reaches any of these tiles, such as a turn or completion zone.
+    */
+    completionTiles = layer_5.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     });
+
+    intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) {
+      return tile.index > 0;
+    })
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
@@ -206,8 +233,7 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
-
-
+    coord_1 = intersectionCenter(intersectionTiles_1); // pixel center of the first intersection
 
   }
 
@@ -216,11 +242,6 @@ var createGame = (userInput) => {
 
 
   function update() {
-    if (userInput === 3) {
-      levelFailed();
-    }
-
-
     /*
     ** Enable sensor functionality if the user has activated the car sensor.
     ** If the sensor detects any overlapping collision bodies, it will turn on.
@@ -251,20 +272,28 @@ var createGame = (userInput) => {
       ** Increase the opacity of the sensor while a collision body is in its area.
       */
       // if (overlap) {
-      //   sensor.alpha = 1;
+      //   sensor.alpha = 0.7;
       // } else {
       //   sensor.alpha = 0.1;
       // }
+    }
+
+    if (FAKE_USER_INPUT.case === 1) {
+      car.body.moveForward(350);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
+        car.body.angle = -90;
+      }
+    } else if (FAKE_USER_INPUT.case === 2) {
+      car.body.moveForward(350);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+        car.body.angle = 90;
+      }
     }
 
     /*
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
     */
-
-    if (userInput === 2) {
-
-    }
     checkCompletion();
   }
 
@@ -295,9 +324,7 @@ var createGame = (userInput) => {
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
     if (userInput.engine) {
-      if (userInput !== 3) {
-        car.body.moveForward(userInput.speed * userSpeedMultiplier);
-      }
+      car.body.moveForward(userInput.speed * userSpeedMultiplier);
     }
   }
 
@@ -411,13 +438,6 @@ var createGame = (userInput) => {
     console.log('COMPLETED!');
   }
 
-  function levelFailed() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Failed!', style);
-    game.paused = true;
-    console.log('level failed');
-  }
-
   /*
   ** Called when the car collides with a collision body (tile)
   ** The car gloriously bursts into flames while the classic WASTED
@@ -440,6 +460,24 @@ var createGame = (userInput) => {
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
   }
+
+  function intersectionCenter(tiles) {
+    // returns the center (x,y) pixel of an intersection layer
+    var x = 0;
+    var y = 0;
+    tiles.forEach(function(tile) {
+      x += tile.worldX;
+      y += tile.worldY;
+    })
+    x = x / tiles.length;
+    y = y / tiles.length;
+
+    return [x, y];
+  }
+
+
+
+
 
 }
 
