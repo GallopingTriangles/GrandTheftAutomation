@@ -39,11 +39,12 @@ var createGame = (userInput) => {
   var text;
 
   /* needsChange */
-  var frontSensor;
-  var leftSensor;
-  var backSensor;
-  var rightSensor;
-  var sensors = [frontSensor, leftSensor, backSensor, rightSensor];
+
+  var sensors = {};
+  sensors.left;
+  sensors.right;
+  sensors.front;
+  sensors.back;
 
 
   var startingX = 400;
@@ -305,22 +306,21 @@ var createGame = (userInput) => {
     // Check to make sure the user has turned the sensor on
     if (userInput.sensor) {
       // Appearace
-      sensors.forEach(function(sensor, index) {
-        // Is there any way to refer to these by name so that I can reference the global variables?
-        sensors[index] = game.add.sprite(startingX, startingY, 'sensor')
-        sensors[index].alpha = .1;
-        sensors[index].anchor.setTo(.5, .5);
-        sensors[index].scale.setTo(.5, .5);
-      });
+      for (var sensor in sensors) {
+        sensor = game.add.sprite(startingX, startingY, 'sensor')
+        sensor.alpha = .1;
+        sensor.anchor.setTo(.5, .5);
+        sensor.scale.setTo(.5, .5);
+      }
     }
   }
 
   function attachSensors(startingAngle, offset, FLBRArray) {
-    sensors.forEach(function(sensor, index) {
+    for (var sensor in sensors) {
       sensor.angle = car.body.angle;
       sensor.y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
       sensor.x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
-    })
+    }
   }
 
   function checkOverlap(spriteA, spriteB) {
