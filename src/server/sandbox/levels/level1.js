@@ -86,7 +86,20 @@ var level1 = function(req, res, next) {
 
     // == COLOR TESTS == //
     runTestSuite(function ColorInputTest(t) {
+      // test if the set color function is called
+      this.testColorDefined = function() {
+        
+      };
 
+      // test if color is of data type string
+      this.testColorString = function() {
+
+      };
+
+      // test if color is equal to white, red, blue, or black
+      this.testColorWhiteRedBlueBlack = function() {
+
+      };
     });
 
     // == SPEED TESTS == //
