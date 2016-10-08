@@ -347,7 +347,6 @@ var createGame = (userInput) => {
     if (userInput.engine) {
 
       checkCompletion();
-      console.log(car.getBounds().contains(400, 100));
 
       if (cursors.up.isDown) {
         car.body.moveForward(carForwardSpeed);
