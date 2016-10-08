@@ -41,10 +41,10 @@ var createGame = (userInput) => {
   /* needsChange */
 
   var sensors = {};
-  sensors.left;
-  sensors.right;
-  sensors.front;
-  sensors.back;
+  sensors.left = 'hello';
+  sensors.right = 'hello';
+  sensors.front = 'hello';
+  sensors.back = 'hello';
 
 
   var startingX = 400;
@@ -181,6 +181,8 @@ var createGame = (userInput) => {
     ** Initiates the car sensor, the car body, and sets the speed
     */
     createSensors();
+    console.log('Sensors in createGame: ', sensors);
+    console.log('right: ', sensors.right);
     createCar();
     setSpeed();
 
@@ -307,19 +309,22 @@ var createGame = (userInput) => {
     if (userInput.sensor) {
       // Appearace
       for (var sensor in sensors) {
-        sensor = game.add.sprite(startingX, startingY, 'sensor')
-        sensor.alpha = .1;
-        sensor.anchor.setTo(.5, .5);
-        sensor.scale.setTo(.5, .5);
+        sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
+        sensors[sensor].alpha = .1;
+        sensors[sensor].anchor.setTo(.5, .5);
+        sensors[sensor].scale.setTo(.5, .5);
+        console.log('Sensors in create: ', sensors);
       }
     }
   }
 
   function attachSensors(startingAngle, offset, FLBRArray) {
+    var index = 0;
     for (var sensor in sensors) {
-      sensor.angle = car.body.angle;
-      sensor.y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
-      sensor.x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
+      sensors[sensor].angle = car.body.angle;
+      sensors[sensor].y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
+      sensors[sensor].x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
+      index += 1;
     }
   }
 
@@ -380,7 +385,7 @@ var createGame = (userInput) => {
     explosion.animations.play('explode', 24, false);
     // text.kill();
     car.kill();
-    if (rightSensor) {
+    if (sensors.right) {
       sensor.kill();
     }
     wasted = game.add.sprite(400, 300, 'wasted');
