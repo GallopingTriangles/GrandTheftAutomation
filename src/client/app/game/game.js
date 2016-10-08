@@ -336,7 +336,6 @@ var createGame = (userInput) => {
       }
     }
 
-    checkCompletion();
 
     /*
     ** The car should remain still if no arrow keys are pressed for early levels.
@@ -346,6 +345,10 @@ var createGame = (userInput) => {
     car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
     if (userInput.engine) {
+
+      checkCompletion();
+      console.log(car.getBounds().contains(400, 100));
+
       if (cursors.up.isDown) {
         car.body.moveForward(carForwardSpeed);
         leftRight(true);
