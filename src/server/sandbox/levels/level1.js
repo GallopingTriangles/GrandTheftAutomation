@@ -39,6 +39,7 @@ var level1 = function(req, res, next) {
 	      t.assertTrue(
 	      	context.testEnable.length > 0, 
 	      	'Expected function enable() to be called, but got not called'
+	      	// ADD FAIL CALLBACK
 	      );
 	  	};
 
@@ -48,23 +49,39 @@ var level1 = function(req, res, next) {
         t.assertTrue(
         	calls <= 2,
           'Expected function enable() to be called twice, but got called ' + calls + ' times'
+          // ADD FAIL CALLBACK
         );
       };
 
       // test if the input is of data type string
       this.testEnableInputType = function() {
-
-      };
-
-      // test if the input equals the expected input value
-      this.testEnableInputValue = function() {
-
+        t.assertOptionsOfTypeString(
+          context.testEnable
+          // ADD FAIL CALLBACK
+        );
       };
     });
 
     // == ENGINE TESTS == //
     runTestSuite(function EngineInputTest(t) {
+      // test if the engine is enabled
+      this.testEngineDefined = function() {
+        t.assertTrue(
+        	context.testEngine,
+          'Expected engine to be enabled, but got undefined'
+          // ADD FAIL CALLBACK
+        );
+      };
 
+      // test if the engine is enabled firstly
+      this.testEngineEnabledFirst = function() {
+      	var enabledFirst = '';
+        context.testEnable[0] ? enabledFirst = context.testEnable[0] : enabledFirst = '';
+        t.assertTrue(
+          context.testEnable[0] === 'engine',
+          'Expected engine to be enabled first, but got ' + enabledFirst + ' enabled first'
+        );
+      };
     });
 
     // == COLOR TESTS == //
