@@ -99,6 +99,7 @@ var createGame = (userInput) => {
   var layer_3;
   var layer_4;
   var layer_5;
+  var layer_6;
 
   /*************************************** OLD STUFF *************************************/
   /*************************************** OLD STUFF *************************************/
@@ -190,6 +191,7 @@ var createGame = (userInput) => {
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
+    layer_6 = map.createLayer('intersection_layer');
 
     // layer_1 = map.createLayer('Tile Layer 1');
     // layer_2 = map.createLayer('Tile Layer 2');
