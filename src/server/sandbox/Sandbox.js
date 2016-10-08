@@ -18,30 +18,32 @@ var Sandbox = function(req, res, next) {
   req.body.bugs = [];
 	
   // == VIRTUAL MACHINE ==================================
-	var script = new vm.Script(userInput);                  // compile user input
-	var sandbox = {
-    sensor: {
-      front: false,
-      left: false,
-      right: false,
-      all: false
-    },
-    enable: function(input) {
+  var funcColor = 'var color = function(input) { testColor = input };';
+  var funcSpeed = 'var speed = function(input) { testSpeed = input };';
+  var funcEnable = 'var enable = function(input) { if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
+  
+  var input = funcColor + funcSpeed + funcEnable + userInput;
+	var script = new vm.Script(input);
 
-    },
-  };                                       // create new sandbox and empty context
+	var sandbox = {
+    testColor: undefined,
+    testSpeed: undefined,
+    testEngine: undefined,
+    testSensor: undefined
+  };                                       
+
 	var context = new vm.createContext(sandbox);
-	script.runInContext(context);                           // run compiled code
+	script.runInNewContext(context);                        
 
 	// == TESTING USER INPUT ===============================
 	runTestSuite(function UserInputTest(t) {
     
     // ** ENGINE TESTS ** //
     // set engine on phaser object to context value if it exists
-    context.engine ? req.body.phaser.engine = context.engine : req.body.phaser.engine = false;
+    context.testEngine ? req.body.phaser.engine = context.testEngine : req.body.phaser.engine = false;
     // start engine input test
     runTestSuite(function EngineInputTest(t) {
-    	var engine = context.engine;
+    	var engine = context.testEngine;
 
       // if a test fails, set the engine to a default value
       var setEngineDefault = function(errorMessage) {
@@ -54,18 +56,19 @@ var Sandbox = function(req, res, next) {
 	      t.assertDefined(engine, 'engine', setEngineDefault);
 	    };
       // test if engine is of data type boolean
-	    this.testEngineBoolean = function() {
-        t.assertBoolean(engine, 'engine', setEngineDefault);
-	    };
-      // test if engine is equal to true
-	    this.testEngineTrue = function() {
-        t.assertTrue(engine, 'Expected engine to equal true, but got false', setEngineDefault);
-	    };
+	    // this.testEngineBoolean = function() {
+     //    t.assertString(engine, 'engine', setEngineDefault);
+	    // };
+     //  // test if engine is equal to true
+	    // this.testEngineTrue = function() {
+     //    //t.assertTrue(engine, 'Expected engine to equal true, but got false', setEngineDefault);
+     //    t.assertEqual('on', engine);
+	    // };
     }); 
 
     // ** COLOR TESTS ** //
     // set color on phaser object to context value if it exists
-    context.color ? req.body.phaser.color = context.color : req.body.phaser.color = 'white';
+    context.testColor ? req.body.phaser.color = context.testColor : req.body.phaser.color = 'white';
     // start color input test
     runTestSuite(function ColorInputTest(t) {
     	var color = context.color;
@@ -81,13 +84,13 @@ var Sandbox = function(req, res, next) {
 	      t.assertDefined(color, 'color', setColorDefault);
 	    };
       // test if color is of data type string
-	    this.testColorString = function() {
-        t.assertString(color, 'color', setColorDefault);
-	    };
+	    // this.testColorString = function() {
+     //    t.assertString(color, 'color', setColorDefault);
+	    // };
       // test if color is equal to white or red or blue or black
-	    this.testColorWhiteRedBlueBlack = function() {
-        t.assertOptions(['white', 'black', 'red', 'blue'], color, setColorDefault);
-	    };
+	    // this.testColorWhiteRedBlueBlack = function() {
+     //    t.assertOptions(['white', 'black', 'red', 'blue'], color, setColorDefault);
+	    // };
     });
 
     // ** SPEED TESTS ** //
@@ -144,10 +147,10 @@ var Sandbox = function(req, res, next) {
 	    };
     });
 
-  next();
-  
   });
   
+  next();
+
 };
 
 module.exports = Sandbox;
