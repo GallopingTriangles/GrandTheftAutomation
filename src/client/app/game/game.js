@@ -220,7 +220,6 @@ var createGame = (userInput) => {
     completionTiles = layer_5.getTiles(0, 0, 1000, 1000).filter(function(tile) {
       return tile.index > 0;
     });
-    console.log(completionTiles);
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
@@ -474,16 +473,27 @@ var createGame = (userInput) => {
     }
   }
 
+  /*
+  ** Checks if the bounds of the car ever overlap with the tiles of the
+  ** completion layer. If so, pause the game and render the level completion.
+  */
   function checkCompletion() {
     completionTiles.forEach(function(tile) {
       if (car.getBounds().contains(tile.worldX, tile.worldY)
        || car.getBounds().contains(tile.worldX + 32, tile.worldY)
        || car.getBounds().contains(tile.worldX, tile.worldY + 32)
        || car.getBounds().contains(tile.worldX + 32, tile.worldY + 32)) {
+        console.log(car.getBounds());
+        var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+        var text = game.add.text(400, 300, 'Success!', style);
         game.paused = true;
         console.log('COMPLETED!');
       }
     })
+  }
+
+  function levelCompleted() {
+
   }
 
   /*
