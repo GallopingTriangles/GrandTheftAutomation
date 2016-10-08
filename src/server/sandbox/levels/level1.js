@@ -12,7 +12,7 @@ var level1 = function(req, res, next) {
     // == VIRTUAL MACHINE =================================
     var funcColor = 'var setColor = function(input) { testColor = input; };';
     var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
-    var funcEnable = 'var enable = function(input) { testEnable.inputs.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
+    var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
 
     // input for virtual machine
     var input = funcColor + funcSpeed + funcEnable + userInput;
@@ -20,9 +20,7 @@ var level1 = function(req, res, next) {
 
     // sandbox used in virtual machine
     var sandbox = {
-    	testEnable: {
-    		inputs: []
-    	},
+    	testEnable: [],
     	testEngine: undefined,
     	testColor: undefined,
     	testSpeed: undefined,
@@ -33,6 +31,36 @@ var level1 = function(req, res, next) {
     script.runInContext(context);
 
     console.log(context);
+
+    // == ENABLED TESTS == //
+    runTestSuite(function EnabledInputTest(t) {
+	  	// test if the enable function is called
+	  	this.testEnabledCalled = function() {
+	      t.assertTrue(
+	      	context.testEnable.length > 0, 
+	      	'Expected function enable() to be called, but got not called'
+	      );
+	  	};
+
+	  	// test the maximum allowed calls of the enable function
+      this.testEnabledMaxCalls = function() {
+      	var calls = context.testEnable.length;
+        t.assertTrue(
+        	calls <= 2,
+          'Expected function enable() to be called twice, but got called ' + calls + ' times'
+        );
+      };
+
+      // test if the input is of data type string
+      this.testEnableInputType = function() {
+
+      };
+
+      // test if the input equals the expected input value
+      this.testEnableInputValue = function() {
+
+      };
+    });
 
     // == ENGINE TESTS == //
     runTestSuite(function EngineInputTest(t) {
