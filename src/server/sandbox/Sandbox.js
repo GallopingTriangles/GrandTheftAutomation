@@ -19,7 +19,17 @@ var Sandbox = function(req, res, next) {
 	
   // == VIRTUAL MACHINE ==================================
 	var script = new vm.Script(userInput);                  // compile user input
-	var sandbox = {};                                       // create new sandbox and empty context
+	var sandbox = {
+    sensor: {
+      front: false,
+      left: false,
+      right: false,
+      all: false
+    },
+    enable: function(input) {
+
+    },
+  };                                       // create new sandbox and empty context
 	var context = new vm.createContext(sandbox);
 	script.runInContext(context);                           // run compiled code
 
