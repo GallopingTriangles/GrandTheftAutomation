@@ -2,8 +2,8 @@ var Sequelize = require('sequelize');
 var config = require('../config/config.js');
 // var passportLocalSequelize = require('passport-local-sequelize');
 
-//Initializes MySQL database through instance of sequelize 
-var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, { 
+//Initializes MySQL database through instance of sequelize
+var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, {
   host: 'localhost', /* Will need to change once server is deployed */
   dialect: 'mysql',
   port: 3306,
@@ -43,7 +43,7 @@ var User = sequelize.define('User', {
 //Creates table schemas/models for User
 var Log = sequelize.define('Log', {
   level: Sequelize.INTEGER,
-  solution: Sequelize.TEXT('long')
+  solution: Sequelize.TEXT('long'),
 });
 
 // should create the database 'gta' if it doesn't already exist
@@ -51,7 +51,7 @@ var Log = sequelize.define('Log', {
 sequelize.sync();
 
 //Creates a userId FOREIGN KEY in Log table
-User.hasMany(Log); 
+User.hasMany(Log);
 Log.belongsTo(User);
 
 //Creates table if table does not exist
@@ -59,4 +59,3 @@ User.sync();
 Log.sync();
 
 module.exports = { sequelize, User, Log };
-

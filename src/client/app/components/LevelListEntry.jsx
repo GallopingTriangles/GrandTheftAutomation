@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 const LevelListEntry = (props) => (
     <tr>
-      <td class="text-left">{props.levelData.level}</td>
-      <td class="text-left">{props.levelData.time}</td>
-      <td class="text-left">{props.levelData.wasted}</td>
+      <td className="text-left">{props.levelDatum.level}</td>
+      <td className="text-left">{props.levelDatum.time}</td>
+      <td className="text-left">{props.levelDatum.wasted}</td>
     </tr>
 )
 

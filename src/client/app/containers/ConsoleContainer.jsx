@@ -144,6 +144,7 @@ class Console extends Component {
     }).then(res => {
       console.log('res: ', res);
       res.json().then(response => {
+        console.log(response.phaser);
         createGame(response.phaser);
         this.setState({bugs: response.bugs});
       })
