@@ -132,6 +132,8 @@ var createGame = (userInput) => {
     ** Set the appropriate tiles of a certain layer to be collideable
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
+
+    /* debugTools */
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
     // map.setCollision(34, true, 'Tile Layer 1');
 
@@ -252,6 +254,20 @@ var createGame = (userInput) => {
       // }
     }
 
+    /* debugTools */
+    car.body.velocity.x = 0;
+    car.body.velocity.y = 0;
+    car.body.angularVelocity = 0;
+    if (userInput.engine) {
+      if (cursors.up.isDown) {
+        car.body.moveForward(carForwardSpeed);
+        leftRight(true);
+      } else if (cursors.down.isDown) {
+        car.body.moveBackward(carBackwardSpeed);
+        leftRight(false);
+      }
+    }
+
     /*
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
@@ -285,9 +301,9 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
-    if (userInput.engine) {
-      car.body.moveForward(userInput.speed * userSpeedMultiplier);
-    }
+    // if (userInput.engine) {
+    //   car.body.moveForward(userInput.speed * userSpeedMultiplier);
+    // }
   }
 
   /*
@@ -422,6 +438,8 @@ var createGame = (userInput) => {
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
   }
+
+  // function
 
 }
 
