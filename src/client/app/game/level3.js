@@ -225,6 +225,8 @@ var createGame = (userInput) => {
     ** Enable sensor functionality if the user has activated the car sensor.
     ** If the sensor detects any overlapping collision bodies, it will turn on.
     */
+
+
     if (userInput.sensor) {
 
       attachSensors(0, 100, sensors);
@@ -276,6 +278,8 @@ var createGame = (userInput) => {
     ** This resets the car's velocity per frame.
     */
     checkCompletion();
+
+    turn90();
   }
 
   function render() {
@@ -443,11 +447,9 @@ var createGame = (userInput) => {
     wasted.anchor.setTo(.5, .5);
   }
 
-  function turn90(startingAngle, direction) {
-    
-    if (cursors.up.isDown) {
-      car.body.moveForward(carForwardSpeed);
-      leftRight(true);
+  function turn90(currentAngle, endingAngle) {
+    car.body.moveForward(userInput.speed);
+    car.body.rotateLeft(userInput.speed / 3);
   }
 
 }
