@@ -40,6 +40,13 @@ var assertions = {
     );
 	},
 
+	assertOptionsOfTypeString: function(options, failCb) {
+		var context = this;
+    options.forEach(function(option) {
+      context.assertString(option, 'input', failCb);
+    });
+	},
+
   // check if variable is equal to expected type
   assertType: function(variable, type, name, failCb) {
     this.assertTrue(
