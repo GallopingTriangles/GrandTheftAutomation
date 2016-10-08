@@ -17,7 +17,7 @@ class LevelList extends Component {
   }
 
   componentWillMount() {
-    
+
   }
 
   render() {
@@ -39,5 +39,6 @@ class LevelList extends Component {
     )
   }
 }
+
 
 export default LevelList;

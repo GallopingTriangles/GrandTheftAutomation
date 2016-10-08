@@ -65,6 +65,71 @@ class Console extends Component {
   // }
 
   postSolution() {
+
+    
+    /* SAMPLE SOLUTION FOR A HIGHER LEVEL DIFFICULTY */
+
+
+    /************************************ SAMPLE SOLUTION *****************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /***********************
+
+
+    // This level involves the sensor working and it will
+    // either redirect the car or cause the car to stop;
+    // This will be a solution that encompasses most features
+    // of the game so we have to figure out how to parse all
+    // possibilities that the user could submit.
+    // They could have a working solution, in a different way,
+    // or an incorrect solution.
+
+    var engine = true;
+    var color = 'black';
+    var speed = 50;
+    enable(sensor); // enables the use of the sensor for the user
+    enable(distanceTracker); // keeps track of the distance to the destination
+
+    if (sensor.right === true) {
+      speed = speed - 20;
+      turn('left');
+    }
+    if (sensor.left === true) {
+      speed = speed - 20;
+      turn('right');
+    }
+    if (sensor.front === true && sensor.right === true) {
+      speed = speed - 20;
+      turn('left');
+    }
+    if (sensor.front === true && sensor.left === true) {
+      speed = speed - 20;
+      turn('right');
+    }
+    if (sensor.All === false) {
+      // return car to normal speed if no sensors detect an obstacle
+      speed = 50;
+    }
+
+    while (distanceGPS.isIncreasing() === true) {
+      // the distance to the destination is increasing, which means the
+      // car is going in the wrong direction. So we should program the
+      // car to keep turning until the car is in the correct direction.
+      turn('right');
+    }
+    if (distanceGPS.distance === 0) {
+      // if the distance to destination is 0, then we can
+      // stop the car and end the game. User wins.
+      speed = 0;
+    }
+
+                                                                            ***********************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    console.log('User submitted solution: ', this.state.input);
     $('canvas').remove();
     fetch('/game', {
       method: 'POST',
@@ -79,6 +144,7 @@ class Console extends Component {
     }).then(res => {
       console.log('res: ', res);
       res.json().then(response => {
+        console.log(response.phaser);
         createGame(response.phaser);
         this.setState({bugs: response.bugs});
       })
@@ -86,28 +152,6 @@ class Console extends Component {
       console.log('Error saving input: ', err);
     });
   }
-
-  // == TOGGLE STATE =====================================================================
-  
-  // stateLearn(e) {
-  //   e.preventDefault();
-  //   this.setState({tab: 'learn'});
-  // }
-
-  // stateInstructions(e) {
-  //   e.preventDefault();
-  //   this.setState({tab: 'instructions'});
-  // }
-
-  // stateEditor(e) {
-  //   e.preventDefault();
-  //   this.setState({tab: 'editor'});
-  // }
-
-  // stateBugs(e) {
-  //   e.preventDefault();
-  //   this.setState({tab: 'bugs'})
-  // }
 
   setTab(e, tab) {
     e.preventDefault();
@@ -133,7 +177,7 @@ class Console extends Component {
   renderContent() {
     switch (this.state.tab) {
       case 'learn': return <Learn />;
-      case 'instructions': return <Instructions />;
+      case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
                             code={ this.state.input } 
                             inputChange={ this.codeChange.bind(this) } 

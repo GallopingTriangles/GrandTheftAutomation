@@ -10,18 +10,18 @@ class ProfilePage extends Component {
     };
   }
 
-  componentWillMount() {
-    fetch('/game', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(data => {
-      console.log('Response from /game: ', data);
-      data.json()
-    });
-  }
+  // componentWillMount() {
+  //   fetch('/game', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //   .then(data => {
+  //     console.log('Response from /game: ', data);
+  //     data.json()
+  //   });
+  // }
 
   render() {
     {console.log('In render')}
