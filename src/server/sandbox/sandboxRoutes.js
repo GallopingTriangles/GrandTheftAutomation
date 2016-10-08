@@ -22,6 +22,9 @@ var Sandbox = function(req, res, next) {
     test: 'dit is een test'
   };
 
+  // == BUGS ARRAY =======================================
+  req.body.bugs = [];
+
   // == LEVEL TEST ROUTES ================================
   if (level === 0) {
     tutorial(req, res, next);
@@ -38,14 +41,6 @@ var Sandbox = function(req, res, next) {
   if (level === 4) {
     level4(req, res, next);
   }
-
-  // == PHASER OBJECT ====================================
- //  req.body.phaser = {                                     // default phaser object
- //    level: userLevel
- //  };
-
- //  // == BUGS ARRAY =======================================
- //  req.body.bugs = [];
 	
  //  // == VIRTUAL MACHINE ==================================
  //  var funcColor = 'var color = function(input) { testColor = input; };';
