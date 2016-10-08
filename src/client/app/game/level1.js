@@ -46,7 +46,7 @@ var createGame = (userInput) => {
 
 
   var startingX = 400;
-  var startingY = 600;
+  var startingY = 550;
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = 100;
