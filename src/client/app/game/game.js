@@ -37,11 +37,15 @@ var createGame = (userInput) => {
   var obstacles;
   var cursors;
   var text;
+
+  /* needsChange */
   var frontSensor;
   var leftSensor;
   var backSensor;
   var rightSensor;
   var sensors = [frontSensor, leftSensor, backSensor, rightSensor];
+
+
   var startingX = 400;
   var startingY = 300;
   var backgroundColor = '#3e5f96';
@@ -175,8 +179,7 @@ var createGame = (userInput) => {
     /*
     ** Initiates the car sensor, the car body, and sets the speed
     */
-    createSensor();
-    console.log(leftSensor);
+    createSensors();
     createCar();
     setSpeed();
 
@@ -295,6 +298,23 @@ var createGame = (userInput) => {
     return degToRad(90 - angle)
   }
 
+
+  /* needsChange */
+
+  function createSensors() {
+    // Check to make sure the user has turned the sensor on
+    if (userInput.sensor) {
+      // Appearace
+      sensors.forEach(function(sensor, index) {
+        // Is there any way to refer to these by name so that I can reference the global variables?
+        sensors[index] = game.add.sprite(startingX, startingY, 'sensor')
+        sensors[index].alpha = .1;
+        sensors[index].anchor.setTo(.5, .5);
+        sensors[index].scale.setTo(.5, .5);
+      });
+    }
+  }
+
   function attachSensors(startingAngle, offset, FLBRArray) {
     sensors.forEach(function(sensor, index) {
       sensor.angle = car.body.angle;
@@ -320,20 +340,6 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
-  }
-
-  function createSensor() {
-    // Check to make sure the user has turned the sensor on
-    if (userInput.sensor) {
-      // Appearace
-      sensors.forEach(function(sensor, index) {
-        // Is there any way to refer to these by name so that I can reference the global variables?
-        sensors[index] = game.add.sprite(startingX, startingY, 'sensor')
-        sensors[index].alpha = .1;
-        sensors[index].anchor.setTo(.5, .5);
-        sensors[index].scale.setTo(.5, .5);
-      });
-    }
   }
 
   function setSpeed() {
