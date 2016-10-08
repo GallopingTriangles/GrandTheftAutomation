@@ -71,7 +71,7 @@ var Sandbox = function(req, res, next) {
     context.testColor ? req.body.phaser.color = context.testColor : req.body.phaser.color = 'white';
     // start color input test
     runTestSuite(function ColorInputTest(t) {
-    	var color = context.color;
+    	var color = context.testColor;
 
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
@@ -84,21 +84,21 @@ var Sandbox = function(req, res, next) {
 	      t.assertDefined(color, 'color', setColorDefault);
 	    };
       // test if color is of data type string
-	    // this.testColorString = function() {
-     //    t.assertString(color, 'color', setColorDefault);
-	    // };
+	    this.testColorString = function() {
+        t.assertString(color, 'color', setColorDefault);
+	    };
       // test if color is equal to white or red or blue or black
-	    // this.testColorWhiteRedBlueBlack = function() {
-     //    t.assertOptions(['white', 'black', 'red', 'blue'], color, setColorDefault);
-	    // };
+	    this.testColorWhiteRedBlueBlack = function() {
+        t.assertOptions(['white', 'black', 'red', 'blue'], color, setColorDefault);
+	    };
     });
 
     // ** SPEED TESTS ** //
     // set speed on phaser object to context value if it exists
-    context.speed ? req.body.phaser.speed = context.speed : req.body.phaser.speed = false;
+    context.testSpeed ? req.body.phaser.speed = context.testSpeed : req.body.phaser.speed = false;
     // start speed input test
     runTestSuite(function SpeedInputTest(t) {
-    	var speed = context.speed;
+    	var speed = context.testSpeed;
 
       // if a test fails, set the speed to a default value
       var setSpeedDefault = function(errorMessage) {
@@ -122,10 +122,10 @@ var Sandbox = function(req, res, next) {
 
     // ** SENSOR TESTS ** //
     // set sensor on phaser object to context value if it exists
-    context.sensor ? req.body.phaser.sensor = context.sensor : req.body.phaser.sensor = false;
+    context.testSensor ? req.body.phaser.sensor = context.testSensor : req.body.phaser.sensor = false;
     // start sensor input test
     runTestSuite(function SensorInputTest(t) {
-      var sensor = context.sensor;
+      var sensor = context.testSensor;
 
       // if a test fails, set the sensor value to a default value
       var setSensorDefault = function(errorMessage) {
