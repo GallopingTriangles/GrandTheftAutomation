@@ -279,7 +279,8 @@ var createGame = (userInput) => {
     */
     checkCompletion();
 
-    turn(90);
+    turnRight(90, car.body.y < 164);
+    turnLeft(0, car.body.x > 500)
   }
 
   function render() {
@@ -447,12 +448,23 @@ var createGame = (userInput) => {
     wasted.anchor.setTo(.5, .5);
   }
 
-  function turn(endingAngle) {
-    if (car.body.y < 164) {
+  function turnRight(endingAngle, intersection) {
+    var mod = endingAngle % 180;
+    if (intersection) {
       if (car.body.angle < endingAngle) {
         car.body.moveForward(userInput.speed * 4);
-        
         car.body.rotateRight(userInput.speed * 4 / 3);
+      } else {
+        car.body.angle = endingAngle;
+      }
+    }
+  }
+
+  function turnLeft(endingAngle, intersection) {
+    if (intersection) {
+      if (car.body.angle > endingAngle) {
+        car.body.moveForward(userInput.speed * 4);
+        car.body.rotateLeft(userInput.speed * 4 / 3);
       } else {
         car.body.angle = endingAngle;
       }
