@@ -6,10 +6,10 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
-    // case: 1, // success left turn
+    case: 1, // success left turn
     // case: 2, // success right turn
     // case: 3, // stopped at intersection
-    case: 4, // crashed straight
+    // case: 4, // crashed straight
     // case: 5  // didn't start engine
   }
   /**********************************************************/
