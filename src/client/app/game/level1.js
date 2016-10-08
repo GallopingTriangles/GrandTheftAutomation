@@ -207,6 +207,8 @@ var createGame = (userInput) => {
     */
     cursors = game.input.keyboard.createCursorKeys();
 
+
+
   }
 
 
@@ -254,7 +256,7 @@ var createGame = (userInput) => {
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
     */
-
+    checkCompletion();
   }
 
   function render() {
@@ -284,7 +286,7 @@ var createGame = (userInput) => {
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
     if (userInput.engine) {
-      car.body.moveForward(userInput.speed);
+      car.body.moveForward(userInput.speed * userSpeedMultiplier);
     }
   }
 
@@ -385,21 +387,17 @@ var createGame = (userInput) => {
   */
   function checkCompletion() {
     completionTiles.forEach(function(tile) {
-      if (car.getBounds().contains(tile.worldX, tile.worldY)
-       || car.getBounds().contains(tile.worldX + 32, tile.worldY)
-       || car.getBounds().contains(tile.worldX, tile.worldY + 32)
-       || car.getBounds().contains(tile.worldX + 32, tile.worldY + 32)) {
-        console.log(car.getBounds());
-        var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-        var text = game.add.text(400, 300, 'Success!', style);
-        game.paused = true;
-        console.log('COMPLETED!');
+      if (Math.abs(tile.worldX + 16 - car.body.x) < 25 && Math.abs(tile.worldY +16 - car.body.y) < 25) {
+        levelCompleted();
       }
     })
   }
 
   function levelCompleted() {
-
+    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    var text = game.add.text(400, 300, 'Success!', style);
+    game.paused = true;
+    console.log('COMPLETED!');
   }
 
   /*
