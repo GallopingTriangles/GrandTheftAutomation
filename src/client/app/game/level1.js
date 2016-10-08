@@ -1,4 +1,18 @@
 var createGame = (userInput) => {
+  /**********************************************************/
+  /**********************************************************/
+  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
+  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
+  /**********************************************************/
+  /**********************************************************/
+  var FAKE_USER_INPUT = {
+    case: 1, // success engine goes forward
+    // case: 2, // fail, engine didn't get turned on
+  }
+  /**********************************************************/
+  /**********************************************************/
+
+
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;
@@ -45,7 +59,7 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
 
-  var startingX = 400;
+  var startingX = 440;
   var startingY = 550;
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
@@ -256,6 +270,10 @@ var createGame = (userInput) => {
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
     */
+
+    if (FAKE_USER_INPUT.case === 1) {
+      car.body.moveForward(400);
+    }
     checkCompletion();
   }
 

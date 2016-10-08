@@ -8,7 +8,8 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     // case: 1, // success, stopped before obstacle
-    case: 2, // fail, crashed into obstacle
+    case: 2, // fail, engine was not on
+    case: 3, // fail, crashed into obstacle
   }
   /**********************************************************/
   /**********************************************************/
@@ -281,6 +282,8 @@ var createGame = (userInput) => {
       car.body.moveForward(400);
       checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) {
+      // engine isnt moving
+    } else if (FAKE_USER_INPUT.case === 3) {
       car.body.moveForward(400);
     }
   }
