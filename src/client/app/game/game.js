@@ -176,6 +176,7 @@ var createGame = (userInput) => {
     ** Initiates the car sensor, the car body, and sets the speed
     */
     createSensor();
+    console.log(leftSensor);
     createCar();
     setSpeed();
 
@@ -216,7 +217,7 @@ var createGame = (userInput) => {
   function update() {
     //  Reset the cars velocity before rendering next frame;
     if (userInput.sensor) {
-      attachSensors();
+      attachSensors(0, 100, sensors);
 
     var overlap = false;
     collisionBodies.forEach(function(obstacle) {
@@ -259,8 +260,6 @@ var createGame = (userInput) => {
 
   function render() {
     game.debug.spriteInfo(car, 32, 32);
-    game.debug.spriteInfo(sensor, 32, 200);
-    // game.debug.spriteBounds(car);
     car.body.debug = true;
 
   }
@@ -327,12 +326,12 @@ var createGame = (userInput) => {
     // Check to make sure the user has turned the sensor on
     if (userInput.sensor) {
       // Appearace
-      sensors.forEach(function(sensor) {
+      sensors.forEach(function(sensor, index) {
         // Is there any way to refer to these by name so that I can reference the global variables?
-        sensor = game.add.sprite(startingX, startingY, 'sensor')
-        sensor.alpha = .1;
-        sensor.anchor.setTo(.5, .5);
-        sensor.scale.setTo(.5, .5);
+        sensors[index] = game.add.sprite(startingX, startingY, 'sensor')
+        sensors[index].alpha = .1;
+        sensors[index].anchor.setTo(.5, .5);
+        sensors[index].scale.setTo(.5, .5);
       });
     }
   }
