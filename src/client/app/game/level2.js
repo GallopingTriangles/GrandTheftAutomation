@@ -1,4 +1,18 @@
 var createGame = (userInput) => {
+
+  /**********************************************************/
+  /**********************************************************/
+  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
+  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
+  /**********************************************************/
+  /**********************************************************/
+  var FAKE_USER_INPUT = {
+    // case: 1, // success, stopped before obstacle
+    case: 2, // fail, crashed into obstacle
+  }
+  /**********************************************************/
+  /**********************************************************/
+
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;
@@ -262,10 +276,13 @@ var createGame = (userInput) => {
     ** This resets the car's velocity per frame.
     */
 
-    if (userInput === 2) {
 
+    if (FAKE_USER_INPUT.case === 1) {
+      car.body.moveForward(400);
+      checkCompletion();
+    } else if (FAKE_USER_INPUT.case === 2) {
+      car.body.moveForward(400);
     }
-    checkCompletion();
   }
 
   function render() {
@@ -295,9 +312,7 @@ var createGame = (userInput) => {
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
     if (userInput.engine) {
-      if (userInput !== 3) {
-        car.body.moveForward(userInput.speed * userSpeedMultiplier);
-      }
+      car.body.moveForward(400);
     }
   }
 
