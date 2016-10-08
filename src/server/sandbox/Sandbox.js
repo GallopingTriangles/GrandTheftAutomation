@@ -18,20 +18,32 @@ var Sandbox = function(req, res, next) {
   req.body.bugs = [];
 	
   // == VIRTUAL MACHINE ==================================
-	var script = new vm.Script(userInput);                  // compile user input
-	var sandbox = {};                                       // create new sandbox and empty context
+  var funcColor = 'var color = function(input) { testColor = input };';
+  var funcSpeed = 'var speed = function(input) { testSpeed = input };';
+  var funcEnable = 'var enable = function(input) { if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
+  
+  var input = funcColor + funcSpeed + funcEnable + userInput;
+	var script = new vm.Script(input);
+
+	var sandbox = {
+    testColor: undefined,
+    testSpeed: undefined,
+    testEngine: undefined,
+    testSensor: undefined
+  };                                       
+
 	var context = new vm.createContext(sandbox);
-	script.runInContext(context);                           // run compiled code
+	script.runInNewContext(context);                        
 
 	// == TESTING USER INPUT ===============================
 	runTestSuite(function UserInputTest(t) {
     
     // ** ENGINE TESTS ** //
     // set engine on phaser object to context value if it exists
-    context.engine ? req.body.phaser.engine = context.engine : req.body.phaser.engine = false;
+    context.testEngine ? req.body.phaser.engine = context.testEngine : req.body.phaser.engine = false;
     // start engine input test
     runTestSuite(function EngineInputTest(t) {
-    	var engine = context.engine;
+    	var engine = context.testEngine;
 
       // if a test fails, set the engine to a default value
       var setEngineDefault = function(errorMessage) {
@@ -44,21 +56,22 @@ var Sandbox = function(req, res, next) {
 	      t.assertDefined(engine, 'engine', setEngineDefault);
 	    };
       // test if engine is of data type boolean
-	    this.testEngineBoolean = function() {
-        t.assertBoolean(engine, 'engine', setEngineDefault);
-	    };
-      // test if engine is equal to true
-	    this.testEngineTrue = function() {
-        t.assertTrue(engine, 'Expected engine to equal true, but got false', setEngineDefault);
-	    };
+	    // this.testEngineBoolean = function() {
+     //    t.assertString(engine, 'engine', setEngineDefault);
+	    // };
+     //  // test if engine is equal to true
+	    // this.testEngineTrue = function() {
+     //    //t.assertTrue(engine, 'Expected engine to equal true, but got false', setEngineDefault);
+     //    t.assertEqual('on', engine);
+	    // };
     }); 
 
     // ** COLOR TESTS ** //
     // set color on phaser object to context value if it exists
-    context.color ? req.body.phaser.color = context.color : req.body.phaser.color = 'white';
+    context.testColor ? req.body.phaser.color = context.testColor : req.body.phaser.color = 'white';
     // start color input test
     runTestSuite(function ColorInputTest(t) {
-    	var color = context.color;
+    	var color = context.testColor;
 
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
@@ -82,10 +95,10 @@ var Sandbox = function(req, res, next) {
 
     // ** SPEED TESTS ** //
     // set speed on phaser object to context value if it exists
-    context.speed ? req.body.phaser.speed = context.speed : req.body.phaser.speed = false;
+    context.testSpeed ? req.body.phaser.speed = context.testSpeed : req.body.phaser.speed = false;
     // start speed input test
     runTestSuite(function SpeedInputTest(t) {
-    	var speed = context.speed;
+    	var speed = context.testSpeed;
 
       // if a test fails, set the speed to a default value
       var setSpeedDefault = function(errorMessage) {
@@ -109,10 +122,10 @@ var Sandbox = function(req, res, next) {
 
     // ** SENSOR TESTS ** //
     // set sensor on phaser object to context value if it exists
-    context.sensor ? req.body.phaser.sensor = context.sensor : req.body.phaser.sensor = false;
+    context.testSensor ? req.body.phaser.sensor = context.testSensor : req.body.phaser.sensor = false;
     // start sensor input test
     runTestSuite(function SensorInputTest(t) {
-      var sensor = context.sensor;
+      var sensor = context.testSensor;
 
       // if a test fails, set the sensor value to a default value
       var setSensorDefault = function(errorMessage) {
@@ -134,10 +147,10 @@ var Sandbox = function(req, res, next) {
 	    };
     });
 
-  next();
-  
   });
   
+  next();
+
 };
 
 module.exports = Sandbox;
