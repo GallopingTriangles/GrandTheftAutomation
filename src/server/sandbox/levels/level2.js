@@ -54,6 +54,9 @@ var level2 = function(req, res, next) {
   			sensor: {
           front: false
   			},
+  			map: {
+          intersection: false
+  			},
         testEnable: [],
         testSpeed: {
         	value: 0,
@@ -82,6 +85,9 @@ var level2 = function(req, res, next) {
 			var sandbox = {
 				sensor: {
 	        front: true
+				},
+				map: {
+          intersection: false
 				},
 	      testEnable: [],
 	      testSpeed: {
@@ -143,7 +149,7 @@ var level2 = function(req, res, next) {
   });
 
   // if user level is greater than level 2, run tests of next level
-  if (req.body.level > 2 && req.body.phaser.case === 1) {
+  if (req.body.level === 4 && req.body.phaser.case === 1) {
   	level3(req, res, next);
   } else {
   // else return phaser object
