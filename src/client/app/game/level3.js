@@ -1,5 +1,8 @@
 var createGame = (userInput) => {
   // change width depends on window width, no dynamically resizing yet
+  /* debugTools */
+  userInput.case = 4;
+
   var width = window.innerWidth;
   var height = window.innerHeight;
   var gameWidth = width * (7 / 12) - 10;
@@ -137,7 +140,7 @@ var createGame = (userInput) => {
     */
 
     /* debugTools */
-    // map.setCollisionBetween(0, 2000, true, 'collision_layer');
+    map.setCollisionBetween(0, 2000, true, 'collision_layer');
     // map.setCollision(34, true, 'Tile Layer 1');
 
     // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
@@ -196,7 +199,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      collisionBody.debug = true;
+      // collisionBody.debug = true;
 
     })
 
@@ -260,18 +263,19 @@ var createGame = (userInput) => {
     }
 
     /* debugTools */
+    // THIS MUST BE HERE FOR TURNS TO RENDER SMOOTHLY
     car.body.velocity.x = 0;
     car.body.velocity.y = 0;
     car.body.angularVelocity = 0;
-    if (userInput.engine) {
-      if (cursors.up.isDown) {
-        car.body.moveForward(carForwardSpeed);
-        leftRight(true);
-      } else if (cursors.down.isDown) {
-        car.body.moveBackward(carBackwardSpeed);
-        leftRight(false);
-      }
-    }
+    // if (userInput.engine) {
+    //   if (cursors.up.isDown) {
+    //     car.body.moveForward(carForwardSpeed);
+    //     leftRight(true);
+    //   } else if (cursors.down.isDown) {
+    //     car.body.moveBackward(carBackwardSpeed);
+    //     leftRight(false);
+    //   }
+    // }
 
     /*
     ** The car should remain still if no arrow keys are pressed for early levels.
@@ -279,8 +283,16 @@ var createGame = (userInput) => {
     */
     checkCompletion();
 
-    turnRight(90, car.body.y < 164);
-    turnLeft(0, car.body.x > 500)
+    if (userInput.case === 1) {
+
+    } else {
+      car.body.moveForward(userInput.speed * userSpeedMultiplier);
+    }
+    if (userInput.case === 2) {
+      turnRight(90, car.body.y < 244);
+    } else if (userInput.case === 3) {
+      turnLeft(-90, car.body.y < 164)
+    }
   }
 
   function render() {
