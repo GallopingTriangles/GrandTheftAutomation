@@ -29,11 +29,6 @@ var createGame = (userInput) => {
     */
     game.load.tilemap('level_1', './assets/gameMaps/level_3.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
-
-
-    // game.load.tilemap('map', './assets/gameMaps/TestMap_1.json', null, Phaser.Tilemap.TILED_JSON);
-    // game.load.image('tmw_desert_spacing', './assets/gameMaps/tmw_desert_spacing.png');
-
   }
 
   var car;
@@ -50,8 +45,8 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
 
-  var startingX = 400;
-  var startingY = 300;
+  var startingX = 300;
+  var startingY = 550;
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = 100;
@@ -80,15 +75,6 @@ var createGame = (userInput) => {
   var endZoneBodies;
 
   var completionTiles;
-
-  //////////////// /*
-  //////////////// ** An array of tiles from a tilemap layer that should contain collideable tiles
-  //////////////// */
-  //////////////// var collisionTiles;
-
-
-
-
   /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
@@ -100,60 +86,6 @@ var createGame = (userInput) => {
   var layer_4;
   var layer_5;
   var layer_6;
-
-  /*************************************** OLD STUFF *************************************/
-  /*************************************** OLD STUFF *************************************/
-  /*************************************** OLD STUFF *************************************/
-  /*************************************** OLD STUFF *************************************/
-
-  ///////////////// function create() {
-  /////////////////   // Set initial state of the game
-  /////////////////   game.physics.startSystem(Phaser.Physics.P2JS);
-  /////////////////   game.physics.p2.setImpactEvents(true);
-  /////////////////   game.stage.backgroundColor = backgroundColor;
-
-
-  /////////////////   if (userInput.engine) {
-  /////////////////     cursors = game.input.keyboard.createCursorKeys();
-  /////////////////   }
-
-  /////////////////   createSensor();
-  /////////////////   createCar();
-  /////////////////   setSpeed();
-
-  /////////////////   carCollisionGroup = game.physics.p2.createCollisionGroup();
-  /////////////////   obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
-
-  /////////////////   game.physics.p2.updateBoundsCollisionGroup();
-  /////////////////   car.body.setCollisionGroup(carCollisionGroup);
-
-  /////////////////   obstacles = game.add.group();
-  /////////////////   obstacles.enableBody = true;
-  /////////////////   obstacles.physicsBodyType = Phaser.Physics.P2JS;
-
-  /////////////////   for (var i = 0; i < 3; i++) {
-  /////////////////     // create an obstacle
-  /////////////////     var obstacle = obstacles.create(300, 50+200*i, 'grass');
-  /////////////////     obstacle.scale.setTo(0.1, 0.1);
-  /////////////////     obstacle.body.setRectangle(obstacle.width, obstacle.height);
-  /////////////////     // assign a collision group to the obstacles
-  /////////////////     obstacle.body.setCollisionGroup(obstacleCollisionGroup);
-  /////////////////     obstacle.body.collides([carCollisionGroup, obstacleCollisionGroup]);
-  /////////////////     obstacle.body.static = true;
-  /////////////////   }
-
-  /////////////////   car.body.collides(obstacleCollisionGroup, gameOver, this);
-
-  /////////////////   text = game.add.text(16, 16, 'Move the car. Sensor overlap: false', { fill: '#ffffff' });
-
-
-  ///////////////// }
-
-  /*************************************** OLD STUFF *************************************/
-  /*************************************** OLD STUFF *************************************/
-  /*************************************** OLD STUFF *************************************/
-  /*************************************** OLD STUFF *************************************/
-
 
   /*
   ** The create() function is called automatically after preload() has finished.
@@ -220,14 +152,6 @@ var createGame = (userInput) => {
     // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
     // console.log(endZoneBodies);
 
-
-
-    // endZoneBodies.forEach(function(body) {
-    //   game.add.sprite(body.x, body.y, 'object');
-    // })
-
-
-
     completionTiles = layer_5.getTiles(0, 0, 1000, 1000).filter(function(tile) {
       return tile.index > 0;
     });
@@ -245,20 +169,8 @@ var createGame = (userInput) => {
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
     createSensors();
-    console.log('Sensors in createGame: ', sensors);
-    console.log('right: ', sensors.right);
     createCar();
     setSpeed();
-    ////////////////// if (sensor) {
-    //////////////////   console.log('sensor x: ', sensor.x);
-    //////////////////   console.log('sensor y: ', sensor.y);
-    //////////////////   console.log('sensor.getBounds().size(): ', sensor.getBounds().size());
-    //////////////////   console.log('sensor width: ', sensor.getBounds().width);
-    //////////////////   console.log('sensor height: ', sensor.getBounds().height);
-    //////////////////   console.log('sensor center: ', sensor.getBounds().centerX, sensor.getBounds().centerY);
-    //////////////////   console.log('sensor contains: ', sensor.getBounds().contains(10, 100));
-    ////////////////// }
-
 
     /*
     ** Create two collision groups. One for the car and one for everything else.
@@ -295,19 +207,8 @@ var createGame = (userInput) => {
     */
     cursors = game.input.keyboard.createCursorKeys();
 
-    //////////////// if (sensor) {
-    ////////////////   arr.forEach(function(rect) {
-    ////////////////     console.log('sensor.getBounds(): ', sensor.getBounds());
-    ////////////////     console.log(sensor.getBounds().contains(rect.centerX, rect.centerY));
-    ////////////////   })
 
-    ////////////////   collisionBodies.forEach(function(body) {
-    ////////////////     if (sensor.getBounds().contains(body.x, body.y)) {
-    ////////////////       game.add.sprite(body.x, body.y, 'car');
-    ////////////////       console.log('hit');
-    ////////////////     }
-    ////////////////   })
-    //////////////// }
+
   }
 
 
@@ -355,22 +256,7 @@ var createGame = (userInput) => {
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
     */
-    car.body.velocity.x = 0;
-    car.body.velocity.y = 0;
-    car.body.angularVelocity = 0;
-    if (userInput.engine) {
-
-      checkCompletion();
-
-      if (cursors.up.isDown) {
-        car.body.moveForward(carForwardSpeed);
-        leftRight(true);
-      } else if (cursors.down.isDown) {
-        car.body.moveBackward(carBackwardSpeed);
-        leftRight(false);
-      }
-    }
-
+    checkCompletion();
   }
 
   function render() {
@@ -383,15 +269,6 @@ var createGame = (userInput) => {
   /*********** HELPER FUNCTIONS ******************/
   /*************** HELPER FUNCTIONS **************/
   /******************* HELPER FUNCTIONS **********/
-
-
-  /**************************** NOTE ****************************/
-  /* Car angle is accessed by car.body.angle                    */
-  /* The angle of objects is 0 while pointing up                */
-  /* The angle of objects is 180 while pointing down            */
-  /* Clockwise is postive rotation, up to 180 degrees           */
-  /* Counterclockwise is negative rotation, up to -180 degrees  */
-  /**************************** NOTE ****************************/
 
   /*
   ** Generates the car as a Phaser sprite object. Enable it to be a Phaser body object.
@@ -408,6 +285,9 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
+    if (userInput.engine) {
+      car.body.moveForward(userInput.speed * userSpeedMultiplier);
+    }
   }
 
   /*
@@ -455,32 +335,6 @@ var createGame = (userInput) => {
     }
   }
 
-  //////////////////// /*
-  //////////////////// ** If the user has activated the sensor:
-  //////////////////// ** Create the sensor around the car as a sprite. Scale it to an appropriate size,
-  //////////////////// ** and set the anchor point at the center, so it's rotation is relative to that point.
-  //////////////////// ** Initialize the starting coordinates to match up with the car's coordinates.
-  //////////////////// */
-  //////////////////// function createSensor() {
-  ////////////////////   if (userInput.sensor) {
-  ////////////////////     sensor = game.add.sprite(startingX, startingY, 'sensor');
-  ////////////////////     sensor.scale.setTo(.25, .25);
-  ////////////////////     game.physics.p2.enable(sensor);
-  ////////////////////     sensor.alpha = .1;
-  ////////////////////     sensor.anchor.setTo(.5, .5);
-  ////////////////////   }
-  //////////////////// }
-
-  //////////////////// /*
-  //////////////////// ** Attaches a sensor to the coordinate location of the car.
-  //////////////////// */
-  //////////////////// function attachSensor(sensor, carX, carY, carAngle) {
-  ////////////////////   sensor.body.x = carX;
-  ////////////////////   sensor.body.y = carY;
-  ////////////////////   sensor.body.angle = carAngle;
-  //////////////////// }
-
-
   function degToRad(num) {
     return num * (Math.PI / 180);
   }
@@ -516,24 +370,6 @@ var createGame = (userInput) => {
     }
   }
 
-
-  /*
-  ** Generates the car as a Phaser sprite object. Enable it to be a Phaser body object.
-  ** Sets a rectangle to the size of the car to interpret collisions.
-  ** Initialize the starting coordinates to match up with the sensor's coordinates.
-  */
-  function createCar() {
-    // Appearance
-    car = game.add.sprite(startingX, startingY, 'car');
-    car.anchor.setTo(.3, .5);
-    car.scale.setTo(carScale);
-
-    // Physics
-    game.physics.p2.enable(car);
-    car.body.setRectangle(car.width, car.height);
-    car.body.collideWorldBounds = true;
-  }
-
   /*
   ** If the user has declared a speed:
   ** Set the car's speed appropriately.
@@ -551,21 +387,17 @@ var createGame = (userInput) => {
   */
   function checkCompletion() {
     completionTiles.forEach(function(tile) {
-      if (car.getBounds().contains(tile.worldX, tile.worldY)
-       || car.getBounds().contains(tile.worldX + 32, tile.worldY)
-       || car.getBounds().contains(tile.worldX, tile.worldY + 32)
-       || car.getBounds().contains(tile.worldX + 32, tile.worldY + 32)) {
-        console.log(car.getBounds());
-        var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-        var text = game.add.text(400, 300, 'Success!', style);
-        game.paused = true;
-        console.log('COMPLETED!');
+      if (Math.abs(tile.worldX + 16 - car.body.x) < 25 && Math.abs(tile.worldY +16 - car.body.y) < 25) {
+        levelCompleted();
       }
     })
   }
 
   function levelCompleted() {
-
+    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    var text = game.add.text(400, 300, 'Success!', style);
+    game.paused = true;
+    console.log('COMPLETED!');
   }
 
   /*
@@ -593,12 +425,4 @@ var createGame = (userInput) => {
 
 }
 
-  ////////////////// function checkOverlap(spriteA, spriteB) {
-  //////////////////   var boundsA = spriteA.getBounds();
-  //////////////////   var boundsB = spriteB.getBounds();
-
-  //////////////////   return Phaser.Rectangle.intersects(boundsA, boundsB);
-  ////////////////// }
-
-
-export default createGame;
+module.exports = createGame;
