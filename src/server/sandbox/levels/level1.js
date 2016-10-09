@@ -21,7 +21,7 @@ var level1 = function(req, res, next) {
 	// ======================================================
   
   // == TESTING USER INPUT ================================
-  runTestSuite(function UserInputTest(t) {
+  runTestSuite(function UserInputTestLevel1(t) {
     // ASSUME A SUCCESSFUL TEST
     req.body.phaser.case = 1;
 
@@ -234,7 +234,8 @@ var level1 = function(req, res, next) {
   });
 
   // if user level is greater than level 1, run tests of next level
-  if (req.body.level > 1) {
+  // and if case is success
+  if (req.body.level > 1 && req.phaser.case === 1) {
     level2(req, res, next);
   } else {
   // else return phaser object
