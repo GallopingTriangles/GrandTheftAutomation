@@ -136,8 +136,8 @@ var level3 = function(req, res, next) {
 
       this.testTurnInputValue = function() {
         t.assertTrue(
-          turn === 'left' || turn === 'right',
-          'Expected function turn() to be called with input value "right" or "left", but got input value ' + turn,
+          /* turn === 'left' || */ turn === 'right',
+          'Expected function turn() to be called with input value "right", but got input value ' + turn,
           function() {
           	setCase(3); // car is not turning at intersetion
           }
@@ -149,7 +149,7 @@ var level3 = function(req, res, next) {
   });
 
   // if user level is greater than level 2, run tests of next level
-  if (req.body.level > 3) {
+  if (req.body.level === 4 && req.body.phaser.case === 1) {
   	level4(req, res, next);
   } else {
   // else return phaser object
