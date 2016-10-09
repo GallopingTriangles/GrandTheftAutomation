@@ -28,7 +28,37 @@ var level5 = function(req, res, next) {
 	// case 4: fail, crashed going straight
 
 	// == TESTING USER INPUT LEVEL 5 ========================
-	runTestSuite(function UserInputTestLevel3(t) {
+	runTestSuite(function UserInputTestLevel5(t) {
+  
+  // USER INPUT
+	var userInput = req.body.log;
+  // == VIRTUAL MACHINE =================================
+  var funcColor = 'var setColor = function(input) { testColor = input; };';
+  var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
+  var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
+  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
+
+  // input for virtual machine
+  var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
+  var script = new vm.Script(input);
+
+  var setCaseCount = 1;
+  var setCase = function(caseNo) {
+  	if (setCaseCount === 1) {
+      req.body.phaser.case = caseNo;
+      setCaseCount++;
+  	}
+  };
+
+  // == ENABLED TESTS == //
+  runTestSuite(function EnabledInputTest(t) {
+
+  });
+
+  // == ROUTE TESTS == //
+  runTestSuite(function RouteInputTest(t) {
+
+  });
 
 	});
 
