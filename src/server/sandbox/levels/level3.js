@@ -33,53 +33,93 @@ var level3 = function(req, res, next) {
     var funcColor = 'var setColor = function(input) { testColor = input; };';
     var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
     var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
-    var funcTurn = 'var turn = function(input) { testTurn = input; };';
+    var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
 
     // input for virtual machine
     var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
     var script = new vm.Script(input);
 
-  	// == TURN TESTS == //
-  	runTestSuite(function TurnInputTest(t) {
+    var setCase = function(caseNo) {
+    	req.body.phaser.case = caseNo;
+    };
+
+  	// == MAP CONDITIONAL TEST == //
+    runTestSuite(function MapConditionalFalseTest(t) {
+    	// sandbox for virtual machine
+    	var sandbox = {
+    		sensor: {
+    	    front: false
+    		},
+    		map: {
+    	    intersection: false
+    		},
+    		testEnable: [],
+    		testTurn: {
+    			value: undefined,
+    			count: 0
+    		}
+    	};
+
+    	var context = new vm.createContext(sandbox);
+    	script.runInContext(context);
+
+    	var turn = context.testTurn;
+
+    	this.testTurnNotCalled = function() {
+
+    	};
+
+    });
+
+    runTestSuite(function MapConditionalTrueTest(t) {
       // sandbox for virtual machine
       var sandbox = {
       	sensor: {
           front: false
       	},
+      	map: {
+          intersection: true
+      	},
       	testEnable: [],
-      	testTurn: undefined
+      	testTurn: {
+      		value: undefined,
+      		count: 0
+      	}
       };
 
       var context = new vm.createContext(sandbox);
       script.runInContext(context);
 
-      // console.log(context);
-      var turn = context.testTurn;
+      var turn = context.testTurn.value;
+      var calls = context.testTurn.count;
 
-      // test if the turn is called and set
-      this.testTurnDefined = function() {
+      this.testTurnCalled = function() {
         t.assertTrue(
-          turn,
-          'Expected turn to be called, but got undefined'
+          calls > 0,
+          'Expected function turn() to be called, but got not called',
+          function() {
+          	setCase(3);
+          }
+        );
+      };
+
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once, but got called ' + calls
           // ADD FAIL CALLBACK
         );
       };
 
-      // test if turn input is of data type string
-      this.testTurnString = function() {
-        t.assertString(
-          turn,
-          'turn'
-          // ADD FAIL CALLBACK
-        );
+      this.testTurnInputNumber = function() {
+
       };
 
-  	});
+      this.testTurnInputValue = function() {
 
-  	// == CONDITIONAL TESTS == //
-  	runTestSuite(function IntersectionConditionalTest(t) {
-      
-  	});
+      };
+
+    });
 
   });
 
