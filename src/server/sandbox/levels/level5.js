@@ -21,4 +21,15 @@ var level5 = function(req, res, next) {
   //
 	// ======================================================
 
+	// == CASES =============================================
+	// case 1: success, left turn
+	// case 2: fail, engine not on or speed 0
+	// case 3: success, right turn
+	// case 4: fail, crashed going straight
+
+	// == TESTING USER INPUT LEVEL 5 ========================
+	runTestSuite(function UserInputTestLevel3(t) {
+
+	});
+
 }
