@@ -1,13 +1,13 @@
 var router = require('express').Router();
 var gameController = require('../controllers/gameController.js');
 var sandbox = require('../middleware/sandbox.js');
-var Sandbox = require('../sandbox/Sandbox.js');
+var sandboxRoutes = require('../sandbox/sandboxRoutes.js');
 
 router.get('/', gameController.getGameState); // gets the user's saved game state of the code editor
 
 // saves the user's game state of the code editor
 // sandbox middleware parses user input and adds it to req.body
-router.post('/', Sandbox, gameController.saveGameState); 
+router.post('/', sandboxRoutes, gameController.saveGameState); 
 
 // router.put('/', gameController.updateGameState); // updates the user's game state of the code editor
 /****************************************************************************
