@@ -37,9 +37,29 @@ var level2 = function(req, res, next) {
 
     // input for virtual machine
     var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
+    var script = new vm.Script(input);
 
   	// == TURN TESTS == //
   	runTestSuite(function TurnInputTest(t) {
+      // sandbox for virtual machine
+      var sandbox = {
+      	testEnable: [],
+      	testTurn: undefined
+      };
+
+      var context = new vm.createContext(sandbox);
+      script.runInContext(context);
+
+      console.log(context);
+
+      // test if the turn is called and set
+      this.testTurnDefined = function() {
+        t.assertTrue(
+          context.testTurn,
+          'Expected turn to be called, but got undefined'
+          // ADD FAIL CALLBACK
+        );
+      };
 
   	});
 
@@ -50,9 +70,14 @@ var level2 = function(req, res, next) {
 
   });
 
-  req.body.phaser.lorenzo = 'dit is een test van lorenzo';
+  // if user level is greater than level 2, run tests of next level
+  if (req.body.level > 2) {
+  	level3(req, res, next);
+  } else {
+  // else return phaser object
+  	next();
+  }
 
-  next();
 };
 
 module.exports = level2;
