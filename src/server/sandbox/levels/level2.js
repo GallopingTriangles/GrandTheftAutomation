@@ -25,7 +25,7 @@ var level2 = function(req, res, next) {
 	// ======================================================
 
 	// == TESTING USER INPUT LEVEL 2 ========================
-  runTestSuite(function UserInputTest(t) {
+  runTestSuite(function UserInputTestLevel2(t) {
   	
   	// USER INPUT
   	var userInput = req.body.log;
@@ -38,6 +38,10 @@ var level2 = function(req, res, next) {
     // input for virtual machine
     var input = funcColor + funcSpeed + funcEnable + userInput;
     var script = new vm.Script(input);
+
+    var setCase = function(caseNo) {
+      req.body.phaser.case = caseNo;
+    };
 
   	// == CONDITIONAL TESTS == //
   	runTestSuite(function SensorConditionalFalseTest(t) {
@@ -56,11 +60,16 @@ var level2 = function(req, res, next) {
   		var context = new vm.createContext(sandbox);
   		script.runInContext(context);
 
-  		console.log(context);
+			var speed = context.testSpeed.value;
+			var calls = context.testSpeed.count;
 
-  		this.testSensorSetSpeed = function() {
-        t.assertTrue(true);
-  		};
+			this.testSetSpeedCalledOnce = function() {
+	      t.assertTrue(
+	        calls === 1,
+	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times'
+	        // ADD FAIL CALLBACK
+	      );
+			};
 
   	});
 
@@ -80,10 +89,43 @@ var level2 = function(req, res, next) {
 			var context = new vm.createContext(sandbox);
 			script.runInContext(context);
 
-			console.log(context);
+			var speed = context.testSpeed.value;
+			var calls = context.testSpeed.count;
 
-			this.testSensorSetSpeed = function() {
-        t.assertTrue(true);
+      // test is the setSpeed function is called twice, indicating the conditional
+			this.testSetSpeedCalledTwice = function() {
+        t.assertTrue(
+          calls === 2,
+          'Expected function setSpeed() to be called twice, but got called ' + calls + ' times'
+          // ADD FAIL CALLBACK
+        );
+			};
+
+      // test if the second call sets the speed to a number
+			this.testSensorSetSpeedNumber = function() {
+        t.assertTrue(
+          calls === 2 && typeof speed === 'number',
+          'Expected speed to be of data type number, but got set to ' + typeof speed,
+          setCase(3) // syntax error, crash into object
+        );
+			};
+
+      // test if the second call sets the speed to a positive number
+			this.testSensorSetSpeedPositive = function() {
+        t.assertTrue(
+          calls === 2 && speed > 0,
+          'Expected speed to be a positive number, but got a negative number',
+          setCase(3) // syntax error, crash into object
+        );
+			}
+
+      // test if the sensor speed is set to 0 is the conditional is true
+			this.testSensorSetSpeedValue = function() {
+        t.assertTrue(
+          calls === 2 && speed === 0,
+          'Expected speed to be set to 0, but got ' + speed,
+          setCase(3) // wrong input, crash into object
+        );
 			};
 
 		});
