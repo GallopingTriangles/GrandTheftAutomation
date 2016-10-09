@@ -1,5 +1,6 @@
 var vm = require('vm');
 
+// next level
 var level2 = require('./level2');
 
 // == USE TESTING FRAMEWORK ===============================
@@ -228,9 +229,11 @@ var level1 = function(req, res, next) {
 
   });
 
-  if (req.body.level === 2) {
+  // if user level is greater than level 1, run tests of next level
+  if (req.body.level > 1) {
     level2(req, res, next);
   } else {
+  // else return phaser object
 	  next();
   }
   
