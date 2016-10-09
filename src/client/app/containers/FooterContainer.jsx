@@ -9,25 +9,9 @@ class Footer extends Component {
   // == REACT FUNCTIONS =====================================================
   constructor(props) {
     super(props);
-    this.state = {
-      // level: this.props.level
-    };
+    this.state = {};
   }
 
-  // == CUSTOM FUNCTIONS ====================================================
-  // previousLevel(e) {
-  //   e.preventDefault();
-  //   if (this.props.level > 1) {
-  //     this.props.changeLevel(this.props.level - 1);
-  //   }
-  // }
-
-  // nextLevel(e) {                                                              // go to next level
-  //   e.preventDefault();
-  //   if (this.props.level < 4) {
-  //     this.props.changeLevel(this.props.level + 1);
-  //   }
-  // }
 
   changeLevel(e, level) {
     /* Updates the store with the appropriate level                       */
