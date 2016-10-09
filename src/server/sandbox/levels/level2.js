@@ -51,12 +51,22 @@ var level2 = function(req, res, next) {
       script.runInContext(context);
 
       console.log(context);
+      var turn = context.testTurn;
 
       // test if the turn is called and set
       this.testTurnDefined = function() {
         t.assertTrue(
-          context.testTurn,
+          turn,
           'Expected turn to be called, but got undefined'
+          // ADD FAIL CALLBACK
+        );
+      };
+
+      // test if turn input is of data type string
+      this.testTurnString = function() {
+        t.assertString(
+          turn,
+          'turn'
           // ADD FAIL CALLBACK
         );
       };
