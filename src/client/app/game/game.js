@@ -8,8 +8,8 @@ export default function(userInput) {
   // level1(userInput);
   // level2(userInput);
   // level3(userInput);
-  level4(userInput);
-  // level5(userInput);
+  // level4(userInput);
+  level5(userInput);
 
 
 }

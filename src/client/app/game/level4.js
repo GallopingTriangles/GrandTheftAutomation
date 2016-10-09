@@ -305,8 +305,8 @@ var createGame = (userInput) => {
         car.body.moveForward(400);
       }
     } else if (FAKE_USER_INPUT.case === 6) { // failed, car didn't start
-      car.velocity.x = 0;
-      car.velocity.y = 0;
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
     }
 
     /*
