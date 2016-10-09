@@ -31,62 +31,73 @@ var level2 = function(req, res, next) {
   	var userInput = req.body.log;
     // == VIRTUAL MACHINE =================================
     var funcColor = 'var setColor = function(input) { testColor = input; };';
-    var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
+    var funcSpeed = 'var setSpeed = function(input) { testSpeed.value = input; testSpeed.count++ };';
     var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
-    var funcTurn = 'var turn = function(input) { testTurn = input; };';
+    // var funcTurn = 'var turn = function(input) { testTurn = input; };';
 
     // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
+    var input = funcColor + funcSpeed + funcEnable + userInput;
     var script = new vm.Script(input);
 
-  	// == TURN TESTS == //
-  	runTestSuite(function TurnInputTest(t) {
-      // sandbox for virtual machine
-      var sandbox = {
-      	testEnable: [],
-      	testTurn: undefined
-      };
-
-      var context = new vm.createContext(sandbox);
-      script.runInContext(context);
-
-      console.log(context);
-      var turn = context.testTurn;
-
-      // test if the turn is called and set
-      this.testTurnDefined = function() {
-        t.assertTrue(
-          turn,
-          'Expected turn to be called, but got undefined'
-          // ADD FAIL CALLBACK
-        );
-      };
-
-      // test if turn input is of data type string
-      this.testTurnString = function() {
-        t.assertString(
-          turn,
-          'turn'
-          // ADD FAIL CALLBACK
-        );
-      };
-
-  	});
-
   	// == CONDITIONAL TESTS == //
-  	runTestSuite(function IntersectionConditionalTest(t) {
-      
+  	runTestSuite(function SensorConditionalFalseTest(t) {
+  		// sandbox for virtual machine
+  		var sandbox = {
+  			sensor: {
+          front: false
+  			},
+        testEnable: [],
+        testSpeed: {
+        	value: 0,
+        	count: 0
+        }
+  		};
+
+  		var context = new vm.createContext(sandbox);
+  		script.runInContext(context);
+
+  		console.log(context);
+
+  		this.testSensorSetSpeed = function() {
+        t.assertTrue(true);
+  		};
+
   	});
+
+		runTestSuite(function SensorConditionalTrueTest(t) {
+			// sandbox for virtual machine
+			var sandbox = {
+				sensor: {
+	        front: true
+				},
+	      testEnable: [],
+	      testSpeed: {
+	      	value: 0,
+	      	count: 0
+	      }
+			};
+
+			var context = new vm.createContext(sandbox);
+			script.runInContext(context);
+
+			console.log(context);
+
+			this.testSensorSetSpeed = function() {
+        t.assertTrue(true);
+			};
+
+		});
 
   });
 
+  next();
   // if user level is greater than level 2, run tests of next level
-  if (req.body.level > 2) {
-  	level3(req, res, next);
-  } else {
-  // else return phaser object
-  	next();
-  }
+  // if (req.body.level > 2) {
+  // 	level3(req, res, next);
+  // } else {
+  // // else return phaser object
+  // 	next();
+  // }
 
 };
 

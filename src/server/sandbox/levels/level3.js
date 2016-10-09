@@ -43,6 +43,9 @@ var level3 = function(req, res, next) {
   	runTestSuite(function TurnInputTest(t) {
       // sandbox for virtual machine
       var sandbox = {
+      	sensor: {
+          front: false
+      	},
       	testEnable: [],
       	testTurn: undefined
       };
@@ -50,7 +53,7 @@ var level3 = function(req, res, next) {
       var context = new vm.createContext(sandbox);
       script.runInContext(context);
 
-      console.log(context);
+      // console.log(context);
       var turn = context.testTurn;
 
       // test if the turn is called and set
