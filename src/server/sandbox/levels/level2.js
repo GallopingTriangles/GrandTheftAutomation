@@ -18,8 +18,8 @@ var level2 = function(req, res, next) {
   //
   // enable('sensor');
   //
-  // if (map.intersection === true) {
-  //   turn('right');
+  // if (sensor.front === true) {
+  //   setSpeed(0);
   // }
   //
 	// ======================================================
