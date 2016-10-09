@@ -73,8 +73,10 @@ var level2 = function(req, res, next) {
 			this.testSetSpeedCalledOnce = function() {
 	      t.assertTrue(
 	        calls === 1,
-	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times'
-	        // ADD FAIL CALLBACK
+	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
+	        function() {
+	        	setCase(2);
+	        }
 	      );
 			};
 
@@ -106,8 +108,10 @@ var level2 = function(req, res, next) {
 			this.testSetSpeedCalledTwice = function() {
         t.assertTrue(
           calls === 2,
-          'Expected function setSpeed() to be called twice, but got called ' + calls + ' times'
-          // ADD FAIL CALLBACK
+          'Expected function setSpeed() to be called twice, but got called ' + calls + ' times',
+          function() {
+          	setCase(3);
+          }
         );
 			};
 
