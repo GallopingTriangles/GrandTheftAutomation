@@ -9,13 +9,12 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1, // success, LEFT turn followed by RIGHT turn to complete the level
+    case: 1, // success, LEFT turn followed by LEFT turn to complete the level (U-turn)
     // case: 2, // fail, didn't enable the engine
     // case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
     // case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
     // case: 5, // fail, turned RIGHT at FIRST intersection and crashed
-    // case: 6, // EASTER EGG SUCCESS, turned LEFT at the SECOND intersection into the park and then turned RIGHT on the path
-    // case: 7, // EASTER EGG FAIL, turned LEFT at the SECOND intersection into the park and then crashed STRAIGHT
+    // case: 6, // fail, turned LEFT at FIRST intersection but turned RIGHT at SECOND intersection and crashed
   }
   /**********************************************************/
   /**********************************************************/
@@ -51,7 +50,7 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
   var startingX = 40;
-  var startingY = 470;
+  var startingY = 525;
   var backgroundColor = '#3e5f96';
   var speed = FAKE_USER_INPUT.speed * 4;
   // var carForwardSpeed = 200;
@@ -99,8 +98,8 @@ var createGame = (userInput) => {
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_UL_layer');
-    layer_7 = map.createLayer('intersection_DR_layer');
+    layer_6 = map.createLayer('intersection_DL_layer');
+    layer_7 = map.createLayer('intersection_UL_layer');
 
     layer_1 = map.createLayer('collision_layer');
 
