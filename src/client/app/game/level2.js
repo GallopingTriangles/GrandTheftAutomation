@@ -9,6 +9,7 @@ var createGame = (userInput) => {
   var FAKE_USER_INPUT = {
     color: 'black',
     speed: 400,
+    sensor: true,
     case: 1, // success, stopped before obstacle
     // case: 2, // fail, engine was not on
     // case: 3, // fail, crashed into obstacle
@@ -291,8 +292,8 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    game.debug.spriteInfo(car, 32, 32);
-    car.body.debug = true;
+    // game.debug.spriteInfo(car, 32, 32);
+    // car.body.debug = true;
 
   }
 
@@ -386,7 +387,6 @@ var createGame = (userInput) => {
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
-        console.log('Sensors in create: ', sensors);
       }
     }
   }
