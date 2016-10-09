@@ -20,7 +20,7 @@ class Game extends Component {
       color: 'white',
       speed: 0
       /* no "case" property yet because this is just the initial rendering of the game */
-    })
+    }, this.props.level)
   }
 
   componentWillUnmount() {
