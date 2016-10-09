@@ -22,8 +22,8 @@ var createGame = (userInput) => {
 
   var width = window.innerWidth;
   var height = window.innerHeight;
-  var gameWidth = width * (7 / 12) - 10;
-  var gameHeight = gameWidth * (6 / 8);
+  // var gameWidth = width * (7 / 12) - 10;
+  // var gameHeight = gameWidth * (6 / 8);
 
   var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser_game', { preload: preload, create: create, update: update, render: render });
 
@@ -41,7 +41,7 @@ var createGame = (userInput) => {
   }
 
   var car;
-  var cursors;
+  // var cursors;
   var text;
 
   var sensors = {};
@@ -70,7 +70,7 @@ var createGame = (userInput) => {
 
   var collisionBodies;
 
-  var endZoneBodies;
+  // var endZoneBodies;
 
   var completionTiles;
 
@@ -123,7 +123,7 @@ var createGame = (userInput) => {
       createSensors();
     }
     createCar();
-    setSpeed();
+    // setSpeed();
 
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -254,14 +254,14 @@ var createGame = (userInput) => {
   }
 
   function createSensors() {
-    // if (userInput.sensor) {
+    if (userInput.sensor) {
       for (var sensor in sensors) {
         sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
       }
-    // }
+    }
   }
 
   function attachSensors(startingAngle, offset, FLBRArray) {
