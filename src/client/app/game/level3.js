@@ -1,7 +1,7 @@
 var createGame = (userInput) => {
   // change width depends on window width, no dynamically resizing yet
   /* debugTools */
-  userInput.case = 4;
+  userInput.case = 2;
 
   var width = window.innerWidth;
   var height = window.innerHeight;
@@ -289,7 +289,7 @@ var createGame = (userInput) => {
       car.body.moveForward(userInput.speed * userSpeedMultiplier);
     }
     if (userInput.case === 2) {
-      turnRight(90, car.body.y < 244);
+      turnRight(180, car.body.y < 244);
     } else if (userInput.case === 3) {
       turnLeft(-90, car.body.y < 164)
     }
@@ -461,7 +461,6 @@ var createGame = (userInput) => {
   }
 
   function turnRight(endingAngle, intersection) {
-    var mod = endingAngle % 180;
     if (intersection) {
       if (car.body.angle < endingAngle) {
         car.body.moveForward(userInput.speed * 4);
