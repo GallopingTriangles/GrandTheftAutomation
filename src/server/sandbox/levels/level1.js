@@ -1,5 +1,7 @@
 var vm = require('vm');
 
+var level2 = require('./level2');
+
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
 
@@ -226,7 +228,12 @@ var level1 = function(req, res, next) {
 
   });
 
-  next();
+  if (req.body.level === 2) {
+    level2(req, res, next);
+  } else {
+	  next();
+  }
+  
 };
 
 module.exports = level1;
