@@ -25,7 +25,7 @@ var level3 = function(req, res, next) {
 	// ======================================================
 
 	// == TESTING USER INPUT LEVEL 3 ========================
-  runTestSuite(function UserInputTest(t) {
+  runTestSuite(function UserInputTestLevel3(t) {
   	
   	// USER INPUT
   	var userInput = req.body.log;
