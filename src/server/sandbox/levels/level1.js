@@ -56,7 +56,13 @@ var level1 = function(req, res, next) {
     var context = new vm.createContext(sandbox);
     script.runInContext(context);
 
-    // console.log(context);
+    var setCaseCount = 1;
+    var setCase = function(caseNo) {
+    	if (setCaseCount === 1) {
+    		req.body.phaser.case = caseNo;
+    		setCaseCount++;
+    	}
+    };
 
     // == ENABLED TESTS == //
     runTestSuite(function EnabledInputTest(t) {
@@ -66,8 +72,10 @@ var level1 = function(req, res, next) {
 	  	this.testEnabledCalled = function() {
 	      t.assertTrue(
 	      	enabled.length > 0, 
-	      	'Expected function enable() to be called, but got not called'
-	      	// ADD FAIL CALLBACK
+	      	'Expected function enable() to be called, but got not called',
+	      	function() {
+	      		setCase(2);
+	      	}
 	      );
 	  	};
 
@@ -76,16 +84,20 @@ var level1 = function(req, res, next) {
       	var calls = enabled.length;
         t.assertTrue(
         	calls <= 2,
-          'Expected function enable() to be called twice, but got called ' + calls + ' times'
-          // ADD FAIL CALLBACK
+          'Expected function enable() to be called twice, but got called ' + calls + ' times',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
         );
       };
 
       // test if the input is of data type string
       this.testEnableInputType = function() {
         t.assertOptionsOfTypeString(
-          enabled
-          // ADD FAIL CALLBACK
+          enabled,
+          function() {
+          	setCase(2);
+          }
         );
       };
     });
@@ -105,7 +117,9 @@ var level1 = function(req, res, next) {
         t.assertTrue(
         	context.testEngine,
           'Expected engine to be enabled, but got undefined',
-          setEngineDefault
+          function() {
+          	setCase(2);
+          }
         );
       };
 
@@ -116,7 +130,9 @@ var level1 = function(req, res, next) {
         t.assertTrue(
           context.testEnable[0] === 'engine',
           'Expected engine to be enabled first, but got ' + enabledFirst + ' enabled first',
-          setEngineDefault
+          function() {
+          	setCase(2);
+          }
         );
       };
     });
@@ -179,7 +195,9 @@ var level1 = function(req, res, next) {
         t.assertTrue(
           speed,
           'Expected speed to be set, but got undefined',
-          setSpeedDefault
+          function() {
+          	setCase(2);
+          }
         );
     	};
 
@@ -188,7 +206,9 @@ var level1 = function(req, res, next) {
         t.assertNumber(
         	speed,
         	'speed',
-        	setSpeedDefault
+        	function() {
+        		setCase(2);
+        	}
         );
     	};
 
@@ -197,7 +217,9 @@ var level1 = function(req, res, next) {
         t.assertTrue(
         	speed >= 0, 
         	'Expected speed to be a positive number, but got a negative number',
-        	setSpeedDefault
+        	function() {
+        		setCase(2);
+        	}
         );
     	};
     });
@@ -239,7 +261,7 @@ var level1 = function(req, res, next) {
 
   // if user level is greater than level 1, run tests of next level
   // and if case is success
-  if (req.body.level === 2 && req.body.phaser.case === 1) {
+  if ((req.body.level === 2 || req.body.level === 4) && req.body.phaser.case === 1) {
     level2(req, res, next);
   } else if (req.body.level === 3 && req.body.phaser.case === 1) {
     level3(req, res, next);

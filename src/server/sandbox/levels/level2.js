@@ -54,6 +54,9 @@ var level2 = function(req, res, next) {
   			sensor: {
           front: false
   			},
+  			map: {
+          intersection: false
+  			},
         testEnable: [],
         testSpeed: {
         	value: 0,
@@ -70,8 +73,10 @@ var level2 = function(req, res, next) {
 			this.testSetSpeedCalledOnce = function() {
 	      t.assertTrue(
 	        calls === 1,
-	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times'
-	        // ADD FAIL CALLBACK
+	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
+	        function() {
+	        	setCase(2);
+	        }
 	      );
 			};
 
@@ -82,6 +87,9 @@ var level2 = function(req, res, next) {
 			var sandbox = {
 				sensor: {
 	        front: true
+				},
+				map: {
+          intersection: false
 				},
 	      testEnable: [],
 	      testSpeed: {
@@ -100,8 +108,10 @@ var level2 = function(req, res, next) {
 			this.testSetSpeedCalledTwice = function() {
         t.assertTrue(
           calls === 2,
-          'Expected function setSpeed() to be called twice, but got called ' + calls + ' times'
-          // ADD FAIL CALLBACK
+          'Expected function setSpeed() to be called twice, but got called ' + calls + ' times',
+          function() {
+          	setCase(3);
+          }
         );
 			};
 
@@ -143,7 +153,7 @@ var level2 = function(req, res, next) {
   });
 
   // if user level is greater than level 2, run tests of next level
-  if (req.body.level > 2 && req.body.phaser.case === 1) {
+  if (req.body.level === 4 && req.body.phaser.case === 1) {
   	level3(req, res, next);
   } else {
   // else return phaser object
