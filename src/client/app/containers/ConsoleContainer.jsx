@@ -144,8 +144,9 @@ class Console extends Component {
     }).then(res => {
       console.log('res: ', res);
       res.json().then(response => {
+        // the response from the server is an object that is used to create the game
         console.log(response.phaser);
-        createGame(response.phaser);
+        createGame(response.phaser, this.props.level);
         this.setState({bugs: response.bugs});
       })
     }).catch(err => {

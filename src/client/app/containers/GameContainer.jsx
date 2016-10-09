@@ -14,8 +14,13 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    // create the game when the component mounts
-    createGame({engine: false, sensor: false, speed: false, color: 'white'});
+    // create the default game when the component mounts
+    // createGame({engine: false, sensor: false, speed: false, color: 'white'});
+    createGame({
+      color: 'white',
+      speed: 0
+      /* no "case" property yet because this is just the initial rendering of the game */
+    })
   }
 
   componentWillUnmount() {

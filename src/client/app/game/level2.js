@@ -7,6 +7,8 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
+    color: 'black',
+    speed: 400,
     case: 1, // success, stopped before obstacle
     // case: 2, // fail, engine was not on
     // case: 3, // fail, crashed into obstacle
