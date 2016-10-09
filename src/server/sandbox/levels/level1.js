@@ -19,6 +19,9 @@ var level1 = function(req, res, next) {
   
   // == TESTING USER INPUT ================================
   runTestSuite(function UserInputTest(t) {
+    // ASSUME A SUCCESSFUL TEST
+    req.body.phaser.case = 1;
+
   	// USER INPUT
   	var userInput = req.body.log;
     // == VIRTUAL MACHINE =================================
@@ -77,13 +80,21 @@ var level1 = function(req, res, next) {
     });
 
     // == ENGINE TESTS == //
+    // set engine on phase object to context value
+    req.body.phaser.engine = context.testEngine;
     runTestSuite(function EngineInputTest(t) {
+      
+      var setEngineDefault = function(errorMessage) {
+        req.body.phaser.engine = false;
+        req.body.phaser.case = 2;
+      };
+
       // test if the engine is enabled
       this.testEngineDefined = function() {
         t.assertTrue(
         	context.testEngine,
-          'Expected engine to be enabled, but got undefined'
-          // ADD FAIL CALLBACK
+          'Expected engine to be enabled, but got undefined',
+          setEngineDefault
         );
       };
 
@@ -93,22 +104,30 @@ var level1 = function(req, res, next) {
         context.testEnable[0] ? enabledFirst = context.testEnable[0] : enabledFirst = '';
         t.assertTrue(
           context.testEnable[0] === 'engine',
-          'Expected engine to be enabled first, but got ' + enabledFirst + ' enabled first'
-          // ADD FAIL CALLBACK
+          'Expected engine to be enabled first, but got ' + enabledFirst + ' enabled first',
+          setEngineDefault
         );
       };
     });
 
     // == COLOR TESTS == //
+    // set color on phaser object to context value
+    req.body.phaser.color = context.testColor;
     runTestSuite(function ColorInputTest(t) {
     	// grab color from sanbox context
     	var color = context.testColor;
+
+      // if a test fails, set the color to a default value
+      var setColorDefault = function(errorMessage) {
+        req.body.phaser.color = 'white';
+      };
+
       // test if the set color function is called
       this.testColorDefined = function() {
         t.assertTrue(
           color,
-          'Expected color to be set, but got undefined'
-          // ADD FAIL CALLBACK
+          'Expected color to be set, but got undefined',
+          setColorDefault
         );
       };
 
@@ -116,8 +135,8 @@ var level1 = function(req, res, next) {
       this.testColorString = function() {
         t.assertString(
           color,
-          'color'
-          // ADD FAIL CALLBACK
+          'color',
+          setColorDefault
         );
       };
 
@@ -125,22 +144,31 @@ var level1 = function(req, res, next) {
       this.testColorWhiteRedBlueBlack = function() {
         t.assertOptions(
           ['white', 'black', 'red', 'blue'],
-          color
-          // ADD FAIL CALLBACK
+          color,
+          setColorDefault
         );
       };
     });
 
     // == SPEED TESTS == //
+    // set speed on phaser object to context
+    req.body.phaser.speed = context.testSpeed;
     runTestSuite(function SpeedInputTest(t) {
     	// grab speed from sandbox context
     	var speed = context.testSpeed;
+
+      // if a test fails, set the speed to a default value
+      var setSpeedDefault = function(errorMessage) {
+        req.body.phaser.speed = false;
+        req.body.phaser.case = 2;
+      };
+
     	// test if the set speed function is called
     	this.testSpeedDefined = function() {
         t.assertTrue(
           speed,
-          'Expected speed to be set, but got undefined'
-          // ADD FAIL CALLBACK
+          'Expected speed to be set, but got undefined',
+          setSpeedDefault
         );
     	};
 
@@ -148,8 +176,8 @@ var level1 = function(req, res, next) {
     	this.testSpeedNumber = function() {
         t.assertNumber(
         	speed,
-        	'speed'
-        	// ADD FAIL CALLBACK
+        	'speed',
+        	setSpeedDefault
         );
     	};
 
@@ -157,22 +185,30 @@ var level1 = function(req, res, next) {
     	this.testSpeedPositive = function() {
         t.assertTrue(
         	speed >= 0, 
-        	'Expected speed to be a positive number, but got a negative number'
-        	// ADD FAIL CALLBACK
+        	'Expected speed to be a positive number, but got a negative number',
+        	setSpeedDefault
         );
     	};
     });
 
     // == SENSOR TESTS == //
+    // set sensor on phaser object to context value
+    req.body.phaser.sensor = context.testSensor;
     runTestSuite(function SensorInputTest(t) {
     	// grab sensor value from context
     	var sensor = context.testSensor;
+
+      // if a test fails, set the sensor value to a default value
+      var setSensorDefault = function(errorMessage) {
+        req.body.phaser.sensor = false;
+      };
+
       // test if the sensor is enabled
       this.testSensorDefined = function() {
         t.assertTrue(
         	sensor,
-          'Expected sensor to be enabled, but got undefined'
-          // ADD FAIL CALLBACK
+          'Expected sensor to be enabled, but got undefined',
+          setSensorDefault
         );
       };
 
@@ -182,8 +218,8 @@ var level1 = function(req, res, next) {
         context.testEnable[1] ? enabledSecond = context.testEnable[1] : enabledSecond = '';
         t.assertTrue(
           context.testEnable[1] === 'sensor',
-          'Expected sensor to be enabled secondly, but got ' + enabledSecond + ' enabled second'
-          // ADD FAIL CALLBACK
+          'Expected sensor to be enabled secondly, but got ' + enabledSecond + ' enabled second',
+          setSensorDefault
         );
       };
     });
