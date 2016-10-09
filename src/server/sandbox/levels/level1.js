@@ -3,6 +3,7 @@ var vm = require('vm');
 // next level
 var level2 = require('./level2');
 var level3 = require('./level3');
+var level5 = require('./level5');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
@@ -265,6 +266,8 @@ var level1 = function(req, res, next) {
     level2(req, res, next);
   } else if (req.body.level === 3 && req.body.phaser.case === 1) {
     level3(req, res, next);
+  } else if (req.body.level === 5 && req.body.phaser.case === 1) {
+    level5(req, res, next);
   } else {
   // else return phaser object
 	  next();
