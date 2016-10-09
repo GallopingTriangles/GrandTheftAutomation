@@ -84,7 +84,7 @@ class GamePage extends Component {
     /* landing page if a redirect occurs before the component mounts  */
     return this.props.user ? (
       <div>
-        <Game />
+        <Game level={ this.props.level } />
         <Console setConsole={ this.setConsole.bind(this) } />
         <Footer getCode={ this.getCode.bind(this) } />
       </div>
