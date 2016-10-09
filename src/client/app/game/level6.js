@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'panda',
-    speed: 400,
+    speed: 100,
     sensor: true,
     case: 1, // success, LEFT turn followed by RIGHT turn to complete the level
     // case: 2, // fail, didn't enable the engine
@@ -53,11 +53,12 @@ var createGame = (userInput) => {
   var startingX = 40;
   var startingY = 470;
   var backgroundColor = '#3e5f96';
-  var carForwardSpeed = 200;
-  var carBackwardSpeed = 100;
+  var speed = FAKE_USER_INPUT.speed * 4;
+  // var carForwardSpeed = 200;
+  // var carBackwardSpeed = 100;
   var carScale = .5;
-  var forwardReverseMultiplier = 1 / 2;
-  var userSpeedMultiplier = 4;
+  // var forwardReverseMultiplier = 1 / 2;
+  // var userSpeedMultiplier = 4;
   var explosion;
   var wasted;
 
@@ -167,7 +168,7 @@ var createGame = (userInput) => {
     }
 
     if (FAKE_USER_INPUT.case === 1) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
@@ -179,19 +180,19 @@ var createGame = (userInput) => {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
     } else if (FAKE_USER_INPUT.case === 3) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
     } else if (FAKE_USER_INPUT.case === 4) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
     } else if (FAKE_USER_INPUT.case === 5) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 180;
       }
     } else if (FAKE_USER_INPUT.case === 6) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
@@ -220,9 +221,6 @@ var createGame = (userInput) => {
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
     car.body.angle = 90;
-    if (userInput.engine) {
-      car.body.moveForward(userInput.speed * userSpeedMultiplier);
-    }
   }
 
   function setCarColor() {
@@ -247,22 +245,6 @@ var createGame = (userInput) => {
     }
   }
 
-  function leftRight(forward) {
-    var angularVelocity;
-
-    if (forward) {
-      angularVelocity = carForwardSpeed / 3;
-    } else {
-      angularVelocity = -carBackwardSpeed / 3;
-    }
-
-    if (cursors.left.isDown) {
-      car.body.rotateLeft(angularVelocity)
-    } else if (cursors.right.isDown) {
-      car.body.rotateRight(angularVelocity);
-    }
-  }
-
   function degToRad(num) {
     return num * (Math.PI / 180);
   }
@@ -271,17 +253,15 @@ var createGame = (userInput) => {
     return degToRad(90 - angle)
   }
 
-
-
   function createSensors() {
-    if (userInput.sensor) {
+    // if (userInput.sensor) {
       for (var sensor in sensors) {
         sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
       }
-    }
+    // }
   }
 
   function attachSensors(startingAngle, offset, FLBRArray) {
@@ -294,12 +274,12 @@ var createGame = (userInput) => {
     }
   }
 
-  function setSpeed() {
-    if (userInput.speed) {
-      carForwardSpeed = userInput.speed * userSpeedMultiplier;
-      carBackwardSpeed = carForwardSpeed * forwardReverseMultiplier;
-    }
-  }
+  // function setSpeed() {
+  //   if (userInput.speed) {
+  //     carForwardSpeed = userInput.speed * userSpeedMultiplier;
+  //     carBackwardSpeed = carForwardSpeed * forwardReverseMultiplier;
+  //   }
+  // }
 
   function checkCompletion() {
     completionTiles.forEach(function(tile) {
@@ -345,7 +325,6 @@ var createGame = (userInput) => {
 
     return [x, y];
   }
-
 }
 
 module.exports = createGame;
