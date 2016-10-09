@@ -67,8 +67,10 @@ class Console extends Component {
   postSolution() {
 
     console.log('User submitted solution: ', this.state.input);
+
     // remove the currently rendered game so we can create a new one
     $('canvas').remove();
+
     fetch('/game', {
       method: 'POST',
       headers: {
@@ -110,7 +112,7 @@ class Console extends Component {
 
   codeReset() {
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
-    this.setState({input: '// Input your code here\n\nvar engine = false;'}); // REFACTOR REFACTOR REFACTOR
+    this.setState({input: '// Input your code here\n\n'}); // REFACTOR REFACTOR REFACTOR
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
   }
 
