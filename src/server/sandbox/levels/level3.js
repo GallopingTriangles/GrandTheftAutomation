@@ -39,8 +39,12 @@ var level3 = function(req, res, next) {
     var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
     var script = new vm.Script(input);
 
+    var setCaseCount = 1;
     var setCase = function(caseNo) {
-    	req.body.phaser.case = caseNo;
+    	if (setCaseCount === 1) {
+	      req.body.phaser.case = caseNo;
+	      setCaseCount++;
+    	}
     };
 
   	// == MAP CONDITIONAL TEST == //
@@ -63,10 +67,17 @@ var level3 = function(req, res, next) {
     	var context = new vm.createContext(sandbox);
     	script.runInContext(context);
 
-    	var turn = context.testTurn;
+    	var turn = context.testTurn.value;
+      var calls = context.testTurn.count;
 
     	this.testTurnNotCalled = function() {
-
+        t.assertTrue(
+          calls === 0,
+          'Expected function turn() to be called inside if statement, but got called outside if statement',
+          function() {
+          	setCase(3); // car is turning before or after intersection
+          }
+        );
     	};
 
     });
@@ -98,7 +109,7 @@ var level3 = function(req, res, next) {
           calls > 0,
           'Expected function turn() to be called, but got not called',
           function() {
-          	setCase(3);
+          	setCase(3); // car is not turning at intersection
           }
         );
       };
@@ -106,17 +117,31 @@ var level3 = function(req, res, next) {
       this.testTurnCalledOnce = function() {
         t.assertTrue(
           calls === 1,
-          'Expected function turn() to be called once, but got called ' + calls
-          // ADD FAIL CALLBACK
+          'Expected function turn() to be called once, but got called ' + calls,
+          function() {
+          	setCase(3); // car is turning multiple times
+          }
         );
       };
 
-      this.testTurnInputNumber = function() {
-
+      this.testTurnInputString = function() {
+        t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() to be called with input type of string, but got called with input of type ' + typeof turn,
+          function() {
+          	setCase(3); // car is not turning at intersection
+          }
+        );
       };
 
       this.testTurnInputValue = function() {
-
+        t.assertTrue(
+          turn === 'left' || turn === 'right',
+          'Expected function turn() to be called with input value "right" or "left", but got input value ' + turn,
+          function() {
+          	setCase(3); // car is not turning at intersetion
+          }
+        );
       };
 
     });
