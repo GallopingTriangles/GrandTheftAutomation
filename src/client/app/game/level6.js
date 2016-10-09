@@ -9,11 +9,13 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 400,
     sensor: true,
-    case: 1, // success left turn
-    // case: 2, // success right turn
-    // case: 3, // fail, stopped at intersection
-    // case: 4, // fail, crashed straight
-    // case: 5  // fail, didn't start engine
+    case: 1, // success, LEFT turn followed by RIGHT turn to complete the level
+    case: 2, // fail, didn't enable the engine
+    case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
+    case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
+    case: 5, // fail, turned RIGHT at FIRST intersection and crashed
+    case: 6, // EASTER EGG SUCCESS, turned LEFT at the SECOND intersection into the park and then turned RIGHT on the path
+    case: 7, // EASTER EGG FAIL, turned LEFT at the SECOND intersection into the park and then crashed STRAIGHT
   }
   /**********************************************************/
   /**********************************************************/
@@ -64,8 +66,8 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
 
-  var startingX = 440;
-  var startingY = 550;
+  var startingX = 40;
+  var startingY = 470;
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = 100;
@@ -109,6 +111,7 @@ var createGame = (userInput) => {
   var layer_4;
   var layer_5;
   var layer_6;
+  var layer_7;
 
   /*
   ** The create() function is called automatically after preload() has finished.
@@ -145,7 +148,8 @@ var createGame = (userInput) => {
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_DRL_layer');
+    layer_6 = map.createLayer('intersection_UL_layer');
+    layer_7 = map.createLayer('intersection_DR_layer');
     layer_1 = map.createLayer('collision_layer');
 
 
@@ -198,7 +202,9 @@ var createGame = (userInput) => {
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
-    createSensors();
+    if (FAKE_USER_INPUT.sensor) {
+      createSensors();
+    }
     createCar();
     setSpeed();
 
@@ -282,23 +288,7 @@ var createGame = (userInput) => {
     }
 
     if (FAKE_USER_INPUT.case === 1) {
-      car.body.moveForward(400);
-      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
-        car.body.angle = -90;
-      }
-    } else if (FAKE_USER_INPUT.case === 2) {
-      car.body.moveForward(400);
-      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 90;
-      }
-    } else if (FAKE_USER_INPUT.case === 3) {
-      car.body.moveForward(400);
-      if (Math.abs(coord_1[0] + 50 - car.body.x) < 50 && Math.abs(coord_1[1] - car.body.y) < 50) {
-        car.body.velocity.x = 0;
-        car.body.velocity.y = 0;
-      }
-    } else if (FAKE_USER_INPUT.case === 4) {
-      car.body.moveForward(400);
+      
     }
 
     /*
@@ -334,6 +324,7 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
+    car.body.angle = 90;
     if (userInput.engine) {
       car.body.moveForward(userInput.speed * userSpeedMultiplier);
     }
