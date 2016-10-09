@@ -10,12 +10,12 @@ var createGame = (userInput) => {
     speed: 400,
     sensor: true,
     case: 1, // success, LEFT turn followed by RIGHT turn to complete the level
-    case: 2, // fail, didn't enable the engine
-    case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
-    case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
-    case: 5, // fail, turned RIGHT at FIRST intersection and crashed
-    case: 6, // EASTER EGG SUCCESS, turned LEFT at the SECOND intersection into the park and then turned RIGHT on the path
-    case: 7, // EASTER EGG FAIL, turned LEFT at the SECOND intersection into the park and then crashed STRAIGHT
+    // case: 2, // fail, didn't enable the engine
+    // case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
+    // case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
+    // case: 5, // fail, turned RIGHT at FIRST intersection and crashed
+    // case: 6, // EASTER EGG SUCCESS, turned LEFT at the SECOND intersection into the park and then turned RIGHT on the path
+    // case: 7, // EASTER EGG FAIL, turned LEFT at the SECOND intersection into the park and then crashed STRAIGHT
   }
   /**********************************************************/
   /**********************************************************/
@@ -167,8 +167,37 @@ var createGame = (userInput) => {
     }
 
     if (FAKE_USER_INPUT.case === 1) {
-
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+        car.body.angle = 0;
+      }
+      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
+        car.body.angle = 90;
+      }
       checkCompletion();
+    } else if (FAKE_USER_INPUT.case === 2) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (FAKE_USER_INPUT.case === 3) {
+      car.body.moveForward(400);
+    } else if (FAKE_USER_INPUT.case === 4) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+        car.body.angle = 0;
+      }
+    } else if (FAKE_USER_INPUT.case === 5) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+        car.body.angle = 180;
+      }
+    } else if (FAKE_USER_INPUT.case === 6) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+        car.body.angle = 0;
+      }
+      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
+        car.body.angle = -90;
+      }
     }
 
   }
