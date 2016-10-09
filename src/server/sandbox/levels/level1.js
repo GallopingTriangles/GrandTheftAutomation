@@ -1,5 +1,9 @@
 var vm = require('vm');
 
+// next level
+var level2 = require('./level2');
+var level3 = require('./level3');
+
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
 
@@ -18,7 +22,7 @@ var level1 = function(req, res, next) {
 	// ======================================================
   
   // == TESTING USER INPUT ================================
-  runTestSuite(function UserInputTest(t) {
+  runTestSuite(function UserInputTestLevel1(t) {
     // ASSUME A SUCCESSFUL TEST
     req.body.phaser.case = 1;
 
@@ -28,13 +32,20 @@ var level1 = function(req, res, next) {
     var funcColor = 'var setColor = function(input) { testColor = input; };';
     var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
     var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
+    var funcTurn = 'var turn = function(input) { testTurn = input; };';
 
     // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + userInput;
+    var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
     var script = new vm.Script(input);
 
     // sandbox used in virtual machine
     var sandbox = {
+    	sensor: {
+    		front: false
+    	},
+    	map: {
+        intersection: false
+    	},
     	testEnable: [],
     	testEngine: undefined,
     	testColor: undefined,
@@ -45,7 +56,7 @@ var level1 = function(req, res, next) {
     var context = new vm.createContext(sandbox);
     script.runInContext(context);
 
-    console.log(context);
+    // console.log(context);
 
     // == ENABLED TESTS == //
     runTestSuite(function EnabledInputTest(t) {
@@ -226,7 +237,17 @@ var level1 = function(req, res, next) {
 
   });
 
-  next();
+  // if user level is greater than level 1, run tests of next level
+  // and if case is success
+  if (req.body.level === 2 && req.body.phaser.case === 1) {
+    level2(req, res, next);
+  } else if (req.body.level === 3 && req.body.phaser.case === 1) {
+    level3(req, res, next);
+  } else {
+  // else return phaser object
+	  next();
+  }
+  
 };
 
 module.exports = level1;
