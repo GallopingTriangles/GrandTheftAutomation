@@ -32,16 +32,19 @@ var level1 = function(req, res, next) {
     var funcColor = 'var setColor = function(input) { testColor = input; };';
     var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
     var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
-    // var funcTurn = 'var turn = function(input) { testTurn = input; };';
+    var funcTurn = 'var turn = function(input) { testTurn = input; };';
 
     // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + userInput;
+    var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
     var script = new vm.Script(input);
 
     // sandbox used in virtual machine
     var sandbox = {
     	sensor: {
     		front: false
+    	},
+    	map: {
+        intersection: false
     	},
     	testEnable: [],
     	testEngine: undefined,
