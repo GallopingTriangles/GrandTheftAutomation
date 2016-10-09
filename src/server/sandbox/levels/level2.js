@@ -106,16 +106,20 @@ var level2 = function(req, res, next) {
         t.assertTrue(
           calls === 2 && typeof speed === 'number',
           'Expected speed to be of data type number, but got set to ' + typeof speed,
-          setCase(3) // syntax error, crash into object
+          function() {
+          	setCase(3); // syntax error, crash into object
+          }
         );
 			};
 
       // test if the second call sets the speed to a positive number
 			this.testSensorSetSpeedPositive = function() {
         t.assertTrue(
-          calls === 2 && speed > 0,
+          calls === 2 && speed >= 0,
           'Expected speed to be a positive number, but got a negative number',
-          setCase(3) // syntax error, crash into object
+          function() {
+          	setCase(3); // syntax error, crash into object
+          }
         );
 			}
 
@@ -124,7 +128,9 @@ var level2 = function(req, res, next) {
         t.assertTrue(
           calls === 2 && speed === 0,
           'Expected speed to be set to 0, but got ' + speed,
-          setCase(3) // wrong input, crash into object
+          function() {
+          	setCase(3); // wrong input, crash into object
+          }
         );
 			};
 
