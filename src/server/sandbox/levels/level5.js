@@ -32,4 +32,8 @@ var level5 = function(req, res, next) {
 
 	});
 
-}
+	next();
+
+};
+
+module.exports = level5;
