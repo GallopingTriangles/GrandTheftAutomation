@@ -6,12 +6,15 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
-    case: 1, // success engine goes forward
-    // case: 2, // fail, engine didn't get turned on
+    case: 1, // success right turn
+    // case: 2, // fail, crashed into obstacle after right turn
+    // case: 3, // fail, crash straight
+    // case: 4, // fail, crash left
+    // case: 5, // fail, stalls at intersection
+    // case: 6, // fail, car did not start engine
   }
   /**********************************************************/
   /**********************************************************/
-
 
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
@@ -41,7 +44,7 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_1', './assets/gameMaps/level_1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_4', './assets/gameMaps/level_4.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
   }
 
@@ -59,7 +62,7 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
 
-  var startingX = 440;
+  var startingX = 280;
   var startingY = 550;
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
@@ -89,6 +92,10 @@ var createGame = (userInput) => {
   var endZoneBodies;
 
   var completionTiles;
+
+  var intersectionTiles_1;
+  var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
+
   /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
@@ -121,7 +128,7 @@ var createGame = (userInput) => {
     ** and collisions can be specific for certain tiles in certain layers.
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
     */
-    map = game.add.tilemap('level_1');
+    map = game.add.tilemap('level_4');
     map.addTilesetImage('GTA_tileset');
 
     // map = game.add.tilemap('map');
@@ -132,22 +139,19 @@ var createGame = (userInput) => {
     ** Needs to be done before generating the p2 bodies below.
     ** The layer names must correspond to the layers from the JSON tilemap file
     */
-    layer_1 = map.createLayer('collision_layer');
     layer_2 = map.createLayer('road_layer');
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_layer');
+    layer_6 = map.createLayer('intersection_R_layer');
+    layer_1 = map.createLayer('collision_layer');
 
-    // layer_1 = map.createLayer('Tile Layer 1');
-    // layer_2 = map.createLayer('Tile Layer 2');
 
     /*
     ** Set the appropriate tiles of a certain layer to be collideable
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
-    // map.setCollision(34, true, 'Tile Layer 1');
 
     // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
 
@@ -166,9 +170,19 @@ var createGame = (userInput) => {
     // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
     // console.log(endZoneBodies);
 
-    completionTiles = layer_5.getTiles(0, 0, 1000, 1000).filter(function(tile) {
+
+
+    /*
+    ** Gather the endzone tiles and intersection tiles so a callback can be run when
+    ** the car reaches any of these tiles, such as a turn or completion zone.
+    */
+    completionTiles = layer_5.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     });
+
+    intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) {
+      return tile.index > 0;
+    })
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
@@ -205,7 +219,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      collisionBody.debug = true;
+      // collisionBody.debug = true;
 
     })
 
@@ -220,8 +234,7 @@ var createGame = (userInput) => {
     ** Enables the user to have control over the car through their cursor keys
     */
     cursors = game.input.keyboard.createCursorKeys();
-
-
+    coord_1 = intersectionCenter(intersectionTiles_1); // pixel center of the first intersection
 
   }
 
@@ -260,21 +273,46 @@ var createGame = (userInput) => {
       ** Increase the opacity of the sensor while a collision body is in its area.
       */
       // if (overlap) {
-      //   sensor.alpha = 1;
+      //   sensor.alpha = 0.7;
       // } else {
       //   sensor.alpha = 0.1;
       // }
+    }
+
+    if (FAKE_USER_INPUT.case === 1) { // successful right turn
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.angle = 90;
+      }
+      checkCompletion();
+    } else if (FAKE_USER_INPUT.case === 2) { // failed, crashed straight
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.angle = 90;
+      }
+    } else if (FAKE_USER_INPUT.case === 3) { // failed, crashed straight
+      car.body.moveForward(400);
+    } else if (FAKE_USER_INPUT.case === 4) { // failed, crashed left
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
+        car.body.angle = -90;
+      }
+    } else if (FAKE_USER_INPUT.case === 5) { // failed, stalled at intersection
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
+        car.body.velocity.x = 0;
+        car.body.velocity.y = 0;
+      } else {
+        car.body.moveForward(400);
+      }
+    } else if (FAKE_USER_INPUT.case === 6) { // failed, car didn't start
+      car.velocity.x = 0;
+      car.velocity.y = 0;
     }
 
     /*
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
     */
-
-    if (FAKE_USER_INPUT.case === 1) {
-      car.body.moveForward(400);
-    }
-    checkCompletion();
   }
 
   function render() {
@@ -440,6 +478,24 @@ var createGame = (userInput) => {
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
   }
+
+  function intersectionCenter(tiles) {
+    // returns the center (x,y) pixel of an intersection layer
+    var x = 0;
+    var y = 0;
+    tiles.forEach(function(tile) {
+      x += tile.worldX;
+      y += tile.worldY;
+    })
+    x = x / tiles.length;
+    y = y / tiles.length;
+
+    return [x, y];
+  }
+
+
+
+
 
 }
 

@@ -1,4 +1,5 @@
 var createGame = (userInput) => {
+
   /**********************************************************/
   /**********************************************************/
   /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
@@ -6,12 +7,12 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
-    case: 1, // success engine goes forward
-    // case: 2, // fail, engine didn't get turned on
+    // case: 1, // success, stopped before obstacle
+    case: 2, // fail, engine was not on
+    case: 3, // fail, crashed into obstacle
   }
   /**********************************************************/
   /**********************************************************/
-
 
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
@@ -41,7 +42,7 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_1', './assets/gameMaps/level_1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_2', './assets/gameMaps/level_2.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
   }
 
@@ -121,7 +122,7 @@ var createGame = (userInput) => {
     ** and collisions can be specific for certain tiles in certain layers.
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
     */
-    map = game.add.tilemap('level_1');
+    map = game.add.tilemap('level_2');
     map.addTilesetImage('GTA_tileset');
 
     // map = game.add.tilemap('map');
@@ -132,12 +133,12 @@ var createGame = (userInput) => {
     ** Needs to be done before generating the p2 bodies below.
     ** The layer names must correspond to the layers from the JSON tilemap file
     */
-    layer_1 = map.createLayer('collision_layer');
     layer_2 = map.createLayer('road_layer');
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
     layer_6 = map.createLayer('intersection_layer');
+    layer_1 = map.createLayer('collision_layer');
 
     // layer_1 = map.createLayer('Tile Layer 1');
     // layer_2 = map.createLayer('Tile Layer 2');
@@ -205,7 +206,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      collisionBody.debug = true;
+      // collisionBody.debug = true;
 
     })
 
@@ -230,6 +231,11 @@ var createGame = (userInput) => {
 
 
   function update() {
+    if (userInput === 3) {
+      levelFailed();
+    }
+
+
     /*
     ** Enable sensor functionality if the user has activated the car sensor.
     ** If the sensor detects any overlapping collision bodies, it will turn on.
@@ -271,10 +277,15 @@ var createGame = (userInput) => {
     ** This resets the car's velocity per frame.
     */
 
+
     if (FAKE_USER_INPUT.case === 1) {
       car.body.moveForward(400);
+      checkCompletion();
+    } else if (FAKE_USER_INPUT.case === 2) {
+      // engine isnt moving
+    } else if (FAKE_USER_INPUT.case === 3) {
+      car.body.moveForward(400);
     }
-    checkCompletion();
   }
 
   function render() {
@@ -304,7 +315,7 @@ var createGame = (userInput) => {
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
     if (userInput.engine) {
-      car.body.moveForward(userInput.speed * userSpeedMultiplier);
+      car.body.moveForward(400);
     }
   }
 
@@ -416,6 +427,13 @@ var createGame = (userInput) => {
     var text = game.add.text(400, 300, 'Success!', style);
     game.paused = true;
     console.log('COMPLETED!');
+  }
+
+  function levelFailed() {
+    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    var text = game.add.text(400, 300, 'Failed!', style);
+    game.paused = true;
+    console.log('level failed');
   }
 
   /*
