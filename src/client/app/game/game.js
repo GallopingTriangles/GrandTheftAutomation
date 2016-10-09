@@ -4,6 +4,7 @@ var level3 = require('./level3.js');
 var level4 = require('./level4.js');
 var level5 = require('./level5.js');
 var level6 = require('./level6.js');
+var level7 = require('./level7.js');
 
 export default function(userInput, level) {
   // create the game for the appropriate level
@@ -24,7 +25,8 @@ export default function(userInput, level) {
   // level3(userInput);
   // level4(userInput);
   // level5(userInput);
-  level6(userInput);
+  // level6(userInput);
+  level7(userInput);
 
 }
 //
