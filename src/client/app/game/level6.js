@@ -6,6 +6,9 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
+    color: 'panda',
+    speed: 400,
+    sensor: true,
     case: 1, // success left turn
     // case: 2, // success right turn
     // case: 3, // fail, stopped at intersection
@@ -306,8 +309,8 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    game.debug.spriteInfo(car, 32, 32);
-    car.body.debug = true;
+    // game.debug.spriteInfo(car, 32, 32);
+    // car.body.debug = true;
 
   }
 
@@ -401,7 +404,6 @@ var createGame = (userInput) => {
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
-        console.log('Sensors in create: ', sensors);
       }
     }
   }

@@ -86,8 +86,7 @@ class Console extends Component {
       res.json().then(response => {
         // the response from the server is an object that is used to create the game
         // create a new game based off of the response object
-        console.log(response.phaser);
-        console.log('am i even getting in here');
+        console.log('phaser response: ', response.phaser);
         createGame(response.phaser, this.props.level);
         this.setState({bugs: response.bugs});
       })
