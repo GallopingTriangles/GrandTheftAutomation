@@ -75,6 +75,8 @@ var createGame = (userInput) => {
 
   var intersectionTiles_1;
   var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
+  var intersectionTiles_2;
+  var coord_2;
 
   var layer_1;
   var layer_2;
@@ -98,21 +100,25 @@ var createGame = (userInput) => {
     layer_5 = map.createLayer('end_zone_layer');
     layer_6 = map.createLayer('intersection_UL_layer');
     layer_7 = map.createLayer('intersection_DR_layer');
+
     layer_1 = map.createLayer('collision_layer');
 
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
 
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, false);
 
-    completionTiles = layer_5.getTiles(0, 0, 2000, 2000).filter(function(tile) {
+    completionTiles = layer_5.getTiles(0, 0, 2000, 2000).filter(function(tile) { // array of tiles of the completion zone
       return tile.index > 0;
     });
 
-    intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) {
+    intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) { // array of tiles for the first intersection
+      return tile.index > 0;
+    })
+    intersectionTiles_2 = layer_7.getTiles(0, 0, 2000, 2000).filter(function(tile) { // array of tiles for the second intersection
       return tile.index > 0;
     })
 
-    if (FAKE_USER_INPUT.sensor) {
+    if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
       createSensors();
     }
     createCar();
@@ -130,8 +136,9 @@ var createGame = (userInput) => {
 
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
-    cursors = game.input.keyboard.createCursorKeys();
+    // cursors = game.input.keyboard.createCursorKeys();
     coord_1 = intersectionCenter(intersectionTiles_1); // pixel center of the first intersection
+    coord_2 = intersectionCenter(intersectionTiles_2); // pixel center of the second intersection
   }
 
   function update() {
