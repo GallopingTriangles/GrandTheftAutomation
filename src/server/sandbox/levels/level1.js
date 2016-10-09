@@ -34,9 +34,10 @@ var level1 = function(req, res, next) {
     var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
     var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
     var funcTurn = 'var turn = function(input) { testTurn = input; };';
+    var funcRoute = 'var route = function(input) { testRoute = input; };';
 
     // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
+    var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
     var script = new vm.Script(input);
 
     // sandbox used in virtual machine
