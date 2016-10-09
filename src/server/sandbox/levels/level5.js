@@ -37,7 +37,7 @@ var level5 = function(req, res, next) {
   var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
   var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "route") { testRoute = true }; };';
   var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
-  var funcRoute = 'var route = function(input) { directions = input; };';
+  var funcRoute = 'var setRoute = function(input) { route = input; };';
 
   // input for virtual machine
   var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
@@ -50,7 +50,7 @@ var level5 = function(req, res, next) {
   	map: {
       intersection: false
   	},
-  	directions: undefined,
+  	route: undefined,
   	testEnable: [],
   	testEngine: undefined,
   	testColor: undefined,
@@ -114,7 +114,7 @@ var level5 = function(req, res, next) {
 
   // == ROUTE TESTS == //
   runTestSuite(function RouteInputTest(t) {
-    
+    // test if the set route function is called
   });
 
 	});
