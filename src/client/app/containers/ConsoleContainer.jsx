@@ -67,6 +67,7 @@ class Console extends Component {
   postSolution() {
 
     console.log('User submitted solution: ', this.state.input);
+    // remove the currently rendered game so we can create a new one
     $('canvas').remove();
     fetch('/game', {
       method: 'POST',
@@ -82,7 +83,9 @@ class Console extends Component {
       console.log('res: ', res);
       res.json().then(response => {
         // the response from the server is an object that is used to create the game
+        // create a new game based off of the response object
         console.log(response.phaser);
+        console.log('am i even getting in here');
         createGame(response.phaser, this.props.level);
         this.setState({bugs: response.bugs});
       })

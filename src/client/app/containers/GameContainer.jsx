@@ -14,6 +14,7 @@ class Game extends Component {
   }
 
   componentDidMount() {
+    console.log('The level im on is: ', this.props.level);
     // create the default game when the component mounts
     // createGame({engine: false, sensor: false, speed: false, color: 'white'});
     createGame({
