@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import styles from '../../styles/ConsoleContainerStyles.js';
-
 import $ from 'jquery';
 import createGame from '../game/game.js';
-
-// const Game = props => (
-//   <div className='col-md-7' id='phaser_game' style={ styles.phaser }></div>
-// );
 
 class Game extends Component {
   constructor(props) {
@@ -14,9 +9,7 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    console.log('The level im on is: ', this.props.level);
     // create the default game when the component mounts
-    // createGame({engine: false, sensor: false, speed: false, color: 'white'});
     createGame({
       color: 'white',
       speed: 0
