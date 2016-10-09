@@ -6,6 +6,8 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
+    color: 'white',
+    speed: 400,
     case: 1, // success engine goes forward
     // case: 2, // fail, engine didn't get turned on
   }

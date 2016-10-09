@@ -43,7 +43,7 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_5', './assets/gameMaps/level_5.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_6', './assets/gameMaps/level_6.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
   }
 
@@ -127,7 +127,7 @@ var createGame = (userInput) => {
     ** and collisions can be specific for certain tiles in certain layers.
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
     */
-    map = game.add.tilemap('level_5');
+    map = game.add.tilemap('level_6');
     map.addTilesetImage('GTA_tileset');
 
     // map = game.add.tilemap('map');

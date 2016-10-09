@@ -6,6 +6,8 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
+    color: 'panda',
+    speed: 400,
     case: 1, // success left turn
     // case: 2, // success right turn
     // case: 3, // fail, stopped at intersection
