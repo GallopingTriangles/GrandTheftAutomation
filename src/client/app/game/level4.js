@@ -199,7 +199,9 @@ var createGame = (userInput) => {
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
-    createSensors();
+    if (FAKE_USER_INPUT.sensor) {
+      createSensors();
+    }
     createCar();
     setSpeed();
 
