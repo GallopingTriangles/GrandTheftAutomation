@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import createCommand from '../actions/UserCommandAction.js';
+import $ from 'jquery';
 import changeLevel from '../actions/changeLevel.js';
+import createGame from '../game/game.js';
 
 class Footer extends Component {
   // == REACT FUNCTIONS =====================================================
@@ -32,6 +34,14 @@ class Footer extends Component {
     e.preventDefault();
     if (level >= 1 && level <= 4) {
       this.props.changeLevel(level);
+
+      // re-render a new game for the appropriate level
+      $('canvas').remove();
+      createGame({
+        color: 'white',
+        speed: 0,
+        /* no "case" property yet because this is just the initial rendering of the game */
+      }, level);
     }
 
     /* Error handling if the level is ever out of bounds: default to 1    */
@@ -41,6 +51,7 @@ class Footer extends Component {
 
     /* Fetches and renders the user's code for that level into the editor */
     this.props.getCode();
+
   }
 
   // == RENDER FOOTER =======================================================
