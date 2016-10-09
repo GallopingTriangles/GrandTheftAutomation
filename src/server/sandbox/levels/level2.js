@@ -39,8 +39,12 @@ var level2 = function(req, res, next) {
     var input = funcColor + funcSpeed + funcEnable + userInput;
     var script = new vm.Script(input);
 
+    var setCaseCount = 1;
     var setCase = function(caseNo) {
-      req.body.phaser.case = caseNo;
+    	if (setCaseCount === 1) {
+	      req.body.phaser.case = caseNo;
+	      setCaseCount++;
+    	}
     };
 
   	// == CONDITIONAL TESTS == //
