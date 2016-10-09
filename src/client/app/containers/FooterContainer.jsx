@@ -30,12 +30,12 @@ class Footer extends Component {
   changeLevel(e, level) {
     /* Updates the store with the appropriate level                       */
     e.preventDefault();
-    if (level >= 1 && level <= 4) {
+    if (level >= 1 && level <= 10) {
       this.props.changeLevel(level);
     }
 
     /* Error handling if the level is ever out of bounds: default to 1    */
-    if (this.props.level > 4 || this.props.level < 1) {
+    if (this.props.level > 10 || this.props.level < 1) {
       this.props.changeLevel(1);
     }
 
@@ -55,7 +55,7 @@ class Footer extends Component {
           Back
           </button>
 
-          <h5 className='col-xs-10 text-center'>{ this.props.level } / 4</h5>
+          <h5 className='col-xs-10 text-center'>{ this.props.level } / 10</h5>
 
           <button 
             className='btn btn-primary col-xs-1'
