@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import level from './instructionsTextFile.js';
 
 export default class Instructions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      1: 'Here are the instructions for level 1',
-      2: 'Here are the instructions for level 2',
-      3: 'Here are the instructions for level 3',
-      4: 'Here are the instructions for level 4'
+      1: level.one,
+      2: level.two,
+      3: level.three,
+      4: level.four
     };
   }
 	render() {
@@ -16,14 +17,3 @@ export default class Instructions extends Component {
 		);
 	}
 }
-
-var levelOne = 'LEVEL 1\n' +
-          'Welcome to GTA\n' +
-          '(a sentence for introducing AV shit...)\n' +
-          'Let\'s turn on your engine, need to use a special tool called "enable"\n' +
-          'Type <code> enable(\'engine\'); </code>\n' +
-          'Now let\'s give the car a speed\n' +
-          'Type <code> setSpeed(30) </code>\n' +
-          'If you want to customize your car... <code> setColor(\'black\'); </code>' +
-          'The semicolons are used to separate statements';
-          'Click RUN to see the car you\'ve just programmed!';
