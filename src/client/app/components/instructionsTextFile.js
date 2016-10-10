@@ -53,5 +53,6 @@ module.exports = {
   seven:          'LEVEL 7\n' +
                   'Create a route path that will complete this level\n',
 
-  eight: , 
+  eight:          'LEVEL 8\n' +
+                  'Get to the end!\n',
 }

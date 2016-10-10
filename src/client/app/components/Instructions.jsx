@@ -8,7 +8,11 @@ export default class Instructions extends Component {
       1: level.one,
       2: level.two,
       3: level.three,
-      4: level.four
+      4: level.four,
+      5: level.five,
+      6: level.six,
+      7: level.seven,
+      8: level.eight
     };
   }
 	render() {
