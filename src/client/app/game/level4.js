@@ -59,10 +59,10 @@ var createGame = (userInput) => {
   /* needsChange */
 
   var sensors = {};
-  sensors.left = 'hello';
-  sensors.right = 'hello';
-  sensors.front = 'hello';
-  sensors.back = 'hello';
+  sensors.left = {};
+  sensors.right = {};
+  sensors.front = {};
+  sensors.back = {};
 
 
   var startingX = 280;
@@ -262,14 +262,13 @@ var createGame = (userInput) => {
       ** detect overlapping between a sensor and collision bodies. If an overlap is
       ** detected, set the variable overlap to true.
       */
-      var overlap = false;
       collisionBodies.forEach(function(body) {
         for (var sensor in sensors) {
           if (sensors[sensor].getBounds().contains(body.x, body.y)
           || sensors[sensor].getBounds().contains(body.x + 32, body.y)
           || sensors[sensor].getBounds().contains(body.x, body.y + 32)
           || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
-            overlap = true;
+            sensors[sensor].overlap = true;
           }
         }
       })
@@ -277,11 +276,13 @@ var createGame = (userInput) => {
       /*
       ** Increase the opacity of the sensor while a collision body is in its area.
       */
-      // if (overlap) {
-      //   sensor.alpha = 0.7;
-      // } else {
-      //   sensor.alpha = 0.1;
-      // }
+      for (var sensor in sensors) {
+        if (sensors[sensor].overlap) {
+          sensors[sensor].alpha = 0.7;
+        } else {
+          sensors[sensor].alpha = 0.1;
+        }
+      }
     }
 
     if (FAKE_USER_INPUT.case === 1) { // successful right turn
@@ -415,7 +416,7 @@ var createGame = (userInput) => {
         sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
-        sensors[sensor].scale.setTo(.5, .5);
+        sensors[sensor].scale.setTo(.1, .1);
       }
     }
   }

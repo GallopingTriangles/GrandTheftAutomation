@@ -21,6 +21,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
 
+
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;
@@ -103,7 +104,7 @@ var createGame = (userInput) => {
 
   var intersectionTiles_1;
   var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
-  
+
   /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
@@ -226,7 +227,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      // collisionBody.debug = true;
+      collisionBody.debug = true;
 
     })
 
@@ -340,7 +341,7 @@ var createGame = (userInput) => {
     } else if (FAKE_USER_INPUT.case === 2) {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
-    } else if (FAKE_USER_INPUT.case === 3) { 
+    } else if (FAKE_USER_INPUT.case === 3) {
       car.body.moveForward(400);
     } else if (FAKE_USER_INPUT.case === 4) {
       car.body.moveForward(400);
@@ -353,6 +354,7 @@ var createGame = (userInput) => {
         car.body.velocity.x = 0;
         car.body.velocity.y = 0;
       }
+
     }
 
   }
