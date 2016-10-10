@@ -1,8 +1,27 @@
 var createGame = (userInput) => {
-  // change width depends on window width, no dynamically resizing yet
   /* debugTools */
-  userInput.case = 2;
+  // userInput.case = 2;
 
+  /**********************************************************/
+  /**********************************************************/
+  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
+  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
+  /**********************************************************/
+  /**********************************************************/
+  var FAKE_USER_INPUT = {
+    color: 'panda',
+    speed: 100,
+    sensor: true,
+    case: 1, // success right turn
+    // case: 2, // fail, car did not start engine
+    // case: 3, // fail, crashed straight
+    // case: 4, // fail, crash left
+    // case: 5, // fail, stalls at intersection
+  }
+  /**********************************************************/
+  /**********************************************************/
+
+  // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;
   var gameWidth = width * (7 / 12) - 10;
@@ -30,7 +49,7 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_1', './assets/gameMaps/level_3.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_3', './assets/gameMaps/level_3.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
   }
 
@@ -78,9 +97,13 @@ var createGame = (userInput) => {
   ** An array of endZone bodies that will trigger a success callback
   ** when the car hits them, and the level is considered completed.
   */
-  var endZoneBodies;
+  // var endZoneBodies;
 
   var completionTiles;
+
+  var intersectionTiles_1;
+  var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
+  
   /*
   ** The layers that correspond to the tile layers exported in the JSON tilemap file.
   ** These will be set in the create() function.
@@ -113,7 +136,7 @@ var createGame = (userInput) => {
     ** and collisions can be specific for certain tiles in certain layers.
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#addTilesetImage
     */
-    map = game.add.tilemap('level_1');
+    map = game.add.tilemap('level_3');
     map.addTilesetImage('GTA_tileset');
 
     // map = game.add.tilemap('map');
@@ -124,15 +147,13 @@ var createGame = (userInput) => {
     ** Needs to be done before generating the p2 bodies below.
     ** The layer names must correspond to the layers from the JSON tilemap file
     */
-    layer_1 = map.createLayer('collision_layer');
     layer_2 = map.createLayer('road_layer');
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_layer');
+    layer_6 = map.createLayer('intersection_R_layer');
 
-    // layer_1 = map.createLayer('Tile Layer 1');
-    // layer_2 = map.createLayer('Tile Layer 2');
+    layer_1 = map.createLayer('collision_layer');
 
     /*
     ** Set the appropriate tiles of a certain layer to be collideable
@@ -160,9 +181,13 @@ var createGame = (userInput) => {
     // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
     // console.log(endZoneBodies);
 
-    completionTiles = layer_5.getTiles(0, 0, 1000, 1000).filter(function(tile) {
+    completionTiles = layer_5.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     });
+
+    intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) {
+      return tile.index > 0;
+    })
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
@@ -176,7 +201,9 @@ var createGame = (userInput) => {
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
-    createSensors();
+    if (FAKE_USER_INPUT) {
+      createSensors();
+    }
     createCar();
     setSpeed();
 
@@ -215,7 +242,7 @@ var createGame = (userInput) => {
     */
     cursors = game.input.keyboard.createCursorKeys();
 
-
+    coord_1 = intersectionCenter(intersectionTiles_1);
 
   }
 
@@ -283,16 +310,51 @@ var createGame = (userInput) => {
     */
     checkCompletion();
 
-    if (userInput.case === 1) {
 
-    } else {
-      car.body.moveForward(userInput.speed * userSpeedMultiplier);
+
+    /******************************************************/
+    /** TEMPORARILIY COMMENTED OUT TO GET MVP CASES DONE **/
+    /******************************************************/
+    /******************************************************/
+    // if (userInput.case === 1) {
+
+    // } else {
+    //   car.body.moveForward(userInput.speed * userSpeedMultiplier);
+    // }
+    // if (userInput.case === 2) {
+    //   turnRight(180, car.body.y < 244);
+    // } else if (userInput.case === 3) {
+    //   turnLeft(-90, car.body.y < 164)
+    // }
+    /******************************************************/
+    /******************************************************/
+    /** TEMPORARILIY COMMENTED OUT TO GET MVP CASES DONE **/
+    /******************************************************/
+
+    if (FAKE_USER_INPUT.case === 1) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.angle = 90;
+      }
+      checkCompletion();
+    } else if (FAKE_USER_INPUT.case === 2) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (FAKE_USER_INPUT.case === 3) { 
+      car.body.moveForward(400);
+    } else if (FAKE_USER_INPUT.case === 4) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.angle = -90;
+      }
+    } else if (FAKE_USER_INPUT.case === 5) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.velocity.x = 0;
+        car.body.velocity.y = 0;
+      }
     }
-    if (userInput.case === 2) {
-      turnRight(180, car.body.y < 244);
-    } else if (userInput.case === 3) {
-      turnLeft(-90, car.body.y < 164)
-    }
+
   }
 
   function render() {
@@ -481,6 +543,19 @@ var createGame = (userInput) => {
     }
   }
 
+  function intersectionCenter(tiles) {
+    // returns the center (x,y) pixel of an intersection layer
+    var x = 0;
+    var y = 0;
+    tiles.forEach(function(tile) {
+      x += tile.worldX;
+      y += tile.worldY;
+    })
+    x = x / tiles.length;
+    y = y / tiles.length;
+
+    return [x, y];
+  }
 }
 
 module.exports = createGame;

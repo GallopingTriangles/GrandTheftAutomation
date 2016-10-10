@@ -7,15 +7,26 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'panda',
-    speed: 100,
+    speed: 80,
     sensor: true,
-    // case: 1, // success, LEFT turn followed by RIGHT turn to complete the level
-    // case: 2, // fail, didn't enable the engine
-    // case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
-    // case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
-    case: 5, // fail, turned RIGHT at FIRST intersection and crashed
-    // case: 6, // EASTER EGG SUCCESS, turned LEFT at the SECOND intersection into the park and then turned RIGHT on the path
-    // case: 7, // EASTER EGG FAIL, turned LEFT at the SECOND intersection into the park and then crashed STRAIGHT
+    /* NOTE: there could be the case that the user decides to route the car ****
+    *******  such that it goes around in a circle over and over again *********/
+    // case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
+    case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
+    // case: 3, // fail, didn't enable the engine
+    // case: 4, // fail, drove STRAIGHT through the FIRST intersection and crashed ([STRAIGHT])
+    // case: 5, // fail, turned LEFT then STRAIGHT and crashed ([LEFT, STRAIGHT])
+    // case: 6, // fail, ([LEFT, LEFT])
+    // case: 7, // fail, ([LEFT, RIGHT, STRAIGHT])
+    // case: 8, // fail, ([LEFT, RIGHT, LEFT])
+    // case: 9, // fail, ([LEFT, RIGHT, RIGHT, STRAIGHT])
+    // case: 10, // fail, ([LEFT, RIGHT, RIGHT, RIGHT])
+    // case: 11, // fail, ([RIGHT, STRAIGHT])
+    // case: 12, // fail, ([RIGHT, RIGHT])
+    // case: 13, // fail, ([RIGHT, LEFT, STRAIGHT])
+    // case: 14, // fail, ([RIGHT, LEFT, RIGHT])
+    // case: 15, // fail, ([RIGHT, LEFT, LEFT, STRAIGHT])
+    // case: 16, // fail, ([RIGHT, LEFT, LEFT, LEFT])
   }
   /**********************************************************/
   /**********************************************************/
@@ -36,8 +47,8 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_6', './assets/gameMaps/level_6.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
+    game.load.tilemap('level_8', './assets/gameMaps/level_8.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset_16', './assets/gameMaps/GTA_tileset_16.png');
   }
 
   var car;
@@ -51,7 +62,8 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
   var startingX = 40;
-  var startingY = 470;
+  var startingY = 365;
+  var startingAngle = 90;
   var backgroundColor = '#3e5f96';
   var speed = FAKE_USER_INPUT.speed * 4;
   // var carForwardSpeed = 200;
@@ -78,6 +90,14 @@ var createGame = (userInput) => {
   var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
   var intersectionTiles_2;
   var coord_2;
+  var intersectionTiles_3;
+  var coord_3;
+  var intersectionTiles_4;
+  var coord_4;
+  var intersectionTiles_5;
+  var coord_5;
+  var intersectionTiles_6;
+  var coord_6;
 
   var layer_1;
   var layer_2;
@@ -86,38 +106,59 @@ var createGame = (userInput) => {
   var layer_5;
   var layer_6;
   var layer_7;
+  var layer_8;
+  var layer_9;
+  var layer_10;
+  var layer_11;
 
   function create() {
 
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
 
-    map = game.add.tilemap('level_6');
-    map.addTilesetImage('GTA_tileset');
+    map = game.add.tilemap('level_8');
+    map.addTilesetImage('GTA_tileset_16');
 
     layer_2 = map.createLayer('road_layer');
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_UL_layer');
+    layer_6 = map.createLayer('intersection_UDL_layer');
     layer_7 = map.createLayer('intersection_DR_layer');
+    layer_8 = map.createLayer('intersection_DL_layer');
+    layer_9 = map.createLayer('intersection_UR_layer');
+    layer_10 = map.createLayer('intersection_UL_layer');
+    layer_11 = map.createLayer('intersection_UDR_layer');
 
     layer_1 = map.createLayer('collision_layer');
 
-    map.setCollisionBetween(0, 2000, true, 'collision_layer');
+    map.setCollisionBetween(0, 2500, true, 'collision_layer');
 
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, false);
 
-    completionTiles = layer_5.getTiles(0, 0, 2000, 2000).filter(function(tile) { // array of tiles of the completion zone
+    completionTiles = layer_5.getTiles(0, 0, 2500, 2500).filter(function(tile) { // array of tiles of the completion zone
       return tile.index > 0;
     });
 
-    intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) { // array of tiles for the first intersection
+    intersectionTiles_1 = layer_6.getTiles(0, 0, 2500, 2500).filter(function(tile) { // array of tiles for the first intersection
       return tile.index > 0;
     })
-    intersectionTiles_2 = layer_7.getTiles(0, 0, 2000, 2000).filter(function(tile) { // array of tiles for the second intersection
+    intersectionTiles_2 = layer_7.getTiles(0, 0, 2500, 2500).filter(function(tile) { // array of tiles for the second intersection
       return tile.index > 0;
     })
+    intersectionTiles_3 = layer_8.getTiles(0, 0, 2500, 2500).filter(function(tile) {
+      return tile.index > 0;
+    })
+    intersectionTiles_4 = layer_9.getTiles(0, 0, 2500, 2500).filter(function(tile) {
+      return tile.index > 0;
+    })
+    intersectionTiles_5 = layer_10.getTiles(0, 0, 2500, 2500).filter(function(tile) {
+      return tile.index > 0;
+    })
+    intersectionTiles_6 = layer_11.getTiles(0, 0, 2500, 2500).filter(function(tile) {
+      return tile.index > 0;
+    })
+    
 
     if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
       createSensors();
@@ -138,8 +179,12 @@ var createGame = (userInput) => {
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
     // cursors = game.input.keyboard.createCursorKeys();
-    coord_1 = intersectionCenter(intersectionTiles_1); // pixel center of the first intersection
-    coord_2 = intersectionCenter(intersectionTiles_2); // pixel center of the second intersection
+    coord_1 = intersectionCenter(intersectionTiles_1); // ~[145,336] pixel center of the first intersection
+    coord_2 = intersectionCenter(intersectionTiles_2); // ~[145,145]
+    coord_3 = intersectionCenter(intersectionTiles_3); // ~[640,145]
+    coord_4 = intersectionCenter(intersectionTiles_4); // ~[145,527]
+    coord_5 = intersectionCenter(intersectionTiles_5); // ~[640,527]
+    coord_6 = intersectionCenter(intersectionTiles_6); // ~[640,336]
   }
 
   function update() {
@@ -167,44 +212,99 @@ var createGame = (userInput) => {
       // }
     }
 
-    if (FAKE_USER_INPUT.case === 1) {
-      car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 0;
-      }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
-        car.body.angle = 90;
-      }
-      checkCompletion();
-    } else if (FAKE_USER_INPUT.case === 2) {
+    if (FAKE_USER_INPUT.case === 3) {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
-    } else if (FAKE_USER_INPUT.case === 3) {
+    } else {
       car.body.moveForward(speed);
-    } else if (FAKE_USER_INPUT.case === 4) {
+    }
+
+    if (FAKE_USER_INPUT.case === 1
+      || FAKE_USER_INPUT.case === 5
+      || FAKE_USER_INPUT.case === 6
+      || FAKE_USER_INPUT.case === 7
+      || FAKE_USER_INPUT.case === 8
+      || FAKE_USER_INPUT.case === 9
+      || FAKE_USER_INPUT.case === 10) { // handle all upper route cases
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 0;
+      if (Math.abs(coord_1[0] + 40 - car.body.x) < 10) {
+        turn('north');
       }
-    } else if (FAKE_USER_INPUT.case === 5) {
-      car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 180;
+      if (FAKE_USER_INPUT.case === 6) {
+        if (Math.abs(coord_2[1] - 20 - car.body.y) < 10) {
+          turn('west');
+        }
+      } else if (FAKE_USER_INPUT.case !== 5) {
+        if (Math.abs(coord_2[1] + 25 - car.body.y) < 10) {
+          turn('east');
+        }
+        if (FAKE_USER_INPUT.case === 8) {
+          if (Math.abs(coord_3[0] + 40 - car.body.x) < 10) {
+            turn('north');
+          }
+        } else if (FAKE_USER_INPUT.case === 9
+          || FAKE_USER_INPUT.case === 10
+          || FAKE_USER_INPUT.case === 1) {
+          if (Math.abs(coord_3[0] - 10 - car.body.x) < 10) {
+            turn('south');
+          }
+          if (FAKE_USER_INPUT.case === 10) {
+            if (Math.abs(coord_6[1] - 10 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('west');
+            }
+          } else if (FAKE_USER_INPUT.case === 1) {
+            if (Math.abs(coord_6[1] + 25 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('east');
+            }
+            checkCompletion();
+          }
+        }
       }
-    } else if (FAKE_USER_INPUT.case === 6) {
+    } else if (FAKE_USER_INPUT.case === 2
+      || FAKE_USER_INPUT.case === 11
+      || FAKE_USER_INPUT.case === 12
+      || FAKE_USER_INPUT.case === 13
+      || FAKE_USER_INPUT.case === 14
+      || FAKE_USER_INPUT.case === 15
+      || FAKE_USER_INPUT.case === 16) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 0;
+      if (Math.abs(coord_1[0] - 10 - car.body.x) < 10) {
+        turn('south');
       }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
-        car.body.angle = -90;
+      if (FAKE_USER_INPUT.case === 12) {
+        if (Math.abs(coord_4[1] - 15 - car.body.y) < 10) {
+          turn('west');
+        }
+      } else if (FAKE_USER_INPUT.case !== 11) {
+        if (Math.abs(coord_4[1] + 28 - car.body.y) < 10) {
+          turn('east');
+        }
+        if (FAKE_USER_INPUT.case === 14) {
+          if (Math.abs(coord_5[0] - 20 - car.body.x) < 10) {
+            turn('south');
+          }
+        } else if (FAKE_USER_INPUT.case !== 13) {
+          if (Math.abs(coord_5[0] + 30 - car.body.x) < 10) {
+            turn('north');
+          }
+          if (FAKE_USER_INPUT.case === 16) {
+            if (Math.abs(coord_6[1] - 20 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('west');
+            }
+          } else if (FAKE_USER_INPUT.case === 2) {
+            if (Math.abs(coord_6[1] + 30 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('east');
+            }
+            checkCompletion();
+          }
+        }
       }
     }
 
   }
 
   function render() {
-
+    car.body.debug = true;
   }
 
   /******* HELPER FUNCTIONS **********************/
@@ -218,9 +318,9 @@ var createGame = (userInput) => {
     car.scale.setTo(carScale);
 
     game.physics.p2.enable(car);
-    car.body.setRectangle(5, 5);
+    car.body.setRectangle(10, 10);
     car.body.collideWorldBounds = true;
-    car.body.angle = 90;
+    car.body.angle = startingAngle;
   }
 
   function setCarColor() {
@@ -310,6 +410,9 @@ var createGame = (userInput) => {
     }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
+    setTimeout(() => {
+      game.paused = true;
+    }, 3000)
   }
 
   function intersectionCenter(tiles) {
@@ -324,6 +427,24 @@ var createGame = (userInput) => {
     y = y / tiles.length;
 
     return [x, y];
+  }
+
+  function turn(direction) {
+    switch (direction) {
+      case 'north': 
+        car.body.angle = 0;
+        break;
+      case 'east': 
+        car.body.angle = 90;
+        break;
+      case 'south': 
+        car.body.angle = 180;
+        break;
+      case 'west': 
+        car.body.angle = -90;
+        break;
+      default: car.body.angle = 0;
+    }
   }
 }
 
