@@ -151,6 +151,38 @@ var level5 = function(req, res, next) {
         }
       );
     };
+
+    // test if the array consists of one element
+    this.testRouteArrayElement = function() {
+      t.assertTrue(
+        route.length === 1,
+        'Expect setRoute() input array to have one element, but got ' + route.length + ' element(s)',
+        function() {
+        	setCase(4); // NOT SURE WHAT TO DO IN THIS CASE
+        }
+      );
+    };
+
+    // test if the array elements are of type stirng
+    this.testRouteArrayString = function() {
+      t.assertOptionsOfTypeString(
+        route,
+        function() {
+        	setCase(4); // NOT SURE WHAT TO DO IN THIS CASE
+        }
+      );
+    };
+
+    // test if the array element if equal to right or left
+    this.testRouteArrayValue = function() {
+      t.assertTrue(
+        route[0] === 'left' || route[0] === 'right',
+        'Expected setRoute() input array elements to be "left" or "right", but got ' + route[0],
+        function() {
+        	setCase(4); // the input is not left/right, car goes straight and crashes
+        }
+      );
+    };
   });
 
 	});
