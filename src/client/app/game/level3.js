@@ -12,11 +12,11 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    // case: 1, // success right turn
+    case: 1, // success right turn
     // case: 2, // fail, car did not start engine
     // case: 3, // fail, crashed straight
     // case: 4, // fail, crash left
-    case: 5, // fail, stalls at intersection
+    // case: 5, // fail, stalls at intersection
   }
   /**********************************************************/
   /**********************************************************/
