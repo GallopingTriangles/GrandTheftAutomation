@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'panda',
-    speed: 10,
+    speed: 80,
     sensor: true,
     /* NOTE: there could be the case that the user decides to route the car ****
     *******  such that it goes around in a circle over and over again *********/
