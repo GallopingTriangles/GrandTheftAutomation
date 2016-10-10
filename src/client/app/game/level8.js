@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'panda',
-    speed: 100,
+    speed: 75,
     sensor: true,
     /* NOTE: there could be the case that the user decides to route the car ****
     *******  such that it goes around in a circle over and over again *********/
@@ -62,7 +62,8 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
   var startingX = 40;
-  var startingY = 350;
+  var startingY = 365;
+  var startingAngle = 90;
   var backgroundColor = '#3e5f96';
   var speed = FAKE_USER_INPUT.speed * 4;
   // var carForwardSpeed = 200;
@@ -89,6 +90,14 @@ var createGame = (userInput) => {
   var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
   var intersectionTiles_2;
   var coord_2;
+  var intersectionTiles_3;
+  var coord_3;
+  var intersectionTiles_4;
+  var coord_4;
+  var intersectionTiles_5;
+  var coord_5;
+  var intersectionTiles_6;
+  var coord_6;
 
   var layer_1;
   var layer_2;
@@ -170,12 +179,12 @@ var createGame = (userInput) => {
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
     // cursors = game.input.keyboard.createCursorKeys();
-    coord_1 = intersectionCenter(intersectionTiles_1); // pixel center of the first intersection
-    coord_2 = intersectionCenter(intersectionTiles_2); // pixel center of the second intersection
-    coord_3 = intersectionCenter(intersectionTiles_3); // etc.
-    coord_4 = intersectionCenter(intersectionTiles_4);
-    coord_5 = intersectionCenter(intersectionTiles_5);
-    coord_6 = intersectionCenter(intersectionTiles_6);
+    coord_1 = intersectionCenter(intersectionTiles_1); // ~[145,336] pixel center of the first intersection
+    coord_2 = intersectionCenter(intersectionTiles_2); // ~[145,145]
+    coord_3 = intersectionCenter(intersectionTiles_3); // ~[640,145]
+    coord_4 = intersectionCenter(intersectionTiles_4); // ~[145,527]
+    coord_5 = intersectionCenter(intersectionTiles_5); // ~[640,527]
+    coord_6 = intersectionCenter(intersectionTiles_6); // ~[640,336]
   }
 
   function update() {
@@ -205,42 +214,25 @@ var createGame = (userInput) => {
 
     if (FAKE_USER_INPUT.case === 1) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 0;
+      if (Math.abs(coord_1[0] + 40 - car.body.x) < 10) {
+        turn('north');
       }
-      if (Math.abs(coord_2[0] + 60 - car.body.x) < 30 && Math.abs(coord_2[1] - 45 - car.body.y) < 30) {
-        car.body.angle = -90;
-      }
+      // if (Math.abs(coord_2[1] + 30 - car.body.y) < 10) {
+      //   turn('east');
+      // }
+      // if (Math.abs(coord_3[0] - 15 - car.body.x) < 10) {
+      //   turn('south');
+      // }
+      // if (Math.abs(coord_6[1] + 30 - car.body.y) < 10) {
+      //   turn('east');
+      // } 
       checkCompletion();
-    } else if (FAKE_USER_INPUT.case === 2) {
-      car.body.velocity.x = 0;
-      car.body.velocity.y = 0;
-    } else if (FAKE_USER_INPUT.case === 3) {
-      car.body.moveForward(speed);
-    } else if (FAKE_USER_INPUT.case === 4) {
-      car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 0;
-      }
-    } else if (FAKE_USER_INPUT.case === 5) {
-      car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 180;
-      }
-    } else if (FAKE_USER_INPUT.case === 6) {
-      car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
-        car.body.angle = 0;
-      }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] - 45 - car.body.y) < 30) {
-        car.body.angle = 90;
-      }
-    }
+    } 
 
   }
 
   function render() {
-
+    car.body.debug = true;
   }
 
   /******* HELPER FUNCTIONS **********************/
@@ -256,7 +248,7 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(10, 10);
     car.body.collideWorldBounds = true;
-    car.body.angle = 90;
+    car.body.angle = startingAngle;
   }
 
   function setCarColor() {
@@ -346,6 +338,9 @@ var createGame = (userInput) => {
     }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
+    setTimeout(() => {
+      game.paused = true;
+    }, 3000)
   }
 
   function intersectionCenter(tiles) {
@@ -360,6 +355,24 @@ var createGame = (userInput) => {
     y = y / tiles.length;
 
     return [x, y];
+  }
+
+  function turn(direction) {
+    switch (direction) {
+      case 'north': 
+        car.body.angle = 0;
+        break;
+      case 'east': 
+        car.body.angle = 90;
+        break;
+      case 'south': 
+        car.body.angle = 180;
+        break;
+      case 'west': 
+        car.body.angle = -90;
+        break;
+      default: car.body.angle = 0;
+    }
   }
 }
 
