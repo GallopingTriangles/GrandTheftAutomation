@@ -116,6 +116,91 @@ var level6 = function(req, res, next) {
 
 	  // == ROUTE TESTS == //
 	  runTestSuite(function RouteInputTest(t) {
+	  	var route = context.route.directions;
+	  	var calls = context.route.count;
+	  	// test if the set route function is called
+	  	this.testRouteCalled = function() {
+        t.assertTrue(
+          calls,
+          'Expected function setRoute() to be called, but got not called',
+          function() {
+          	setCase(3);
+          }
+        );
+	  	};
+
+	  	// test is setRoute function has input
+	    this.testRouteDefined = function() {
+	      t.assertTrue(
+	        route,
+	        'Expected route to be defined, but got ' + route,
+	        function() {
+	        	setCase(3); // no route defined, car crashes straigt
+	        }
+	      );
+	    };
+
+      // test if the setRoute input is of data type array
+      this.testRouteArray = function() {
+        t.assertTrue(
+          Array.isArray(route),
+          'Expected setRoute() input to be an array, but got ' + typeof route,
+          function() {
+            setCase(3); // route is not defined, car crashes straight
+          }
+        );
+      };
+
+      // test if the array is not empty
+      this.testRouteArrayNotEmpty = function() {
+        t.assertTrue(
+          route.length !== 0,
+          'Expect setRoute() input array to be not empty, but got ' + route.length + ' input',
+          function() {
+          	setCase(3); // NO
+          }
+        );
+      };
+
+      // test if the array elements are of type string
+      this.testRouteArrayString = function() {
+        t.assertOptionsOfTypeString(
+          route,
+          function() {
+          	setCase(3);
+          }
+        );
+      };
+
+      // test if the array element is set to right or left
+      this.testRouteArrayValue = function() {
+        t.assertTrue(
+          route[0] === 'left' || route[0] === 'right',
+          'Expected setRoute() input array elements to be "left" or "right", but got ' + route[0],
+          function() {
+          	setCase(3);
+          }
+        );
+      };
+
+      // test if the array consists of one element
+      this.testRouteArrayNotOneElement = function() {
+        t.assertTrue(
+          route.length !== 1,
+          'Expect setRoute() input array to have more than 1 element, but got ' + route.length + ' element(s)',
+          function() {
+          	if (route[0] === 'left') {
+              setCase(4);
+          	} else if (route[0] === 'right') {
+              setCase(5);
+          	}
+          }
+        );
+      };
+
+      this.testRouteArrayTwoOrThreeElements = function() {
+
+      };	    
 
 	  });
 
