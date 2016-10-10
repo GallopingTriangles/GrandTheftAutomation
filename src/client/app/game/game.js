@@ -8,25 +8,30 @@ var level7 = require('./level7.js');
 
 export default function(userInput, level) {
   // create the game for the appropriate level
-  // if (level === 1) {
-  //   level1(userInput);
-  // } else if (level === 2) {
-  //   level2(userInput);
-  // } else if (level === 3) {
-  //   level3(userInput);
-  // } else if (level === 4) {
-  //   level4(userInput);
-  // } else if (level === 5) {
-  //   level5(userInput);
-  // }
+  if (level === 1) {
+    level1(userInput);
+  } else if (level === 2) {
+    level2(userInput);
+  } else if (level === 3) {
+    level3(userInput);
+  } else if (level === 4) {
+    level4(userInput);
+  } else if (level === 5) {
+    level5(userInput);
+  } else if (level === 6) {
+    level6(userInput);
+  } else if (level === 7) {
+    level7(userInput);
+  }
 
+  // hardcoding which level to render for troubleshooting
   // level1(userInput);
   // level2(userInput);
   // level3(userInput);
   // level4(userInput);
   // level5(userInput);
   // level6(userInput);
-  level7(userInput);
+  // level7(userInput);
 
 }
 //
