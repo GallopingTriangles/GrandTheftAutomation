@@ -9,12 +9,12 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    // case: 1, // success, LEFT turn followed by LEFT turn to complete the level (U-turn)
+    case: 1, // success, LEFT turn followed by LEFT turn to complete the level (U-turn)
     // case: 2, // fail, didn't enable the engine
     // case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
     // case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
     // case: 5, // fail, turned RIGHT at FIRST intersection and crashed
-    case: 6, // fail, turned LEFT at FIRST intersection but turned RIGHT at SECOND intersection and crashed
+    // case: 6, // fail, turned LEFT at FIRST intersection but turned RIGHT at SECOND intersection and crashed
   }
   /**********************************************************/
   /**********************************************************/
