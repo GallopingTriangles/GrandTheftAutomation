@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'panda',
-    speed: 75,
+    speed: 80,
     sensor: true,
     /* NOTE: there could be the case that the user decides to route the car ****
     *******  such that it goes around in a circle over and over again *********/
@@ -212,21 +212,47 @@ var createGame = (userInput) => {
       // }
     }
 
-    if (FAKE_USER_INPUT.case === 1) {
+    if (FAKE_USER_INPUT.case === 1
+      || FAKE_USER_INPUT.case === 5
+      || FAKE_USER_INPUT.case === 6
+      || FAKE_USER_INPUT.case === 7
+      || FAKE_USER_INPUT.case === 8
+      || FAKE_USER_INPUT.case === 9
+      || FAKE_USER_INPUT.case === 10) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 40 - car.body.x) < 10) {
         turn('north');
       }
-      // if (Math.abs(coord_2[1] + 30 - car.body.y) < 10) {
-      //   turn('east');
-      // }
-      // if (Math.abs(coord_3[0] - 15 - car.body.x) < 10) {
-      //   turn('south');
-      // }
-      // if (Math.abs(coord_6[1] + 30 - car.body.y) < 10) {
-      //   turn('east');
-      // } 
-      checkCompletion();
+      if (FAKE_USER_INPUT.case === 6) {
+        if (Math.abs(coord_2[1] - 20 - car.body.y) < 10) {
+          turn('west');
+        }
+      } else if (FAKE_USER_INPUT.case !== 5) {
+        if (Math.abs(coord_2[1] + 25 - car.body.y) < 10) {
+          turn('east');
+        }
+        if (FAKE_USER_INPUT.case === 8) {
+          if (Math.abs(coord_3[0] + 40 - car.body.x) < 10) {
+            turn('north');
+          }
+        } else if (FAKE_USER_INPUT.case === 9
+          || FAKE_USER_INPUT.case === 10
+          || FAKE_USER_INPUT.case === 1) {
+          if (Math.abs(coord_3[0] - 10 - car.body.x) < 10) {
+            turn('south');
+          }
+          if (FAKE_USER_INPUT.case === 10) {
+            if (Math.abs(coord_6[1] - 10 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('west');
+            }
+          } else if (FAKE_USER_INPUT.case === 1) {
+            if (Math.abs(coord_6[1] + 25 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('east');
+            }
+            checkCompletion();
+          }
+        }
+      }
     } 
 
   }
