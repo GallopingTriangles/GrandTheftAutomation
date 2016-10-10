@@ -12,8 +12,12 @@ export default class Instructions extends Component {
     };
   }
 	render() {
-		return (
-      <div>{ this.state[this.props.level] }</div>
-		);
+    return (
+      <div>
+        { this.state[this.props.level].split('\n').map(line => (
+          <p key={ Math.random() }> { line } </p>
+        )) }
+      </div>
+    )
 	}
 }

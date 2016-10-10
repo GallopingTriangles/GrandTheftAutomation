@@ -21,6 +21,11 @@ module.exports = {
                   'If the front sensor is detecting an obstacle, it becomes true\n' +
                   'If it is true, we want to stop the car so we set the speed to 0',
 
-  three: '',
+  three:          'LEVEL 3\n' +
+                  'Introduce INTERSECTIONS\n' +
+                  'Need to enable maps\n' +
+                  'If we\'re at the intersection, need to turn(\'right\');\n' +
+                  
+
   four: '',
 }
