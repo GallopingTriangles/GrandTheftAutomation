@@ -12,12 +12,11 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1, // success, LEFT turn followed by LEFT turn to complete the level (U-turn)
-    // case: 2, // fail, didn't enable the engine
-    // case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
-    // case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
-    // case: 5, // fail, turned RIGHT at FIRST intersection and crashed
-    // case: 6, // fail, turned LEFT at FIRST intersection but turned RIGHT at SECOND intersection and crashed
+    // case: 1, // success right turn
+    // case: 2, // fail, car did not start engine
+    // case: 3, // fail, crashed straight
+    // case: 4, // fail, crash left
+    case: 5, // fail, stalls at intersection
   }
   /**********************************************************/
   /**********************************************************/
@@ -311,6 +310,12 @@ var createGame = (userInput) => {
     */
     checkCompletion();
 
+
+
+    /******************************************************/
+    /** TEMPORARILIY COMMENTED OUT TO GET MVP CASES DONE **/
+    /******************************************************/
+    /******************************************************/
     // if (userInput.case === 1) {
 
     // } else {
@@ -321,6 +326,35 @@ var createGame = (userInput) => {
     // } else if (userInput.case === 3) {
     //   turnLeft(-90, car.body.y < 164)
     // }
+    /******************************************************/
+    /******************************************************/
+    /** TEMPORARILIY COMMENTED OUT TO GET MVP CASES DONE **/
+    /******************************************************/
+
+    if (FAKE_USER_INPUT.case === 1) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.angle = 90;
+      }
+      checkCompletion();
+    } else if (FAKE_USER_INPUT.case === 2) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (FAKE_USER_INPUT.case === 3) { 
+      car.body.moveForward(400);
+    } else if (FAKE_USER_INPUT.case === 4) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.angle = -90;
+      }
+    } else if (FAKE_USER_INPUT.case === 5) {
+      car.body.moveForward(400);
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+        car.body.velocity.x = 0;
+        car.body.velocity.y = 0;
+      }
+    }
+
   }
 
   function render() {
