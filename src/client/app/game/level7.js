@@ -9,12 +9,12 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1, // success, LEFT turn followed by LEFT turn to complete the level (U-turn)
+    // case: 1, // success, LEFT turn followed by LEFT turn to complete the level (U-turn)
     // case: 2, // fail, didn't enable the engine
     // case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
     // case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
     // case: 5, // fail, turned RIGHT at FIRST intersection and crashed
-    // case: 6, // fail, turned LEFT at FIRST intersection but turned RIGHT at SECOND intersection and crashed
+    case: 6, // fail, turned LEFT at FIRST intersection but turned RIGHT at SECOND intersection and crashed
   }
   /**********************************************************/
   /**********************************************************/
@@ -98,8 +98,8 @@ var createGame = (userInput) => {
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_DL_layer');
-    layer_7 = map.createLayer('intersection_UL_layer');
+    layer_6 = map.createLayer('intersection_UL_layer');
+    layer_7 = map.createLayer('intersection_DL_layer');
 
     layer_1 = map.createLayer('collision_layer');
 
@@ -168,11 +168,11 @@ var createGame = (userInput) => {
 
     if (FAKE_USER_INPUT.case === 1) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 65 - car.body.x) < 100 && Math.abs(coord_1[1] + 25 - car.body.y) < 100) {
+      if (Math.abs(coord_1[0] + 60 - car.body.x) < 24 && Math.abs(coord_1[1] + 25 - car.body.y) < 30) {
         car.body.angle = 0;
       }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
-        car.body.angle = 90;
+      if (Math.abs(coord_2[0] + 60 - car.body.x) < 30 && Math.abs(coord_2[1] - 35 - car.body.y) < 30) {
+        car.body.angle = -90;
       }
       checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) {
@@ -195,8 +195,8 @@ var createGame = (userInput) => {
       if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
-        car.body.angle = -90;
+      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] - 30 - car.body.y) < 30) {
+        car.body.angle = 90;
       }
     }
 
