@@ -7,12 +7,12 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'panda',
-    speed: 80,
+    speed: 10,
     sensor: true,
     /* NOTE: there could be the case that the user decides to route the car ****
     *******  such that it goes around in a circle over and over again *********/
-    // case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
-    case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
+    case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
+    // case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
     // case: 3, // fail, didn't enable the engine
     // case: 4, // fail, drove STRAIGHT through the FIRST intersection and crashed ([STRAIGHT])
     // case: 5, // fail, turned LEFT then STRAIGHT and crashed ([LEFT, STRAIGHT])
@@ -227,7 +227,7 @@ var createGame = (userInput) => {
       || FAKE_USER_INPUT.case === 9
       || FAKE_USER_INPUT.case === 10) { // handle all upper route cases
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 40 - car.body.x) < 10) {
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 10) {
         turn('north');
       }
       if (FAKE_USER_INPUT.case === 6) {
@@ -315,7 +315,7 @@ var createGame = (userInput) => {
   function createCar() {
     car = game.add.sprite(startingX, startingY, 'car');
     car.anchor.setTo(.3, .5);
-    car.scale.setTo(carScale);
+    car.scale.setTo(0.2);
 
     game.physics.p2.enable(car);
     car.body.setRectangle(10, 10);
