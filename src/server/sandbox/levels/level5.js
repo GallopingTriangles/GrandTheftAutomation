@@ -74,8 +74,6 @@ var level5 = function(req, res, next) {
   	}
   };
 
-  console.log('CONTEXT', context);
-
   // == ENABLED TESTS == //
   runTestSuite(function EnabledInputTest(t) {
   	// enabled array in sandbox context
