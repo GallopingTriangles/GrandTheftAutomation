@@ -11,8 +11,8 @@ var createGame = (userInput) => {
     sensor: true,
     /* NOTE: there could be the case that the user decides to route the car ****
     *******  such that it goes around in a circle over and over again *********/
-    case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
-    // case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
+    // case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
+    case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
     // case: 3, // fail, didn't enable the engine
     // case: 4, // fail, drove STRAIGHT through the FIRST intersection and crashed ([STRAIGHT])
     // case: 5, // fail, turned LEFT then STRAIGHT and crashed ([LEFT, STRAIGHT])
@@ -212,13 +212,20 @@ var createGame = (userInput) => {
       // }
     }
 
+    if (FAKE_USER_INPUT.case === 3) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else {
+      car.body.moveForward(speed);
+    }
+
     if (FAKE_USER_INPUT.case === 1
       || FAKE_USER_INPUT.case === 5
       || FAKE_USER_INPUT.case === 6
       || FAKE_USER_INPUT.case === 7
       || FAKE_USER_INPUT.case === 8
       || FAKE_USER_INPUT.case === 9
-      || FAKE_USER_INPUT.case === 10) {
+      || FAKE_USER_INPUT.case === 10) { // handle all upper route cases
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 40 - car.body.x) < 10) {
         turn('north');
@@ -253,7 +260,46 @@ var createGame = (userInput) => {
           }
         }
       }
-    } 
+    } else if (FAKE_USER_INPUT.case === 2
+      || FAKE_USER_INPUT.case === 11
+      || FAKE_USER_INPUT.case === 12
+      || FAKE_USER_INPUT.case === 13
+      || FAKE_USER_INPUT.case === 14
+      || FAKE_USER_INPUT.case === 15
+      || FAKE_USER_INPUT.case === 16) {
+      car.body.moveForward(speed);
+      if (Math.abs(coord_1[0] - 10 - car.body.x) < 10) {
+        turn('south');
+      }
+      if (FAKE_USER_INPUT.case === 12) {
+        if (Math.abs(coord_4[1] - 15 - car.body.y) < 10) {
+          turn('west');
+        }
+      } else if (FAKE_USER_INPUT.case !== 11) {
+        if (Math.abs(coord_4[1] + 28 - car.body.y) < 10) {
+          turn('east');
+        }
+        if (FAKE_USER_INPUT.case === 14) {
+          if (Math.abs(coord_5[0] - 20 - car.body.x) < 10) {
+            turn('south');
+          }
+        } else if (FAKE_USER_INPUT.case !== 13) {
+          if (Math.abs(coord_5[0] + 30 - car.body.x) < 10) {
+            turn('north');
+          }
+          if (FAKE_USER_INPUT.case === 16) {
+            if (Math.abs(coord_6[1] - 20 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('west');
+            }
+          } else if (FAKE_USER_INPUT.case === 2) {
+            if (Math.abs(coord_6[1] + 30 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
+              turn('east');
+            }
+            checkCompletion();
+          }
+        }
+      }
+    }
 
   }
 
