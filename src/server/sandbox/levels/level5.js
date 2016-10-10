@@ -37,7 +37,7 @@ var level5 = function(req, res, next) {
   var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
   var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "route") { testRoute = true }; };';
   var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
-  var funcRoute = 'var setRoute = function(input) { route = input; };';
+  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
 
   // input for virtual machine
   var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
@@ -50,7 +50,10 @@ var level5 = function(req, res, next) {
   	map: {
       intersection: false
   	},
-  	route: undefined,
+  	route: {
+  		directions: undefined,
+  		count: 0
+  	},
   	testEnable: [],
   	testEngine: undefined,
   	testColor: undefined,
@@ -114,7 +117,40 @@ var level5 = function(req, res, next) {
 
   // == ROUTE TESTS == //
   runTestSuite(function RouteInputTest(t) {
+  	var route = context.route.directions;
+  	var calls = context.route.count;
     // test if the set route function is called
+    this.testRouteCalled = function() {
+      t.assertTrue(
+        calls,
+        'Expected function setRoute() to be called, but got not called',
+        function() {
+        	setCase(4); // no route is created, car crashes straight
+        }
+      );
+    };
+
+    // test is setRoute function has input
+    this.testRouteDefined = function() {
+      t.assertTrue(
+        route,
+        'Expected route to be defined, but got ' + route,
+        function() {
+        	setCase(4); // no route defined, car crashes straigt
+        }
+      );
+    };
+
+    // test if the setRoute input is of data type array
+    this.testRouteArray = function() {
+      t.assertTrue(
+        Array.isArray(route),
+        'Expected setRoute() input to be an array, but got ' + typeof route,
+        function() {
+          setCase(4); // route is not defined, car crashes straight
+        }
+      );
+    };
   });
 
 	});
