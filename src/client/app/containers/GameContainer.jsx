@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import styles from '../../styles/ConsoleContainerStyles.js';
-
 import $ from 'jquery';
 import createGame from '../game/game.js';
-
-// const Game = props => (
-//   <div className='col-md-7' id='phaser_game' style={ styles.phaser }></div>
-// );
 
 class Game extends Component {
   constructor(props) {
@@ -14,8 +9,12 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    // create the game when the component mounts
-    createGame({engine: false, sensor: false, speed: false, color: 'white'});
+    // create the default game when the component mounts
+    createGame({
+      color: 'white',
+      speed: 0
+      /* no "case" property yet because this is just the initial rendering of the game */
+    }, this.props.level)
   }
 
   componentWillUnmount() {

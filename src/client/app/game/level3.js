@@ -392,7 +392,6 @@ var createGame = (userInput) => {
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
-        console.log('Sensors in create: ', sensors);
       }
     }
   }

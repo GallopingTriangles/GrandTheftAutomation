@@ -9,13 +9,12 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1, // success, LEFT turn followed by RIGHT turn to complete the level
+    case: 1, // success, LEFT turn followed by LEFT turn to complete the level (U-turn)
     // case: 2, // fail, didn't enable the engine
     // case: 3, // fail, drove STRAIGHT through the FIRST intersection and crashed
     // case: 4, // fail, turned LEFT at FIRST intersection but drove STRAIGHT through the SECOND intersection and crashed
     // case: 5, // fail, turned RIGHT at FIRST intersection and crashed
-    // case: 6, // EASTER EGG SUCCESS, turned LEFT at the SECOND intersection into the park and then turned RIGHT on the path
-    // case: 7, // EASTER EGG FAIL, turned LEFT at the SECOND intersection into the park and then crashed STRAIGHT
+    // case: 6, // fail, turned LEFT at FIRST intersection but turned RIGHT at SECOND intersection and crashed
   }
   /**********************************************************/
   /**********************************************************/
@@ -36,7 +35,7 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_6', './assets/gameMaps/level_6.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_7', './assets/gameMaps/level_7.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
   }
 
@@ -51,7 +50,7 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
   var startingX = 40;
-  var startingY = 470;
+  var startingY = 525;
   var backgroundColor = '#3e5f96';
   var speed = FAKE_USER_INPUT.speed * 4;
   // var carForwardSpeed = 200;
@@ -92,7 +91,7 @@ var createGame = (userInput) => {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
 
-    map = game.add.tilemap('level_6');
+    map = game.add.tilemap('level_7');
     map.addTilesetImage('GTA_tileset');
 
     layer_2 = map.createLayer('road_layer');
@@ -100,7 +99,7 @@ var createGame = (userInput) => {
     layer_4 = map.createLayer('street_stuff_layer');
     layer_5 = map.createLayer('end_zone_layer');
     layer_6 = map.createLayer('intersection_UL_layer');
-    layer_7 = map.createLayer('intersection_DR_layer');
+    layer_7 = map.createLayer('intersection_DL_layer');
 
     layer_1 = map.createLayer('collision_layer');
 
@@ -169,11 +168,11 @@ var createGame = (userInput) => {
 
     if (FAKE_USER_INPUT.case === 1) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+      if (Math.abs(coord_1[0] + 60 - car.body.x) < 24 && Math.abs(coord_1[1] + 25 - car.body.y) < 30) {
         car.body.angle = 0;
       }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
-        car.body.angle = 90;
+      if (Math.abs(coord_2[0] + 60 - car.body.x) < 30 && Math.abs(coord_2[1] - 35 - car.body.y) < 30) {
+        car.body.angle = -90;
       }
       checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) {
@@ -196,8 +195,8 @@ var createGame = (userInput) => {
       if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] + 30 - car.body.y) < 30) {
-        car.body.angle = -90;
+      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] - 30 - car.body.y) < 30) {
+        car.body.angle = 90;
       }
     }
 

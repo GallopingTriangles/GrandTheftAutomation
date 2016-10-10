@@ -66,71 +66,11 @@ class Console extends Component {
 
   postSolution() {
 
-    
-    /* SAMPLE SOLUTION FOR A HIGHER LEVEL DIFFICULTY */
-
-
-    /************************************ SAMPLE SOLUTION *****************************************/
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-    /***********************
-
-
-    // This level involves the sensor working and it will
-    // either redirect the car or cause the car to stop;
-    // This will be a solution that encompasses most features
-    // of the game so we have to figure out how to parse all
-    // possibilities that the user could submit.
-    // They could have a working solution, in a different way,
-    // or an incorrect solution.
-
-    var engine = true;
-    var color = 'black';
-    var speed = 50;
-    enable(sensor); // enables the use of the sensor for the user
-    enable(distanceTracker); // keeps track of the distance to the destination
-
-    if (sensor.right === true) {
-      speed = speed - 20;
-      turn('left');
-    }
-    if (sensor.left === true) {
-      speed = speed - 20;
-      turn('right');
-    }
-    if (sensor.front === true && sensor.right === true) {
-      speed = speed - 20;
-      turn('left');
-    }
-    if (sensor.front === true && sensor.left === true) {
-      speed = speed - 20;
-      turn('right');
-    }
-    if (sensor.All === false) {
-      // return car to normal speed if no sensors detect an obstacle
-      speed = 50;
-    }
-
-    while (distanceGPS.isIncreasing() === true) {
-      // the distance to the destination is increasing, which means the
-      // car is going in the wrong direction. So we should program the
-      // car to keep turning until the car is in the correct direction.
-      turn('right');
-    }
-    if (distanceGPS.distance === 0) {
-      // if the distance to destination is 0, then we can
-      // stop the car and end the game. User wins.
-      speed = 0;
-    }
-
-                                                                            ***********************/
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
     console.log('User submitted solution: ', this.state.input);
+
+    // remove the currently rendered game so we can create a new one
     $('canvas').remove();
+
     fetch('/game', {
       method: 'POST',
       headers: {
@@ -144,8 +84,10 @@ class Console extends Component {
     }).then(res => {
       console.log('res: ', res);
       res.json().then(response => {
-        console.log(response.phaser);
-        createGame(response.phaser);
+        // the response from the server is an object that is used to create the game
+        // create a new game based off of the response object
+        console.log('phaser response: ', response.phaser);
+        createGame(response.phaser, this.props.level);
         this.setState({bugs: response.bugs});
       })
     }).catch(err => {
@@ -169,7 +111,7 @@ class Console extends Component {
 
   codeReset() {
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
-    this.setState({input: '// Input your code here\n\nvar engine = false;'}); // REFACTOR REFACTOR REFACTOR
+    this.setState({input: '// Input your code here\n\n'}); // REFACTOR REFACTOR REFACTOR
     // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
   }
 

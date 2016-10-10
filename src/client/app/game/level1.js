@@ -6,6 +6,9 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
+    color: 'white',
+    speed: 400,
+    sensor: true,
     case: 1, // success engine goes forward
     // case: 2, // fail, engine didn't get turned on
   }
@@ -182,7 +185,9 @@ var createGame = (userInput) => {
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
-    createSensors();
+    if (FAKE_USER_INPUT.sensor) {
+      createSensors();
+    }
     createCar();
     setSpeed();
 
@@ -205,7 +210,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      collisionBody.debug = true;
+      // collisionBody.debug = true;
 
     })
 
@@ -278,8 +283,8 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    game.debug.spriteInfo(car, 32, 32);
-    car.body.debug = true;
+    // game.debug.spriteInfo(car, 32, 32);
+    // car.body.debug = true;
 
   }
 
@@ -373,7 +378,6 @@ var createGame = (userInput) => {
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
-        console.log('Sensors in create: ', sensors);
       }
     }
   }

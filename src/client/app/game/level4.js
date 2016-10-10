@@ -6,6 +6,9 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   var FAKE_USER_INPUT = {
+    color: 'blue',
+    speed: 400,
+    sensor: true,
     case: 1, // success right turn
     // case: 2, // fail, crashed into obstacle after right turn
     // case: 3, // fail, crash straight
@@ -196,7 +199,9 @@ var createGame = (userInput) => {
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
-    createSensors();
+    if (FAKE_USER_INPUT.sensor) {
+      createSensors();
+    }
     createCar();
     setSpeed();
 
@@ -305,8 +310,8 @@ var createGame = (userInput) => {
         car.body.moveForward(400);
       }
     } else if (FAKE_USER_INPUT.case === 6) { // failed, car didn't start
-      car.velocity.x = 0;
-      car.velocity.y = 0;
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
     }
 
     /*
@@ -316,8 +321,8 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    game.debug.spriteInfo(car, 32, 32);
-    car.body.debug = true;
+    // game.debug.spriteInfo(car, 32, 32);
+    // car.body.debug = true;
 
   }
 
@@ -411,7 +416,6 @@ var createGame = (userInput) => {
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
-        console.log('Sensors in create: ', sensors);
       }
     }
   }

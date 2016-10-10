@@ -1,46 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import createCommand from '../actions/UserCommandAction.js';
+import $ from 'jquery';
 import changeLevel from '../actions/changeLevel.js';
+import createGame from '../game/game.js';
 
 class Footer extends Component {
   // == REACT FUNCTIONS =====================================================
   constructor(props) {
     super(props);
-    this.state = {
-      // level: this.props.level
-    };
+    this.state = {};
   }
 
-  // == CUSTOM FUNCTIONS ====================================================
-  // previousLevel(e) {
-  //   e.preventDefault();
-  //   if (this.props.level > 1) {
-  //     this.props.changeLevel(this.props.level - 1);
-  //   }
-  // }
-
-  // nextLevel(e) {                                                              // go to next level
-  //   e.preventDefault();
-  //   if (this.props.level < 4) {
-  //     this.props.changeLevel(this.props.level + 1);
-  //   }
-  // }
 
   changeLevel(e, level) {
     /* Updates the store with the appropriate level                       */
     e.preventDefault();
-    if (level >= 1 && level <= 10) {
+    if (level >= 1 && level <= 7) {
       this.props.changeLevel(level);
+
+      // re-render a new game for the appropriate level
+      $('canvas').remove();
+      createGame({
+        color: 'white',
+        speed: 0,
+        /* no "case" property yet because this is just the initial rendering of the game */
+      }, level);
     }
 
     /* Error handling if the level is ever out of bounds: default to 1    */
-    if (this.props.level > 10 || this.props.level < 1) {
+    if (this.props.level > 7 || this.props.level < 1) {
       this.props.changeLevel(1);
     }
 
     /* Fetches and renders the user's code for that level into the editor */
     this.props.getCode();
+
   }
 
   // == RENDER FOOTER =======================================================
@@ -55,7 +50,7 @@ class Footer extends Component {
           Back
           </button>
 
-          <h5 className='col-xs-10 text-center'>{ this.props.level } / 10</h5>
+          <h5 className='col-xs-10 text-center'>{ this.props.level } / 7</h5>
 
           <button 
             className='btn btn-primary col-xs-1'
