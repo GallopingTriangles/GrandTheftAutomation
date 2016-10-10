@@ -168,10 +168,10 @@ var createGame = (userInput) => {
 
     if (FAKE_USER_INPUT.case === 1) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 60 - car.body.x) < 24 && Math.abs(coord_1[1] + 25 - car.body.y) < 30) {
+      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 25 - car.body.y) < 30) {
         car.body.angle = 0;
       }
-      if (Math.abs(coord_2[0] + 60 - car.body.x) < 30 && Math.abs(coord_2[1] - 35 - car.body.y) < 30) {
+      if (Math.abs(coord_2[0] + 60 - car.body.x) < 30 && Math.abs(coord_2[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
       checkCompletion();
@@ -182,20 +182,20 @@ var createGame = (userInput) => {
       car.body.moveForward(speed);
     } else if (FAKE_USER_INPUT.case === 4) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
     } else if (FAKE_USER_INPUT.case === 5) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 180;
       }
     } else if (FAKE_USER_INPUT.case === 6) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 65 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
+      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
-      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] - 30 - car.body.y) < 30) {
+      if (Math.abs(coord_2[0] + 45 - car.body.x) < 30 && Math.abs(coord_2[1] - 45 - car.body.y) < 30) {
         car.body.angle = 90;
       }
     }
@@ -217,7 +217,7 @@ var createGame = (userInput) => {
     car.scale.setTo(carScale);
 
     game.physics.p2.enable(car);
-    car.body.setRectangle(car.width, car.height);
+    car.body.setRectangle(10, 10);
     car.body.collideWorldBounds = true;
     car.body.angle = 90;
   }

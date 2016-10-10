@@ -30,8 +30,8 @@ export default function(userInput, level) {
   // level3(userInput);
   // level4(userInput);
   // level5(userInput);
-  level6(userInput);
-  // level7(userInput);
+  // level6(userInput);
+  level7(userInput);
 
 }
 //
