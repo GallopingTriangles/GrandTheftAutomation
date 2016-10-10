@@ -229,32 +229,32 @@ var level6 = function(req, res, next) {
           		setCase(6); // EASTER EGG SUCCESS
           	} else if (array[1] === 'left') {
           		setCase(7); // EASTER EGG FAIL
+          	} else {
+              setCase(4);
           	}
-            //setCase(4);
           }
         );
       };
 
       this.testRouteArraySecondValueLeftOrRight = function() {
-      	var route = route || [];
+      	var array = route || [];
         t.assertTrue(
-          route[1] === 'left' || route[1] === 'right',
-          'aExpected setRoute() input array elements to be "left" or "right", but got ' + route[0],
+          array[1] === 'left' || array[1] === 'right',
+          'Expected setRoute() input array elements to be "left" or "right", but got ' + route[1],
           function() {
-          	if (route.length === 3)
           	setCase(4);
           }
         );
       };
 
-      // test if the 
+      // test if the it is a success!
       this.testRouteArraySecondValueRight = function() {
-      	var route = route || [];
+      	var array = route || [];
         t.assertTrue(
-          route[1] === 'right',
+          array[1] === 'right',
           'Expected setRoute() second element of input array to be "right", but got ' + route[1],
           function() {
-            
+            setCase(7);
           }
         );
       };	    
