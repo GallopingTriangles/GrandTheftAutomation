@@ -50,7 +50,7 @@ var createGame = (userInput) => {
   sensors.back = 'hello';
 
   var startingX = 40;
-  var startingY = 525;
+  var startingY = 535;
   var backgroundColor = '#3e5f96';
   var speed = FAKE_USER_INPUT.speed * 4;
   // var carForwardSpeed = 200;
@@ -168,7 +168,7 @@ var createGame = (userInput) => {
 
     if (FAKE_USER_INPUT.case === 1) {
       car.body.moveForward(speed);
-      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 25 - car.body.y) < 30) {
+      if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
       if (Math.abs(coord_2[0] + 60 - car.body.x) < 30 && Math.abs(coord_2[1] - 45 - car.body.y) < 30) {
