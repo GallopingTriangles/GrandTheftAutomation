@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'blue',
-    speed: 400,
+    speed: 20,
     sensor: true,
     // case: 1, // success right turn
     // case: 2, // fail, crashed into obstacle after right turn
@@ -224,7 +224,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      // collisionBody.debug = true;
+      collisionBody.debug = true;
 
     })
 
@@ -254,7 +254,7 @@ var createGame = (userInput) => {
     */
     if (userInput.sensor) {
 
-      attachSensors(0, 100, sensors);
+      attachSensors(0, 40, sensors);
 
       /*
       ** In every frame of the game, examine every collision body (tile) and check if
@@ -262,13 +262,17 @@ var createGame = (userInput) => {
       ** detect overlapping between a sensor and collision bodies. If an overlap is
       ** detected, set the variable overlap to true.
       */
+      for (var sensor in sensors) {
+        sensors[sensor].alpha = .1;
+      }
+
       collisionBodies.forEach(function(body) {
         for (var sensor in sensors) {
           if (sensors[sensor].getBounds().contains(body.x, body.y)
           || sensors[sensor].getBounds().contains(body.x + 32, body.y)
           || sensors[sensor].getBounds().contains(body.x, body.y + 32)
           || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
-            sensors[sensor].overlap = true;
+            sensors[sensor].alpha = .7;
           }
         }
       })
@@ -276,30 +280,32 @@ var createGame = (userInput) => {
       /*
       ** Increase the opacity of the sensor while a collision body is in its area.
       */
-      for (var sensor in sensors) {
-        if (sensors[sensor].overlap) {
-          sensors[sensor].alpha = 0.7;
-        } else {
-          sensors[sensor].alpha = 0.1;
-        }
-      }
+      // for (var sensor in sensors) {
+      //   if (sensors[sensor].overlap) {
+      //     sensors[sensor].alpha = 0.7;
+      //   } else {
+      //     sensors[sensor].alpha = 0.1;
+      //   }
+      // }
+
+      // console.log(sensors[left].alpha);
     }
 
     if (FAKE_USER_INPUT.case === 1) { // successful right turn
-      car.body.moveForward(400);
+      car.body.moveForward(50);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
         car.body.angle = 90;
       }
       checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) { // failed, crashed straight
-      car.body.moveForward(400);
+      car.body.moveForward(50);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
         car.body.angle = 90;
       }
     } else if (FAKE_USER_INPUT.case === 3) { // failed, crashed straight
-      car.body.moveForward(400);
+      car.body.moveForward(50);
     } else if (FAKE_USER_INPUT.case === 4) { // failed, crashed left
-      car.body.moveForward(400);
+      car.body.moveForward(50);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
@@ -308,7 +314,7 @@ var createGame = (userInput) => {
         car.body.velocity.x = 0;
         car.body.velocity.y = 0;
       } else {
-        car.body.moveForward(400);
+        car.body.moveForward(50);
       }
     } else if (FAKE_USER_INPUT.case === 6) { // failed, car didn't start
       car.body.velocity.x = 0;
