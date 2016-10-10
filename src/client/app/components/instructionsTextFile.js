@@ -9,7 +9,7 @@ module.exports = {
                   'Type <code> setSpeed(30); </code>\n' +
                   'If you want to customize your car... <code> setColor(\'black\'); </code>\n' +
                   'The semicolons are used to separate statements\n' +
-                  'Click RUN to see the car you\'ve just programmed!',
+                  'Click RUN to see the car you\'ve just programmed!\n',
 
   two:            'LEVEL 2\n' +
                   'Let\'s give your car a sensor\n' +
@@ -19,13 +19,16 @@ module.exports = {
                   'Need to learn about conditional statements, AKA "if" statements\n' +
                   'Write <code> if(sensor.front === true) { setSpeed(0); }; </code>\n' +
                   'If the front sensor is detecting an obstacle, it becomes true\n' +
-                  'If it is true, we want to stop the car so we set the speed to 0',
+                  'If it is true, we want to stop the car so we set the speed to 0\n',
 
   three:          'LEVEL 3\n' +
                   'Introduce INTERSECTIONS\n' +
                   'Need to enable maps\n' +
-                  'If we\'re at the intersection, need to turn(\'right\');\n' +
-                  
+                  'If we\'re at the intersection, need to turn(\'right\');\n',
 
-  four: '',
+  four:           'LEVEL 4\n' +
+                  'Combined what we learned from sensors with the intersections\n' +
+                  'Enable sensors so code it so that it will stop if \n' +
+                  'the front sensor detects any incoming obstacle.\n' +
+                  'Also make the car turn right correctly as before.\n',
 }
