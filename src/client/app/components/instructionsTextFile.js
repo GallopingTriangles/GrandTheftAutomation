@@ -50,4 +50,8 @@ module.exports = {
                   'notice the quotation marks, the directions must be \n' +
                   'sent to the computer in a STRING form\n',
 
+  seven:          'LEVEL 7\n' +
+                  'Create a route path that will complete this level\n',
+
+  eight: , 
 }
