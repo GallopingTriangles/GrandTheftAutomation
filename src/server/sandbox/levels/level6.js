@@ -180,7 +180,7 @@ var level6 = function(req, res, next) {
       	var array = route || [];
         t.assertTrue(
           array[0] === 'left' || array[0] === 'right',
-          'Expected setRoute() input array elements to be "left" or "right", but got ' + route[0],
+          'Expected setRoute() input array elements to be "left" or "right", but got ' + array[0],
           function() {
           	setCase(3);
           }
@@ -191,7 +191,7 @@ var level6 = function(req, res, next) {
       	var array = route || [];
         t.assertTrue(
           array[0] === 'left',
-          'Expected setRoute() first element of input array to be "left", but got ' + route[0],
+          'Expected setRoute() first element of input array to be "left", but got ' + array[0],
           function() {
             if (array[0] === 'right') {
             	setCase(5);
@@ -207,7 +207,7 @@ var level6 = function(req, res, next) {
       	var array = route || [];
         t.assertTrue(
           array.length !== 1,
-          'Expect setRoute() input array to have more than 1 element, but got ' + route.length + ' element',
+          'Expect setRoute() input array to have more than 1 element, but got ' + array.length + ' element',
           function() {
           	if (array[0] === 'left') {
               setCase(4);
@@ -240,7 +240,7 @@ var level6 = function(req, res, next) {
       	var array = route || [];
         t.assertTrue(
           array[1] === 'left' || array[1] === 'right',
-          'Expected setRoute() input array elements to be "left" or "right", but got ' + route[1],
+          'Expected setRoute() input array elements to be "left" or "right", but got ' + array[1],
           function() {
           	setCase(4);
           }
@@ -252,7 +252,7 @@ var level6 = function(req, res, next) {
       	var array = route || [];
         t.assertTrue(
           array[1] === 'right',
-          'Expected setRoute() second element of input array to be "right", but got ' + route[1],
+          'Expected setRoute() second element of input array to be "right", but got ' + array[1],
           function() {
             setCase(7);
           }
