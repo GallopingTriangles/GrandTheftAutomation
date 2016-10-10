@@ -47,7 +47,7 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_8', './assets/gameMaps/level_8.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_10', './assets/gameMaps/level_10.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset_16', './assets/gameMaps/GTA_tileset_16.png');
   }
 
@@ -82,8 +82,6 @@ var createGame = (userInput) => {
 
   var collisionBodies;
 
-  // var endZoneBodies;
-
   var completionTiles;
 
   var intersectionTiles_1;
@@ -110,22 +108,24 @@ var createGame = (userInput) => {
   var layer_9;
   var layer_10;
   var layer_11;
+  var layer_12;
 
   function create() {
 
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
 
-    map = game.add.tilemap('level_8');
+    map = game.add.tilemap('level_10');
     map.addTilesetImage('GTA_tileset_16');
 
-    layer_5 = map.createLayer('end_zone_layer');
-    layer_6 = map.createLayer('intersection_UDL_layer');
-    layer_7 = map.createLayer('intersection_DR_layer');
-    layer_8 = map.createLayer('intersection_DL_layer');
-    layer_9 = map.createLayer('intersection_UR_layer');
-    layer_10 = map.createLayer('intersection_UL_layer');
-    layer_11 = map.createLayer('intersection_UDR_layer');
+    layer_5 = map.createLayer('end_success_layer');
+    layer_6 = map.createLayer('intersection_1_layer');
+    layer_7 = map.createLayer('intersection_2_layer');
+    layer_8 = map.createLayer('intersection_3_layer');
+    layer_9 = map.createLayer('intersection_4_layer');
+    layer_10 = map.createLayer('intersection_5_layer');
+    layer_11 = map.createLayer('intersection_6_layer');
+    layer_12 = map.createLayer('end_failure_layer');
 
     layer_1 = map.createLayer('collision_layer');
     layer_2 = map.createLayer('road_layer');
@@ -164,7 +164,6 @@ var createGame = (userInput) => {
       createSensors();
     }
     createCar();
-    // setSpeed();
 
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -178,13 +177,12 @@ var createGame = (userInput) => {
 
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
-    // cursors = game.input.keyboard.createCursorKeys();
-    coord_1 = intersectionCenter(intersectionTiles_1); // ~[145,336] pixel center of the first intersection
-    coord_2 = intersectionCenter(intersectionTiles_2); // ~[145,145]
-    coord_3 = intersectionCenter(intersectionTiles_3); // ~[640,145]
-    coord_4 = intersectionCenter(intersectionTiles_4); // ~[145,527]
-    coord_5 = intersectionCenter(intersectionTiles_5); // ~[640,527]
-    coord_6 = intersectionCenter(intersectionTiles_6); // ~[640,336]
+    coord_1 = intersectionCenter(intersectionTiles_1); // 
+    coord_2 = intersectionCenter(intersectionTiles_2); // 
+    coord_3 = intersectionCenter(intersectionTiles_3); // 
+    coord_4 = intersectionCenter(intersectionTiles_4); // 
+    coord_5 = intersectionCenter(intersectionTiles_5); // 
+    coord_6 = intersectionCenter(intersectionTiles_6); // 
   }
 
   function update() {
