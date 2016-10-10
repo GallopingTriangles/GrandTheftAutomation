@@ -183,6 +183,20 @@ var level6 = function(req, res, next) {
         );
       };
 
+      this.testRouteArrayFirstValueLeft = function() {
+        t.assertTrue(
+          route[0] === 'left',
+          'Expected setRoute() first element of input array to be "left", but got ' + route[0],
+          function() {
+            if (route[0] === 'right') {
+            	setCase(5);
+            } else {
+            	setCase(3);
+            }
+          }
+        );
+      };
+
       // test if the array consists of one element
       this.testRouteArrayNotOneElement = function() {
         t.assertTrue(
@@ -198,8 +212,14 @@ var level6 = function(req, res, next) {
         );
       };
 
-      this.testRouteArrayTwoOrThreeElements = function() {
-
+      this.testRouteArrayTwoOrThreeElements = function() { // compare length to 3 for EASTER EGG
+        t.assertTrue(
+          route.length === 2 || route.length === 3,
+          'Expect setRoute() input array to have length of 2, but got ' + route.length + ' ',
+          function() {
+            
+          }
+        );
       };	    
 
 	  });
