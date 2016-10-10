@@ -9,6 +9,8 @@ module.exports = {
                   'Type <code> setSpeed(30); </code>\n' +
                   'If you want to customize your car... <code> setColor(\'black\'); </code>\n' +
                   'The semicolons are used to separate statements\n' +
+                  'and the quotation marks are to represent \'STRINGS\'\n' +
+                  '(((explain what strings are)))\n' +
                   'Click RUN to see the car you\'ve just programmed!\n',
 
   two:            'LEVEL 2\n' +
@@ -45,5 +47,7 @@ module.exports = {
                   'Use brackets <code> [] </code> to create the list, \n' +
                   'and send it into our routing tool that the car can understand\n' +
                   '<code> route([\'left\', \'right\']); </code>\n' +
-                  
+                  'notice the quotation marks, the directions must be \n' +
+                  'sent to the computer in a STRING form\n',
+
 }
