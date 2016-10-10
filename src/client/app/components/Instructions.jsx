@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
+import level from './instructionsTextFile.js';
 
 export default class Instructions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      1: 'Here are the instructions for level 1',
-      2: 'Here are the instructions for level 2',
-      3: 'Here are the instructions for level 3',
-      4: 'Here are the instructions for level 4'
+      1: level.one,
+      2: level.two,
+      3: level.three,
+      4: level.four,
+      5: level.five,
+      6: level.six,
+      7: level.seven,
+      8: level.eight
     };
   }
 	render() {
-		return (
-      <div>{ this.state[this.props.level] }</div>
-		);
+    return (
+      <div>
+        { this.state[this.props.level].split('\n').map(line => (
+          <p key={ Math.random() }> { line } </p>
+        )) }
+      </div>
+    )
 	}
 }
