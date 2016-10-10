@@ -27,7 +27,7 @@ module.exports = {
                   'If we\'re at the intersection, need to turn(\'right\');\n',
 
   four:           'LEVEL 4\n' +
-                  'Combined what we learned from sensors with the intersections\n' +
+                  'Combine what we learned from sensors with the intersections\n' +
                   'Enable sensors so code it so that it will stop if \n' +
                   'the front sensor detects any incoming obstacle.\n' +
                   'Also make the car turn right correctly as before.\n',
