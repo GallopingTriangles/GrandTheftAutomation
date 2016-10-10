@@ -31,4 +31,19 @@ module.exports = {
                   'Enable sensors so code it so that it will stop if \n' +
                   'the front sensor detects any incoming obstacle.\n' +
                   'Also make the car turn right correctly as before.\n',
+
+  five:           'LEVEL 5\n' +
+                  'DisneyLand is on the left.\n' +
+                  'Complete the level by making a LEFT turn\n',
+
+  six:            'LEVEL 6\n' +
+                  'introduce ROUTES\n' +
+                  'When dealing with multiple intersections\n' +
+                  'we may want to program our car to handle a certain route.\n' +
+                  'Add <code> enable(\'routes\'); </code>\n' +
+                  'In order to use our routes, we must give it a list of commands\n' +
+                  'Use brackets <code> [] </code> to create the list, \n' +
+                  'and send it into our routing tool that the car can understand\n' +
+                  '<code> route([\'left\', \'right\']); </code>\n' +
+                  
 }
