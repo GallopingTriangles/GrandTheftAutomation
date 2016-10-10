@@ -355,6 +355,7 @@ var createGame = (userInput) => {
         car.body.velocity.y = 0;
       }
 
+
     }
 
   }
@@ -538,7 +539,7 @@ var createGame = (userInput) => {
     if (intersection) {
       if (car.body.angle > endingAngle) {
         car.body.moveForward(userInput.speed * 4);
-        car.body.rotateLeft(userInput.speed * 4 / 3);
+        car.body.rotateLeft(userInput.speed);
       } else {
         car.body.angle = endingAngle;
       }
@@ -558,6 +559,7 @@ var createGame = (userInput) => {
 
     return [x, y];
   }
+
 }
 
 module.exports = createGame;
