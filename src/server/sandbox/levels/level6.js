@@ -130,15 +130,15 @@ var level6 = function(req, res, next) {
 	  	};
 
 	  	// test is setRoute function has input
-	    this.testRouteDefined = function() {
-	      t.assertTrue(
-	        route,
-	        'Expected route to be defined, but got ' + route,
-	        function() {
-	        	setCase(3); // no route defined, car crashes straigt
-	        }
-	      );
-	    };
+	    // this.testRouteDefined = function() {
+	    //   t.assertTrue(
+	    //     route,
+	    //     'Expected route to be defined, but got ' + route,
+	    //     function() {
+	    //     	setCase(3); // no route defined, car crashes straigt
+	    //     }
+	    //   );
+	    // };
 
       // test if the setRoute input is of data type array
       this.testRouteArray = function() {
@@ -153,19 +153,22 @@ var level6 = function(req, res, next) {
 
       // test if the array is not empty
       this.testRouteArrayNotEmpty = function() {
+      	var array = route || [];
+      	var length = array.length;
         t.assertTrue(
-          route.length !== 0,
-          'Expect setRoute() input array to be not empty, but got ' + route.length + ' input',
+          length !== 0,
+          'Expect setRoute() input array to be not empty, but got ' + length + ' input',
           function() {
-          	setCase(3); // NO
+          	setCase(3); 
           }
         );
       };
 
       // test if the array elements are of type string
       this.testRouteArrayString = function() {
+      	var array = route || [];
         t.assertOptionsOfTypeString(
-          route,
+          array,
           function() {
           	setCase(3);
           }
@@ -173,9 +176,10 @@ var level6 = function(req, res, next) {
       };
 
       // test if the array element is set to right or left
-      this.testRouteArrayValue = function() {
+      this.testRouteArrayFirstValueLeftOrRight = function() {
+      	var array = route || [];
         t.assertTrue(
-          route[0] === 'left' || route[0] === 'right',
+          array[0] === 'left' || array[0] === 'right',
           'Expected setRoute() input array elements to be "left" or "right", but got ' + route[0],
           function() {
           	setCase(3);
@@ -184,11 +188,12 @@ var level6 = function(req, res, next) {
       };
 
       this.testRouteArrayFirstValueLeft = function() {
+      	var array = route || [];
         t.assertTrue(
-          route[0] === 'left',
+          array[0] === 'left',
           'Expected setRoute() first element of input array to be "left", but got ' + route[0],
           function() {
-            if (route[0] === 'right') {
+            if (array[0] === 'right') {
             	setCase(5);
             } else {
             	setCase(3);
@@ -199,23 +204,55 @@ var level6 = function(req, res, next) {
 
       // test if the array consists of one element
       this.testRouteArrayNotOneElement = function() {
+      	var array = route || [];
         t.assertTrue(
-          route.length !== 1,
-          'Expect setRoute() input array to have more than 1 element, but got ' + route.length + ' element(s)',
+          array.length !== 1,
+          'Expect setRoute() input array to have more than 1 element, but got ' + route.length + ' element',
           function() {
-          	if (route[0] === 'left') {
+          	if (array[0] === 'left') {
               setCase(4);
-          	} else if (route[0] === 'right') {
+          	} else if (array[0] === 'right') {
               setCase(5);
           	}
           }
         );
       };
 
-      this.testRouteArrayTwoOrThreeElements = function() { // compare length to 3 for EASTER EGG
+      // test if the array has two elements [or three elements for EASTER EGG]
+      this.testRouteArrayTwoElements = function() { // compare length to 3 for EASTER EGG
+        var array = route || [];
         t.assertTrue(
-          route.length === 2 || route.length === 3,
-          'Expect setRoute() input array to have length of 2, but got ' + route.length + ' ',
+          array.length === 2,
+          'Expect setRoute() input array to have length of 2, but got ' + array.length + ' ',
+          function() {
+          	if (array[1] === 'left' && array[2] === 'right') {
+          		setCase(6); // EASTER EGG SUCCESS
+          	} else if (array[1] === 'left') {
+          		setCase(7); // EASTER EGG FAIL
+          	}
+            //setCase(4);
+          }
+        );
+      };
+
+      this.testRouteArraySecondValueLeftOrRight = function() {
+      	var route = route || [];
+        t.assertTrue(
+          route[1] === 'left' || route[1] === 'right',
+          'aExpected setRoute() input array elements to be "left" or "right", but got ' + route[0],
+          function() {
+          	if (route.length === 3)
+          	setCase(4);
+          }
+        );
+      };
+
+      // test if the 
+      this.testRouteArraySecondValueRight = function() {
+      	var route = route || [];
+        t.assertTrue(
+          route[1] === 'right',
+          'Expected setRoute() second element of input array to be "right", but got ' + route[1],
           function() {
             
           }
