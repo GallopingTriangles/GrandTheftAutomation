@@ -233,7 +233,8 @@ var createGame = (userInput) => {
     } else if (FAKE_USER_INPUT.case === 8) {
       utils.turn(car, coord_3, 'east', 'north');
     } else if (FAKE_USER_INPUT.case === 9) {
-      
+      utils.turn(car, coord_3, 'east', 'north');
+      utils.turn(car, coord_1, 'north', 'west');
     }
 
     // car.body.moveForward(speed);
