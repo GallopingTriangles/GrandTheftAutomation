@@ -46,9 +46,9 @@ app.use(session({                                               // configures ex
   }
 }));
 
-// == routers ===================================================
-app.use('/users', userRoutes);                              // handles all requests to '/users'
-app.use('/game', gameController.checkAuth, gameRoutes);     // handles all requests to '/game'
+// == routers ==================================================
+app.use('/users', userRoutes);                                  // router for all requests to: '/users'
+app.use('/game', gameController.checkAuth, gameRoutes);         // router for all requests to: '/game', includes authentication middleware
 
 // == listen ===================================================
 
