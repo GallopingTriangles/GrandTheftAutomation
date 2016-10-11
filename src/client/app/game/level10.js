@@ -12,8 +12,14 @@ var createGame = (userInput) => {
     speed: 100,
     sensor: true,
     /* NOTE: there could be multiple solutions for this map */
-    case: 1, // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 2, // 
+    case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
+    // case: 2 // fail: [STRAIGHT, LEFT, SOUTH, LEFT]
+    // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
+    // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
+    // case: 5 // fail: [STRAIGHT, STRAIGHT]
+    // case: 6 // fail: [STRAIGHT, RIGHT]
+    // case: 7 // fail: [LEFT, LEFT]
+    // case: 8 // fail: [RIGHT]
   }
   /**********************************************************/
   /**********************************************************/
@@ -34,8 +40,8 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_10', './assets/gameMaps/level_10.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset_16', './assets/gameMaps/GTA_tileset_16.png');
+    game.load.tilemap('level_10', './assets/gameMaps_v2/level_10.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset_16', './assets/gameMaps_v2/GTA_tileset_16.png');
   }
 
   var car;
@@ -172,6 +178,15 @@ var createGame = (userInput) => {
   }
 
   function update() {
+    
+    // case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
+    // case: 2 // fail: [STRAIGHT, LEFT, SOUTH, LEFT]
+    // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
+    // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
+    // case: 5 // fail: [STRAIGHT, STRAIGHT]
+    // case: 6 // fail: [STRAIGHT, RIGHT]
+    // case: 7 // fail: [LEFT, LEFT]
+    // case: 8 // fail: [RIGHT]
 
 
     if (FAKE_USER_INPUT.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
@@ -200,88 +215,6 @@ var createGame = (userInput) => {
     //       }
     //     }
     //   })
-    // }
-
-    // if (FAKE_USER_INPUT.case === 1
-    //   || FAKE_USER_INPUT.case === 5
-    //   || FAKE_USER_INPUT.case === 6
-    //   || FAKE_USER_INPUT.case === 7
-    //   || FAKE_USER_INPUT.case === 8
-    //   || FAKE_USER_INPUT.case === 9
-    //   || FAKE_USER_INPUT.case === 10) { // handle all upper route cases
-    //   car.body.moveForward(speed);
-    //   if (Math.abs(coord_1[0] + 32 - car.body.x) < 10) {
-    //     turn('north');
-    //   }
-    //   if (FAKE_USER_INPUT.case === 6) {
-    //     if (Math.abs(coord_2[1] - 20 - car.body.y) < 10) {
-    //       turn('west');
-    //     }
-    //   } else if (FAKE_USER_INPUT.case !== 5) {
-    //     if (Math.abs(coord_2[1] + 25 - car.body.y) < 10) {
-    //       turn('east');
-    //     }
-    //     if (FAKE_USER_INPUT.case === 8) {
-    //       if (Math.abs(coord_3[0] + 40 - car.body.x) < 10) {
-    //         turn('north');
-    //       }
-    //     } else if (FAKE_USER_INPUT.case === 9
-    //       || FAKE_USER_INPUT.case === 10
-    //       || FAKE_USER_INPUT.case === 1) {
-    //       if (Math.abs(coord_3[0] - 10 - car.body.x) < 10) {
-    //         turn('south');
-    //       }
-    //       if (FAKE_USER_INPUT.case === 10) {
-    //         if (Math.abs(coord_6[1] - 10 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
-    //           turn('west');
-    //         }
-    //       } else if (FAKE_USER_INPUT.case === 1) {
-    //         if (Math.abs(coord_6[1] + 25 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
-    //           turn('east');
-    //         }
-    //         checkCompletion();
-    //       }
-    //     }
-    //   }
-    // } else if (FAKE_USER_INPUT.case === 2
-    //   || FAKE_USER_INPUT.case === 11
-    //   || FAKE_USER_INPUT.case === 12
-    //   || FAKE_USER_INPUT.case === 13
-    //   || FAKE_USER_INPUT.case === 14
-    //   || FAKE_USER_INPUT.case === 15
-    //   || FAKE_USER_INPUT.case === 16) {
-    //   car.body.moveForward(speed);
-    //   if (Math.abs(coord_1[0] - 10 - car.body.x) < 10) {
-    //     turn('south');
-    //   }
-    //   if (FAKE_USER_INPUT.case === 12) {
-    //     if (Math.abs(coord_4[1] - 15 - car.body.y) < 10) {
-    //       turn('west');
-    //     }
-    //   } else if (FAKE_USER_INPUT.case !== 11) {
-    //     if (Math.abs(coord_4[1] + 28 - car.body.y) < 10) {
-    //       turn('east');
-    //     }
-    //     if (FAKE_USER_INPUT.case === 14) {
-    //       if (Math.abs(coord_5[0] - 20 - car.body.x) < 10) {
-    //         turn('south');
-    //       }
-    //     } else if (FAKE_USER_INPUT.case !== 13) {
-    //       if (Math.abs(coord_5[0] + 30 - car.body.x) < 10) {
-    //         turn('north');
-    //       }
-    //       if (FAKE_USER_INPUT.case === 16) {
-    //         if (Math.abs(coord_6[1] - 20 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
-    //           turn('west');
-    //         }
-    //       } else if (FAKE_USER_INPUT.case === 2) {
-    //         if (Math.abs(coord_6[1] + 30 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
-    //           turn('east');
-    //         }
-    //         checkCompletion();
-    //       }
-    //     }
-    //   }
     // }
 
   }
@@ -390,20 +323,6 @@ var createGame = (userInput) => {
       game.paused = true;
     }, 3000)
   }
-
-  // function intersectionCenter(tiles) {
-  //   // returns the center (x,y) pixel of an intersection layer
-  //   var x = 0;
-  //   var y = 0;
-  //   tiles.forEach(function(tile) {
-  //     x += tile.worldX;
-  //     y += tile.worldY;
-  //   })
-  //   x = x / tiles.length;
-  //   y = y / tiles.length;
-
-  //   return [x, y];
-  // }
 
   function turn(direction) {
     switch (direction) {
