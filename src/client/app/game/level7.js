@@ -35,8 +35,8 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_7', './assets/gameMaps/level_7.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
+    game.load.tilemap('level_7', './assets/gameMaps_v2/level_7.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset', './assets/gameMaps_v2/GTA_tileset.png');
   }
 
   var car;
