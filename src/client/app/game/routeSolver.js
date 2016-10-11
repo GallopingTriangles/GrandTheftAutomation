@@ -8,7 +8,24 @@ module.exports = {
     // handle 'straight' dir
   },
 
-  determineOffset: (curDir, endDir) => {
+  determineOffset: (car, curDir, endDir) => {
+    if (curDir === 'north' && endDir === 'east') {
+      return 'LR';
+    } else if (curDir === 'north' && endDir === 'west') {
+      return 'UR';
+    } else if (curDir === 'east' && endDir === 'north') {
+      return 'LR';
+    } else if (curDir === 'east' && endDir === 'south') {
+      return 'LL';
+    } else if (curDir === 'south' && endDir === 'east') {
+      return 'LL';
+    } else if (curDir === 'south' && endDir === 'west') {
+      return 'UL';
+    } else if (curDir === 'west' && endDir === 'north') {
+      return 'UR';
+    } else if (curDir === 'west' && endDir === 'south') {
+      return 'UL';
+    }
     
   }
 
