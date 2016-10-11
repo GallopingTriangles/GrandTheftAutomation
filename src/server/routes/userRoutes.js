@@ -9,16 +9,25 @@ var userController = require('../controllers/userController.js');
 ** userController.js for more information.                            **
 ************************************************************************/
 
-router.route('/')                 // handles routes with '/users/' endpoint
-  .get(userController.getState);  // returns user's saved stuff after verification
+// handles routes with '/users/' endpoint
+router.route('/')
+  // returns user's saved game information after verification                 
+  .get(userController.getState);  
 
-router.route('/login')            // handles routes with '/users/login' endpoint
-  .post(userController.login);    // logs user in and creates new session
+// handles routes with '/users/login' endpoint
+router.route('/login')       
+  // logs user in and creates new session to be store in database    
+  .post(userController.login);    
 
-router.route('/signup')           // handles routes with '/users/signup' endpoint
-  .post(userController.signup);   // creates a new user by saving to the database
+// handles routes with '/users/signup' endpoint
+router.route('/signup')           
+  // creates a new user by saving information to the database
+  .post(userController.signup);   
 
-router.route('/logout')           // handles routes with '/users/logout' endpoint
-  .get(userController.logout);    // logs out user by destroying session on database
+// handles routes with '/users/logout' endpoint
+router.route('/logout')      
+  // logs out user by destroying session on database     
+  .get(userController.logout);    
 
-module.exports = router;          // exports all routes
+// exports all routes
+module.exports = router;          
