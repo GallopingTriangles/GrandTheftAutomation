@@ -2,7 +2,30 @@ module.exports = {
 
   turn: (car, corner, point, endDir, curDir) => {
     var anchor = offset(corner, point);
+    // if the car hits the point with a curDir, make it turn in the endDir
 
+  },
+
+  verifyDir: (car, dir) => { // checks if the car is traveling in the given direction
+    var angle = car.body.angle;
+    if (dir === 'north') {
+      return angleRange(angle, 0);
+    }
+    if (dir === 'east') {
+      return angleRange(angle, 90);
+    }
+    if (dir === 'south') {
+      return angleRange(angle, 180) || angleRange(angle, -180);
+    }
+    if (dir === 'west') {
+      return angleRange(angle, -90);
+    }
+  },
+
+  angleRange: (carAngle, angle) => { // helper function for verifyDir
+    if (Math.abs(carAngle - angle) < 10) {
+      return true;
+    }
   },
   
   intersectionCenter: tiles => {
@@ -20,7 +43,7 @@ module.exports = {
     return [x + 8, y + 8];
   },
 
-  offset: (corner, coord) => {
+  offset: (corner, coord) => { // returns the center coord of the intersection fourths
     var x = coord[0];
     var y = coord[1];
     if (corner === 'UL') {
@@ -36,10 +59,6 @@ module.exports = {
       return [x + 20, y + 20];
     }
   },
-
-  verifyDir: (car, dir) => {
-    
-  }
 
 }
 
