@@ -186,8 +186,6 @@ var level8 = function(req, res, next) {
 
   if (req.body.level === 9) {
 
-  } else if (req.body.level === 10) {
-  	level10(req, res, next);
   } else {
 		next();
   }
