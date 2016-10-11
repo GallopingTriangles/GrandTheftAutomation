@@ -256,7 +256,7 @@ var createGame = (userInput) => {
     */
     if (userInput.sensor) {
 
-      attachSensors(0, 10, sensors);
+      attachSensors(0, 20, sensors);
 
       /*
       ** In every frame of the game, examine every collision body (tile) and check if
@@ -437,9 +437,13 @@ var createGame = (userInput) => {
   function attachSensors(startingAngle, offset) {
     var index = 0;
     for (var sensor in sensors) {
+      var individualOffset = offset;
+      if (index % 2 === 0) {
+        individualOffset = offset * 2;
+      }
       sensors[sensor].angle = car.body.angle;
-      sensors[sensor].y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
-      sensors[sensor].x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
+      sensors[sensor].y = (-individualOffset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
+      sensors[sensor].x = (individualOffset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
       index += 1;
     }
   }
@@ -491,7 +495,9 @@ var createGame = (userInput) => {
     // text.kill();
     car.kill();
     if (sensors.right) {
-      // sensor.kill();
+      for (var sensor in sensors) {
+        sensors[sensor].kill();
+      }
     }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
