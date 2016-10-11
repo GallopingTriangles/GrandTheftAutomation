@@ -1,3 +1,4 @@
+var level0 = require('./level0.js');
 var level1 = require('./level1.js');
 var level2 = require('./level2.js');
 var level3 = require('./level3.js');
@@ -12,7 +13,9 @@ var level11 = require('./level11.js');
 
 export default function(userInput, level) {
   // create the game for the appropriate level
-  if (level === 1) {
+  if (level === 0) {
+    level0(userInput);
+  } else if (level === 1) {
     level1(userInput);
   } else if (level === 2) {
     level2(userInput);
@@ -32,11 +35,12 @@ export default function(userInput, level) {
     level9(userInput);
   } else if (level === 10) {
     level10(userInput);
-  } else if (level === 11) {
+  } else if (level === 1) {
     level11(userInput);
   }
 
   // hardcoding which level to render for troubleshooting
+  // level0(userInput);
   // level1(userInput);
   // level2(userInput);
   // level3(userInput);
@@ -49,6 +53,10 @@ export default function(userInput, level) {
   // level10(userInput);
   // level11(userInput);
 }
+
+
+
+
 //
 // var createGame = (userInput) => {
 //   // change width depends on window width, no dynamically resizing yet

@@ -11,13 +11,13 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    // case: 1 // success: [STRAIGHT, LEFT, LEFT, RIGHT, RIGHT, STRAIGHT]
+    case: 1 // success: [STRAIGHT, LEFT, LEFT, RIGHT, RIGHT, STRAIGHT]
     // case: 2 // fail:    [STRAIGHT, LEFT, STRAIGHT] (crash into obstacle)
     // case: 3 // fail:    [STRAIGHT, LEFT, LEFT, STRAIGHT]
     // case: 4 // fail:    [STRAIGHT, STRAIGHT]
     // case: 5 // fail:    [RIGHT]
     // case: 6 // fail:    [LEFT, LEFT]
-    case: 7 // fail:    [STRAIGHT, LEFT, RIGHT]
+    // case: 7 // fail:    [STRAIGHT, LEFT, RIGHT]
     // case: 8 // fail:    ENGINE WAS NOT ENABLED
   }
   /**********************************************************/
