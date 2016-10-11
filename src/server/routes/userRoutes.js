@@ -1,16 +1,33 @@
 var router = require('express').Router();
 var userController = require('../controllers/userController.js');
 
+/****************** ROUTER FOR '/users' ENDPOINT ***********************
+** Within the '/users' endpoint are several routes associated to user ** 
+** profiles (login, sign up, and logout). Each route accommodates     **
+** specific HTTP request types, where corresponding controllers from  **
+** userController.js are supplied to handle certain actions. Refer to **
+** userController.js for more information.                            **
+************************************************************************/
+
+// handles routes with '/users/' endpoint
 router.route('/')
-  .get(userController.getState); // returns user's saved stuff after verification
+  // returns user's saved game information after verification                 
+  .get(userController.getState);  
 
-router.route('/login')
-  .post(userController.login); // authenticates the user when loggin in
+// handles routes with '/users/login' endpoint
+router.route('/login')       
+  // logs user in and creates new session to be store in database    
+  .post(userController.login);    
 
-router.route('/signup')
-  .post(userController.signup); // checks and creates a new user to the database
+// handles routes with '/users/signup' endpoint
+router.route('/signup')           
+  // creates a new user by saving information to the database
+  .post(userController.signup);   
 
-router.route('/logout')
-  .get(userController.logout); // wipes the session and logs the user out
+// handles routes with '/users/logout' endpoint
+router.route('/logout')      
+  // logs out user by destroying session on database     
+  .get(userController.logout);    
 
-module.exports = router;
+// exports all routes
+module.exports = router;          
