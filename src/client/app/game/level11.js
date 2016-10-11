@@ -11,14 +11,7 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 2 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
-    // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
-    // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
-    // case: 5 // fail: [STRAIGHT, STRAIGHT]
-    // case: 6 // fail: [STRAIGHT, RIGHT]
-    // case: 7 // fail: [LEFT, LEFT]
-    // case: 8 // fail: [RIGHT]
+    case: 1 // success: []
   }
   /**********************************************************/
   /**********************************************************/
@@ -39,7 +32,7 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_10', './assets/gameMaps_v2/level_10.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level_11', './assets/gameMaps_v2/level_11.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('GTA_tileset_16', './assets/gameMaps_v2/GTA_tileset_16.png');
   }
 
@@ -107,7 +100,7 @@ var createGame = (userInput) => {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
 
-    map = game.add.tilemap('level_10');
+    map = game.add.tilemap('level_11');
     map.addTilesetImage('GTA_tileset_16');
 
     layer_5 = map.createLayer('end_success_layer');
@@ -183,14 +176,7 @@ var createGame = (userInput) => {
 
   function update() {
 
-    // case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 2 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
-    // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
-    // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
-    // case: 5 // fail: [STRAIGHT, STRAIGHT]
-    // case: 6 // fail: [STRAIGHT, RIGHT]
-    // case: 7 // fail: [LEFT, LEFT]
-    // case: 8 // fail: [RIGHT]
+    // case: 1 // success: []
 
 
     car.body.moveForward(speed);

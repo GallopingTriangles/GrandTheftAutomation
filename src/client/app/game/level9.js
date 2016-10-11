@@ -262,31 +262,6 @@ var createGame = (userInput) => {
 
     }
 
-    // car.body.moveForward(speed);
-    // if (FAKE_USER_INPUT.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    //   utils.turn(car, coord_4, 'south', 'east');
-    //   utils.turn(car, coord_6, 'east', 'south');
-    //   checkCompletion();
-    // } else if (FAKE_USER_INPUT.case === 2) {
-    //   utils.turn(car, coord_4, 'south', 'east');
-    //   utils.turn(car, coord_6, 'east', 'north');
-    // } else if (FAKE_USER_INPUT.case === 3) {
-    //   utils.turn(car, coord_4, 'south', 'east');
-    // } else if (FAKE_USER_INPUT.case === 4) {
-    //   utils.turn(car, coord_4, 'south', 'east');
-    //   utils.turn(car, coord_5, 'east', 'south');
-    //   checkFailure();
-    // } else if (FAKE_USER_INPUT.case === 5) {
-    //   /*** no turning, just crashing ***/
-    // } else if (FAKE_USER_INPUT.case === 6) {
-    //   utils.turn(car, coord_4, 'south', 'west');
-    // } else if (FAKE_USER_INPUT.case === 7) {
-    //   utils.turn(car, coord_1, 'south', 'east');
-    //   utils.turn(car, coord_2, 'east', 'north');
-    // } else if (FAKE_USER_INPUT.case === 8) {
-    //   utils.turn(car, coord_1, 'south', 'west');
-    // }
-
     // if (userInput.sensor) {
 
     //   attachSensors(0, 100, sensors);
