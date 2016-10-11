@@ -213,20 +213,20 @@ var createGame = (userInput) => {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
-      
+
     } else if (FAKE_USER_INPUT.case === 3) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
       uturn();
-      
+
     } else if (FAKE_USER_INPUT.case === 4) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
       uturn();
       utils.turn(car, coord_5, 'west', 'south');
-      
+
     } else if (FAKE_USER_INPUT.case === 5) {
 
       utils.turn(car, coord_3, 'east', 'south');
@@ -234,14 +234,14 @@ var createGame = (userInput) => {
       uturn();
       utils.turn(car, coord_5, 'west', 'north');
       utils.turn(car, coord_3, 'north' 'east');
-      
+
     } else if (FAKE_USER_INPUT.case === 6) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
       uturn();
       utils.turn(car, coord_5, 'west', 'north');
-      
+
     } else if (FAKE_USER_INPUT.case === 7) {
 
       utils.turn(car, coord_3, 'east', 'south');
@@ -249,15 +249,16 @@ var createGame = (userInput) => {
       uturn();
       utils.turn(car, coord_5, 'west', 'north');
       utils.turn(car, coord_1, 'north', 'west');
-      
+
     } else if (FAKE_USER_INPUT.case === 8) {
 
       utils.turn(car, coord_3, 'east', 'north');
-      
+
     } else if (FAKE_USER_INPUT.case === 9) {
 
       utils.turn(car, coord_3, 'east', 'north');
       utils.turn(car, coord_1, 'north', 'west');
+
     }
 
     // car.body.moveForward(speed);
@@ -446,23 +447,6 @@ var createGame = (userInput) => {
     }
   }
 
-  // function turn(direction) {
-  //   switch (direction) {
-  //     case 'north': 
-  //       car.body.angle = 0;
-  //       break;
-  //     case 'east': 
-  //       car.body.angle = 90;
-  //       break;
-  //     case 'south': 
-  //       car.body.angle = 180;
-  //       break;
-  //     case 'west': 
-  //       car.body.angle = -90;
-  //       break;
-  //     default: car.body.angle = 0;
-  //   }
-  // }
 }
 
 module.exports = createGame;
