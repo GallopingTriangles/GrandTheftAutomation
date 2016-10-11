@@ -51,7 +51,6 @@ app.use('/users', userRoutes);                                  // router for al
 app.use('/game', gameController.checkAuth, gameRoutes);         // router for all requests to: '/game', includes authentication middleware
 
 // == listen ===================================================
-
-app.listen(port, () => {
+app.listen(port, () => {                                        // listens connection to this apps host and port
   console.log('app listening on port', port);
 });
