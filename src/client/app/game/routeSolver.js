@@ -1,8 +1,8 @@
-module.exports = function(dir, turn, point, turnFunction) {
+var route = function(turn, dir, point, turnFunction) {
   switch (turn) {
     case 'straight':
       if (dir === 'north') {
-
+        
       } else if (dir === 'east') {
 
       } else if (dir === 'south') {
