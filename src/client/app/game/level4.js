@@ -9,12 +9,12 @@ var createGame = (userInput) => {
     color: 'blue',
     speed: 400,
     sensor: true,
-    case: 1, // success right turn
+    // case: 1, // success right turn
     // case: 2, // fail, crashed into obstacle after right turn
     // case: 3, // fail, crash straight
     // case: 4, // fail, crash left
     // case: 5, // fail, stalls at intersection
-    // case: 6, // fail, car did not start engine
+    case: 6, // fail, car did not start engine
   }
   /**********************************************************/
   /**********************************************************/
@@ -47,8 +47,8 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_4', './assets/gameMaps/level_4.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
+    game.load.tilemap('level_4', './assets/gameMaps_v2/level_4.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset', './assets/gameMaps_v2/GTA_tileset.png');
   }
 
   var car;

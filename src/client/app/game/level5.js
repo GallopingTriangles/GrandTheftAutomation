@@ -10,7 +10,7 @@ var createGame = (userInput) => {
     speed: 400,
     sensor: true,
     case: 1, // success left turn
-    // case: 2, // success right turn
+    // case: 2, // fail, right turn
     // case: 3, // fail, stopped at intersection
     // case: 4, // fail, crashed straight
     // case: 5  // fail, didn't start engine
@@ -46,8 +46,8 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_5', './assets/gameMaps/level_5.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
+    game.load.tilemap('level_5', './assets/gameMaps_v2/level_5.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset', './assets/gameMaps_v2/GTA_tileset.png');
   }
 
   var car;
@@ -94,6 +94,7 @@ var createGame = (userInput) => {
   var endZoneBodies;
 
   var completionTiles;
+  var failureTiles;
 
   var intersectionTiles_1;
   var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
@@ -109,6 +110,7 @@ var createGame = (userInput) => {
   var layer_4;
   var layer_5;
   var layer_6;
+  var layer_7;
 
   /*
   ** The create() function is called automatically after preload() has finished.
@@ -144,8 +146,9 @@ var createGame = (userInput) => {
     layer_2 = map.createLayer('road_layer');
     layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
-    layer_5 = map.createLayer('end_zone_layer');
+    layer_5 = map.createLayer('end_success_layer');
     layer_6 = map.createLayer('intersection_DRL_layer');
+    layer_7 = map.createLayer('end_failure_layer');
     layer_1 = map.createLayer('collision_layer');
 
 
@@ -185,6 +188,10 @@ var createGame = (userInput) => {
     intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     })
+
+    failureTiles = layer_7.getTiles(0, 0, 2000, 2000).filter(function(tile) {
+      return tile.index > 0;
+    });
 
     /*
     ** Gather all tiles from layer_1 into an array of tiles,
@@ -288,11 +295,13 @@ var createGame = (userInput) => {
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
+      checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) {
       car.body.moveForward(400);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 90;
       }
+      checkFailure();
     } else if (FAKE_USER_INPUT.case === 3) {
       car.body.moveForward(400);
       if (Math.abs(coord_1[0] + 50 - car.body.x) < 50 && Math.abs(coord_1[1] - car.body.y) < 50) {
@@ -307,7 +316,6 @@ var createGame = (userInput) => {
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
     */
-    checkCompletion();
   }
 
   function render() {
@@ -443,11 +451,24 @@ var createGame = (userInput) => {
     })
   }
 
+  function checkFailure() {
+    failureTiles.forEach(function(tile) {
+      if (Math.abs(tile.worldX + 16 - car.body.x) < 25 && Math.abs(tile.worldY +16 - car.body.y) < 25) {
+        levelFailed();
+      }
+    })
+  }
+
   function levelCompleted() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
     var text = game.add.text(400, 300, 'Success!', style);
     game.paused = true;
-    console.log('COMPLETED!');
+  }
+
+  function levelFailed() {
+    var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    var text = game.add.text(400, 300, 'FAIL!', style);
+    game.paused = true;
   }
 
   /*

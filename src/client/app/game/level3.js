@@ -49,8 +49,8 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_3', './assets/gameMaps/level_3.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
+    game.load.tilemap('level_3', './assets/gameMaps_v2/level_3.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset', './assets/gameMaps_v2/GTA_tileset.png');
   }
 
   var car;
@@ -344,7 +344,7 @@ var createGame = (userInput) => {
       car.body.moveForward(400);
     } else if (FAKE_USER_INPUT.case === 4) {
       car.body.moveForward(400);
-      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
+      if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 40 - car.body.y) < 30) {
         car.body.angle = -90;
       }
     } else if (FAKE_USER_INPUT.case === 5) {
@@ -358,8 +358,8 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    game.debug.spriteInfo(car, 32, 32);
-    car.body.debug = true;
+    // game.debug.spriteInfo(car, 32, 32);
+    // car.body.debug = true;
 
   }
 

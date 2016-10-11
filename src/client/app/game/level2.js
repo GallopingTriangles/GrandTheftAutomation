@@ -45,8 +45,8 @@ var createGame = (userInput) => {
     ** Tilemap is the json file that contains the tile IDs of every tile in each map layer.
     ** It sets up the map. The tile IDs correspond to the tile in a loaded image through addTilesetImage()
     */
-    game.load.tilemap('level_2', './assets/gameMaps/level_2.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset', './assets/gameMaps/GTA_tileset.png');
+    game.load.tilemap('level_2', './assets/gameMaps_v2/level_2.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset', './assets/gameMaps_v2/GTA_tileset.png');
   }
 
   var car;
