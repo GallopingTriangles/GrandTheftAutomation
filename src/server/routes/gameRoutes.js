@@ -4,26 +4,18 @@ var sandbox = require('../middleware/sandbox.js');
 var sandboxRoutes = require('../sandbox/sandboxRoutes.js');
 
 /******************* ROUTER FOR '/game' ENDPOINT ***********************
-** This router handles all HTTP requests to '/game/'.  ** 
-**   **
-**   **
-**   **
-**   **
+** This router handles all HTTP requests to '/game/'. Each route      ** 
+** accommodates specific HTTP request types, where corresponding      **
+** controllers from gameController.js are supplied to handle certain  **
+** actions. Refer to gameController.js for more information.          **
 ************************************************************************/
 
+// handles routes with '/game/' endpoint
 router.route('/')
-  .get(gameController.getGameState) // gets the user's saved game state of the code editor
+  // gets the user's saved game state of the code editor
+  .get(gameController.getGameState)                 
+  // sandboxRoutes middleware parses user input to be saved as user's game state in database
   .post(sandboxRoutes, gameController.saveGameState)
 
-// saves the user's game state of the code editor
-// sandbox middleware parses user input and adds it to req.body
-
-
-// router.put('/', gameController.updateGameState); // updates the user's game state of the code editor
-/****************************************************************************
-// Don't need a handler for PUT requests
-// Send everything through POST request and it will automatically update the
-// log in the database if it already exists
-*****************************************************************************/
-
-module.exports = router;
+// exports route
+module.exports = router;                            
