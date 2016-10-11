@@ -7,12 +7,12 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'blue',
-    speed: 200,
+    speed: 20,
     sensor: true,
-    // case: 1, // success right turn
+    case: 1, // success right turn
     // case: 2, // fail, crashed into obstacle after right turn
     // case: 3, // fail, crash straight
-    case: 4, // fail, crash left
+    // case: 4, // fail, crash left
     // case: 5, // fail, stalls at intersection
     // case: 6, // fail, car did not start engine
   }
@@ -253,7 +253,7 @@ var createGame = (userInput) => {
   function update() {
 
     enableSensors();
-    
+
     if (FAKE_USER_INPUT.case === 1) { // successful right turn
       car.body.moveForward(200);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
@@ -367,6 +367,8 @@ var createGame = (userInput) => {
     }
   }
 
+  /********** SENSOR FUNCTIONS **********/
+
   function degToRad(num) {
     return num * (Math.PI / 180);
   }
@@ -374,9 +376,6 @@ var createGame = (userInput) => {
   function convertAngle(angle) {
     return degToRad(90 - angle)
   }
-
-
-  /* needsChange */
 
   function createSensors() {
     // Check to make sure the user has turned the sensor on
@@ -436,19 +435,6 @@ var createGame = (userInput) => {
           }
         }
       })
-
-      /*
-      ** Increase the opacity of the sensor while a collision body is in its area.
-      */
-      // for (var sensor in sensors) {
-      //   if (sensors[sensor].overlap) {
-      //     sensors[sensor].alpha = 0.7;
-      //   } else {
-      //     sensors[sensor].alpha = 0.1;
-      //   }
-      // }
-
-      // console.log(sensors[left].alpha);
     }
   }
 

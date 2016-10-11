@@ -45,10 +45,11 @@ var createGame = (userInput) => {
   var text;
 
   var sensors = {};
-  sensors.left = 'hello';
-  sensors.right = 'hello';
-  sensors.front = 'hello';
-  sensors.back = 'hello';
+  // These must be declared in this order. We iterate through them later.
+  sensors.front = {};
+  sensors.right = {};
+  sensors.back = {};
+  sensors.left = {};
 
   var startingX = 40;
   var startingY = 470;

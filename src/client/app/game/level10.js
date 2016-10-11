@@ -45,10 +45,11 @@ var createGame = (userInput) => {
   var text;
 
   var sensors = {};
-  sensors.left = 'hello';
-  sensors.right = 'hello';
-  sensors.front = 'hello';
-  sensors.back = 'hello';
+  // These must be declared in this order. We iterate through them later.
+  sensors.front = {};
+  sensors.right = {};
+  sensors.back = {};
+  sensors.left = {};
 
   var startingX = 50;
   var startingY = 18;
@@ -148,7 +149,7 @@ var createGame = (userInput) => {
     intersectionTiles_6 = layer_11.getTiles(0, 0, 2500, 2500).filter(function(tile) {
       return tile.index > 0;
     })
-    
+
 
     if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
       createSensors();
@@ -167,12 +168,12 @@ var createGame = (userInput) => {
 
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
-    coord_1 = utils.intersectionCenter(intersectionTiles_1); // 
-    coord_2 = utils.intersectionCenter(intersectionTiles_2); // 
-    coord_3 = utils.intersectionCenter(intersectionTiles_3); // 
-    coord_4 = utils.intersectionCenter(intersectionTiles_4); // 
-    coord_5 = utils.intersectionCenter(intersectionTiles_5); // 
-    coord_6 = utils.intersectionCenter(intersectionTiles_6); // 
+    coord_1 = utils.intersectionCenter(intersectionTiles_1); //
+    coord_2 = utils.intersectionCenter(intersectionTiles_2); //
+    coord_3 = utils.intersectionCenter(intersectionTiles_3); //
+    coord_4 = utils.intersectionCenter(intersectionTiles_4); //
+    coord_5 = utils.intersectionCenter(intersectionTiles_5); //
+    coord_6 = utils.intersectionCenter(intersectionTiles_6); //
   }
 
   function update() {
