@@ -9,7 +9,7 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1 // success: []
+    /* *** NO CASES??? *** */
   }
   /**********************************************************/
   /**********************************************************/
@@ -53,7 +53,7 @@ var createGame = (userInput) => {
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = 100;
-  var carScale = .5;
+  var carScale = 0.7;
   var forwardReverseMultiplier = 1 / 2;
   var userSpeedMultiplier = 4;
   var explosion;
