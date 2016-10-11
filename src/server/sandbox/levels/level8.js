@@ -381,7 +381,7 @@ var level8 = function(req, res, next) {
 	});
 
   if (req.body.level === 9) {
-
+    level9(req, res, next);
   } else {
 		next();
   }
