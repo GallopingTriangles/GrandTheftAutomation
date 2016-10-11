@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));             // parse applica
 app.use(bodyParser.json());                                     // parse application/json
 app.use(morgan('dev'));                                         // log every request to the console
 
-// == mysql session store =====================================
+// == mysql session store config===============================
 var sessionStore = new MySQLStore({                             // initializes a mysql session store
   host: 'localhost',                                            // this property will change if/when app is deployed
   port: 3306,                                                   // this property will change if/when app is deployed
@@ -35,7 +35,7 @@ var sessionStore = new MySQLStore({                             // initializes a
   database: config.dbName                                       // mysql database name for project
 });
 
-// == express session ========================================= 
+// == express session config ===================================
 app.use(session({                                               // configures express session
   secret: config.secret,                                        // requires session secret to secure
   store: sessionStore,                                          // all sessions to be store in mysql session store (above)
@@ -45,47 +45,8 @@ app.use(session({                                               // configures ex
     maxAge: 7200000                                             // sets expiration date of cookie in milliseconds beyond current server time
   }
 }));
-// == passport/authentication ===============================================
-// app.use(passport.initialize());                                 // initializes passport
-// app.use(passport.session());                                    // enables passport's persistent login session
 
-// passport.use('local', new LocalStrategy(
-//   function(username, password, done) {
-//     console.log('I AM HERE!')
-//     db.User.findOne({ where: { username: username } })
-//       .then(function(user) {
-//         if (user === null) {
-//           return done(null, false)
-//         } else {
-//           bcrypt.compare(password, user.password, function(err, response) {
-//             if (err || !response) {
-//               return done(null, false)
-//             } else {
-//               return done(null, user);
-//             }
-//           })
-//         }
-//       })
-//   }
-// ));
-
-// passport.serializeUser(function(user, done) {
-//   console.log('inside serialize, user: ', user);
-//   done(null, user.id);
-// });
-
-// passport.deserializeUser(function(id, done) {
-//   console.log('inside deserialize, id: ', id);
-//   db.User.findById(id)
-//     .then(function(user) {
-//       if (user !== null) {
-//         done(err, user);
-//       }
-//     })
-// });
-
-// == routes ===================================================
-
+// == routers ===================================================
 app.use('/users', userRoutes);                              // handles all requests to '/users'
 app.use('/game', gameController.checkAuth, gameRoutes);     // handles all requests to '/game'
 
