@@ -164,12 +164,12 @@ var createGame = (userInput) => {
 
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
-    coord_1 = intersectionCenter(intersectionTiles_1); // 
-    coord_2 = intersectionCenter(intersectionTiles_2); // 
-    coord_3 = intersectionCenter(intersectionTiles_3); // 
-    coord_4 = intersectionCenter(intersectionTiles_4); // 
-    coord_5 = intersectionCenter(intersectionTiles_5); // 
-    coord_6 = intersectionCenter(intersectionTiles_6); // 
+    coord_1 = utils.intersectionCenter(intersectionTiles_1); // 
+    coord_2 = utils.intersectionCenter(intersectionTiles_2); // 
+    coord_3 = utils.intersectionCenter(intersectionTiles_3); // 
+    coord_4 = utils.intersectionCenter(intersectionTiles_4); // 
+    coord_5 = utils.intersectionCenter(intersectionTiles_5); // 
+    coord_6 = utils.intersectionCenter(intersectionTiles_6); // 
   }
 
   function update() {
@@ -386,19 +386,19 @@ var createGame = (userInput) => {
     }, 3000)
   }
 
-  function intersectionCenter(tiles) {
-    // returns the center (x,y) pixel of an intersection layer
-    var x = 0;
-    var y = 0;
-    tiles.forEach(function(tile) {
-      x += tile.worldX;
-      y += tile.worldY;
-    })
-    x = x / tiles.length;
-    y = y / tiles.length;
+  // function intersectionCenter(tiles) {
+  //   // returns the center (x,y) pixel of an intersection layer
+  //   var x = 0;
+  //   var y = 0;
+  //   tiles.forEach(function(tile) {
+  //     x += tile.worldX;
+  //     y += tile.worldY;
+  //   })
+  //   x = x / tiles.length;
+  //   y = y / tiles.length;
 
-    return [x, y];
-  }
+  //   return [x, y];
+  // }
 
   function turn(direction) {
     switch (direction) {

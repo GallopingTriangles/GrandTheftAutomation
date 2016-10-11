@@ -41,9 +41,9 @@ export default function(userInput, level) {
   // level5(userInput);
   // level6(userInput);
   // level7(userInput);
-  // level8(userInput);
+  level8(userInput);
   // level9(userInput);
-  level10(userInput);
+  // level10(userInput);
 }
 //
 // var createGame = (userInput) => {

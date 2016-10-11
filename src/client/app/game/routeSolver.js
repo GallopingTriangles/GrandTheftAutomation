@@ -1,4 +1,9 @@
 module.exports = {
+
+  turn: (car, corner, point, endDir, curDir) => {
+    var anchor = offset(corner, point);
+
+  },
   
   intersectionCenter: tiles => {
     // returns the center (x,y) pixel of an intersection layer
@@ -32,7 +37,10 @@ module.exports = {
     }
   },
 
-  
+  verifyDir: (car, dir) => {
+    
+  }
+
 }
 
 
