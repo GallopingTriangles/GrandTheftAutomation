@@ -6,6 +6,8 @@ var level3 = require('./level3');
 var level5 = require('./level5');
 var level6 = require('./level6');
 var level7 = require('./level7');
+var level8 = require('./level8');
+var level10 = require('./level10');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
@@ -50,6 +52,9 @@ var level1 = function(req, res, next) {
     	map: {
         intersection: false
     	},
+    	gps: {
+    		intersection: false
+    	},
     	testEnable: [],
     	testEngine: undefined,
     	testColor: undefined,
@@ -84,26 +89,28 @@ var level1 = function(req, res, next) {
 	  	};
 
 	  	// test the maximum allowed calls of the enable function
-      this.testEnabledMaxCalls = function() {
-      	var calls = enabled.length;
-        t.assertTrue(
-        	calls <= 2,
-          'Expected function enable() to be called twice, but got called ' + calls + ' times',
-          function() {
-          	// ADD FAIL CALLBACK
-          }
-        );
-      };
+	  	if (req.body.level === 1) {
+        this.testEnabledMaxCalls = function() {
+        	var calls = enabled.length;
+          t.assertTrue(
+          	calls <= 2,
+            'Expected function enable() to be called twice, but got called ' + calls + ' times',
+            function() {
+            	// ADD FAIL CALLBACK
+            }
+          );
+        };
+	  	}
 
       // test if the input is of data type string
-      this.testEnableInputType = function() {
-        t.assertOptionsOfTypeString(
-          enabled,
-          function() {
-          	setCase(2);
-          }
-        );
-      };
+      // this.testEnableInputType = function() {
+      //   t.assertOptionsOfTypeString(
+      //     enabled,
+      //     function() {
+      //     	setCase(2);
+      //     }
+      //   );
+      // };
     });
 
     // == ENGINE TESTS == //
@@ -276,6 +283,12 @@ var level1 = function(req, res, next) {
     	level6(req, res, next);
     } else if (req.body.level === 7) {
       level7(req, res, next);
+    } else if (req.body.level === 8) {
+      level8(req, res, next);
+    } else if (req.body.level === 10) {
+      level10(req, res, next);
+    } else {
+    	next();
     }
   } else {
   	next();

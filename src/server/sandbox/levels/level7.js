@@ -128,6 +128,16 @@ var level7 = function(req, res, next) {
 	      );
 	  	};
 
+	  	this.testRouteCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function setRoute() to be called once, but got called ' + calls + ' times',
+          function() {
+          	setCase(2);
+          }
+        );
+	  	};
+
 	  	// test if the setRoute input is of data type array
 	  	this.testRouteArray = function() {
 	  	  t.assertTrue(
