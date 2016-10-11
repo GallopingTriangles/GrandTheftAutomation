@@ -427,7 +427,7 @@ var createGame = (userInput) => {
     }
   }
 
-  function attachSensors(startingAngle, offset, FLBRArray) {
+  function attachSensors(startingAngle, offset) {
     var index = 0;
     for (var sensor in sensors) {
       sensors[sensor].angle = car.body.angle;
