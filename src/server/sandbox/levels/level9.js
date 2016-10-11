@@ -119,7 +119,13 @@ var level9 = function(req, res, next) {
       };
 
       this.testConditionalSensorPresence = function() {
-        
+        t.assertTrue(
+          userInput.indexOf('sensor.front === true') !== -1,
+          'Expected code to have an if statement with conditional: (sensor.front === true) {...',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
       };
     });
 
