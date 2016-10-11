@@ -5,6 +5,7 @@ var level2 = require('./level2');
 var level3 = require('./level3');
 var level5 = require('./level5');
 var level6 = require('./level6');
+var level7 = require('./level7');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
@@ -264,17 +265,20 @@ var level1 = function(req, res, next) {
 
   // if user level is greater than level 1, run tests of next level
   // and if case is success
-  if ((req.body.level === 2 || req.body.level === 4) && req.body.phaser.case === 1) {
-    level2(req, res, next);
-  } else if (req.body.level === 3 && req.body.phaser.case === 1) {
-    level3(req, res, next);
-  } else if (req.body.level === 5 && req.body.phaser.case === 1) {
-    level5(req, res, next);
-  } else if (req.body.level === 6 && req.body.phaser.case === 1) {
-  	level6(req, res, next) 
+  if (req.body.phaser.case === 1) {
+    if (req.body.level === 2 || req.body.level === 4) {
+    	level2(req, res, next);
+    } else if (req.body.level === 3) {
+    	level3(req, res, next);
+    } else if (req.body.level === 5) {
+    	level5(req, res, next);
+    } else if (req.body.level === 6) {
+    	level6(req, res, next);
+    } else if (req.body.level === 7) {
+      level7(req, res, next);
+    }
   } else {
-  // else return phaser object
-	  next();
+  	next();
   }
   
 };
