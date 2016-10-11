@@ -61,6 +61,7 @@ var createGame = (userInput) => {
   /* needsChange */
 
   var sensors = {};
+  // These must be declared in this order. We iterate through them later.
   sensors.front = {};
   sensors.right = {};
   sensors.back = {};
@@ -156,7 +157,7 @@ var createGame = (userInput) => {
     ** Set the appropriate tiles of a certain layer to be collideable
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
-    map.setCollisionBetween(0, 2000, true, 'collision_layer');
+    // map.setCollisionBetween(0, 2000, true, 'collision_layer');
 
     // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
 
