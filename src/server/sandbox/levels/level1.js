@@ -276,6 +276,8 @@ var level1 = function(req, res, next) {
     	level6(req, res, next);
     } else if (req.body.level === 7) {
       level7(req, res, next);
+    } else {
+    	next();
     }
   } else {
   	next();
