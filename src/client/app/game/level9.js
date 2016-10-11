@@ -11,10 +11,16 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1 // success: [LEFT, RIGHT, RIGHT, LEFT]
-    // case: 2 // fail: [LEFT, RIGHT, RIGHT, STRAIGHT, STRAIGHT]
-    // case: 3 // fail: [LEFT, RIGHT, RIGHT, STRAIGHT, RIGHT]
-    // case: 4 // fail: [LEFT, RIGHT, RIGHT, RIGHT]
+    case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
+    // case: 2 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
+    // case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
+    // case: 4 // fail: [RIGHT, LEFT, U-TURN, LEFT]
+    // case: 5 // fail: [RIGHT, LEFT, U-TURN, RIGHT, RIGHT]
+    // case: 6 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, STRAIGHT]
+    // case: 7 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, LEFT]
+    // case: 8 // fail: [LEFT, STRAIGHT]
+    // case: 9 // fail: [LEFT, LEFT]
+    // case: 10 // fail: ENGINE IS NOT ENABLED
   }
   /**********************************************************/
   /**********************************************************/
@@ -113,8 +119,8 @@ var createGame = (userInput) => {
     layer_10 = map.createLayer('intersection_UR_layer');
     layer_11 = map.createLayer('intersection_UL_layer');
 
-    layer_1 = map.createLayer('collision_layer');
     layer_2 = map.createLayer('road_layer');
+    layer_1 = map.createLayer('collision_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_3 = map.createLayer('building_layer');
 
@@ -169,19 +175,42 @@ var createGame = (userInput) => {
     coord_4 = utils.intersectionCenter(intersectionTiles_4); // 
     coord_5 = utils.intersectionCenter(intersectionTiles_5); // 
     coord_6 = utils.intersectionCenter(intersectionTiles_6); // 
+
   }
 
   function update() {
 
-    // case: 1 // success: [LEFT, RIGHT, RIGHT, LEFT]
-    // case: 2 // fail: [LEFT, RIGHT, RIGHT, STRAIGHT, STRAIGHT]
-    // case: 3 // fail: [LEFT, RIGHT, RIGHT, STRAIGHT, RIGHT]
-    // case: 4 // fail: [LEFT, RIGHT, RIGHT, RIGHT]
+    // case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
+
 
     car.body.moveForward(speed);
-    if (FAKE_USER_INPUT.case === 1) {
+    if (FAKE_USER_INPUT.case === 1) { // u-turn when encountering the obstacle
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
+      // obstacle collision at [380, 558]... hardcoding a u-turn
+      if (car.body.x > 340 && car.body.y > 520 && car.body.angle > 80) {
+        car.body.angle = 75;
+      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > 45) {
+        car.body.angle = 45;
+      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > 25) {
+        car.body.angle = 25;
+      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > 5) {
+        car.body.angle = 0;
+      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -35) {
+        car.body.angle = -35;
+      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -55 ) {
+        car.body.angle = -55;
+      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -75 ) {
+        car.body.angle = -75;
+      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -90 ) {
+        car.body.angle = -90;
+        car.body.x = 360;
+        car.body.y = 515;
+      }
+      utils.turn(car, coord_5, 'west', 'north');
+      utils.turn(car, coord_1, 'north', 'east');
+      utils.turn(car, coord_2, 'east', 'south');
+      utils.turn(car, coord_4, 'south', 'east');
       checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) {
       
@@ -199,30 +228,30 @@ var createGame = (userInput) => {
       
     }
 
-    car.body.moveForward(speed);
-    if (FAKE_USER_INPUT.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-      utils.turn(car, coord_4, 'south', 'east');
-      utils.turn(car, coord_6, 'east', 'south');
-      checkCompletion();
-    } else if (FAKE_USER_INPUT.case === 2) {
-      utils.turn(car, coord_4, 'south', 'east');
-      utils.turn(car, coord_6, 'east', 'north');
-    } else if (FAKE_USER_INPUT.case === 3) {
-      utils.turn(car, coord_4, 'south', 'east');
-    } else if (FAKE_USER_INPUT.case === 4) {
-      utils.turn(car, coord_4, 'south', 'east');
-      utils.turn(car, coord_5, 'east', 'south');
-      checkFailure();
-    } else if (FAKE_USER_INPUT.case === 5) {
-      /*** no turning, just crashing ***/
-    } else if (FAKE_USER_INPUT.case === 6) {
-      utils.turn(car, coord_4, 'south', 'west');
-    } else if (FAKE_USER_INPUT.case === 7) {
-      utils.turn(car, coord_1, 'south', 'east');
-      utils.turn(car, coord_2, 'east', 'north');
-    } else if (FAKE_USER_INPUT.case === 8) {
-      utils.turn(car, coord_1, 'south', 'west');
-    }
+    // car.body.moveForward(speed);
+    // if (FAKE_USER_INPUT.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
+    //   utils.turn(car, coord_4, 'south', 'east');
+    //   utils.turn(car, coord_6, 'east', 'south');
+    //   checkCompletion();
+    // } else if (FAKE_USER_INPUT.case === 2) {
+    //   utils.turn(car, coord_4, 'south', 'east');
+    //   utils.turn(car, coord_6, 'east', 'north');
+    // } else if (FAKE_USER_INPUT.case === 3) {
+    //   utils.turn(car, coord_4, 'south', 'east');
+    // } else if (FAKE_USER_INPUT.case === 4) {
+    //   utils.turn(car, coord_4, 'south', 'east');
+    //   utils.turn(car, coord_5, 'east', 'south');
+    //   checkFailure();
+    // } else if (FAKE_USER_INPUT.case === 5) {
+    //   /*** no turning, just crashing ***/
+    // } else if (FAKE_USER_INPUT.case === 6) {
+    //   utils.turn(car, coord_4, 'south', 'west');
+    // } else if (FAKE_USER_INPUT.case === 7) {
+    //   utils.turn(car, coord_1, 'south', 'east');
+    //   utils.turn(car, coord_2, 'east', 'north');
+    // } else if (FAKE_USER_INPUT.case === 8) {
+    //   utils.turn(car, coord_1, 'south', 'west');
+    // }
 
     // if (userInput.sensor) {
 
