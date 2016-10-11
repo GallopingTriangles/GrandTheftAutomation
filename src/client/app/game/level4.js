@@ -7,14 +7,14 @@ var createGame = (userInput) => {
   /**********************************************************/
   var FAKE_USER_INPUT = {
     color: 'blue',
-    speed: 400,
+    speed: 200,
     sensor: true,
     // case: 1, // success right turn
     // case: 2, // fail, crashed into obstacle after right turn
     // case: 3, // fail, crash straight
-    // case: 4, // fail, crash left
+    case: 4, // fail, crash left
     // case: 5, // fail, stalls at intersection
-    case: 6, // fail, car did not start engine
+    // case: 6, // fail, car did not start engine
   }
   /**********************************************************/
   /**********************************************************/
@@ -35,8 +35,10 @@ var createGame = (userInput) => {
     setCarColor();
     game.load.image('wasted', './assets/wasted.png');
     game.load.image('panda', './assets/panda.png');
-    game.load.image('grass', './assets/grass.jpg');
-    game.load.image('sensor', './assets/round.png');
+    game.load.image('frontSensor', './assets/sensor_front.png');
+    game.load.image('backSensor', './assets/sensor_back.png');
+    game.load.image('rightSensor', './assets/sensor_right.png');
+    game.load.image('leftSensor', './assets/sensor_left.png');
 
     /*
     ** A spritesheet contains a bunch of frames stitched together to create an animation effect
@@ -59,10 +61,11 @@ var createGame = (userInput) => {
   /* needsChange */
 
   var sensors = {};
-  sensors.left = 'hello';
-  sensors.right = 'hello';
-  sensors.front = 'hello';
-  sensors.back = 'hello';
+  // These must be declared in this order. We iterate through them later.
+  sensors.front = {};
+  sensors.right = {};
+  sensors.back = {};
+  sensors.left = {};
 
 
   var startingX = 280;
@@ -248,57 +251,24 @@ var createGame = (userInput) => {
 
 
   function update() {
-    /*
-    ** Enable sensor functionality if the user has activated the car sensor.
-    ** If the sensor detects any overlapping collision bodies, it will turn on.
-    */
-    if (userInput.sensor) {
 
-      attachSensors(0, 100, sensors);
-
-      /*
-      ** In every frame of the game, examine every collision body (tile) and check if
-      ** any of its corners are inside the sensor area. This serves as a listener to
-      ** detect overlapping between a sensor and collision bodies. If an overlap is
-      ** detected, set the variable overlap to true.
-      */
-      var overlap = false;
-      collisionBodies.forEach(function(body) {
-        for (var sensor in sensors) {
-          if (sensors[sensor].getBounds().contains(body.x, body.y)
-          || sensors[sensor].getBounds().contains(body.x + 32, body.y)
-          || sensors[sensor].getBounds().contains(body.x, body.y + 32)
-          || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
-            overlap = true;
-          }
-        }
-      })
-
-      /*
-      ** Increase the opacity of the sensor while a collision body is in its area.
-      */
-      // if (overlap) {
-      //   sensor.alpha = 0.7;
-      // } else {
-      //   sensor.alpha = 0.1;
-      // }
-    }
-
+    enableSensors();
+    
     if (FAKE_USER_INPUT.case === 1) { // successful right turn
-      car.body.moveForward(400);
+      car.body.moveForward(200);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
         car.body.angle = 90;
       }
       checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) { // failed, crashed straight
-      car.body.moveForward(400);
+      car.body.moveForward(200);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
         car.body.angle = 90;
       }
     } else if (FAKE_USER_INPUT.case === 3) { // failed, crashed straight
-      car.body.moveForward(400);
+      car.body.moveForward(200);
     } else if (FAKE_USER_INPUT.case === 4) { // failed, crashed left
-      car.body.moveForward(400);
+      car.body.moveForward(200);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
@@ -307,7 +277,7 @@ var createGame = (userInput) => {
         car.body.velocity.x = 0;
         car.body.velocity.y = 0;
       } else {
-        car.body.moveForward(400);
+        car.body.moveForward(200);
       }
     } else if (FAKE_USER_INPUT.case === 6) { // failed, car didn't start
       car.body.velocity.x = 0;
@@ -323,6 +293,7 @@ var createGame = (userInput) => {
   function render() {
     // game.debug.spriteInfo(car, 32, 32);
     // car.body.debug = true;
+    // game.debug.spriteInfo(sensor.left)
 
   }
 
@@ -411,8 +382,12 @@ var createGame = (userInput) => {
     // Check to make sure the user has turned the sensor on
     if (userInput.sensor) {
       // Appearace
+      sensors.left = game.add.sprite(startingX, startingY, 'leftSensor')
+      sensors.right = game.add.sprite(startingX, startingY, 'rightSensor')
+      sensors.front = game.add.sprite(startingX, startingY, 'frontSensor')
+      sensors.back = game.add.sprite(startingX, startingY, 'backSensor')
+
       for (var sensor in sensors) {
-        sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
@@ -420,13 +395,60 @@ var createGame = (userInput) => {
     }
   }
 
-  function attachSensors(startingAngle, offset, FLBRArray) {
+  function attachSensors(startingAngle, offset) {
     var index = 0;
     for (var sensor in sensors) {
+      var individualOffset = offset;
+      if (index % 2 === 0) {
+        individualOffset = offset * 2;
+      }
       sensors[sensor].angle = car.body.angle;
-      sensors[sensor].y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
-      sensors[sensor].x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
+      sensors[sensor].y = (-individualOffset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
+      sensors[sensor].x = (individualOffset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
       index += 1;
+    }
+  }
+
+  function enableSensors() {
+    /*
+    ** Enable sensor functionality if the user has activated the car sensor.
+    ** If the sensor detects any overlapping collision bodies, it will turn on.
+    */
+    if (userInput.sensor) {
+      attachSensors(0, 20, sensors);
+      /*
+      ** In every frame of the game, examine every collision body (tile) and check if
+      ** any of its corners are inside the sensor area. This serves as a listener to
+      ** detect overlapping between a sensor and collision bodies. If an overlap is
+      ** detected, set the variable overlap to true.
+      */
+      for (var sensor in sensors) {
+        sensors[sensor].alpha = .3;
+      }
+
+      collisionBodies.forEach(function(body) {
+        for (var sensor in sensors) {
+          if (sensors[sensor].getBounds().contains(body.x, body.y)
+          || sensors[sensor].getBounds().contains(body.x + 32, body.y)
+          || sensors[sensor].getBounds().contains(body.x, body.y + 32)
+          || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
+            sensors[sensor].alpha = 1.0;
+          }
+        }
+      })
+
+      /*
+      ** Increase the opacity of the sensor while a collision body is in its area.
+      */
+      // for (var sensor in sensors) {
+      //   if (sensors[sensor].overlap) {
+      //     sensors[sensor].alpha = 0.7;
+      //   } else {
+      //     sensors[sensor].alpha = 0.1;
+      //   }
+      // }
+
+      // console.log(sensors[left].alpha);
     }
   }
 
@@ -477,7 +499,9 @@ var createGame = (userInput) => {
     // text.kill();
     car.kill();
     if (sensors.right) {
-      // sensor.kill();
+      for (var sensor in sensors) {
+        sensors[sensor].kill();
+      }
     }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
