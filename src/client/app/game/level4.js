@@ -251,49 +251,9 @@ var createGame = (userInput) => {
 
 
   function update() {
-    /*
-    ** Enable sensor functionality if the user has activated the car sensor.
-    ** If the sensor detects any overlapping collision bodies, it will turn on.
-    */
-    if (userInput.sensor) {
 
-      attachSensors(0, 20, sensors);
-
-      /*
-      ** In every frame of the game, examine every collision body (tile) and check if
-      ** any of its corners are inside the sensor area. This serves as a listener to
-      ** detect overlapping between a sensor and collision bodies. If an overlap is
-      ** detected, set the variable overlap to true.
-      */
-      for (var sensor in sensors) {
-        sensors[sensor].alpha = .3;
-      }
-
-      collisionBodies.forEach(function(body) {
-        for (var sensor in sensors) {
-          if (sensors[sensor].getBounds().contains(body.x, body.y)
-          || sensors[sensor].getBounds().contains(body.x + 32, body.y)
-          || sensors[sensor].getBounds().contains(body.x, body.y + 32)
-          || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
-            sensors[sensor].alpha = 1.0;
-          }
-        }
-      })
-
-      /*
-      ** Increase the opacity of the sensor while a collision body is in its area.
-      */
-      // for (var sensor in sensors) {
-      //   if (sensors[sensor].overlap) {
-      //     sensors[sensor].alpha = 0.7;
-      //   } else {
-      //     sensors[sensor].alpha = 0.1;
-      //   }
-      // }
-
-      // console.log(sensors[left].alpha);
-    }
-
+    enableSensors();
+    
     if (FAKE_USER_INPUT.case === 1) { // successful right turn
       car.body.moveForward(200);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
@@ -446,6 +406,49 @@ var createGame = (userInput) => {
       sensors[sensor].y = (-individualOffset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
       sensors[sensor].x = (individualOffset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
       index += 1;
+    }
+  }
+
+  function enableSensors() {
+    /*
+    ** Enable sensor functionality if the user has activated the car sensor.
+    ** If the sensor detects any overlapping collision bodies, it will turn on.
+    */
+    if (userInput.sensor) {
+      attachSensors(0, 20, sensors);
+      /*
+      ** In every frame of the game, examine every collision body (tile) and check if
+      ** any of its corners are inside the sensor area. This serves as a listener to
+      ** detect overlapping between a sensor and collision bodies. If an overlap is
+      ** detected, set the variable overlap to true.
+      */
+      for (var sensor in sensors) {
+        sensors[sensor].alpha = .3;
+      }
+
+      collisionBodies.forEach(function(body) {
+        for (var sensor in sensors) {
+          if (sensors[sensor].getBounds().contains(body.x, body.y)
+          || sensors[sensor].getBounds().contains(body.x + 32, body.y)
+          || sensors[sensor].getBounds().contains(body.x, body.y + 32)
+          || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
+            sensors[sensor].alpha = 1.0;
+          }
+        }
+      })
+
+      /*
+      ** Increase the opacity of the sensor while a collision body is in its area.
+      */
+      // for (var sensor in sensors) {
+      //   if (sensors[sensor].overlap) {
+      //     sensors[sensor].alpha = 0.7;
+      //   } else {
+      //     sensors[sensor].alpha = 0.1;
+      //   }
+      // }
+
+      // console.log(sensors[left].alpha);
     }
   }
 
