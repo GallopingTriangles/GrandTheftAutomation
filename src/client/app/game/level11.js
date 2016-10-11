@@ -57,11 +57,7 @@ var createGame = (userInput) => {
   var startingAngle = 180;
   var backgroundColor = '#3e5f96';
   var speed = FAKE_USER_INPUT.speed * 4;
-  // var carForwardSpeed = 200;
-  // var carBackwardSpeed = 100;
   var carScale = .5;
-  // var forwardReverseMultiplier = 1 / 2;
-  // var userSpeedMultiplier = 4;
   var explosion;
   var wasted;
 
@@ -360,23 +356,6 @@ var createGame = (userInput) => {
     }, 3000)
   }
 
-  // function turn(direction) {
-  //   switch (direction) {
-  //     case 'north': 
-  //       car.body.angle = 0;
-  //       break;
-  //     case 'east': 
-  //       car.body.angle = 90;
-  //       break;
-  //     case 'south': 
-  //       car.body.angle = 180;
-  //       break;
-  //     case 'west': 
-  //       car.body.angle = -90;
-  //       break;
-  //     default: car.body.angle = 0;
-  //   }
-  // }
 }
 
 module.exports = createGame;
