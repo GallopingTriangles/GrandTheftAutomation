@@ -1,14 +1,11 @@
 // == set up ===================================================
 var express = require('express'),
-    cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),	 										// pull information from HTML POST
+    bodyParser = require('body-parser'),	 										  // pull information from HTML POST
     morgan = require('morgan'),																	// log requests to the console
     port = process.env.PORT || 8080,													  // set the port
     path = require('path'),
     session = require('express-session'),                       // express-session is used for sessions
     MySQLStore = require('express-mysql-session'),              // enables session store creation in MySQL
-    passport = require('passport'),                             // passport is used for authentication
-    LocalStrategy = require('passport-local').Strategy,
     bcrypt = require('bcrypt'),
     userRoutes = require('./routes/userRoutes.js'),
     gameRoutes = require('./routes/gameRoutes.js'),
