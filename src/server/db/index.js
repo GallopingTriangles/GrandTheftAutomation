@@ -1,6 +1,11 @@
 var Sequelize = require('sequelize');
 var config = require('../config/config.js');
-// var passportLocalSequelize = require('passport-local-sequelize');
+
+/********************** DATABASE CONFIGURATION *************************
+** The following code configures a mysql database with two tables:    **
+** User and Log. We are using sequelize as an ORM to handle database  **
+** and table creation, and table management.                          **
+************************************************************************/
 
 //Initializes MySQL database through instance of sequelize
 var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, {
