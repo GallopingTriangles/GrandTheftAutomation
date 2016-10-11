@@ -1,11 +1,12 @@
 module.exports = {
 
-  turn: (car, corner, point, endDir, curDir) => {
-    var anchor = offset(corner, point);
+  turn: (car, corner, point, curDir, endDir) => {
+    var anchor;
     // if the car hits the point with a curDir, make it turn in the endDir
     // must determine which offset (intersection quarter) to use depending on endDir and curDir
     if (verifyDir(car, 'north')) {
-
+      var quarter = determineOffset(car, 'north', endDir);
+      anchor = offset(quarter, point);
     } else if (verifyDir(car, 'east')) {
       
     } else if (verifyDir(car, 'south')) {
@@ -15,6 +16,14 @@ module.exports = {
     }
 
     // handle 'straight' dir
+  },
+
+  positionRange: (car, point) => {
+    if (Math.abs(car.body.x - point[0]) < 7 && Math.abs(car.body.y - point[1]) < 7) {
+      return true;
+    } else {
+      return false;
+    }
   },
 
   determineOffset: (car, curDir, endDir) => {
@@ -36,7 +45,7 @@ module.exports = {
       return 'UL';
     }
 
-  }
+  },
 
   verifyDir: (car, dir) => { // checks if the car is traveling in the given direction
     var angle = car.body.angle;
