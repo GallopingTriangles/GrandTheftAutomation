@@ -11,10 +11,10 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    // case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
+    case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
     // case: 2 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
-    case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
-    // case: 4 // fail: [RIGHT, LEFT, U-TURN, LEFT]
+    // case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
+    // case: 4 // fail: BUGGY CASE, DO NOT USE [RIGHT, LEFT, U-TURN, LEFT] // THIS CASE IS BUGGY SO DO NOT USE IT
     // case: 5 // fail: [RIGHT, LEFT, U-TURN, RIGHT, RIGHT]
     // case: 6 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, STRAIGHT]
     // case: 7 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, LEFT]
@@ -222,6 +222,7 @@ var createGame = (userInput) => {
 
     } else if (FAKE_USER_INPUT.case === 4) {
 
+      // THIS CAUSES AN INFINITE LOOP RESET ON THE GAME
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
       uturn();
