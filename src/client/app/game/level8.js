@@ -54,11 +54,12 @@ var createGame = (userInput) => {
   var text;
 
   var sensors = {};
-  sensors.left = 'hello';
-  sensors.right = 'hello';
-  sensors.front = 'hello';
-  sensors.back = 'hello';
-
+  // These must be declared in this order. We iterate through them later.
+  sensors.front = {};
+  sensors.right = {};
+  sensors.back = {};
+  sensors.left = {};
+  
   var startingX = 40;
   var startingY = 365;
   var startingAngle = 90;
@@ -156,7 +157,7 @@ var createGame = (userInput) => {
     intersectionTiles_6 = layer_11.getTiles(0, 0, 2500, 2500).filter(function(tile) {
       return tile.index > 0;
     })
-    
+
 
     if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
       createSensors();
@@ -422,16 +423,16 @@ var createGame = (userInput) => {
 
   function turn(direction) {
     switch (direction) {
-      case 'north': 
+      case 'north':
         car.body.angle = 0;
         break;
-      case 'east': 
+      case 'east':
         car.body.angle = 90;
         break;
-      case 'south': 
+      case 'south':
         car.body.angle = 180;
         break;
-      case 'west': 
+      case 'west':
         car.body.angle = -90;
         break;
       default: car.body.angle = 0;
