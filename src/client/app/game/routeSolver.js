@@ -2,24 +2,75 @@ module.exports = {
 
   turn: (car, corner, point, curDir, endDir) => {
     var anchor;
-    // if the car hits the point with a curDir, make it turn in the endDir
+    // if the car hits a certain point with a curDir, make it turn in the endDir
     // must determine which offset (intersection quarter) to use depending on endDir and curDir
-    if (verifyDir(car, 'north')) {
-      var quarter = determineOffset(car, 'north', endDir);
+    if (verifyDir(car, curDir)) {
+
+      var quarter = determineOffset(car, curDir, endDir);
       anchor = offset(quarter, point);
-    } else if (verifyDir(car, 'east')) {
-      
-    } else if (verifyDir(car, 'south')) {
-      
-    } else if (verifyDir(car, 'west')) {
-      
+      if (positionRange(car, anchor)) {
+        setAngle(car, endDir);
+      }
+
     }
+    // if (verifyDir(car, 'north')) {
+
+    //   var quarter = determineOffset(car, 'north', endDir);
+    //   anchor = offset(quarter, point);
+    //   if (positionRange(car, anchor)) {
+    //     setAngle(car, endDir);
+    //   }
+
+    // } else if (verifyDir(car, 'east')) {
+      
+    // } else if (verifyDir(car, 'south')) {
+      
+    // } else if (verifyDir(car, 'west')) {
+      
+    // }
 
     // handle 'straight' dir
   },
 
-  positionRange: (car, point) => { // check if the car is within 7 pixels (x and y) of a point
-    if (Math.abs(car.body.x - point[0]) < 7 && Math.abs(car.body.y - point[1]) < 7) {
+  verifyDir: (car, dir) => { // checks if the car is traveling in the given direction
+    var angle = car.body.angle;
+    if (dir === 'north') {
+      return angleRange(angle, 0);
+    } else if (dir === 'east') {
+      return angleRange(angle, 90);
+    } else if (dir === 'south') {
+      return angleRange(angle, 180) || angleRange(angle, -180);
+    } else if (dir === 'west') {
+      return angleRange(angle, -90);
+    }
+  },
+
+  angleRange: (carAngle, angle) => { // helper function for verifyDir
+    if (Math.abs(carAngle - angle) < 10) {
+      return true;
+    }
+  },
+
+  setAngle: (car, dir) => {
+    switch (dir) {
+      case 'north': 
+        car.body.angle = 0;
+        break;
+      case 'east': 
+        car.body.angle = 90;
+        break;
+      case 'south': 
+        car.body.angle = 180;
+        break;
+      case 'west': 
+        car.body.angle = -90;
+        break;
+      default: car.body.angle = 0;
+    }
+  },
+
+  positionRange: (car, point) => { // check if the car is within 10 pixels (x and y) of a point
+    if (Math.abs(car.body.x - point[0]) < 10 && Math.abs(car.body.y - point[1]) < 10) {
       return true;
     } else {
       return false;
@@ -45,25 +96,6 @@ module.exports = {
       return 'UL';
     }
 
-  },
-
-  verifyDir: (car, dir) => { // checks if the car is traveling in the given direction
-    var angle = car.body.angle;
-    if (dir === 'north') {
-      return angleRange(angle, 0);
-    } else if (dir === 'east') {
-      return angleRange(angle, 90);
-    } else if (dir === 'south') {
-      return angleRange(angle, 180) || angleRange(angle, -180);
-    } else if (dir === 'west') {
-      return angleRange(angle, -90);
-    }
-  },
-
-  angleRange: (carAngle, angle) => { // helper function for verifyDir
-    if (Math.abs(carAngle - angle) < 10) {
-      return true;
-    }
   },
   
   intersectionCenter: tiles => {
