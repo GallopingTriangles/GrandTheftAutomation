@@ -17,7 +17,8 @@ var createGame = (userInput) => {
     // case: 4 // fail:    [STRAIGHT, STRAIGHT]
     // case: 5 // fail:    [RIGHT]
     // case: 6 // fail:    [LEFT, LEFT]
-    case: 7 // fail:    ENGINE WAS NOT ENABLED
+    case: 7 // fail:    [STRAIGHT, LEFT, RIGHT]
+    // case: 8 // fail:    ENGINE WAS NOT ENABLED
   }
   /**********************************************************/
   /**********************************************************/
@@ -188,9 +189,10 @@ var createGame = (userInput) => {
     // case: 4 // fail:    [STRAIGHT, STRAIGHT]
     // case: 5 // fail:    [RIGHT]
     // case: 6 // fail:    [LEFT, LEFT]
-    // case: 7 // fail:    ENGINE WAS NOT ENABLED
+    // case: 7 // fail:    [STRAIGHT, LEFT, RIGHT] (went into fail-zone)
+    // case: 8 // fail:    ENGINE WAS NOT ENABLED
 
-    if (FAKE_USER_INPUT.case !== 7) {
+    if (FAKE_USER_INPUT.case !== 8) {
       car.body.moveForward(speed);
     } else {
       car.body.velocity.x = 0;
@@ -215,6 +217,10 @@ var createGame = (userInput) => {
     } else if (FAKE_USER_INPUT.case === 6) {
       utils.turn(car, coord_1, 'south', 'east');
       utils.turn(car, coord_2, 'east', 'north');
+    } else if (FAKE_USER_INPUT.case === 7) {
+      utils.turn(car, coord_4, 'south', 'east');
+      utils.turn(car, coord_5, 'east', 'south');
+      checkFailure();
     }
 
     // if (userInput.sensor) {
