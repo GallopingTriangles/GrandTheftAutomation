@@ -112,8 +112,8 @@ var createGame = (userInput) => {
     layer_11 = map.createLayer('intersection_6_layer');
     layer_12 = map.createLayer('end_failure_layer');
 
-    layer_1 = map.createLayer('collision_layer');
     layer_2 = map.createLayer('road_layer');
+    layer_1 = map.createLayer('collision_layer');
     layer_4 = map.createLayer('street_stuff_layer');
     layer_3 = map.createLayer('building_layer');
 
@@ -177,7 +177,6 @@ var createGame = (userInput) => {
   function update() {
 
     // case: 1 // success: []
-
 
     car.body.moveForward(speed);
     if (FAKE_USER_INPUT.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
