@@ -1,47 +1,32 @@
 module.exports = {
 
-  turn: (car, corner, point, curDir, endDir) => {
+  turn: (car, point, curDir, endDir) => {
     var anchor;
     // if the car hits a certain point with a curDir, make it turn in the endDir
     // must determine which offset (intersection quarter) to use depending on endDir and curDir
-    if (verifyDir(car, curDir)) {
+    // handle 'straight' dir by not setting a case for curDir === endDir
+    if (module.exports.verifyDir(car, curDir)) {
 
-      var quarter = determineOffset(car, curDir, endDir);
-      anchor = offset(quarter, point);
-      if (positionRange(car, anchor)) {
-        setAngle(car, endDir);
+      var quarter = module.exports.determineOffset(car, curDir, endDir);
+      anchor = module.exports.offset(quarter, point);
+      if (module.exports.positionRange(car, anchor)) {
+        module.exports.setAngle(car, endDir);
       }
 
     }
-    // if (verifyDir(car, 'north')) {
 
-    //   var quarter = determineOffset(car, 'north', endDir);
-    //   anchor = offset(quarter, point);
-    //   if (positionRange(car, anchor)) {
-    //     setAngle(car, endDir);
-    //   }
-
-    // } else if (verifyDir(car, 'east')) {
-      
-    // } else if (verifyDir(car, 'south')) {
-      
-    // } else if (verifyDir(car, 'west')) {
-      
-    // }
-
-    // handle 'straight' dir
   },
 
   verifyDir: (car, dir) => { // checks if the car is traveling in the given direction
     var angle = car.body.angle;
     if (dir === 'north') {
-      return angleRange(angle, 0);
+      return module.exports.angleRange(angle, 0);
     } else if (dir === 'east') {
-      return angleRange(angle, 90);
+      return module.exports.angleRange(angle, 90);
     } else if (dir === 'south') {
-      return angleRange(angle, 180) || angleRange(angle, -180);
+      return module.exports.angleRange(angle, 180) || module.exports.angleRange(angle, -180);
     } else if (dir === 'west') {
-      return angleRange(angle, -90);
+      return module.exports.angleRange(angle, -90);
     }
   },
 
@@ -133,54 +118,54 @@ module.exports = {
 }
 
 
-var route = function(turn, dir, point, turnFunction) {
-  switch (turn) {
-    case 'straight':
-      if (dir === 'north') {
+// var route = function(turn, dir, point, turnFunction) {
+//   switch (turn) {
+//     case 'straight':
+//       if (dir === 'north') {
         
-      } else if (dir === 'east') {
+//       } else if (dir === 'east') {
 
-      } else if (dir === 'south') {
+//       } else if (dir === 'south') {
 
-      } else if (dir === 'west') {
+//       } else if (dir === 'west') {
 
-      }
-      /***/
-      break;
-
-
-    case 'right':
-      if (dir === 'north') {
-
-      } else if (dir === 'east') {
-
-      } else if (dir === 'south') {
-
-      } else if (dir === 'west') {
-
-      }
-      /***/
-      break;
+//       }
+//       /***/
+//       break;
 
 
-    case 'left':
-      if (dir === 'north') {
+//     case 'right':
+//       if (dir === 'north') {
 
-      } else if (dir === 'east') {
+//       } else if (dir === 'east') {
 
-      } else if (dir === 'south') {
+//       } else if (dir === 'south') {
 
-      } else if (dir === 'west') {
+//       } else if (dir === 'west') {
 
-      }
-      /***/
-      break;
+//       }
+//       /***/
+//       break;
 
 
-    default:
-      console.log('error in your turn');
-  }
-}
+//     case 'left':
+//       if (dir === 'north') {
+
+//       } else if (dir === 'east') {
+
+//       } else if (dir === 'south') {
+
+//       } else if (dir === 'west') {
+
+//       }
+//       /***/
+//       break;
+
+
+//     default:
+//       console.log('error in your turn');
+//   }
+// }
 
 // module.exports = function(list, startNode, startDirection, endNode, endDirection, map) {
 

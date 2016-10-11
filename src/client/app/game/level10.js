@@ -39,7 +39,6 @@ var createGame = (userInput) => {
   }
 
   var car;
-  // var cursors;
   var text;
 
   var sensors = {};
@@ -174,28 +173,34 @@ var createGame = (userInput) => {
 
   function update() {
 
-    if (userInput.sensor) {
 
-      attachSensors(0, 100, sensors);
-
-      var overlap = false;
-      collisionBodies.forEach(function(body) {
-        for (var sensor in sensors) {
-          if (sensors[sensor].getBounds().contains(body.x, body.y)
-          || sensors[sensor].getBounds().contains(body.x + 32, body.y)
-          || sensors[sensor].getBounds().contains(body.x, body.y + 32)
-          || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
-            overlap = true;
-          }
-        }
-      })
-
-      // if (overlap) {
-      //   sensor.alpha = 0.7;
-      // } else {
-      //   sensor.alpha = 0.1;
-      // }
+    if (FAKE_USER_INPUT.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
+      car.body.moveForward(speed);
+      utils.turn(car, coord_4, 'south', 'east');
+      utils.turn(car, coord_6, 'east', 'south');
+      checkCompletion();
+      // utils.turn(car, coord_1, 'south', 'east');
+      // utils.turn(car, coord_2, 'east', 'south');
+      // utils.turn(car, coord_5, 'south', 'east');
+      // utils.turn(car, coord_6, 'east', 'south');
     }
+
+    // if (userInput.sensor) {
+
+    //   attachSensors(0, 100, sensors);
+
+    //   var overlap = false;
+    //   collisionBodies.forEach(function(body) {
+    //     for (var sensor in sensors) {
+    //       if (sensors[sensor].getBounds().contains(body.x, body.y)
+    //       || sensors[sensor].getBounds().contains(body.x + 32, body.y)
+    //       || sensors[sensor].getBounds().contains(body.x, body.y + 32)
+    //       || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
+    //         overlap = true;
+    //       }
+    //     }
+    //   })
+    // }
 
     // if (FAKE_USER_INPUT.case === 1
     //   || FAKE_USER_INPUT.case === 5
