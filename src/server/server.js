@@ -3,21 +3,23 @@ var express = require('express'),
     bodyParser = require('body-parser'),	 										  // pull information from HTML POST
     morgan = require('morgan'),																	// log requests to the console
     port = process.env.PORT || 8080,													  // set the port
-    path = require('path'),
+    path = require('path'),                                     // node path module
     session = require('express-session'),                       // express-session is used for sessions
     MySQLStore = require('express-mysql-session'),              // enables session store creation in MySQL
-    bcrypt = require('bcrypt'),
-    userRoutes = require('./routes/userRoutes.js'),
-    gameRoutes = require('./routes/gameRoutes.js'),
-    config = require('./config/config.js'),
-    db = require('./db/index.js'),
-    gameController = require('./controllers/gameController.js');
+    bcrypt = require('bcrypt'),                                 // encryption module
+    userRoutes = require('./routes/userRoutes.js'),             // router file for all user related endpoints
+    gameRoutes = require('./routes/gameRoutes.js'),             // router file for all game related endpoints
+    config = require('./config/config.js'),                     // config file containing sensitive information
+    db = require('./db/index.js'),                              // including database file here starts database
+    gameController = require('./controllers/gameController.js');// gameController holds authentication function 
 
 var app = express();
 
 // == serve static assets ===================================
-app.use(express.static(path.join(__dirname, '../../dist')));    // serve static files
-app.use('/lib', (express.static(path.join(__dirname, '../../node_modules'))));
+// serve static client-side files
+app.use(express.static(path.join(__dirname, '../../dist')));    
+// serve node_modules from post-compiled /lib file
+app.use('/lib', (express.static(path.join(__dirname, '../../node_modules'))));  
 
 // == middleware ============================================
 // app.use(cookieParser(config.secret));
