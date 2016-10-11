@@ -51,6 +51,9 @@ var level1 = function(req, res, next) {
     	map: {
         intersection: false
     	},
+    	gps: {
+    		intersection: false
+    	},
     	testEnable: [],
     	testEngine: undefined,
     	testColor: undefined,
@@ -277,7 +280,7 @@ var level1 = function(req, res, next) {
     	level6(req, res, next);
     } else if (req.body.level === 7) {
       level7(req, res, next);
-    } else if (req, res, next) {
+    } else if (req.body.level === 8) {
       level8(req, res, next);
     } else {
     	next();
