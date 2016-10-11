@@ -52,7 +52,7 @@ var level8 = function(req, res, next) {
 	  // == VIRTUAL MACHINE =================================
 	  var funcColor = 'var setColor = function(input) { testColor = input; };';
 	  var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
-	  var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "route") { testRoute = true }; };';
+	  var funcEnable = 'var enable = function(input) { testEnable.values.push(input); testEnable.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "gps") { testGps = true }; };';
 	  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
 	  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
 
@@ -75,7 +75,10 @@ var level8 = function(req, res, next) {
 		  		directions: undefined,
 		  		count: 0
 		  	},
-		  	testEnable: [],
+		  	testEnable: {
+          values: [],
+          count: 0
+		  	},
 		  	testEngine: undefined,
 		  	testColor: undefined,
 		  	testSpeed: undefined,
@@ -85,7 +88,8 @@ var level8 = function(req, res, next) {
 		  	testTurn: {
 		  		value: undefined,
 		  		count: 0
-        }
+        },
+        testGps: undefined
       };
      };
 
@@ -99,12 +103,17 @@ var level8 = function(req, res, next) {
 
     // == ENABLED TESTS == //
 	  runTestSuite(function EnabledGpsInputTest(t) {
+	  	// create new sandbox
 	  	var sb = new Sandbox().sandbox;
-	  	console.log(sb);
+	  	// create new virtual machine
 	  	var context = new vm.createContext(sb);
 		  script.runInContext(context);
 
       console.log(context);
+
+      this.testEnabledCalledThreeTimes = function() {
+
+      };
 	  });
 
     // == CONDITIONAL LEFT TESTS == //
@@ -115,7 +124,7 @@ var level8 = function(req, res, next) {
       var context = new vm.createContext(sb);
       script.runInContext(context);
 
-      console.log(context);    
+      // console.log(context);    
 	  });
 
     // == CONDITIONAL RIGHT TESTS == //
@@ -126,7 +135,7 @@ var level8 = function(req, res, next) {
       var context = new vm.createContext(sb);
       script.runInContext(context);
 
-      console.log(context);
+      // console.log(context);
 	  });
 
 	});
