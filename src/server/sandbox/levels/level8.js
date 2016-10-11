@@ -1,5 +1,8 @@
 var vm = require('vm');
 
+// next level
+var level10 = require('./level10');
+
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
 
@@ -181,7 +184,13 @@ var level8 = function(req, res, next) {
 
 	});
 
-	next();
+  if (req.body.level === 9) {
+
+  } else if (req.body.level === 10) {
+  	level10(req, res, next);
+  } else {
+		next();
+  }
 
 };
 
