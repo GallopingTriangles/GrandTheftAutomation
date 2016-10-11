@@ -1,3 +1,24 @@
+module.exports = {
+  
+  intersectionCenter: tiles => {
+    // returns the center (x,y) pixel of an intersection layer
+    var x = 0;
+    var y = 0;
+    tiles.forEach(function(tile) {
+      x += tile.worldX;
+      y += tile.worldY;
+    })
+    x = x / tiles.length;
+    y = y / tiles.length;
+
+    // need to offset by 1/2 width and height to find exact centerbecause tile coords start from top left
+    return [x + 8, y + 8];
+  },
+
+  
+}
+
+
 var route = function(turn, dir, point, turnFunction) {
   switch (turn) {
     case 'straight':
