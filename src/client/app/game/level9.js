@@ -11,9 +11,9 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
+    // case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
     // case: 2 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
-    // case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
+    case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
     // case: 4 // fail: [RIGHT, LEFT, U-TURN, LEFT]
     // case: 5 // fail: [RIGHT, LEFT, U-TURN, RIGHT, RIGHT]
     // case: 6 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, STRAIGHT]
@@ -233,7 +233,7 @@ var createGame = (userInput) => {
       utils.turn(car, coord_5, 'south', 'east');
       uturn();
       utils.turn(car, coord_5, 'west', 'north');
-      utils.turn(car, coord_3, 'north' 'east');
+      utils.turn(car, coord_3, 'north', 'east');
 
     } else if (FAKE_USER_INPUT.case === 6) {
 
