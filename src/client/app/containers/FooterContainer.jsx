@@ -16,7 +16,7 @@ class Footer extends Component {
   changeLevel(e, level) {
     /* Updates the store with the appropriate level                       */
     e.preventDefault();
-    if (level >= 1 && level <= 11) {
+    if (level >= 0 && level <= 11) {
       this.props.changeLevel(level);
 
       // re-render a new game for the appropriate level
@@ -28,9 +28,9 @@ class Footer extends Component {
       }, level);
     }
 
-    /* Error handling if the level is ever out of bounds: default to 1    */
-    if (this.props.level > 11 || this.props.level < 1) {
-      this.props.changeLevel(1);
+    /* Error handling if the level is ever out of bounds: default to 0    */
+    if (this.props.level > 11 || this.props.level < 0) {
+      this.props.changeLevel(0);
     }
 
     /* Fetches and renders the user's code for that level into the editor */
