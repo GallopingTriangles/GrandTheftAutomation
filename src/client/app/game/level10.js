@@ -10,7 +10,8 @@ var createGame = (userInput) => {
     speed: 100,
     sensor: true,
     /* NOTE: there could be multiple solutions for this map */
-    case: 1, // [STRAIGHT, ]
+    case: 1, // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
+    // case: 2, // 
   }
   /**********************************************************/
   /**********************************************************/
@@ -348,13 +349,6 @@ var createGame = (userInput) => {
       index += 1;
     }
   }
-
-  // function setSpeed() {
-  //   if (userInput.speed) {
-  //     carForwardSpeed = userInput.speed * userSpeedMultiplier;
-  //     carBackwardSpeed = carForwardSpeed * forwardReverseMultiplier;
-  //   }
-  // }
 
   function checkCompletion() {
     completionTiles.forEach(function(tile) {
