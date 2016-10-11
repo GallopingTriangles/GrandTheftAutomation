@@ -198,10 +198,6 @@ var createGame = (userInput) => {
       utils.turn(car, coord_4, 'south', 'east');
       utils.turn(car, coord_6, 'east', 'south');
       checkCompletion();
-      // utils.turn(car, coord_1, 'south', 'east');
-      // utils.turn(car, coord_2, 'east', 'south');
-      // utils.turn(car, coord_5, 'south', 'east');
-      // utils.turn(car, coord_6, 'east', 'south');
     } else if (FAKE_USER_INPUT.case === 2) {
       utils.turn(car, coord_4, 'south', 'east');
       utils.turn(car, coord_6, 'east', 'north');

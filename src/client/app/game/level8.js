@@ -9,10 +9,8 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    /* NOTE: there could be the case that the user decides to route the car ****
-    *******  such that it goes around in a circle over and over again *********/
-    // case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
-    case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
+    case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
+    // case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
     // case: 3, // fail, didn't enable the engine
     // case: 4, // fail, drove STRAIGHT through the FIRST intersection and crashed ([STRAIGHT])
     // case: 5, // fail, turned LEFT then STRAIGHT and crashed ([LEFT, STRAIGHT])
@@ -47,8 +45,8 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_8', './assets/gameMaps/level_8.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset_16', './assets/gameMaps/GTA_tileset_16.png');
+    game.load.tilemap('level_8', './assets/gameMaps_v2/level_8.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset_16', './assets/gameMaps_v2/GTA_tileset_16.png');
   }
 
   var car;
@@ -178,13 +176,12 @@ var createGame = (userInput) => {
 
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
-    // cursors = game.input.keyboard.createCursorKeys();
-    coord_1 = intersectionCenter(intersectionTiles_1); // ~[145,336] pixel center of the first intersection
-    coord_2 = intersectionCenter(intersectionTiles_2); // ~[145,145]
-    coord_3 = intersectionCenter(intersectionTiles_3); // ~[640,145]
-    coord_4 = intersectionCenter(intersectionTiles_4); // ~[145,527]
-    coord_5 = intersectionCenter(intersectionTiles_5); // ~[640,527]
-    coord_6 = intersectionCenter(intersectionTiles_6); // ~[640,336]
+    coord_1 = intersectionCenter(intersectionTiles_1); //
+    coord_2 = intersectionCenter(intersectionTiles_2); //
+    coord_3 = intersectionCenter(intersectionTiles_3); //
+    coord_4 = intersectionCenter(intersectionTiles_4); //
+    coord_5 = intersectionCenter(intersectionTiles_5); //
+    coord_6 = intersectionCenter(intersectionTiles_6); //
   }
 
   function update() {
@@ -204,12 +201,6 @@ var createGame = (userInput) => {
           }
         }
       })
-
-      // if (overlap) {
-      //   sensor.alpha = 0.7;
-      // } else {
-      //   sensor.alpha = 0.1;
-      // }
     }
 
     if (FAKE_USER_INPUT.case === 3) {
