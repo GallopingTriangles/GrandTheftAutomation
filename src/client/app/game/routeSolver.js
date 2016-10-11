@@ -18,7 +18,7 @@ module.exports = {
     // handle 'straight' dir
   },
 
-  positionRange: (car, point) => {
+  positionRange: (car, point) => { // check if the car is within 7 pixels (x and y) of a point
     if (Math.abs(car.body.x - point[0]) < 7 && Math.abs(car.body.y - point[1]) < 7) {
       return true;
     } else {
@@ -26,7 +26,7 @@ module.exports = {
     }
   },
 
-  determineOffset: (car, curDir, endDir) => {
+  determineOffset: (car, curDir, endDir) => { // determine which intersection quarter to use for turning
     if (curDir === 'north' && endDir === 'east') {
       return 'LR';
     } else if (curDir === 'north' && endDir === 'west') {
