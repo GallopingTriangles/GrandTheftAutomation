@@ -29,7 +29,15 @@ var level9 = function(req, res, next) {
 
 	// == CASES =============================================
 	// case 1: success
-	// case 2:
+	// case: 2 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
+	// case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
+	// case: 4 // fail: BUGGY CASE, DO NOT USE [RIGHT, LEFT, U-TURN, LEFT] // THIS CASE IS BUGGY SO DO NOT USE IT
+	// case: 5 // fail: [RIGHT, LEFT, U-TURN, RIGHT, RIGHT]
+	// case: 6 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, STRAIGHT]
+	// case: 7 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, LEFT]
+	// case: 8 // fail: [LEFT, STRAIGHT]
+	// case: 9 // fail: [LEFT, LEFT]
+	// case: 10 // fail: ENGINE IS NOT ENABLED
 
   // == TESTING USER INPUT LEVEL 8 ========================
 	runTestSuite(function UserInputTestLevel8(t) {
@@ -101,6 +109,13 @@ var level9 = function(req, res, next) {
       		count++;
       		pos = input.indexOf('if', pos + 1);
       	}
+      	t.assertTrue(
+          count === 3,
+          'Expected code to have three if statements, but got ' + count + ' if statement(s)',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+      	);
       };
 
       this.testConditionalSensorPresence = function() {
