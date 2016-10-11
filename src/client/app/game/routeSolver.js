@@ -15,6 +15,23 @@ module.exports = {
     return [x + 8, y + 8];
   },
 
+  offset: (corner, coord) => {
+    var x = coord[0];
+    var y = coord[1];
+    if (corner === 'UL') {
+      return [x - 20, y - 20];
+    }
+    if (corner === 'LL') {
+      return [x - 20, y + 20];
+    }
+    if (corner === 'UR') {
+      return [x + 20, y - 20];
+    }
+    if (corner === 'LR') {
+      return [x + 20, y + 20];
+    }
+  },
+
   
 }
 
