@@ -39,19 +39,18 @@ var createGame = (userInput) => {
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
 
-    game.load.tilemap('level_11', './assets/gameMaps_v2/level_11.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('GTA_tileset_16', './assets/gameMaps_v2/GTA_tileset_16.png');
+    game.load.tilemap('level_0', './assets/gameMaps_v2/level_0.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('GTA_tileset_16', './assets/gameMaps_v2/GTA_tileset.png');
   }
 
   var car;
   var text;
 
   var sensors = {};
-  // These must be declared in this order. We iterate through them later.
-  sensors.front = {};
-  sensors.right = {};
-  sensors.back = {};
-  sensors.left = {};
+  sensors.left = 'hello';
+  sensors.right = 'hello';
+  sensors.front = 'hello';
+  sensors.back = 'hello';
 
   var startingX = 50;
   var startingY = 18;
@@ -92,19 +91,13 @@ var createGame = (userInput) => {
   var layer_4;
   var layer_5;
   var layer_6;
-  var layer_7;
-  var layer_8;
-  var layer_9;
-  var layer_10;
-  var layer_11;
-  var layer_12;
 
   function create() {
 
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
 
-    map = game.add.tilemap('level_11');
+    map = game.add.tilemap('level_0');
     map.addTilesetImage('GTA_tileset_16');
 
     layer_5 = map.createLayer('end_success_layer');
@@ -151,7 +144,7 @@ var createGame = (userInput) => {
     intersectionTiles_6 = layer_11.getTiles(0, 0, 2500, 2500).filter(function(tile) {
       return tile.index > 0;
     })
-
+    
 
     if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
       createSensors();
@@ -170,12 +163,12 @@ var createGame = (userInput) => {
 
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
-    coord_1 = utils.intersectionCenter(intersectionTiles_1); //
-    coord_2 = utils.intersectionCenter(intersectionTiles_2); //
-    coord_3 = utils.intersectionCenter(intersectionTiles_3); //
-    coord_4 = utils.intersectionCenter(intersectionTiles_4); //
-    coord_5 = utils.intersectionCenter(intersectionTiles_5); //
-    coord_6 = utils.intersectionCenter(intersectionTiles_6); //
+    coord_1 = utils.intersectionCenter(intersectionTiles_1); // 
+    coord_2 = utils.intersectionCenter(intersectionTiles_2); // 
+    coord_3 = utils.intersectionCenter(intersectionTiles_3); // 
+    coord_4 = utils.intersectionCenter(intersectionTiles_4); // 
+    coord_5 = utils.intersectionCenter(intersectionTiles_5); // 
+    coord_6 = utils.intersectionCenter(intersectionTiles_6); // 
   }
 
   function update() {
