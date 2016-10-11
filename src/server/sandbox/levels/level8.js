@@ -1,7 +1,7 @@
 var vm = require('vm');
 
 // next level
-var level10 = require('./level10');
+var level9 = require('./level9');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
@@ -156,8 +156,82 @@ var level8 = function(req, res, next) {
           }
         );
       };
+	  });
 
+    // == CONDITIONAL TESTS == //
+	  runTestSuite(function ConditionalTest(t) {
+      var sb = new Sandbox().sandbox;
+      var context = new vm.createContext(sb);
+      script.runInContext(context);
 
+      var calls = context.testTurn.count;
+
+      this.testTurnNotCalledOutsideConditional = function() {
+        t.assertTrue(
+          calls === 0,
+          'Expected function turn() not to be called outside if statement, but got called ' + calls + ' time(s)',
+          function() {
+          	setCase(2);
+          }
+        );
+      };
+
+      this.testConditionalPresence = function() {
+        t.assertTrue(
+          userInput.indexOf('if') !== -1,
+          'Expected code to have an if statement, example: "if (gps.intersection) { do something... }"',
+          function() {
+          	setCase(3);
+          }
+        );
+      };
+
+      this.testConditionalLeftOrRightPresence = function() {
+      	t.assertTrue(
+          userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1,
+          'Expect code to have an if statement with conditinal: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
+          function() {
+            // ADD FAIL CALLBACK
+          }
+      	);
+      };
+
+      this.testTwoConditionalsPresent = function() {
+        var input = userInput;
+        var count = 0;
+        var pos = input.indexOf('if');
+        while (pos !== -1) {
+        	count++;
+        	pos = input.indexOf('if', pos + 1);
+        }
+        t.assertTrue(
+          count >= 2,
+          'Expected code to have two if statements, but got ' + count + ' if statement(s)',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testConditionalLeftPresence = function() {
+      	t.assertTrue(
+          userInput.indexOf("gps.intersection === 'left'") !== -1,
+          'Expect code to have an if statement with conditinal: if (gps.intersection === "left") {..',
+          function() {
+            // ADD FAIL CALLBACK
+          }
+      	);
+      };
+
+      this.testConditionalRightPresence = function() {
+      	t.assertTrue(
+          userInput.indexOf("gps.intersection === 'right'") !== -1,
+          'Expect code to have an if statement with conditinal: (gps.intersection === "right") {..',
+          function() {
+            // ADD FAIL CALLBACK
+          }
+      	);
+      };
 	  });
 
     // == CONDITIONAL LEFT TESTS == //
@@ -168,7 +242,68 @@ var level8 = function(req, res, next) {
       var context = new vm.createContext(sb);
       script.runInContext(context);
 
-      // console.log(context);    
+      var turn = context.testTurn.value;
+      var calls = context.testTurn.count;   
+
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            // ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+      	t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+      	);
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right',
+          'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputValueLeft = function() {
+        t.assertTrue(
+          turn === 'left',
+          'Expected function turn() argument to have value "left", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
 	  });
 
     // == CONDITIONAL RIGHT TESTS == //
@@ -178,14 +313,75 @@ var level8 = function(req, res, next) {
 
       var context = new vm.createContext(sb);
       script.runInContext(context);
+      
+      var turn = context.testTurn.value;
+      var calls = context.testTurn.count;
+      
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
 
-      // console.log(context);
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            // ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+      	t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+      	);
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right',
+          'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputValueLeft = function() {
+        t.assertTrue(
+          turn === 'right',
+          'Expected function turn() argument to have value "right", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
 	  });
-
+    
 	});
 
   if (req.body.level === 9) {
-
+    level9(req, res, next);
   } else {
 		next();
   }
