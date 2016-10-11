@@ -88,26 +88,28 @@ var level1 = function(req, res, next) {
 	  	};
 
 	  	// test the maximum allowed calls of the enable function
-      this.testEnabledMaxCalls = function() {
-      	var calls = enabled.length;
-        t.assertTrue(
-        	calls <= 2,
-          'Expected function enable() to be called twice, but got called ' + calls + ' times',
-          function() {
-          	// ADD FAIL CALLBACK
-          }
-        );
-      };
+	  	if (req.body.level === 1) {
+        this.testEnabledMaxCalls = function() {
+        	var calls = enabled.length;
+          t.assertTrue(
+          	calls <= 2,
+            'Expected function enable() to be called twice, but got called ' + calls + ' times',
+            function() {
+            	// ADD FAIL CALLBACK
+            }
+          );
+        };
+	  	}
 
       // test if the input is of data type string
-      this.testEnableInputType = function() {
-        t.assertOptionsOfTypeString(
-          enabled,
-          function() {
-          	setCase(2);
-          }
-        );
-      };
+      // this.testEnableInputType = function() {
+      //   t.assertOptionsOfTypeString(
+      //     enabled,
+      //     function() {
+      //     	setCase(2);
+      //     }
+      //   );
+      // };
     });
 
     // == ENGINE TESTS == //
