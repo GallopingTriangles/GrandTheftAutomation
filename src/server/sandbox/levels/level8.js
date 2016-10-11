@@ -45,6 +45,92 @@ var runTestSuite = require('../TestingFramework');
 
 var level8 = function(req, res, next) {
 
+  // == TESTING USER INPUT LEVEL 8 ========================
+	runTestSuite(function UserInputTestLevel8(t) {
+	  // USER INPUT
+		var userInput = req.body.log;
+	  // == VIRTUAL MACHINE =================================
+	  var funcColor = 'var setColor = function(input) { testColor = input; };';
+	  var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
+	  var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "route") { testRoute = true }; };';
+	  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
+	  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
+
+	  // input for virtual machine
+	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
+	  var script = new vm.Script(input);
+
+    var Sandbox = function() {
+      this.sandbox = {
+		  	sensor: {
+		  		front: false
+		  	},
+		  	map: {
+		      intersection: false
+		  	},
+		  	gps: {
+	        intersection: false
+		  	},
+		  	route: {
+		  		directions: undefined,
+		  		count: 0
+		  	},
+		  	testEnable: [],
+		  	testEngine: undefined,
+		  	testColor: undefined,
+		  	testSpeed: undefined,
+		  	testSensor: undefined,
+		  	testRoute: undefined,
+		  	testRoute: undefined,
+		  	testTurn: {
+		  		value: undefined,
+		  		count: 0
+        }
+      };
+     };
+
+	  var setCaseCount = 1;
+	  var setCase = function(caseNo) {
+	  	if (setCaseCount === 1) {
+	      req.body.phaser.case = caseNo;
+	      setCaseCount++;
+	  	}
+	  };
+
+    // == ENABLED TESTS == //
+	  runTestSuite(function EnabledGpsInputTest(t) {
+	  	var sb = new Sandbox().sandbox;
+	  	console.log(sb);
+	  	var context = new vm.createContext(sb);
+		  script.runInContext(context);
+
+      console.log(context);
+	  });
+
+    // == CONDITIONAL LEFT TESTS == //
+	  runTestSuite(function GpsIntersectionLeftTest(t) {
+	  	var sb = new Sandbox().sandbox;
+      sb.gps.intersection = 'left';
+
+      var context = new vm.createContext(sb);
+      script.runInContext(context);
+
+      console.log(context);    
+	  });
+
+    // == CONDITIONAL RIGHT TESTS == //
+	  runTestSuite(function GpsIntersectionRightTest(t) {
+	  	var sb = new Sandbox().sandbox;
+      sb.gps.intersection = 'right';
+
+      var context = new vm.createContext(sb);
+      script.runInContext(context);
+
+      console.log(context);
+	  });
+
+	});
+
 	next();
 
 };
