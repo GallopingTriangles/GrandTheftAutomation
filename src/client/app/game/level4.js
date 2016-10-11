@@ -35,8 +35,10 @@ var createGame = (userInput) => {
     setCarColor();
     game.load.image('wasted', './assets/wasted.png');
     game.load.image('panda', './assets/panda.png');
-    game.load.image('grass', './assets/grass.jpg');
-    game.load.image('sensor', './assets/round.png');
+    game.load.image('frontSensor', './assets/sensor_front.png');
+    game.load.image('backSensor', './assets/sensor_back.png');
+    game.load.image('rightSensor', './assets/sensor_right.png');
+    game.load.image('leftSensor', './assets/sensor_left.png');
 
     /*
     ** A spritesheet contains a bunch of frames stitched together to create an animation effect
@@ -59,10 +61,10 @@ var createGame = (userInput) => {
   /* needsChange */
 
   var sensors = {};
-  sensors.left = {};
-  sensors.right = {};
   sensors.front = {};
+  sensors.right = {};
   sensors.back = {};
+  sensors.left = {};
 
 
   var startingX = 280;
@@ -224,7 +226,7 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      collisionBody.debug = true;
+      // collisionBody.debug = true;
 
     })
 
@@ -254,7 +256,7 @@ var createGame = (userInput) => {
     */
     if (userInput.sensor) {
 
-      attachSensors(0, 40, sensors);
+      attachSensors(0, 10, sensors);
 
       /*
       ** In every frame of the game, examine every collision body (tile) and check if
@@ -263,7 +265,7 @@ var createGame = (userInput) => {
       ** detected, set the variable overlap to true.
       */
       for (var sensor in sensors) {
-        sensors[sensor].alpha = .1;
+        sensors[sensor].alpha = .3;
       }
 
       collisionBodies.forEach(function(body) {
@@ -272,7 +274,7 @@ var createGame = (userInput) => {
           || sensors[sensor].getBounds().contains(body.x + 32, body.y)
           || sensors[sensor].getBounds().contains(body.x, body.y + 32)
           || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
-            sensors[sensor].alpha = .7;
+            sensors[sensor].alpha = 1.0;
           }
         }
       })
@@ -330,6 +332,7 @@ var createGame = (userInput) => {
   function render() {
     // game.debug.spriteInfo(car, 32, 32);
     // car.body.debug = true;
+    // game.debug.spriteInfo(sensor.left)
 
   }
 
@@ -418,11 +421,15 @@ var createGame = (userInput) => {
     // Check to make sure the user has turned the sensor on
     if (userInput.sensor) {
       // Appearace
+      sensors.left = game.add.sprite(startingX, startingY, 'leftSensor')
+      sensors.right = game.add.sprite(startingX, startingY, 'rightSensor')
+      sensors.front = game.add.sprite(startingX, startingY, 'frontSensor')
+      sensors.back = game.add.sprite(startingX, startingY, 'backSensor')
+
       for (var sensor in sensors) {
-        sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
-        sensors[sensor].scale.setTo(.1, .1);
+        sensors[sensor].scale.setTo(.5, .5);
       }
     }
   }
