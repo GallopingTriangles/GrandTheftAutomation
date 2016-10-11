@@ -191,7 +191,13 @@ var createGame = (userInput) => {
     // case: 9 // fail: [LEFT, LEFT]
     // case: 10 // fail: ENGINE IS NOT ENABLED
 
-    car.body.moveForward(speed);
+    if (FAKE_USER_INPUT.case !== 10) { // engine is enabled in all cases except case 10
+      car.body.moveForward(speed);
+    } else {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    }
+
     if (FAKE_USER_INPUT.case === 1) { // u-turn when encountering the obstacle
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
