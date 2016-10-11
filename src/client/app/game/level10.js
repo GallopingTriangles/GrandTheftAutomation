@@ -11,9 +11,8 @@ var createGame = (userInput) => {
     color: 'panda',
     speed: 100,
     sensor: true,
-    /* NOTE: there could be multiple solutions for this map */
     case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 2 // fail: [STRAIGHT, LEFT, SOUTH, LEFT]
+    // case: 2 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
     // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
     // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
     // case: 5 // fail: [STRAIGHT, STRAIGHT]
@@ -75,6 +74,7 @@ var createGame = (userInput) => {
   var collisionBodies;
 
   var completionTiles;
+  var failureTiles;
 
   var intersectionTiles_1;
   var coord_1; // the (x,y) coordinate of the center of the intersectionTiles_1
@@ -132,6 +132,10 @@ var createGame = (userInput) => {
       return tile.index > 0;
     });
 
+    failureTiles = layer_12.getTiles(0, 0, 2000, 2000).filter(function(tile) {
+      return tile.index > 0;
+    });
+
     intersectionTiles_1 = layer_6.getTiles(0, 0, 2500, 2500).filter(function(tile) { // array of tiles for the first intersection
       return tile.index > 0;
     })
@@ -178,9 +182,9 @@ var createGame = (userInput) => {
   }
 
   function update() {
-    
+
     // case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 2 // fail: [STRAIGHT, LEFT, SOUTH, LEFT]
+    // case: 2 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
     // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
     // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
     // case: 5 // fail: [STRAIGHT, STRAIGHT]
@@ -189,8 +193,8 @@ var createGame = (userInput) => {
     // case: 8 // fail: [RIGHT]
 
 
+    car.body.moveForward(speed);
     if (FAKE_USER_INPUT.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-      car.body.moveForward(speed);
       utils.turn(car, coord_4, 'south', 'east');
       utils.turn(car, coord_6, 'east', 'south');
       checkCompletion();
@@ -198,6 +202,24 @@ var createGame = (userInput) => {
       // utils.turn(car, coord_2, 'east', 'south');
       // utils.turn(car, coord_5, 'south', 'east');
       // utils.turn(car, coord_6, 'east', 'south');
+    } else if (FAKE_USER_INPUT.case === 2) {
+      utils.turn(car, coord_4, 'south', 'east');
+      utils.turn(car, coord_6, 'east', 'north');
+    } else if (FAKE_USER_INPUT.case === 3) {
+      utils.turn(car, coord_4, 'south', 'east');
+    } else if (FAKE_USER_INPUT.case === 4) {
+      utils.turn(car, coord_4, 'south', 'east');
+      utils.turn(car, coord_5, 'east', 'south');
+      checkFailure();
+    } else if (FAKE_USER_INPUT.case === 5) {
+      /*** no turning, just crashing ***/
+    } else if (FAKE_USER_INPUT.case === 6) {
+      utils.turn(car, coord_4, 'south', 'west');
+    } else if (FAKE_USER_INPUT.case === 7) {
+      utils.turn(car, coord_1, 'south', 'east');
+      utils.turn(car, coord_2, 'east', 'north');
+    } else if (FAKE_USER_INPUT.case === 8) {
+      utils.turn(car, coord_1, 'south', 'west');
     }
 
     // if (userInput.sensor) {
@@ -303,6 +325,20 @@ var createGame = (userInput) => {
     var text = game.add.text(400, 300, 'Success!', style);
     game.paused = true;
     console.log('COMPLETED!');
+  }
+
+  function checkFailure() {
+    failureTiles.forEach(function(tile) {
+      if (Math.abs(tile.worldX + 16 - car.body.x) < 25 && Math.abs(tile.worldY +16 - car.body.y) < 25) {
+        levelFailed();
+      }
+    })
+  }
+
+  function levelFailed() {
+    var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    var text = game.add.text(400, 300, 'FAIL!', style);
+    game.paused = true;
   }
 
   function gameOver() {
