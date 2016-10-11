@@ -181,50 +181,58 @@ var createGame = (userInput) => {
   function update() {
 
     // case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
-
+    // case: 2 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
+    // case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
+    // case: 4 // fail: [RIGHT, LEFT, U-TURN, LEFT]
+    // case: 5 // fail: [RIGHT, LEFT, U-TURN, RIGHT, RIGHT]
+    // case: 6 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, STRAIGHT]
+    // case: 7 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, LEFT]
+    // case: 8 // fail: [LEFT, STRAIGHT]
+    // case: 9 // fail: [LEFT, LEFT]
+    // case: 10 // fail: ENGINE IS NOT ENABLED
 
     car.body.moveForward(speed);
     if (FAKE_USER_INPUT.case === 1) { // u-turn when encountering the obstacle
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
-      // obstacle collision at [380, 558]... hardcoding a u-turn
-      if (car.body.x > 340 && car.body.y > 520 && car.body.angle > 80) {
-        car.body.angle = 75;
-      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > 45) {
-        car.body.angle = 45;
-      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > 25) {
-        car.body.angle = 25;
-      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > 5) {
-        car.body.angle = 0;
-      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -35) {
-        car.body.angle = -35;
-      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -55 ) {
-        car.body.angle = -55;
-      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -75 ) {
-        car.body.angle = -75;
-      } else if (car.body.x > 355 && car.body.y > 520 && car.body.angle > -90 ) {
-        car.body.angle = -90;
-        car.body.x = 360;
-        car.body.y = 515;
-      }
+      uturn();
       utils.turn(car, coord_5, 'west', 'north');
       utils.turn(car, coord_1, 'north', 'east');
       utils.turn(car, coord_2, 'east', 'south');
       utils.turn(car, coord_4, 'south', 'east');
       checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) {
-      
+      utils.turn(car, coord_3, 'east', 'south');
+      utils.turn(car, coord_5, 'south', 'east');
     } else if (FAKE_USER_INPUT.case === 3) {
-      
+      utils.turn(car, coord_3, 'east', 'south');
+      utils.turn(car, coord_5, 'south', 'east');
+      uturn();
     } else if (FAKE_USER_INPUT.case === 4) {
-      
+      utils.turn(car, coord_3, 'east', 'south');
+      utils.turn(car, coord_5, 'south', 'east');
+      uturn();
+      utils.turn(car, coord_5, 'west', 'south');
     } else if (FAKE_USER_INPUT.case === 5) {
-      
+      utils.turn(car, coord_3, 'east', 'south');
+      utils.turn(car, coord_5, 'south', 'east');
+      uturn();
+      utils.turn(car, coord_5, 'west', 'north');
+      utils.turn(car, coord_3, 'north' 'east');
     } else if (FAKE_USER_INPUT.case === 6) {
-      
+      utils.turn(car, coord_3, 'east', 'south');
+      utils.turn(car, coord_5, 'south', 'east');
+      uturn();
+      utils.turn(car, coord_5, 'west', 'north');
     } else if (FAKE_USER_INPUT.case === 7) {
-      
+      utils.turn(car, coord_3, 'east', 'south');
+      utils.turn(car, coord_5, 'south', 'east');
+      uturn();
+      utils.turn(car, coord_5, 'west', 'north');
+      utils.turn(car, coord_1, 'north', 'west');
     } else if (FAKE_USER_INPUT.case === 8) {
+      utils.turn(car, coord_3, 'east', 'north');
+    } else if (FAKE_USER_INPUT.case === 9) {
       
     }
 
@@ -391,23 +399,46 @@ var createGame = (userInput) => {
     }, 3000)
   }
 
-  function turn(direction) {
-    switch (direction) {
-      case 'north': 
-        car.body.angle = 0;
-        break;
-      case 'east': 
-        car.body.angle = 90;
-        break;
-      case 'south': 
-        car.body.angle = 180;
-        break;
-      case 'west': 
-        car.body.angle = -90;
-        break;
-      default: car.body.angle = 0;
+  function uturn() { // HARDCODED ONLY FOR THIS LEVEL
+    // obstacle collision at [380, 558]... hardcoding a u-turn animation
+    if (car.body.x > 345 && car.body.y > 520 && car.body.angle > 80) {
+      car.body.angle = 75;
+    } else if (car.body.x > 345 && car.body.y > 520 && car.body.angle > 45) {
+      car.body.angle = 45;
+    } else if (car.body.x > 345 && car.body.y > 520 && car.body.angle > 25) {
+      car.body.angle = 25;
+    } else if (car.body.x > 345 && car.body.y > 520 && car.body.angle > 5) {
+      car.body.angle = 0;
+    } else if (car.body.x > 345 && car.body.y > 520 && car.body.angle > -35) {
+      car.body.angle = -35;
+    } else if (car.body.x > 345 && car.body.y > 520 && car.body.angle > -55 ) {
+      car.body.angle = -55;
+    } else if (car.body.x > 345 && car.body.y > 520 && car.body.angle > -75 ) {
+      car.body.angle = -75;
+    } else if (car.body.x > 345 && car.body.y > 520 && car.body.angle > -90 ) {
+      car.body.angle = -90;
+      car.body.x = 360;
+      car.body.y = 515;
     }
   }
+
+  // function turn(direction) {
+  //   switch (direction) {
+  //     case 'north': 
+  //       car.body.angle = 0;
+  //       break;
+  //     case 'east': 
+  //       car.body.angle = 90;
+  //       break;
+  //     case 'south': 
+  //       car.body.angle = 180;
+  //       break;
+  //     case 'west': 
+  //       car.body.angle = -90;
+  //       break;
+  //     default: car.body.angle = 0;
+  //   }
+  // }
 }
 
 module.exports = createGame;
