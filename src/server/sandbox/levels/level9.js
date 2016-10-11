@@ -136,6 +136,59 @@ var level9 = function(req, res, next) {
     	var context = new vm.createContext(sb);
     	script.runInContext(context);
 
+    	var turn = context.testTurn.value;
+    	var calls = context.testTurn.count;
+
+    	this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Expected function turn() to be called in sensor.front if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+    	};
+
+    	this.testTurnCalledWithArgument = function() {
+    	  t.assertTrue(
+    	    turn,
+    	    'Expected function turn() to be called with an argument, but got ' + turn,
+    	    function() {
+    	      // ADD FAIL CALLBACK
+    	    }
+    	  );
+    	};
+
+    	this.testTurnInputString = function() {
+    		t.assertTrue(
+    	    typeof turn === 'string',
+    	    'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+    	    function() {
+    	    	// ADD FAIL CALLBACK
+    	    }
+    		);
+    	};
+
+    	this.testTurnInputValue = function() {
+    	  t.assertTrue(
+    	    turn === 'left' || turn === 'right' || turn === 'u-turn',
+    	    'Expected function turn() argument to have value "left", "right" or "u-turn", but got value ' + turn,
+    	    function() {
+    	    	// ADD FAIL CALLBACK
+    	    }
+    	  );
+    	};
+
+    	this.testTurnInputValueLeft = function() {
+    	  t.assertTrue(
+    	    turn === 'u-turn',
+    	    'Expected function turn() argument to have value "u-turn", but got value ' + turn,
+    	    function() {
+    	    	// ADD FAIL CALLBACK
+    	    }
+    	  );
+    	};
+
     });
 
 	});
