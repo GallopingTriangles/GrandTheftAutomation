@@ -282,7 +282,6 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    car.body.debug = true;
   }
 
   /******* HELPER FUNCTIONS **********************/

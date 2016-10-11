@@ -17,7 +17,7 @@ var createGame = (userInput) => {
     // case: 4 // fail:    [STRAIGHT, STRAIGHT]
     // case: 5 // fail:    [RIGHT]
     // case: 6 // fail:    [LEFT, LEFT]
-    // case: 7 // fail:    ENGINE WAS NOT ENABLED
+    case: 7 // fail:    ENGINE WAS NOT ENABLED
   }
   /**********************************************************/
   /**********************************************************/
@@ -190,19 +190,31 @@ var createGame = (userInput) => {
     // case: 6 // fail:    [LEFT, LEFT]
     // case: 7 // fail:    ENGINE WAS NOT ENABLED
 
-    car.body.moveForward(speed);
-    if (FAKE_USER_INPUT.case === 1) {
+    if (FAKE_USER_INPUT.case !== 7) {
+      car.body.moveForward(speed);
+    } else {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    }
 
+    if (FAKE_USER_INPUT.case === 1) {
+      utils.turn(car, coord_4, 'south', 'east');
+      utils.turn(car, coord_5, 'east', 'north');
+      utils.turn(car, coord_2, 'north', 'east');
+      utils.turn(car, coord_3, 'east', 'south');
+      checkCompletion();
     } else if (FAKE_USER_INPUT.case === 2) {
-      
+      utils.turn(car, coord_4, 'south', 'east');
     } else if (FAKE_USER_INPUT.case === 3) {
-      
+      utils.turn(car, coord_4, 'south', 'east');
+      utils.turn(car, coord_5, 'east', 'north');
     } else if (FAKE_USER_INPUT.case === 4) {
-      
+      /*** drive straight and crash ***/
     } else if (FAKE_USER_INPUT.case === 5) {
-      
+      utils.turn(car, coord_1, 'south', 'west');
     } else if (FAKE_USER_INPUT.case === 6) {
-      
+      utils.turn(car, coord_1, 'south', 'east');
+      utils.turn(car, coord_2, 'east', 'north');
     }
 
     // if (userInput.sensor) {
@@ -225,7 +237,6 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    car.body.debug = true;
   }
 
   /******* HELPER FUNCTIONS **********************/
@@ -343,23 +354,23 @@ var createGame = (userInput) => {
     }, 3000)
   }
 
-  function turn(direction) {
-    switch (direction) {
-      case 'north': 
-        car.body.angle = 0;
-        break;
-      case 'east': 
-        car.body.angle = 90;
-        break;
-      case 'south': 
-        car.body.angle = 180;
-        break;
-      case 'west': 
-        car.body.angle = -90;
-        break;
-      default: car.body.angle = 0;
-    }
-  }
+  // function turn(direction) {
+  //   switch (direction) {
+  //     case 'north': 
+  //       car.body.angle = 0;
+  //       break;
+  //     case 'east': 
+  //       car.body.angle = 90;
+  //       break;
+  //     case 'south': 
+  //       car.body.angle = 180;
+  //       break;
+  //     case 'west': 
+  //       car.body.angle = -90;
+  //       break;
+  //     default: car.body.angle = 0;
+  //   }
+  // }
 }
 
 module.exports = createGame;
