@@ -6,6 +6,7 @@ var level3 = require('./level3');
 var level5 = require('./level5');
 var level6 = require('./level6');
 var level7 = require('./level7');
+var level8 = require('./level8');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
@@ -276,6 +277,8 @@ var level1 = function(req, res, next) {
     	level6(req, res, next);
     } else if (req.body.level === 7) {
       level7(req, res, next);
+    } else if (req, res, next) {
+      level8(req, res, next);
     } else {
     	next();
     }
