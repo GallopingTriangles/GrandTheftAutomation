@@ -50,7 +50,6 @@ var createGame = (userInput) => {
   }
 
   var car;
-  // var cursors;
   var text;
 
   var sensors = {};

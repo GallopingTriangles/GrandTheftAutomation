@@ -9,8 +9,8 @@ var createGame = (userInput) => {
     color: 'white',
     speed: 400,
     sensor: true,
-    // case: 1, // success engine goes forward
-    case: 2, // fail, engine didn't get turned on
+    case: 1, // success engine goes forward
+    // case: 2, // fail, engine didn't get turned on
   }
   /**********************************************************/
   /**********************************************************/
@@ -224,7 +224,7 @@ var createGame = (userInput) => {
     /*
     ** Enables the user to have control over the car through their cursor keys
     */
-    cursors = game.input.keyboard.createCursorKeys();
+    // cursors = game.input.keyboard.createCursorKeys();
 
 
 
