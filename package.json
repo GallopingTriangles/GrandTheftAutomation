@@ -41,6 +41,7 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
+    "axios": "^0.14.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
