@@ -205,7 +205,7 @@ var level8 = function(req, res, next) {
         	pos = input.indexOf('if', pos + 1);
         }
         t.assertTrue(
-          count === 2,
+          count >= 2,
           'Expected code to have two if statements, but got ' + count + ' if statement(s)',
           function() {
           	// ADD FAIL CALLBACK
@@ -244,6 +244,66 @@ var level8 = function(req, res, next) {
 
       var turn = context.testTurn.value;
       var calls = context.testTurn.count;   
+
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            // ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+      	t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+      	);
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right',
+          'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputValueLeft = function() {
+        t.assertTrue(
+          turn === 'left',
+          'Expected function turn() argument to have value "left", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
 	  });
 
     // == CONDITIONAL RIGHT TESTS == //
@@ -257,8 +317,67 @@ var level8 = function(req, res, next) {
       var turn = context.testTurn.value;
       var calls = context.testTurn.count;
       
-	  });
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
 
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            // ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+      	t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+      	);
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right',
+          'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputValueLeft = function() {
+        t.assertTrue(
+          turn === 'right',
+          'Expected function turn() argument to have value "right", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+	  });
+    
 	});
 
   if (req.body.level === 9) {
