@@ -59,16 +59,12 @@ var createGame = (userInput) => {
   sensors.back = {};
   sensors.left = {};
   
+  var speed = userInput.speed ? userInput.speed * 4 : 0;
   var startingX = 40;
   var startingY = 365;
   var startingAngle = 90;
   var backgroundColor = '#3e5f96';
-  var speed = FAKE_USER_INPUT.speed * 4;
-  // var carForwardSpeed = 200;
-  // var carBackwardSpeed = 100;
   var carScale = .5;
-  // var forwardReverseMultiplier = 1 / 2;
-  // var userSpeedMultiplier = 4;
   var explosion;
   var wasted;
 
@@ -79,8 +75,6 @@ var createGame = (userInput) => {
   var obstacleCollisionGroup;
 
   var collisionBodies;
-
-  // var endZoneBodies;
 
   var completionTiles;
 
@@ -158,11 +152,10 @@ var createGame = (userInput) => {
     })
 
 
-    if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
+    if (userInput.sensor) { // create the sensors if the use has enabled them
       createSensors();
     }
     createCar();
-    // setSpeed();
 
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -203,47 +196,47 @@ var createGame = (userInput) => {
       })
     }
 
-    if (FAKE_USER_INPUT.case === 3) {
+    if (userInput.case === 3) {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
     } else {
       car.body.moveForward(speed);
     }
 
-    if (FAKE_USER_INPUT.case === 1
-      || FAKE_USER_INPUT.case === 5
-      || FAKE_USER_INPUT.case === 6
-      || FAKE_USER_INPUT.case === 7
-      || FAKE_USER_INPUT.case === 8
-      || FAKE_USER_INPUT.case === 9
-      || FAKE_USER_INPUT.case === 10) { // handle all upper route cases
+    if (userInput.case === 1
+      || userInput.case === 5
+      || userInput.case === 6
+      || userInput.case === 7
+      || userInput.case === 8
+      || userInput.case === 9
+      || userInput.case === 10) { // handle all upper route cases
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 10) {
         turn('north');
       }
-      if (FAKE_USER_INPUT.case === 6) {
+      if (userInput.case === 6) {
         if (Math.abs(coord_2[1] - 20 - car.body.y) < 10) {
           turn('west');
         }
-      } else if (FAKE_USER_INPUT.case !== 5) {
+      } else if (userInput.case !== 5) {
         if (Math.abs(coord_2[1] + 25 - car.body.y) < 10) {
           turn('east');
         }
-        if (FAKE_USER_INPUT.case === 8) {
+        if (userInput.case === 8) {
           if (Math.abs(coord_3[0] + 40 - car.body.x) < 10) {
             turn('north');
           }
-        } else if (FAKE_USER_INPUT.case === 9
-          || FAKE_USER_INPUT.case === 10
-          || FAKE_USER_INPUT.case === 1) {
+        } else if (userInput.case === 9
+          || userInput.case === 10
+          || userInput.case === 1) {
           if (Math.abs(coord_3[0] - 10 - car.body.x) < 10) {
             turn('south');
           }
-          if (FAKE_USER_INPUT.case === 10) {
+          if (userInput.case === 10) {
             if (Math.abs(coord_6[1] - 10 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
               turn('west');
             }
-          } else if (FAKE_USER_INPUT.case === 1) {
+          } else if (userInput.case === 1) {
             if (Math.abs(coord_6[1] + 25 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
               turn('east');
             }
@@ -251,38 +244,38 @@ var createGame = (userInput) => {
           }
         }
       }
-    } else if (FAKE_USER_INPUT.case === 2
-      || FAKE_USER_INPUT.case === 11
-      || FAKE_USER_INPUT.case === 12
-      || FAKE_USER_INPUT.case === 13
-      || FAKE_USER_INPUT.case === 14
-      || FAKE_USER_INPUT.case === 15
-      || FAKE_USER_INPUT.case === 16) {
+    } else if (userInput.case === 2
+      || userInput.case === 11
+      || userInput.case === 12
+      || userInput.case === 13
+      || userInput.case === 14
+      || userInput.case === 15
+      || userInput.case === 16) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] - 10 - car.body.x) < 10) {
         turn('south');
       }
-      if (FAKE_USER_INPUT.case === 12) {
+      if (userInput.case === 12) {
         if (Math.abs(coord_4[1] - 15 - car.body.y) < 10) {
           turn('west');
         }
-      } else if (FAKE_USER_INPUT.case !== 11) {
+      } else if (userInput.case !== 11) {
         if (Math.abs(coord_4[1] + 28 - car.body.y) < 10) {
           turn('east');
         }
-        if (FAKE_USER_INPUT.case === 14) {
+        if (userInput.case === 14) {
           if (Math.abs(coord_5[0] - 20 - car.body.x) < 10) {
             turn('south');
           }
-        } else if (FAKE_USER_INPUT.case !== 13) {
+        } else if (userInput.case !== 13) {
           if (Math.abs(coord_5[0] + 30 - car.body.x) < 10) {
             turn('north');
           }
-          if (FAKE_USER_INPUT.case === 16) {
+          if (userInput.case === 16) {
             if (Math.abs(coord_6[1] - 20 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
               turn('west');
             }
-          } else if (FAKE_USER_INPUT.case === 2) {
+          } else if (userInput.case === 2) {
             if (Math.abs(coord_6[1] + 30 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
               turn('east');
             }
@@ -364,13 +357,6 @@ var createGame = (userInput) => {
       index += 1;
     }
   }
-
-  // function setSpeed() {
-  //   if (userInput.speed) {
-  //     carForwardSpeed = userInput.speed * userSpeedMultiplier;
-  //     carBackwardSpeed = carForwardSpeed * forwardReverseMultiplier;
-  //   }
-  // }
 
   function checkCompletion() {
     completionTiles.forEach(function(tile) {
