@@ -206,8 +206,6 @@ var level10 = function(req, res, next) {
        var context = new vm.createContext(sb);
        script.runInContext(context);
 
-        console.log(context);
-
         var enabled = context.testEnabled.values;
         var calls = context.testEnabled.count;
 
@@ -250,6 +248,85 @@ var level10 = function(req, res, next) {
          }
       	);
       };
+
+       var calls = context.testTurn.count;
+
+       this.testTurnNotCalledOutsideConditional = function() {
+         t.assertTrue(
+           calls === 0,
+           'Expected function turn() not to be called outside if statement, but got called ' + calls + ' time(s)',
+           function() {
+           	setCase(2);
+           }
+         );
+       };
+
+       this.testConditionalPresence = function() {
+         t.assertTrue(
+           userInput.indexOf('if') !== -1,
+           'Expected code to have an if statement, example: "if (gps.intersection) { do something... }"',
+           function() {
+           	setCase(5);
+           }
+         );
+       };
+
+       this.testConditionalLeftRightStraightPresence = function() {
+       	t.assertTrue(
+           userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1 || userInput.indexOf("gps.intersection === 'straight'") !== -1,
+           'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
+           function() {
+             setCase(5);
+           }
+       	);
+       };
+
+       this.testThreeConditionalsPresent = function() {
+         var input = userInput;
+         var count = 0;
+         var pos = input.indexOf('if');
+         while (pos !== -1) {
+         	count++;
+         	pos = input.indexOf('if', pos + 1);
+         }
+         t.assertTrue(
+           count >= 3,
+           'Expected code to have three if statements, but got ' + count + ' if statement(s)',
+           function() {
+             setCase(5);
+           }
+         );
+       };
+
+       this.testConditionalStraightPresence = function() {
+        t.assertTrue(
+           userInput.indexOf("gps.intersection === 'straight'") !== -1,
+           'Expect code to have an if statement with conditinal: (gps.intersection === "straight") {..',
+           function() {
+             setCase(5);
+           }
+        );
+       };
+
+       this.testConditionalLeftPresence = function() {
+       	t.assertTrue(
+           userInput.indexOf("gps.intersection === 'left'") !== -1,
+           'Expect code to have an if statement with conditinal: if (gps.intersection === "left") {..',
+           function() {
+             setCase(5);
+           }
+       	);
+       };
+
+       this.testConditionalRightPresence = function() {
+       	t.assertTrue(
+           userInput.indexOf("gps.intersection === 'right'") !== -1,
+           'Expect code to have an if statement with conditinal: (gps.intersection === "right") {..',
+           function() {
+             setCase(5);
+           }
+       	);
+       };
  	  });
 
     // == CONDITIONAL LEFT TESTS == //
