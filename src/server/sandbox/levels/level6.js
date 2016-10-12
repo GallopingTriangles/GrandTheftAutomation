@@ -90,14 +90,25 @@ var level6 = function(req, res, next) {
 	  		);
 	  	};
 
-	  	this.testEnableInputType = function() {
-        t.assertOptionsOfTypeString(
-          enabled,
+      this.testEnableCalledWithArgument = function() {
+        t.assertTrue(
+          enabled[2],
+          'Expected enable() to be called with an argument, but got called with ' + enabled[2],
           function() {
-          	setCase(3);
+            setCase(3);
           }
         );
-	  	};
+      };
+      
+      this.testEnableCalledWithString = function() {
+        t.assertTrue(
+          typeof enabled[2] === 'string',
+          'Expected enable() to be called with an argument of type string, but got called with type ' + typeof enabled[2],
+          function() {
+            setCase(3);
+          }
+        );
+      };
 
 	  	// test if route is enabled thirdly
 	  	this.testRouteEnabledThirdly = function() {
