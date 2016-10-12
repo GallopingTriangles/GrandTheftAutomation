@@ -60,8 +60,10 @@ class Console extends Component {
     }).then(res => {
       console.log('res: ', res);
       res.json().then(response => {
-        // the response from the server is an object that is used to create the game
-        // create a new game based off of the response object
+        /* The response from the server is an object that is used to create */
+        /* the game create a new game based off of the response object      */
+        /* The response also comes with a bug report describing the user's  */
+        /* errors in the form of passing or failing a particular test       */
         console.log('phaser response: ', response.phaser);
         console.log('phaser bugs: ', response.bugs);
         createGame(response.phaser, this.props.level);
@@ -77,13 +79,9 @@ class Console extends Component {
     this.setState({ tab })
   }
 
-  // == EDITOR INPUT =====================================================================
+  /* Keep track of the user's code from the editor by storing it in state */
   codeChange(newCode) {
     this.setState({ input: newCode });
-  }
-
-  codeFetch() {
-    this.postSolution();
   }
 
   codeReset() {
@@ -100,7 +98,7 @@ class Console extends Component {
       case 'editor': return <Editor 
                             code={ this.state.input } 
                             inputChange={ this.codeChange.bind(this) } 
-                            runInput={ this.codeFetch.bind(this) } 
+                            runInput={ this.postSolution.bind(this) } 
                             resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
       default: return <div>ERROR</div>;
