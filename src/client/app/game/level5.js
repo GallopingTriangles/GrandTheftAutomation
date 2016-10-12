@@ -68,11 +68,7 @@ var createGame = (userInput) => {
   var startingX = 440;
   var startingY = 550;
   var backgroundColor = '#3e5f96';
-  var carForwardSpeed = 200;
-  var carBackwardSpeed = 100;
   var carScale = .5;
-  var forwardReverseMultiplier = 1 / 2;
-  var userSpeedMultiplier = 4;
   var explosion;
   var wasted;
 
@@ -87,12 +83,6 @@ var createGame = (userInput) => {
   ** A callback will be invoked upon collisions.
   */
   var collisionBodies;
-
-  /*
-  ** An array of endZone bodies that will trigger a success callback
-  ** when the car hits them, and the level is considered completed.
-  */
-  var endZoneBodies;
 
   var completionTiles;
   var failureTiles;
@@ -168,15 +158,6 @@ var createGame = (userInput) => {
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.html#convertTilemap
     */
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, false);
-
-    /*
-    ** Convert the endZoneBodies into Phaser p2 bodies so the game can detect when
-    ** the car has entered any of these tiles, which will be interpreted as a level completion.
-    */
-    // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
-    // console.log(endZoneBodies);
-
-
 
     /*
     ** Gather the endzone tiles and intersection tiles so a callback can be run when
