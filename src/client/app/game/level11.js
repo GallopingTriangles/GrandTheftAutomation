@@ -8,18 +8,20 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   /*
+        *** NOTE: cases not in order (2 and 8)
+
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 100,
     sensor: true,
     case: 1 // success: [STRAIGHT, LEFT, LEFT, RIGHT, RIGHT, STRAIGHT]
-    // case: 2 // fail:    [STRAIGHT, LEFT, STRAIGHT] (crash into obstacle)
+    // case: 8 // fail:    [STRAIGHT, LEFT, STRAIGHT] (crash into obstacle)
     // case: 3 // fail:    [STRAIGHT, LEFT, LEFT, STRAIGHT]
     // case: 4 // fail:    [STRAIGHT, STRAIGHT]
     // case: 5 // fail:    [RIGHT]
     // case: 6 // fail:    [LEFT, LEFT]
     // case: 7 // fail:    [STRAIGHT, LEFT, RIGHT]
-    // case: 8 // fail:    ENGINE WAS NOT ENABLED
+    // case: 2 // fail:    ENGINE WAS NOT ENABLED
   }
   */
   /**********************************************************/
@@ -186,15 +188,15 @@ var createGame = (userInput) => {
     }
 
     // case: 1 // success: [STRAIGHT, LEFT, LEFT, RIGHT, RIGHT, STRAIGHT]
-    // case: 2 // fail:    [STRAIGHT, LEFT, STRAIGHT] (crash into obstacle)
+    // case: 8 // fail:    [STRAIGHT, LEFT, STRAIGHT] (crash into obstacle)
     // case: 3 // fail:    [STRAIGHT, LEFT, LEFT, STRAIGHT]
     // case: 4 // fail:    [STRAIGHT, STRAIGHT]
     // case: 5 // fail:    [RIGHT]
     // case: 6 // fail:    [LEFT, LEFT]
     // case: 7 // fail:    [STRAIGHT, LEFT, RIGHT] (went into fail-zone)
-    // case: 8 // fail:    ENGINE WAS NOT ENABLED
+    // case: 2 // fail:    ENGINE WAS NOT ENABLED
 
-    if (userInput.case !== 8) {
+    if (userInput.case !== 2) {
       car.body.moveForward(speed);
     } else {
       car.body.velocity.x = 0;
@@ -207,7 +209,7 @@ var createGame = (userInput) => {
       utils.turn(car, coord_2, 'north', 'east');
       utils.turn(car, coord_3, 'east', 'south');
       checkCompletion();
-    } else if (userInput.case === 2) {
+    } else if (userInput.case === 8) {
       utils.turn(car, coord_4, 'south', 'east');
     } else if (userInput.case === 3) {
       utils.turn(car, coord_4, 'south', 'east');

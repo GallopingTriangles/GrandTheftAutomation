@@ -8,18 +8,21 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   /*
+        *** NOTE: cases are not in order (2 and 9) ***
+
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 100,
     sensor: true,
     case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 2 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
+    // case: 9 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
     // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
     // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
     // case: 5 // fail: [STRAIGHT, STRAIGHT]
     // case: 6 // fail: [STRAIGHT, RIGHT]
     // case: 7 // fail: [LEFT, LEFT]
     // case: 8 // fail: [RIGHT]
+    // case: 2 // fail: USER DID NOT ENABLE THE ENGINE
   }
   */
   /**********************************************************/
@@ -186,21 +189,27 @@ var createGame = (userInput) => {
     };
 
     // case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 2 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
+    // case: 9 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
     // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
     // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
     // case: 5 // fail: [STRAIGHT, STRAIGHT]
     // case: 6 // fail: [STRAIGHT, RIGHT]
     // case: 7 // fail: [LEFT, LEFT]
     // case: 8 // fail: [RIGHT]
+    // case: 2 // fail: user didn't enable engine
 
+    if (userInput.case !== 2) { // case 2: user didn't enable engine
+      car.body.moveForward(speed);
+    } else {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    }
 
-    car.body.moveForward(speed);
     if (userInput.case === 1) { // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
       utils.turn(car, coord_4, 'south', 'east');
       utils.turn(car, coord_6, 'east', 'south');
       checkCompletion();
-    } else if (userInput.case === 2) {
+    } else if (userInput.case === 9) {
       utils.turn(car, coord_4, 'south', 'east');
       utils.turn(car, coord_6, 'east', 'north');
     } else if (userInput.case === 3) {
