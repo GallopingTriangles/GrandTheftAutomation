@@ -44,16 +44,19 @@ var Log = sequelize.define('Log', {
   solution: Sequelize.TEXT('long'),
 });
 
-// should create the database 'gta' if it doesn't already exist
-// CURRENTLY NOT WORKING, DATABASE IS BEING MANUALLY CREATED IN MYSQL
-sequelize.sync();
+/* sequelize method to sync database OR create database if not already existing */
+sequelize.sync(); 
 
-//Creates a userId FOREIGN KEY in Log table
+/* The following methods are necessary to forming a foreign **
+** key relationship between the User and Log tables, where  **
+** each row in the Log table has a User table foreign key.  **/
 User.hasMany(Log);
 Log.belongsTo(User);
 
-//Creates table if table does not exist
+/* sequelize method to sync User/Log tables OR creates the **
+** table(s), if they do not already exist.                 **/
 User.sync();
 Log.sync();
 
+/* exports all routes */
 module.exports = { sequelize, User, Log };
