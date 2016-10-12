@@ -357,9 +357,9 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(body) {
       for (var sensor in sensors) {
         if (sensors[sensor].getBounds().contains(body.x, body.y)
-        || sensors[sensor].getBounds().contains(body.x + 32, body.y)
-        || sensors[sensor].getBounds().contains(body.x, body.y + 32)
-        || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
+        || sensors[sensor].getBounds().contains(body.x + 16, body.y)
+        || sensors[sensor].getBounds().contains(body.x, body.y + 16)
+        || sensors[sensor].getBounds().contains(body.x + 16, body.y + 16)) {
           sensors[sensor].alpha = 1.0;
         }
       }
