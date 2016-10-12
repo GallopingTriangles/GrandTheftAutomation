@@ -61,7 +61,11 @@ class GamePage extends Component {
           return solution.level === this.props.level;
         })[0];
         var solution = result ? result.solution : '// Input your code here\n\n';
+
+        /* Update the current code in the Redux Store */
         this.props.setCode(solution);
+
+        
 
         /*************************************************************/
         /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
