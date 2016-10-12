@@ -9,11 +9,6 @@ var userController = require('../controllers/userController.js');
 ** userController.js for more information.                            **
 ************************************************************************/
 
-// handles routes with '/users/' endpoint
-router.route('/')
-  // returns user's saved game information after verification                 
-  .get(userController.getState);  
-
 // handles routes with '/users/login' endpoint
 router.route('/login')       
   // logs user in and creates new session to be store in database    
