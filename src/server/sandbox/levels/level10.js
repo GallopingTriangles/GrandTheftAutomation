@@ -41,35 +41,35 @@ var level10 = function(req, res, next) {
 
     var Sandbox = function() {
       this.sandbox = {
-      sensor: {
-      	front: false
-      },
-      map: {
-        intersection: false
-      },
-      gps: {
-        intersection: false
-      },
-      route: {
-      	directions: undefined,
-      	count: 0
-      },
-      testEnabled: {
-        values: [],
-        count: 0
-      },
-      testEngine: undefined,
-      testColor: undefined,
-      testSpeed: undefined,
-      testSensor: undefined,
-      testRoute: undefined,
-      testRoute: undefined,
-      testTurn: {
-      	value: undefined,
-      	count: 0
-      },
-      testGps: undefined
-      };
+        sensor: {
+        	front: false
+        },
+        map: {
+          intersection: false
+        },
+        gps: {
+          intersection: false
+        },
+        route: {
+        	directions: undefined,
+        	count: 0
+        },
+        testEnabled: {
+          values: [],
+          count: 0
+        },
+        testEngine: undefined,
+        testColor: undefined,
+        testSpeed: undefined,
+        testSensor: undefined,
+        testRoute: undefined,
+        testRoute: undefined,
+        testTurn: {
+        	value: undefined,
+        	count: 0
+        },
+        testGps: undefined
+        };
       };
 
       var setCaseCount = 1;
@@ -78,10 +78,10 @@ var level10 = function(req, res, next) {
        req.body.phaser.case = caseNo;
        setCaseCount++;
       }
-      };
+    };
 
-      // == ENABLED TESTS == //
-      runTestSuite(function EnabledGpsInputTest(t) {
+    // == ENABLED TESTS == //
+    runTestSuite(function EnabledGpsInputTest(t) {
       // create new sandbox
       var sb = new Sandbox().sandbox;
       // create new virtual machine
@@ -218,9 +218,80 @@ var level10 = function(req, res, next) {
          }
       	);
       };
-
-
  	  });
+
+    // == CONDITIONAL LEFT TESTS == //
+	  runTestSuite(function GpsIntersectionLeftTest(t) {
+	  	var sb = new Sandbox().sandbox;
+      sb.gps.intersection = 'left';
+
+      var context = new vm.createContext(sb);
+      script.runInContext(context);
+
+      var turn = context.testTurn.value;
+      var calls = context.testTurn.count;
+
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Expected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            // ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+      	t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+      	);
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right',
+          'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+
+      this.testTurnInputValueLeft = function() {
+        t.assertTrue(
+          turn === 'left',
+          'Expected function turn() argument to have value "left", but got value ' + turn,
+          function() {
+          	// ADD FAIL CALLBACK
+          }
+        );
+      };
+	  });
+
   })
 
   next();
