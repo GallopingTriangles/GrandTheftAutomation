@@ -36,13 +36,15 @@ class SignupContainer extends Component {
         console.log('signup response: ', result.message);
 
         /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
+        /*********************************************************************************************/
 
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE SIGNUP IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE SIGNUP IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE SIGNUP IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE SIGNUP IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE SIGNUP IS INVALID  *********/
-        
+        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
+         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
+
+        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
+         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
+
+        /*********************************************************************************************/
         /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
 
         /* clear the form after it has been submitted */
