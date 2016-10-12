@@ -6,16 +6,18 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   /*
+           *** NOTE: the cases are not in order ***
+           
   var FAKE_USER_INPUT = {
     color: 'blue',
     speed: 65,
     sensor: true,
     case: 1, // success right turn
-    // case: 2, // fail, crashed into obstacle after right turn
+    // case: 6, // fail, crashed into obstacle after right turn
     // case: 3, // fail, crash straight
     // case: 4, // fail, crash left
     // case: 5, // fail, stalls at intersection
-    // case: 6, // fail, car did not start engine
+    // case: 2, // fail, car did not start engine
   }
   */
   /**********************************************************/
@@ -222,7 +224,7 @@ var createGame = (userInput) => {
         car.body.angle = 90;
       }
       checkCompletion();
-    } else if (userInput.case === 2) { // failed, crashed straight
+    } else if (userInput.case === 6) { // failed, crashed straight
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
         car.body.angle = 90;
@@ -241,7 +243,7 @@ var createGame = (userInput) => {
       } else {
         car.body.moveForward(speed);
       }
-    } else if (userInput.case === 6) { // failed, car didn't start
+    } else if (userInput.case === 2) { // failed, car didn't start
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
     }
