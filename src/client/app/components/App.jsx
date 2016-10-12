@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-import Nav from './Nav.jsx';
 import PageContainer from '../../views/PageContainer.jsx';
 import LandingPage from '../../views/LandingPage.jsx';
 import GamePage from '../../views/GamePage.jsx';
