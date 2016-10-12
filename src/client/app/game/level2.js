@@ -192,7 +192,6 @@ var createGame = (userInput) => {
       createSensors();
     }
     createCar();
-    setSpeed();
 
     /*
     ** Create two collision groups. One for the car and one for everything else.
