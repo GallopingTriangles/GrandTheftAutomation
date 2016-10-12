@@ -435,12 +435,13 @@ var level10 = function(req, res, next) {
         );
       };
 	  });
-
-
-
   })
 
-  next();
+  if (req.body.level === 11) {
+    level9(req, res, next);
+  } else {
+		next();
+  }
 
 };
 
