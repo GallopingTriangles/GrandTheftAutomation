@@ -96,8 +96,6 @@ var level10 = function(req, res, next) {
        var context = new vm.createContext(sb);
        script.runInContext(context);
 
-        console.log(context);
-
         var enabled = context.testEnabled.values;
         var calls = context.testEnabled.count;
 
@@ -164,22 +162,22 @@ var level10 = function(req, res, next) {
            userInput.indexOf('if') !== -1,
            'Expected code to have an if statement, example: "if (gps.intersection) { do something... }"',
            function() {
-           	setCase(3);
+           	setCase(5);
            }
          );
        };
 
-       this.testConditionalLeftOrRightPresence = function() {
+       this.testConditionalLeftRightStraightPresence = function() {
        	t.assertTrue(
-           userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1,
+           userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1 || userInput.indexOf("gps.intersection === 'straight'") !== -1,
            'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
            function() {
-             // ADD FAIL CALLBACK
+             setCase(5);
            }
        	);
        };
 
-       this.testTwoConditionalsPresent = function() {
+       this.testThreeConditionalsPresent = function() {
          var input = userInput;
          var count = 0;
          var pos = input.indexOf('if');
@@ -191,9 +189,19 @@ var level10 = function(req, res, next) {
            count >= 3,
            'Expected code to have three if statements, but got ' + count + ' if statement(s)',
            function() {
-           	// ADD FAIL CALLBACK
+             setCase(5);
            }
          );
+       };
+
+       this.testConditionalStraightPresence = function() {
+        t.assertTrue(
+           userInput.indexOf("gps.intersection === 'straight'") !== -1,
+           'Expect code to have an if statement with conditinal: (gps.intersection === "straight") {..',
+           function() {
+             setCase(5);
+           }
+        );
        };
 
        this.testConditionalLeftPresence = function() {
@@ -201,7 +209,7 @@ var level10 = function(req, res, next) {
            userInput.indexOf("gps.intersection === 'left'") !== -1,
            'Expect code to have an if statement with conditinal: if (gps.intersection === "left") {..',
            function() {
-             // ADD FAIL CALLBACK
+             setCase(5);
            }
        	);
        };
@@ -211,10 +219,11 @@ var level10 = function(req, res, next) {
            userInput.indexOf("gps.intersection === 'right'") !== -1,
            'Expect code to have an if statement with conditinal: (gps.intersection === "right") {..',
            function() {
-             // ADD FAIL CALLBACK
+             setCase(5);
            }
        	);
        };
+
  	  });
   })
 
