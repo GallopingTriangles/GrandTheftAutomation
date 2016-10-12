@@ -53,11 +53,11 @@ var createGame = (userInput) => {
   sensors.back = {};
   sensors.left = {};
 
+  var speed = userInput.speed ? userInput.speed * 4 : 0;
   var startingX = 40;
   var startingY = 365;
   var startingAngle = 90;
   var backgroundColor = '#3e5f96';
-  var speed = FAKE_USER_INPUT.speed * 4;
   var carScale = .5;
   var explosion;
   var wasted;
@@ -147,7 +147,7 @@ var createGame = (userInput) => {
     })
 
 
-    if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
+    if (userInput.sensor) { // create the sensors if the use has enabled them
       createSensors();
     }
     createCar();
@@ -186,14 +186,14 @@ var createGame = (userInput) => {
     // case: 9 // fail: [LEFT, LEFT]
     // case: 10 // fail: ENGINE IS NOT ENABLED
 
-    if (FAKE_USER_INPUT.case !== 10) { // engine is enabled in all cases except case 10
+    if (userInput.case !== 10) { // engine is enabled in all cases except case 10
       car.body.moveForward(speed);
     } else {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
     }
 
-    if (FAKE_USER_INPUT.case === 1) { // u-turn when encountering the obstacle
+    if (userInput.case === 1) { // u-turn when encountering the obstacle
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
@@ -204,18 +204,18 @@ var createGame = (userInput) => {
       utils.turn(car, coord_4, 'south', 'east');
       checkCompletion();
 
-    } else if (FAKE_USER_INPUT.case === 2) {
+    } else if (userInput.case === 2) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
 
-    } else if (FAKE_USER_INPUT.case === 3) {
+    } else if (userInput.case === 3) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
       uturn();
 
-    } else if (FAKE_USER_INPUT.case === 4) {
+    } else if (userInput.case === 4) {
 
       // THIS CAUSES AN INFINITE LOOP RESET ON THE GAME
       utils.turn(car, coord_3, 'east', 'south');
@@ -223,7 +223,7 @@ var createGame = (userInput) => {
       uturn();
       utils.turn(car, coord_5, 'west', 'south');
 
-    } else if (FAKE_USER_INPUT.case === 5) {
+    } else if (userInput.case === 5) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
@@ -231,14 +231,14 @@ var createGame = (userInput) => {
       utils.turn(car, coord_5, 'west', 'north');
       utils.turn(car, coord_3, 'north', 'east');
 
-    } else if (FAKE_USER_INPUT.case === 6) {
+    } else if (userInput.case === 6) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
       uturn();
       utils.turn(car, coord_5, 'west', 'north');
 
-    } else if (FAKE_USER_INPUT.case === 7) {
+    } else if (userInput.case === 7) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
@@ -246,11 +246,11 @@ var createGame = (userInput) => {
       utils.turn(car, coord_5, 'west', 'north');
       utils.turn(car, coord_1, 'north', 'west');
 
-    } else if (FAKE_USER_INPUT.case === 8) {
+    } else if (userInput.case === 8) {
 
       utils.turn(car, coord_3, 'east', 'north');
 
-    } else if (FAKE_USER_INPUT.case === 9) {
+    } else if (userInput.case === 9) {
 
       utils.turn(car, coord_3, 'east', 'north');
       utils.turn(car, coord_1, 'north', 'west');
