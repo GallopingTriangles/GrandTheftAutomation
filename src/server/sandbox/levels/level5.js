@@ -26,6 +26,7 @@ var level5 = function(req, res, next) {
 	// case 2: fail, engine not on or speed 0
 	// case 3: success, right turn
 	// case 4: fail, crashed going straight
+  // case 5: fail, right turn
 
 	// == TESTING USER INPUT LEVEL 5 ========================
 	runTestSuite(function UserInputTestLevel5(t) {
@@ -84,7 +85,7 @@ var level5 = function(req, res, next) {
         enabled.length === 3,
         'Expect enable() to be called three times, but got called ' + enabled.length + ' times',
         function() {
-        	setCase(2); // error, don't let car move
+        	setCase(4); // error, don't let car move
         }
       );
     };
