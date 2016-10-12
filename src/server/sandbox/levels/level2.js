@@ -75,12 +75,33 @@ var level2 = function(req, res, next) {
 	        calls === 1,
 	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
 	        function() {
-	        	setCase(2);
+	        	setCase(3);
 	        }
 	      );
 			};
 
   	});
+
+    // == CONDITIONAL TESTS == //
+    runTestSuite(function ConditionalTest(t) {
+      this.testConditionalPresence = function() {
+        t.assertTrue(
+          userInput.indexOf('if') !== -1,
+          'Expected code to have an if statement, example: "if (sensor.front) { do something..."',
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testConditionalSensorPresence = function() {
+        userInput.indexOf('sensor.front === true'),
+        'Expected code to have an if statement with conditional: if (sensor.front === true) {...',
+        function() {
+          setCase(3);
+        }
+      };
+    });
 
 		runTestSuite(function SensorConditionalTrueTest(t) {
 			// sandbox for virtual machine
