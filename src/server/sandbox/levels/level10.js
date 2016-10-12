@@ -161,17 +161,18 @@ var level10 = function(req, res, next) {
        );
       };
 
-      this.testConditionalLeftOrRightPresence = function() {
+      this.testConditionalLeftOrRightorStraightPresence = function() {
       	t.assertTrue(
-         userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1,
-         'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
+         userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1 ||
+         userInput.indexOf("gps.intersection === 'straight'"),
+         'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {.. or if (gps.intersection === "straight") {..',
          function() {
            // ADD FAIL CALLBACK
          }
       	);
       };
 
-      this.testTwoConditionalsPresent = function() {
+      this.testThreeConditionalsPresent = function() {
        var input = userInput;
        var count = 0;
        var pos = input.indexOf('if');
