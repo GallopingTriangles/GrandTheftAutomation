@@ -54,14 +54,10 @@ var createGame = (userInput) => {
   }
 
   var car;
-  // var obstacles;
   var cursors;
   var text;
 
-  /* needsChange */
-
   var sensors = {};
-  // These must be declared in this order. We iterate through them later.
   sensors.front = {};
   sensors.right = {};
   sensors.back = {};
@@ -90,12 +86,6 @@ var createGame = (userInput) => {
   ** A callback will be invoked upon collisions.
   */
   var collisionBodies;
-
-  /*
-  ** An array of endZone bodies that will trigger a success callback
-  ** when the car hits them, and the level is considered completed.
-  */
-  var endZoneBodies;
 
   var completionTiles;
 
@@ -137,9 +127,6 @@ var createGame = (userInput) => {
     map = game.add.tilemap('level_4');
     map.addTilesetImage('GTA_tileset');
 
-    // map = game.add.tilemap('map');
-    // map.addTilesetImage('tmw_desert_spacing');
-
     /*
     ** Set the layers and their respective tile IDs for collision.
     ** Needs to be done before generating the p2 bodies below.
@@ -159,8 +146,6 @@ var createGame = (userInput) => {
     */
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
 
-    // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
-
     /*
     ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
     ** that collide are created. This returns an array of body objects that can be
@@ -168,15 +153,6 @@ var createGame = (userInput) => {
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.html#convertTilemap
     */
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, false);
-
-    /*
-    ** Convert the endZoneBodies into Phaser p2 bodies so the game can detect when
-    ** the car has entered any of these tiles, which will be interpreted as a level completion.
-    */
-    // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
-    // console.log(endZoneBodies);
-
-
 
     /*
     ** Gather the endzone tiles and intersection tiles so a callback can be run when
@@ -189,15 +165,6 @@ var createGame = (userInput) => {
     intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     })
-
-    /*
-    ** Gather all tiles from layer_1 into an array of tiles,
-    ** and assign a callback function to when these tiles are hit by anything.
-    */
-    // collisionTiles = layer_1.getTiles(0, 0, 800, 600).filter(function(tile) {
-    //   return tile.index > 0;
-    // });
-
 
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
@@ -227,8 +194,6 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      // collisionBody.debug = true;
-
     })
 
     /*
@@ -237,11 +202,6 @@ var createGame = (userInput) => {
     */
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
-
-    /*
-    ** Enables the user to have control over the car through their cursor keys
-    */
-    // cursors = game.input.keyboard.createCursorKeys();
     coord_1 = intersectionCenter(intersectionTiles_1); // pixel center of the first intersection
 
   }
@@ -506,10 +466,6 @@ var createGame = (userInput) => {
 
     return [x, y];
   }
-
-
-
-
 
 }
 
