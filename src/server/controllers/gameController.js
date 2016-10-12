@@ -55,10 +55,13 @@ module.exports = {
       })
   },
 
+  /********************************************************************************** 
+  ** Handles POST request by querying database with username to allocate userId.   **
+  ** Uses retrieved userId to query Log table for a specific level to update or    ** 
+  ** create a new level entry for the user. This method also stores the state of   **
+  ** the code editor into the database.                                            **
+  ***********************************************************************************/
   saveGameState: (req, res, next) => {
-    /* handles a POST request                             */
-    /* store the state of the code editor into the db     */
-    /* req should contain the level and user and commands */
     console.log('session: ', req.session);
     var username = req.body.username;
     var level = req.body.level;
@@ -66,8 +69,6 @@ module.exports = {
     db.User.findOne({ where: { username: username }})
       .then(user => {
         if (!user) { 
-          // handle error, but user should NOT be null since they must be logged in to save a solution
-          console.log('Cannot find user');
           res.status(404).send({message: 'Processing error. Try again.'});
         } else {
           var userId = user.dataValues.id;
@@ -77,22 +78,23 @@ module.exports = {
               UserId: userId
             }
           }).then(log => {
-            if (!log) { // if a log doesn't exist for the user at that level, create it
+            // if a log doesn't exist for the user at that level, create it
+            if (!log) { 
               db.Log.create({
                 level: level,
                 solution: solution,
                 UserId: userId
-              }).then(log => {
+              }).then( log => {
                 // respond with phaser object and bug report
                 res.status(200).json({phaser: req.body.phaser, bugs: req.body.bugs});
-              }).catch(err => {
+              }).catch( err => {
                 console.log('Error saving solution: ', err);
                 res.status(404).send({message: 'Processing error. Try again.'});
               });
             } else { // if it does exist, then update it
               module.exports.updateGameState(req, res, next);
             }
-          }).catch(err => {
+          }).catch( err => {
             console.log('error searching: ', err);
           })
         }
