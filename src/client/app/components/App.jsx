@@ -17,15 +17,6 @@ class App extends Component {
     super(props);
   }
   render() {
-    // return (
-    //   <div>
-    //     <Nav />
-    //     <Signup />
-    //     <Login />
-    //     <Game />
-    //     <Console />
-    //   </div>
-    // )
     return (
       <Router history={ hashHistory }>
         <Route path='/' component={ PageContainer }>
