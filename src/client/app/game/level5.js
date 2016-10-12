@@ -64,7 +64,7 @@ var createGame = (userInput) => {
   sensors.back = {};
   sensors.left = {};
 
-
+  var speed = userInput.speed ? userInput.speed * 4 : 0;
   var startingX = 440;
   var startingY = 550;
   var backgroundColor = '#3e5f96';
@@ -206,11 +206,10 @@ var createGame = (userInput) => {
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
     */
-    if (FAKE_USER_INPUT.sensor) {
+    if (userInput.sensor) {
       createSensors();
     }
     createCar();
-    setSpeed();
 
     /*
     ** Create two collision groups. One for the car and one for everything else.
@@ -291,25 +290,25 @@ var createGame = (userInput) => {
       // }
     }
 
-    if (FAKE_USER_INPUT.case === 1) {
+    if (userInput.case === 1) {
       car.body.moveForward(400);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
       checkCompletion();
-    } else if (FAKE_USER_INPUT.case === 2) {
+    } else if (userInput.case === 2) {
       car.body.moveForward(400);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 90;
       }
       checkFailure();
-    } else if (FAKE_USER_INPUT.case === 3) {
+    } else if (userInput.case === 3) {
       car.body.moveForward(400);
       if (Math.abs(coord_1[0] + 50 - car.body.x) < 50 && Math.abs(coord_1[1] - car.body.y) < 50) {
         car.body.velocity.x = 0;
         car.body.velocity.y = 0;
       }
-    } else if (FAKE_USER_INPUT.case === 4) {
+    } else if (userInput.case === 4) {
       car.body.moveForward(400);
     }
 
@@ -320,8 +319,6 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    // game.debug.spriteInfo(car, 32, 32);
-    // car.body.debug = true;
 
   }
 
@@ -345,9 +342,6 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(car.width, car.height);
     car.body.collideWorldBounds = true;
-    if (userInput.engine) {
-      car.body.moveForward(userInput.speed * userSpeedMultiplier);
-    }
   }
 
   /*
@@ -372,26 +366,6 @@ var createGame = (userInput) => {
         break;
       default:
         game.load.image('car', './assets/car-top-view-small.png');
-    }
-  }
-
-  /*
-  ** Dictates which direction the car should rotate based on if the car
-  ** is moving in a forward or reverse direction.
-  */
-  function leftRight(forward) {
-    var angularVelocity;
-
-    if (forward) {
-      angularVelocity = carForwardSpeed / 3;
-    } else {
-      angularVelocity = -carBackwardSpeed / 3;
-    }
-
-    if (cursors.left.isDown) {
-      car.body.rotateLeft(angularVelocity)
-    } else if (cursors.right.isDown) {
-      car.body.rotateRight(angularVelocity);
     }
   }
 
@@ -426,17 +400,6 @@ var createGame = (userInput) => {
       sensors[sensor].y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
       sensors[sensor].x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
       index += 1;
-    }
-  }
-
-  /*
-  ** If the user has declared a speed:
-  ** Set the car's speed appropriately.
-  */
-  function setSpeed() {
-    if (userInput.speed) {
-      carForwardSpeed = userInput.speed * userSpeedMultiplier;
-      carBackwardSpeed = carForwardSpeed * forwardReverseMultiplier;
     }
   }
 
