@@ -181,7 +181,7 @@ var level1 = function(req, res, next) {
 
     // == COLOR TESTS == //
     // set color on phaser object to context value
-    req.body.phaser.color = context.testColor;
+    req.body.phaser.color = context.testColor.value;
     runTestSuite(function ColorInputTest(t) {
     	// grab color from sanbox context
     	var color = context.testColor.value;
@@ -238,7 +238,7 @@ var level1 = function(req, res, next) {
 
     // == SPEED TESTS == //
     // set speed on phaser object to context
-    req.body.phaser.speed = context.testSpeed;
+    req.body.phaser.speed = context.testSpeed.value;
     runTestSuite(function SpeedInputTest(t) {
     	// grab speed from sandbox context
     	var speed = context.testSpeed.value;
