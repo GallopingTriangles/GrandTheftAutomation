@@ -116,20 +116,14 @@ class Console extends Component {
               <button 
                 type='button' 
                 className='btn btn-default' 
-                onClick={ (e) => this.setTab(e, 'learn') } >
-                <i className='fa fa-book' aria-hidden='true'></i> Learn
-              </button>
-              <button 
-                type='button' 
-                className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'instructions') }>
-                <i className='fa fa-check-square-o' aria-hidden='true'></i> Instruction
+                <i className='fa fa-check-square-o' aria-hidden='true'></i> Instructions
                 </button>
               <button 
                 type='button' 
                 className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'editor') }>
-                <i className='fa fa-code' aria-hidden='true'></i> Code
+                <i className='fa fa-code' aria-hidden='true'></i> Code Editor
                 </button>
               <button 
                 type='button' 
