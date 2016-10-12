@@ -74,7 +74,7 @@ class Console extends Component {
   }
 
   /* Keep track of the user's code from the editor by storing it in state */
-  codeChange(newCode) {
+  inputChange(newCode) {
     this.setState({ input: newCode });
   }
 
@@ -88,7 +88,7 @@ class Console extends Component {
       case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
                             code={ this.state.input } 
-                            inputChange={ this.codeChange.bind(this) } 
+                            inputChange={ this.inputChange.bind(this) } 
                             runInput={ this.postSolution.bind(this) } 
                             resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
