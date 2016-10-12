@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   /*
         *** NOTE: cases not in order (2 and 5) ***
-        
+
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 400,
