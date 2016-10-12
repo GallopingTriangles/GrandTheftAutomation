@@ -56,6 +56,11 @@ class SignupContainer extends Component {
 
         /* Redirect the logged in user to the game */
         this.props.router.push('/game');
+
+        /********
+        ********* should probably be setting the level to 0 for new user?!?!?!
+        ********/
+
       })
     }).catch(err => {
       console.log('Error in signup request');
