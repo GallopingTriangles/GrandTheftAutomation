@@ -60,7 +60,7 @@ class GamePage extends Component {
         var result = solutions.filter(solution => {
           return solution.level === this.props.level;
         })[0];
-        var solution = result ? result.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n';
+        var solution = result ? result.solution : '// Input your code here\n\n';
         this.props.setCode(solution);
 
         /*************************************************************/
