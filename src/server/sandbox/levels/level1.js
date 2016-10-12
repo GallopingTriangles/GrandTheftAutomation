@@ -241,7 +241,8 @@ var level1 = function(req, res, next) {
     req.body.phaser.speed = context.testSpeed;
     runTestSuite(function SpeedInputTest(t) {
     	// grab speed from sandbox context
-    	var speed = context.testSpeed;
+    	var speed = context.testSpeed.value;
+    	var calls = context.testSpeed.count;
 
       // if a test fails, set the speed to a default value
       var setSpeedDefault = function(errorMessage) {
@@ -249,11 +250,21 @@ var level1 = function(req, res, next) {
         req.body.phaser.case = 2;
       };
 
+      this.testSpeedCalled = function() {
+      	t.assertTrue(
+          calls,
+          'Expected setSpeed() to be called, but got ' + calls + ' calls',
+          function() {
+          	setCase(2);
+          }
+      	);
+      };
+
     	// test if the set speed function is called
-    	this.testSpeedDefined = function() {
+    	this.testSpeedCalledWithArgument = function() {
         t.assertTrue(
           speed,
-          'Expected speed to be set, but got undefined',
+          'Expected setSpeed() to be called with an argument, but got ' + speed,
           function() {
           	setCase(2);
           }
@@ -262,12 +273,12 @@ var level1 = function(req, res, next) {
 
     	// test if speed if of data type number
     	this.testSpeedNumber = function() {
-        t.assertNumber(
-        	speed,
-        	'speed',
-        	function() {
-        		setCase(2);
-        	}
+        t.assertTrue(
+          typeof speed === 'number',
+          'Expected setSpeed() to be called with an argument of type string, but got called with argument of type ' + typeof speed,
+          function() {
+          	setCase(2);
+          } 
         );
     	};
 
