@@ -206,6 +206,10 @@ var createGame = (userInput) => {
     if (userInput.case === 1) {
       car.body.moveForward(speed);
       checkCompletion();
+    } else {
+      setTimeout(() => {
+        levelFailed();
+      }, 2000);
     }
   }
 
@@ -333,6 +337,12 @@ var createGame = (userInput) => {
   function levelCompleted() {
     var text = game.add.sprite(400, 300, 'success');
     text.anchor.setTo(.5, .5)
+    game.paused = true;
+  }
+
+  function levelFailed() {
+    var text = game.add.sprite(400, 300, 'failure');
+    text.anchor.setTo(.5, .5);
     game.paused = true;
   }
 
