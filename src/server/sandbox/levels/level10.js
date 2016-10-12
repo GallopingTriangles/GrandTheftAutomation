@@ -42,11 +42,10 @@ var level10 = function(req, res, next) {
 	  var funcEnable = 'var enable = function(input) { testEnabled.values.push(input); testEnabled.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "gps") { testGps = true }; };';
 	  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
 	  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
-    var gps = 'var gps = { intersection: false };';
     var reroute = 'gps.reroute = function() { testReroute++; };';
 
 	  // input for virtual machine
-	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + gps + reroute + userInput;
+	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + reroute + userInput;
 	  var script = new vm.Script(input);
 
     var Sandbox = function() {
@@ -76,7 +75,10 @@ var level10 = function(req, res, next) {
 		  		count: 0
         },
         testGps: undefined,
-        testReroute: 0
+        testReroute: 0,
+        gps: {
+          intersection: false
+        }
       };
      };
 
@@ -223,8 +225,86 @@ var level10 = function(req, res, next) {
            }
        	);
        };
-
  	  });
+
+    // == CONDITIONAL STRAIGHT TESTS == //
+    runTestSuite(function GpsIntersectionStraightTest(t) {
+      var sb = new Sandbox().sandbox;
+      sb.gps.intersection = 'straight';
+
+      var context = new vm.createContext(sb);
+      script.runInContext(context);
+
+      var turn = context.testTurn.value;
+      var calls = context.testTurn.count;   
+
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+        t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right' || turn === 'straight',
+          'Expected function turn() argument to have value "left", "right" or "straight", but got value ' + turn,
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnInputValueStraight = function() {
+        t.assertTrue(
+          turn === 'straight',
+          'Expected function turn() argument to have value "straight", but got value ' + turn,
+          function() {
+            if (turn === 'left') {
+              setCase(7);
+            } else if (turn === 'right') {
+              setCase(8);
+            } else {
+              setCase(5);
+            }
+          }
+        );
+      };
+    });
+
   })
 
   next();
