@@ -226,8 +226,6 @@ var createGame = (userInput) => {
       enableSensors();
     }
 
-    /* Don't need to handle case 2 because the user doesn't have the engine on */
-
     if (userInput.case === 1) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
@@ -248,6 +246,10 @@ var createGame = (userInput) => {
       }
     } else if (userInput.case === 4) {
       car.body.moveForward(speed);
+    } else if (userInput.case === 2) {
+      setTimeout(() => {
+        levelFailed();
+      }, 2000);
     }
 
   }
@@ -383,16 +385,17 @@ var createGame = (userInput) => {
   }
 
   function levelCompleted() {
-    var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Success!', style);
+    var text = game.add.sprite(400, 300, 'success');
+    text.anchor.setTo(.5, .5)
     game.paused = true;
   }
 
   function levelFailed() {
-    var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'FAIL!', style);
+    var text = game.add.sprite(400, 300, 'failure');
+    text.anchor.setTo(.5, .5);
     game.paused = true;
   }
+
 
   /*
   ** Called when the car collides with a collision body (tile)
