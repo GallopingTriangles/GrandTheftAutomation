@@ -344,7 +344,7 @@ var level1 = function(req, res, next) {
       level7(req, res, next);
     } else if (req.body.level === 8 || req.body.level === 9) {
       level8(req, res, next);
-    } else if (req.body.level === 10) {
+    } else if (req.body.level === 10 || req.body.level === 11) {
       level10(req, res, next);
     } else {
     	next();
