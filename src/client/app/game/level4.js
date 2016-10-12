@@ -330,24 +330,8 @@ var createGame = (userInput) => {
     }
   }
 
-  // function attachSensors(offset) {
-  //   var index = 0;
-  //   for (var sensor in sensors) {
-  //     var individualOffset = offset;
-  //     if (index % 2 === 0) {
-  //       individualOffset = offset * 2;
-  //     }
-  //     // sensors[sensor].angle = car.body.angle;
-  //     sensors[sensor].y = (-individualOffset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
-  //     sensors[sensor].x = (individualOffset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
-  //     index += 1;
-  //   }
-  // }
-
   function enableSensors() {
-
-    // attachSensors(20);
-
+    
     for (var sensor in sensors) {
       sensors[sensor].angle = car.body.angle;
       sensors[sensor].alpha = .3;

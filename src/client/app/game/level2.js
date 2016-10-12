@@ -130,9 +130,6 @@ var createGame = (userInput) => {
     map = game.add.tilemap('level_2');
     map.addTilesetImage('GTA_tileset');
 
-    // map = game.add.tilemap('map');
-    // map.addTilesetImage('tmw_desert_spacing');
-
     /*
     ** Set the layers and their respective tile IDs for collision.
     ** Needs to be done before generating the p2 bodies below.
@@ -145,17 +142,11 @@ var createGame = (userInput) => {
     layer_6 = map.createLayer('intersection_layer');
     layer_1 = map.createLayer('collision_layer');
 
-    // layer_1 = map.createLayer('Tile Layer 1');
-    // layer_2 = map.createLayer('Tile Layer 2');
-
     /*
     ** Set the appropriate tiles of a certain layer to be collideable
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
-    // map.setCollision(34, true, 'Tile Layer 1');
-
-    // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
 
     /*
     ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
@@ -164,13 +155,6 @@ var createGame = (userInput) => {
     ** http://phaser.io/docs/2.6.2/Phaser.Physics.P2.html#convertTilemap
     */
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, false);
-
-    /*
-    ** Convert the endZoneBodies into Phaser p2 bodies so the game can detect when
-    ** the car has entered any of these tiles, which will be interpreted as a level completion.
-    */
-    // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
-    // console.log(endZoneBodies);
 
     completionTiles = layer_5.getTiles(0, 0, 1000, 1000).filter(function(tile) {
       return tile.index > 0;
@@ -309,20 +293,6 @@ var createGame = (userInput) => {
   function convertAngle(angle) {
     return degToRad(90 - angle)
   }
-
-
-  // function createSensors() {
-  //   // Check to make sure the user has turned the sensor on
-  //   if (userInput.sensor) {
-  //     // Appearace
-  //     for (var sensor in sensors) {
-  //       sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
-  //       sensors[sensor].alpha = .1;
-  //       sensors[sensor].anchor.setTo(.5, .5);
-  //       sensors[sensor].scale.setTo(.5, .5);
-  //     }
-  //   }
-  // }
 
   function createSensors() {
     // Appearace

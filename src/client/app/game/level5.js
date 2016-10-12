@@ -34,8 +34,10 @@ var createGame = (userInput) => {
     setCarColor();
     game.load.image('wasted', './assets/wasted.png');
     game.load.image('panda', './assets/panda.png');
-    game.load.image('grass', './assets/grass.jpg');
-    game.load.image('sensor', './assets/round.png');
+    game.load.image('frontSensor', './assets/sensor_front.png');
+    game.load.image('backSensor', './assets/sensor_back.png');
+    game.load.image('rightSensor', './assets/sensor_right.png');
+    game.load.image('leftSensor', './assets/sensor_left.png');
 
     /*
     ** A spritesheet contains a bunch of frames stitched together to create an animation effect
@@ -51,14 +53,9 @@ var createGame = (userInput) => {
   }
 
   var car;
-  // var obstacles;
-  var cursors;
   var text;
 
-  /* needsChange */
-
   var sensors = {};
-  // These must be declared in this order. We iterate through them later.
   sensors.front = {};
   sensors.right = {};
   sensors.back = {};
@@ -126,9 +123,6 @@ var createGame = (userInput) => {
     map = game.add.tilemap('level_5');
     map.addTilesetImage('GTA_tileset');
 
-    // map = game.add.tilemap('map');
-    // map.addTilesetImage('tmw_desert_spacing');
-
     /*
     ** Set the layers and their respective tile IDs for collision.
     ** Needs to be done before generating the p2 bodies below.
@@ -148,8 +142,6 @@ var createGame = (userInput) => {
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
-
-    // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
 
     /*
     ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
@@ -174,15 +166,6 @@ var createGame = (userInput) => {
     failureTiles = layer_7.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     });
-
-    /*
-    ** Gather all tiles from layer_1 into an array of tiles,
-    ** and assign a callback function to when these tiles are hit by anything.
-    */
-    // collisionTiles = layer_1.getTiles(0, 0, 800, 600).filter(function(tile) {
-    //   return tile.index > 0;
-    // });
-
 
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
@@ -211,8 +194,6 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      // collisionBody.debug = true;
-
     })
 
     /*
@@ -222,10 +203,6 @@ var createGame = (userInput) => {
     car.body.collides(obstacleCollisionGroup, gameOver, this);
 
 
-    /*
-    ** Enables the user to have control over the car through their cursor keys
-    */
-    // cursors = game.input.keyboard.createCursorKeys();
     coord_1 = intersectionCenter(intersectionTiles_1); // pixel center of the first intersection
 
   }
@@ -261,42 +238,30 @@ var createGame = (userInput) => {
         }
       })
 
-      /*
-      ** Increase the opacity of the sensor while a collision body is in its area.
-      */
-      // if (overlap) {
-      //   sensor.alpha = 0.7;
-      // } else {
-      //   sensor.alpha = 0.1;
-      // }
     }
 
     if (userInput.case === 1) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
       checkCompletion();
     } else if (userInput.case === 2) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 90;
       }
       checkFailure();
     } else if (userInput.case === 3) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 50 - car.body.x) < 50 && Math.abs(coord_1[1] - car.body.y) < 50) {
         car.body.velocity.x = 0;
         car.body.velocity.y = 0;
       }
     } else if (userInput.case === 4) {
-      car.body.moveForward(400);
+      car.body.moveForward(speed);
     }
 
-    /*
-    ** The car should remain still if no arrow keys are pressed for early levels.
-    ** This resets the car's velocity per frame.
-    */
   }
 
   function render() {
