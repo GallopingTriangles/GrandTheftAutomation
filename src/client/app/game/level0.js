@@ -399,7 +399,7 @@ var createGame = (userInput) => {
   }
 
   function enableSensors() {
-    
+
     for (var sensor in sensors) {
       sensors[sensor].angle = car.body.angle;
       sensors[sensor].alpha = .3;
@@ -505,8 +505,10 @@ var createGame = (userInput) => {
     explosion.animations.play('explode', 24, false);
     // text.kill();
     car.kill();
-    if (sensors.right) {
-      // sensor.kill();
+    for (var sensor in sensors) {
+      if (sensors[sensor] !== {}) {
+        sensors[sensor].kill();
+      }
     }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
