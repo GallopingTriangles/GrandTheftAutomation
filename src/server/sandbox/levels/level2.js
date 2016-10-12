@@ -95,11 +95,13 @@ var level2 = function(req, res, next) {
       };
 
       this.testConditionalSensorPresence = function() {
-        userInput.indexOf('sensor.front === true'),
-        'Expected code to have an if statement with conditional: if (sensor.front === true) {...',
-        function() {
-          setCase(3);
-        }
+        t.assertTrue(
+          userInput.indexOf('sensor.front === true') !== -1,
+          'Expected code to have an if statement with conditional: if (sensor.front === true) {...',
+          function() {
+            setCase(3);
+          }
+        );
       };
     });
 
