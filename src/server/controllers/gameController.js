@@ -91,7 +91,7 @@ module.exports = {
                 console.log('Error saving solution: ', err);
                 res.status(404).send({message: 'Processing error. Try again.'});
               });
-            } else { // if it does exist, then update it
+            } else { // if it does exist, then update it with update method written below
               module.exports.updateGameState(req, res, next);
             }
           }).catch( err => {
@@ -103,50 +103,49 @@ module.exports = {
       })
   },
 
+
+  /********************************************************************************** 
+  ** Handles PUT request by querying database with username to allocate userId.    **
+  ** Uses retrieved userId to query Log table for a specific level to update. This **
+  ** method updates the Log table with a user's corresponding in-game commands.    ** 
+  ***********************************************************************************/
   updateGameState: (req, res, next) => {
-    /* handles a PUT request with a 204 status on success         */
-    /* updates the saved commands for user for a particular level
-               to a set of new commands that the user has entered */
     var username = req.body.username;
     var level = req.body.level;
     var solution = req.body.log;
-    db.User.findOne({ where: { username: username }}).then(user => {
-      if (!user) {
-        // this error should never occur because a user should be logged in
-        res.status(404).send({message: 'Processing error. Try again'});
-      } else {
-        var userId = user.dataValues.id;
-        // find the log corresponding to the user
-        db.Log.findOne({
-          where: {
-            level: level,
-            UserId: userId
-          }
-        }).then(log => {
-          // then update it
-          if (log) {
-            log.update({
-              solution: solution
-            }).then(() => {
-              console.log('Updated log: ', log.dataValues);
-              res.send({phaser: req.body.phaser, bugs: req.body.bugs});
-            }).catch(err => {
-              console.log('Error updating log: ', err);
-              res.status(404).send({message: 'Error updating solution'});
-            })
-          } else {
-            // log didn't exist
-            console.log('Log did not exist.. weird');
-            res.status(404).send({message: 'Error updating solution'});
-          }
-        }).catch(err => {
-          console.log('Error updating log: ', err);
-          res.status(404).send({message: 'Error updating solution'});
-        })
-      }
-    }).catch(err => {
-      console.log('Error looking for user: ', err);
-      res.status(404).send({message: 'Processing error. Try again.'});
-    })
+    db.User.findOne({ where: { username: username } })
+      .then( user => {
+        if (!user) {
+          // this error should never occur because a user should be logged in
+          res.status(404).send({message: 'Processing error. Try again'});
+        } else {
+          var userId = user.dataValues.id;
+          db.Log.findOne({
+            where: {
+              level: level,
+              UserId: userId
+            } 
+          }).then( log => {
+            if (log) {
+              log.update({ solution: solution })
+                .then( () => {
+                  // console.log('Updated log: ', log.dataValues);
+                  res.send({ phaser: req.body.phaser, bugs: req.body.bugs });
+                }).catch( err => {
+                  // console.log('Error updating log: ', err);
+                  res.status(404).send({message: 'Error updating solution'});
+                })
+            } else {
+              res.status(404).send({message: 'Log does not exist.'});
+            }
+          }).catch(err => {
+            // console.log('Error updating log: ', err);
+            res.status(404).send({message: 'Error finding level.'});
+          })
+        }
+      }).catch(err => {
+        // console.log('Error looking for user: ', err);
+        res.status(404).send({message: 'Error finding user. Try again.'});
+      })
   }
 }
