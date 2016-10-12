@@ -6,15 +6,17 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   /*
+        *** NOTE: cases not in order (2 and 5) ***
+        
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 400,
     sensor: true,
     case: 1, // success left turn
-    // case: 2, // fail, right turn
+    // case: 5, // fail, right turn
     // case: 3, // fail, stopped at intersection
     // case: 4, // fail, crashed straight
-    // case: 5  // fail, didn't start engine
+    // case: 2  // fail, didn't start engine
   }
   */
   /**********************************************************/
@@ -222,13 +224,15 @@ var createGame = (userInput) => {
       enableSensors();
     }
 
+    /* Don't need to handle case 2 because the user doesn't have the engine on */
+
     if (userInput.case === 1) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.angle = -90;
       }
       checkCompletion();
-    } else if (userInput.case === 2) {
+    } else if (userInput.case === 5) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 90;

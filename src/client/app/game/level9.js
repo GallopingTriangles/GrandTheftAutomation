@@ -8,12 +8,14 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   /*
+        *** NOTE: cases not in order (2 and 10)
+
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 100,
     sensor: true,
     case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
-    // case: 2 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
+    // case: 10 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
     // case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
     // case: 4 // fail: BUGGY CASE, DO NOT USE [RIGHT, LEFT, U-TURN, LEFT] // THIS CASE IS BUGGY SO DO NOT USE IT
     // case: 5 // fail: [RIGHT, LEFT, U-TURN, RIGHT, RIGHT]
@@ -21,7 +23,7 @@ var createGame = (userInput) => {
     // case: 7 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, LEFT]
     // case: 8 // fail: [LEFT, STRAIGHT]
     // case: 9 // fail: [LEFT, LEFT]
-    // case: 10 // fail: ENGINE IS NOT ENABLED
+    // case: 2 // fail: ENGINE IS NOT ENABLED
   }
   */
   /**********************************************************/
@@ -183,7 +185,7 @@ var createGame = (userInput) => {
     }
 
     // case: 1 // success: [RIGHT, LEFT, U-TURN, RIGHT, STRAIGHT, RIGHT, RIGHT, LEFT]
-    // case: 2 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
+    // case: 10 // fail: [RIGHT, LEFT] (crash into the obstacle instead of u-turning)
     // case: 3 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT]
     // case: 4 // fail: [RIGHT, LEFT, U-TURN, LEFT]
     // case: 5 // fail: [RIGHT, LEFT, U-TURN, RIGHT, RIGHT]
@@ -191,9 +193,9 @@ var createGame = (userInput) => {
     // case: 7 // fail: [RIGHT, LEFT, U-TURN, STRAIGHT, LEFT]
     // case: 8 // fail: [LEFT, STRAIGHT]
     // case: 9 // fail: [LEFT, LEFT]
-    // case: 10 // fail: ENGINE IS NOT ENABLED
+    // case: 2 // fail: ENGINE IS NOT ENABLED
 
-    if (userInput.case !== 10) { // engine is enabled in all cases except case 10
+    if (userInput.case !== 2) { // engine is enabled in all cases except case 2
       car.body.moveForward(speed);
     } else {
       car.body.velocity.x = 0;
@@ -211,7 +213,7 @@ var createGame = (userInput) => {
       utils.turn(car, coord_4, 'south', 'east');
       checkCompletion();
 
-    } else if (userInput.case === 2) {
+    } else if (userInput.case === 10) {
 
       utils.turn(car, coord_3, 'east', 'south');
       utils.turn(car, coord_5, 'south', 'east');
@@ -357,9 +359,9 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(body) {
       for (var sensor in sensors) {
         if (sensors[sensor].getBounds().contains(body.x, body.y)
-        || sensors[sensor].getBounds().contains(body.x + 32, body.y)
-        || sensors[sensor].getBounds().contains(body.x, body.y + 32)
-        || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
+        || sensors[sensor].getBounds().contains(body.x + 16, body.y)
+        || sensors[sensor].getBounds().contains(body.x, body.y + 16)
+        || sensors[sensor].getBounds().contains(body.x + 16, body.y + 16)) {
           sensors[sensor].alpha = 1.0;
         }
       }

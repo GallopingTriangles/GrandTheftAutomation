@@ -6,13 +6,15 @@ var createGame = (userInput) => {
   /**********************************************************/
   /**********************************************************/
   /*
+            *** NOTE: case 2 and 3 are not in order ***
+
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 100,
     sensor: true,
     case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
-    // case: 2, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
-    // case: 3, // fail, didn't enable the engine
+    // case: 3, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
+    // case: 2, // fail, didn't enable the engine
     // case: 4, // fail, drove STRAIGHT through the FIRST intersection and crashed ([STRAIGHT])
     // case: 5, // fail, turned LEFT then STRAIGHT and crashed ([LEFT, STRAIGHT])
     // case: 6, // fail, ([LEFT, LEFT])
@@ -183,7 +185,7 @@ var createGame = (userInput) => {
       enableSensors();
     }
 
-    if (userInput.case === 3) {
+    if (userInput.case === 2) {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
     } else {
@@ -231,7 +233,7 @@ var createGame = (userInput) => {
           }
         }
       }
-    } else if (userInput.case === 2
+    } else if (userInput.case === 3
       || userInput.case === 11
       || userInput.case === 12
       || userInput.case === 13
@@ -262,7 +264,7 @@ var createGame = (userInput) => {
             if (Math.abs(coord_6[1] - 20 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
               turn('west');
             }
-          } else if (userInput.case === 2) {
+          } else if (userInput.case === 3) {
             if (Math.abs(coord_6[1] + 30 - car.body.y) < 10 && Math.abs(coord_6[0] - car.body.x) < 150) {
               turn('east');
             }
@@ -365,9 +367,9 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(body) {
       for (var sensor in sensors) {
         if (sensors[sensor].getBounds().contains(body.x, body.y)
-        || sensors[sensor].getBounds().contains(body.x + 32, body.y)
-        || sensors[sensor].getBounds().contains(body.x, body.y + 32)
-        || sensors[sensor].getBounds().contains(body.x + 32, body.y + 32)) {
+        || sensors[sensor].getBounds().contains(body.x + 16, body.y)
+        || sensors[sensor].getBounds().contains(body.x, body.y + 16)
+        || sensors[sensor].getBounds().contains(body.x + 16, body.y + 16)) {
           sensors[sensor].alpha = 1.0;
         }
       }
