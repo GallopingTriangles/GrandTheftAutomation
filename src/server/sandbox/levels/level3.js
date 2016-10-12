@@ -23,6 +23,11 @@ var level3 = function(req, res, next) {
   // }
   //
 	// ======================================================
+  // case 1: success right turn
+  // case 2: fail, invalid speed or engine input
+  // case 3: fail, car crashed straight
+  // case 4: fail, crash left
+  // case 5: fail, stall at intersection
 
 	// == TESTING USER INPUT LEVEL 3 ========================
   runTestSuite(function UserInputTestLevel3(t) {
@@ -82,6 +87,27 @@ var level3 = function(req, res, next) {
 
     });
 
+    // == CONDITIONAL TESTS == //
+    runTestSuite(function ConditionalTest(t) {
+      this.testConditionalPresence = function() {
+        t.assertTrue(
+          userInput.indexOf('if') !== -1,
+          'Expected code to have an if statement, example: "if (map.intersection) { do something..."',
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testConditionalSensorPresence = function() {
+        userInput.indexOf('map.intersection === true'),
+        'Expected code to have an if statement with conditional: if (map.intersection === true) {...',
+        function() {
+          setCase(3);
+        }
+      };
+    });
+
     runTestSuite(function MapConditionalTrueTest(t) {
       // sandbox for virtual machine
       var sandbox = {
@@ -119,7 +145,21 @@ var level3 = function(req, res, next) {
           calls === 1,
           'Expected function turn() to be called once, but got called ' + calls,
           function() {
-          	setCase(3); // car is turning multiple times
+            if (turn === 'left') {
+              setCase(4);
+            } else {
+            	setCase(3); // car is turning multiple times
+            }
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got called with ' + turn,
+          function() {
+            setCase(3);
           }
         );
       };
@@ -134,12 +174,26 @@ var level3 = function(req, res, next) {
         );
       };
 
-      this.testTurnInputValue = function() {
+      this.testInputValueLeftOrRight = function() {
         t.assertTrue(
-          /* turn === 'left' || */ turn === 'right',
+          turn === 'left' || turn === 'right',
+          'Expected function turn() to be called with argument "left" or "right", but got called with ' + turn,
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testTurnInputValueRight = function() {
+        t.assertTrue(
+          turn === 'right',
           'Expected function turn() to be called with input value "right", but got input value ' + turn,
           function() {
-          	setCase(3); // car is not turning at intersetion
+            if (turn === 'left') {
+              setCase(4);
+            } else {
+            	setCase(3); // car is not turning at intersetion
+            }
           }
         );
       };
