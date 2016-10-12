@@ -16,10 +16,6 @@ class Console extends Component {
     };
   }
 
-  componentWillMount() {
-
-  }
-
   postSolution() {
 
     console.log('User submitted solution: ', this.props.currentCode);
