@@ -50,10 +50,11 @@ class GamePage extends Component {
 
         /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
 
+        /** THIS MAY HAVE BEEN FIXED, I'M NOT SURE                                                  **/
         /** Throws an error when it tries to fetch code for a user that has never saved code before **/
         /** This problem may or may not be present anymore... Troubleshooting required              **/ 
         /** The reason is most likely that getCode() was being run when it shouldn't be? Test it    **/
-        
+
         /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
 
         var result = solutions.filter(solution => {
@@ -108,6 +109,7 @@ class GamePage extends Component {
 }
 
 const mapStateToProps = state => {
+  /* Gives this component access to the current logged in user, game level, and code from Redux Store */
   return {
     user: state.user,
     level: state.level,
@@ -116,6 +118,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
+  /* Function to dispatch an action that will set the current code in the Redux Store             */
+  /* This is used for making sure the code in the Redux Store matches with the code in the editor */
   return {
     setCode: (code) => {
       dispatch(setCode(code));
