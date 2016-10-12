@@ -181,7 +181,7 @@ var level8 = function(req, res, next) {
           userInput.indexOf('if') !== -1,
           'Expected code to have an if statement, example: "if (gps.intersection) { do something... }"',
           function() {
-          	setCase(3);
+          	setCase(4);
           }
         );
       };
@@ -191,7 +191,7 @@ var level8 = function(req, res, next) {
           userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1,
           'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
           function() {
-            // ADD FAIL CALLBACK
+            setCase(4);
           }
       	);
       };
@@ -208,7 +208,7 @@ var level8 = function(req, res, next) {
           count >= 2,
           'Expected code to have two if statements, but got ' + count + ' if statement(s)',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(4);
           }
         );
       };
@@ -218,7 +218,7 @@ var level8 = function(req, res, next) {
           userInput.indexOf("gps.intersection === 'left'") !== -1,
           'Expect code to have an if statement with conditinal: if (gps.intersection === "left") {..',
           function() {
-            // ADD FAIL CALLBACK
+            setCase(4);
           }
       	);
       };
@@ -228,7 +228,7 @@ var level8 = function(req, res, next) {
           userInput.indexOf("gps.intersection === 'right'") !== -1,
           'Expect code to have an if statement with conditinal: (gps.intersection === "right") {..',
           function() {
-            // ADD FAIL CALLBACK
+            setCase(4);
           }
       	);
       };
@@ -250,7 +250,7 @@ var level8 = function(req, res, next) {
           calls,
           'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(4);
           }
         );
       };
@@ -260,7 +260,7 @@ var level8 = function(req, res, next) {
           calls === 1,
           'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(4);
           }
         );
       };
@@ -270,7 +270,7 @@ var level8 = function(req, res, next) {
           turn,
           'Expected function turn() to be called with an argument, but got ' + turn,
           function() {
-            // ADD FAIL CALLBACK
+            setCase(4);
           }
         );
       };
@@ -280,7 +280,7 @@ var level8 = function(req, res, next) {
           typeof turn === 'string',
           'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(4);
           }
       	);
       };
@@ -290,7 +290,7 @@ var level8 = function(req, res, next) {
           turn === 'left' || turn === 'right',
           'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(4);
           }
         );
       };
@@ -300,7 +300,7 @@ var level8 = function(req, res, next) {
           turn === 'left',
           'Expected function turn() argument to have value "left", but got value ' + turn,
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(11);
           }
         );
       };
@@ -322,7 +322,7 @@ var level8 = function(req, res, next) {
           calls,
           'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(5);
           }
         );
       };
@@ -332,7 +332,7 @@ var level8 = function(req, res, next) {
           calls === 1,
           'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(5);
           }
         );
       };
@@ -342,7 +342,7 @@ var level8 = function(req, res, next) {
           turn,
           'Expected function turn() to be called with an argument, but got ' + turn,
           function() {
-            // ADD FAIL CALLBACK
+            setCase(5);
           }
         );
       };
@@ -352,7 +352,7 @@ var level8 = function(req, res, next) {
           typeof turn === 'string',
           'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(5);
           }
       	);
       };
@@ -362,7 +362,7 @@ var level8 = function(req, res, next) {
           turn === 'left' || turn === 'right',
           'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(5);
           }
         );
       };
@@ -372,7 +372,7 @@ var level8 = function(req, res, next) {
           turn === 'right',
           'Expected function turn() argument to have value "right", but got value ' + turn,
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(6);
           }
         );
       };
