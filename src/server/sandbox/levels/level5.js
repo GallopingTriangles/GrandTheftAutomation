@@ -85,7 +85,17 @@ var level5 = function(req, res, next) {
         enabled.length === 3,
         'Expect enable() to be called three times, but got called ' + enabled.length + ' times',
         function() {
-        	setCase(4); // error, don't let car move
+        	setCase(4); 
+        }
+      );
+    };
+
+    this.testEnableCalledWithArgument = function() {
+      t.assertTrue(
+        enabled[2] !== undefined,
+        'Expected enable() to be called with an argument, but got called with ' + enabled[2],
+        function() {
+          setCase(4);
         }
       );
     };
@@ -129,13 +139,12 @@ var level5 = function(req, res, next) {
       );
     };
 
-    // test is setRoute function has input
-    this.testRouteDefined = function() {
+    this.testRouteCalledWithArgument = function() {
       t.assertTrue(
         route,
-        'Expected route to be defined, but got ' + route,
+        'Expected function setRoute() to be called with an argument, but got called with ' + route,
         function() {
-        	setCase(4); // no route defined, car crashes straigt
+          setCase(4);
         }
       );
     };
@@ -151,34 +160,53 @@ var level5 = function(req, res, next) {
       );
     };
 
+    var el;
+    var len = 0;
+    if (route) {
+      el = route[0];
+      len = route.length;
+    }
+    this.testRouteArrayElementString = function() {
+      t.assertTrue(
+        typeof el === 'string',
+        'Expect setRoute() input array elements to be of type string, but got ' + typeof el,
+        function() {
+          setCase(4);
+        }
+      );
+    };
+
     // test if the array consists of one element
-    this.testRouteArrayElement = function() {
+    this.testRouteArrayOneElement = function() {
       t.assertTrue(
-        route.length === 1,
-        'Expect setRoute() input array to have one element, but got ' + route.length + ' element(s)',
+        len === 1,
+        'Expect setRoute() input array to have one element, but got ' + len + ' element(s)',
         function() {
         	setCase(4); // NOT SURE WHAT TO DO IN THIS CASE
         }
       );
     };
 
-    // test if the array elements are of type stirng
-    this.testRouteArrayString = function() {
-      t.assertOptionsOfTypeString(
-        route,
+    this.testRouteArrayValueLeftOrRight = function() {
+      t.assertTrue(
+        el === 'left' || el === 'right',
+        'Expected setRoute() input array to have elements of value "left" or "right", but got ' + el,
         function() {
-        	setCase(4); // NOT SURE WHAT TO DO IN THIS CASE
+          setCase(4);
         }
       );
     };
 
-    // test if the array element if equal to right or left
-    this.testRouteArrayValue = function() {
+    this.testRouteArrayValueLeft = function() {
       t.assertTrue(
-        route[0] === 'left' || route[0] === 'right',
-        'Expected setRoute() input array elements to be "left" or "right", but got ' + route[0],
+        el === 'left',
+        'Expected setRoute() input array element to have value "left", but got ' + el,
         function() {
-        	setCase(4); // the input is not left/right, car goes straight and crashes
+          if (el === 'right') {
+            setCase(5); // ADD THIS FAIL CASE TO PHASER, RIGHT TURN....
+          } else {
+            setCase(4);
+          }
         }
       );
     };
