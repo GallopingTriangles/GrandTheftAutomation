@@ -21,7 +21,7 @@ var level11 = require('./level11.js');
 * *   and instantiate a brand new HTML canvas for a new Phaser instance by        *
  *    invoking the createGame() function. The differences in game logic is       * *
 * *   interpreted by createGame() through the userInput parameter sent from       *
- *    the client, but all things related to the rendering  and updating of the   * *
+ *    the client, but all things related to the rendering and updating of the    * *
 * *   game is contained in each createGame() function.                            *
  *                                                                               * *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

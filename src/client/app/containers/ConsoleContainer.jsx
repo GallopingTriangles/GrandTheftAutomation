@@ -23,7 +23,6 @@ class Console extends Component {
   }
 
   componentWillMount() {
-    // this.fetchSolutions();
 
     /*************************************************************/
     /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
@@ -40,29 +39,6 @@ class Console extends Component {
     var childContext = this;
     this.props.setConsole(childContext);
   }
-
-  // == FETCH FROM SERVER ================================================================
-  // fetchSolutions() {
-  //   var url = `/game?username=${this.props.user}`;
-
-  //   fetch(url, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then(response => {
-  //     response.json().then(solutions => {
-  //       var solution = (_.filter(solutions, (el) => {
-  //         return el.level === this.props.level;
-  //       }))[0];
-  //       this.setState({
-  //         input: solution ? solution.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n'
-  //       });
-  //     });
-  //   }).catch(err => {
-  //     console.log('error fetching code: ', err);
-  //   });
-  // }
 
   postSolution() {
 
@@ -87,6 +63,7 @@ class Console extends Component {
         // the response from the server is an object that is used to create the game
         // create a new game based off of the response object
         console.log('phaser response: ', response.phaser);
+        console.log('phaser bugs: ', response.bugs);
         createGame(response.phaser, this.props.level);
         this.setState({bugs: response.bugs});
       })
