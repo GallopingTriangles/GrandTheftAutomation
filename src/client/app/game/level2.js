@@ -387,7 +387,6 @@ var createGame = (userInput) => {
     explosion.animations.play('explode', 24, false);
     car.kill();
     for (var sensor in sensors) {
-      console.log('Each sensor', sensors[sensor]);
       if (sensors[sensor] !== {}) {
         sensors[sensor].kill();
       }
