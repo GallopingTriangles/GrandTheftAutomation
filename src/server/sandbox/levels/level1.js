@@ -310,7 +310,7 @@ var level1 = function(req, res, next) {
       this.testSensorDefined = function() {
         t.assertTrue(
         	sensor,
-          'Expected sensor to be enabled, but got undefined',
+          'Expected sensor to be enabled with function enable(), but got undefined',
           setSensorDefault
         );
       };
@@ -318,9 +318,9 @@ var level1 = function(req, res, next) {
       // test if the engine is enabled firstly
       this.testSensorEnabledSecond = function() {
       	var enabledSecond = '';
-        context.testEnable[1] ? enabledSecond = context.testEnable[1] : enabledSecond = '';
+        context.testEnable.values[1] ? enabledSecond = context.testEnable.values[1] : enabledSecond = '';
         t.assertTrue(
-          context.testEnable[1] === 'sensor',
+          context.testEnable.values[1] === 'sensor',
           'Expected sensor to be enabled secondly, but got ' + enabledSecond + ' enabled second',
           setSensorDefault
         );
