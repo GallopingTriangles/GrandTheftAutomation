@@ -41,30 +41,30 @@ var userController = {
     }   
   },
 
+  /********************************************************************************** 
+  ** Handles POST request by querying database with username to verify if user     **
+  ** exists. If not, uses bcrypt to generate salt and hash supplied plain-text     **
+  ** password to be combined with other supplied information to create a new user  **
+  ** in the database.                                                              **
+  ***********************************************************************************/
   signup: (req, res, next) => {
-    //check if user exists
     db.User.findOne({ where: { username: req.body.username } })
       .then(function(user) {
-        if (user === null) {
+        if (user === null) { //if user does not exist
           bcrypt.genSalt(10, function(err, salt) {
-            //generate hashed password w/ salt
             bcrypt.hash(req.body.password, salt, function(err, hash) {
-              //create newUser object to be inserted into db
-              var newUser = {
+              var newUser = { //create newUser object to be inserted into db
                 email: req.body.username,
                 username: req.body.username,
                 password: hash,
                 salt: salt
               }
-              //create user instance with newUser object
-              db.User.create(newUser)
-                //on success, respond with status 201 and message
+              db.User.create(newUser) //create user instance with newUser object
                 .then(function(createdUser) {
                   res.status(201).json({ message: 'User successfully created!' });
                 })
-                //on failure, respond with status 400
                 .catch(function(err) {
-                  console.log('error creating new user: ', err);
+                  // console.log('error creating new user: ', err);
                   res.sendStatus(400);
                 })
             })
@@ -88,4 +88,5 @@ var userController = {
   }
 }
 
+/* exports userController and associated methods */
 module.exports = userController;
