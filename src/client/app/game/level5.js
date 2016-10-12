@@ -5,6 +5,7 @@ var createGame = (userInput) => {
   /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
   /**********************************************************/
   /**********************************************************/
+  /*
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 400,
@@ -15,6 +16,7 @@ var createGame = (userInput) => {
     // case: 4, // fail, crashed straight
     // case: 5  // fail, didn't start engine
   }
+  */
   /**********************************************************/
   /**********************************************************/
 
