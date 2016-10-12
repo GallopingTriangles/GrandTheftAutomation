@@ -39,9 +39,11 @@ var level1 = function(req, res, next) {
     var funcEnable = 'var enable = function(input) { testEnable.values.push(input); testEnable.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
     var funcTurn = 'var turn = function(input) { testTurn = input; };';
     var funcRoute = 'var setRoute = function(input) { testRoute = input; };';
+    var gps = 'var gps = { intersection: false };';
+    var reroute = 'gps.reroute = function() {};';
 
     // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
+    var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + gps + reroute + userInput;
     var script = new vm.Script(input);
 
     // sandbox used in virtual machine
@@ -51,9 +53,6 @@ var level1 = function(req, res, next) {
     	},
     	map: {
         intersection: false
-    	},
-    	gps: {
-    		intersection: false
     	},
     	testEnable: {
     		values: [],
