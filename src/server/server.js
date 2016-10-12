@@ -15,6 +15,13 @@ var express = require('express'),
 
 var app = express();
 
+/*********************** SERVER CONFIGURATION ****************************
+** The following code configures a node express server to: serve static **
+** static assets; include middleware modules; configure mysql session   **
+** store; configure express sessions; use specific routers for different**
+** endpoints; and listens for the server connection.                    ** 
+**************************************************************************/
+
 // == serve static assets =====================================
 // serve static client-side files
 app.use(express.static(path.join(__dirname, '../../dist')));    
