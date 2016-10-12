@@ -75,12 +75,13 @@ var userController = {
       });
   },
 
+  /* Handles GET request by destroying any session on local machine via express session.*/
   logout: (req, res, next) => {
     req.session.destroy(function(err) {
       if (err) {
         res.status(409).send({ message: 'Error destroying session...' }); 
       } else {
-        console.log('req.session is: ', req.session);
+        // console.log('req.session is: ', req.session);
         res.status(202).send({ message: 'Session destroyed.' });
       }
     })
