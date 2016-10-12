@@ -1,12 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
+import React, { Component } from 'react';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import Nav from './Nav.jsx';
-import Signup from '../containers/SignupContainer.jsx';
-import Login from '../containers/LoginContainer.jsx';
-import Game from '../containers/GameContainer.jsx';
-import Console from '../containers/ConsoleContainer.jsx';
 import PageContainer from '../../views/PageContainer.jsx';
 import LandingPage from '../../views/LandingPage.jsx';
 import GamePage from '../../views/GamePage.jsx';
