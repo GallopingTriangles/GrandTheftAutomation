@@ -33,17 +33,29 @@ class LoginContainer extends Component {
       })
     }).then(res => {
       res.json().then(result => {
+        console.log('login result: ', result.message);
+
+        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR **/
+
+        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
+        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
+        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
+        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
+        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
+        
+        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR **/
 
         /* Dispatch an action to change the current user in the store */
         this.props.changeUser(this.state.username);
         this.props.resetLevel();
-        console.log(result.message);
 
-        // clear the form
+        /* clear the form */
         this.setState({
           username: '',
           password: ''
         })
+
+        /* Redirect the user to the game */
         this.props.router.push('/game');
       })
     }).catch(err => {
