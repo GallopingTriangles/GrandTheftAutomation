@@ -12,32 +12,17 @@ class Console extends Component {
     super(props);
     this.state = {
       tab: 'editor',
-      input: '',
       bugs: []
     };
   }
 
   componentWillMount() {
 
-    /*************************************************************/
-    /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
-    /* This sends the Console component context up to the parent */
-    /* So the parent can set the 'currentCode' into this state   */
-    /*   because the console wasn't refreshing on its own,       */
-    /*   even though the store's state was changing              */
-    /*   and the store's currentCode is mapped to props...       */
-    /*                                                           */
-    /* Why we doing this?? To get the editor to change when      */
-    /*  switching levels from the footer                         */
-    /*************************************************************/
-
-    var childContext = this;
-    this.props.setConsole(childContext);
   }
 
   postSolution() {
 
-    console.log('User submitted solution: ', this.state.input);
+    console.log('User submitted solution: ', this.props.currentCode);
 
     // remove the currently rendered game so we can create a new one
     $('canvas').remove();
@@ -50,7 +35,7 @@ class Console extends Component {
       body: JSON.stringify({
         username: this.props.user,
         level: this.props.level,
-        log: this.state.input
+        log: this.props.currentCode
       })
     }).then(res => {
       console.log('res: ', res);
@@ -76,12 +61,11 @@ class Console extends Component {
 
   /* Keep track of the user's code from the editor by storing it in state */
   inputChange(newCode) {
-    // this.setState({ input: newCode });
     this.props.setCode(newCode);
   }
 
   codeReset() {
-    this.setState({ input: '// Input your code here\n\n' });
+    this.props.setCode('// Input your code here\n\n');
   }
 
   /* Decide which component to render based on which tab is currently active */
@@ -89,7 +73,6 @@ class Console extends Component {
     switch (this.state.tab) {
       case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
-                              // code={ this.state.input } 
                               code={ this.props.currentCode }
                               inputChange={ this.inputChange.bind(this) } 
                               runCode={ this.postSolution.bind(this) } 
