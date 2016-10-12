@@ -47,7 +47,6 @@ var createGame = (userInput) => {
   sensors.front = 'hello';
   sensors.back = 'hello';
 
-
   var startingX = 100;
   var startingY = 300;
   var backgroundColor = '#3e5f96';
@@ -92,6 +91,7 @@ var createGame = (userInput) => {
   ** These will be set in the create() function.
   ** layer_1 contains the tiles to be set in collisionBodies that are collideable with the player
   */
+
   var layer_1;
   var layer_2;
   var layer_3;
@@ -292,6 +292,7 @@ var createGame = (userInput) => {
     ** Enable sensor functionality if the user has activated the car sensor.
     ** If the sensor detects any overlapping collision bodies, it will turn on.
     */
+
     // if (userInput.sensor) {
 
     //   attachSensors(0, 100, sensors);
@@ -302,6 +303,7 @@ var createGame = (userInput) => {
     //   ** detect overlapping between a sensor and collision bodies. If an overlap is
     //   ** detected, set the variable overlap to true.
     //   */
+
     //   var overlap = false;
     //   collisionBodies.forEach(function(body) {
     //     for (var sensor in sensors) {
@@ -383,6 +385,7 @@ var createGame = (userInput) => {
   /*
   ** Determine which image to load as the car sprite, based on user input.
   */
+
   function setCarColor() {
     switch(userInput.color) {
       case 'white':
@@ -471,7 +474,7 @@ var createGame = (userInput) => {
         sensors[sensor].alpha = .1;
         sensors[sensor].anchor.setTo(.5, .5);
         sensors[sensor].scale.setTo(.5, .5);
-        console.log('Sensors in create: ', sensors);
+
       }
     }
   }
@@ -530,6 +533,7 @@ var createGame = (userInput) => {
         var text = game.add.text(400, 300, 'Success!', style);
         game.paused = true;
         console.log('COMPLETED!');
+
       }
     })
   }
@@ -545,6 +549,7 @@ var createGame = (userInput) => {
   ** How it's done: remove the car from the game, and add the explosion
   ** spritesheet. Animate it by going through the frames of the spritesheet.
   */
+
   function gameOver() {
     explosion = game.add.sprite(400, 300, 'explosion');
     explosion.x = car.x;
@@ -559,10 +564,12 @@ var createGame = (userInput) => {
     }
     wasted = game.add.sprite(400, 300, 'wasted');
     wasted.anchor.setTo(.5, .5);
+
+    setTimeout(() => {
+      game.paused = true;
+    }, 3000)
   }
 
 }
-
-
 
 module.exports = createGame;
