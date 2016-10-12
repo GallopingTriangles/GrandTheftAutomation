@@ -11,26 +11,26 @@ var config = require('../config/config.js'); //config file that stores sensitive
 ************************************************************************/
 var userController = {
 
+  /********************************************************************************** 
+  ** Handles POST request by querying database with username to verify user exists.**
+  ** Then uses bcrypt's (encryption module) native compare function to verify the  **
+  ** plain-text password (sent in request) with encrypted password (from database).**
+  ** If username and password are verified, user information is saved to local     **
+  ** machine's session store.                                                      ** 
+  ***********************************************************************************/
   login: (req, res, next) => {
-
-    //check if user is already logged in
-    if (req.session.user) {
+    if (req.session.user) { //check if user is already logged in
       res.json({ message: 'A user is already logged in.' })
     } else {
-      //find user in database to retrieve salt and hashed password
       db.User.findOne({ where: { username: req.body.username } })
         .then(function(user) {
-          //if user does not exist, user returns null
-          if (user === null) {
+          if (user === null) { //if user does not exist, user returns null
             res.json({ message: 'Username does not exist.' })
           } else {
-            //if user exists, compare supplied plaintext password and encrypted password via bcrypt
             bcrypt.compare(req.body.password, user.dataValues.password, function(err, response) {
-              //if error or response returns 'false'
-              if (err || !response) {
+              if (err || !response) { //if error or response returns 'false'
                 res.status(400).json({ message: 'Incorrect password.' })
               } else {
-                //save user profile object into session
                 req.session.user = user.dataValues;
                 req.session.save();
                 res.status(200).json({ message: 'User is now logged in with session id.' });
