@@ -304,6 +304,7 @@ var level1 = function(req, res, next) {
       // if a test fails, set the sensor value to a default value
       var setSensorDefault = function(errorMessage) {
         req.body.phaser.sensor = false;
+        setCase(2);
       };
 
       // test if the sensor is enabled
