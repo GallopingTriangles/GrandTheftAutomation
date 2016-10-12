@@ -6,7 +6,6 @@ import changeLevel from '../actions/changeLevel.js';
 import createGame from '../game/game.js';
 
 class Footer extends Component {
-  // == REACT FUNCTIONS =====================================================
   constructor(props) {
     super(props);
     this.state = {};
@@ -14,17 +13,18 @@ class Footer extends Component {
 
 
   changeLevel(e, level) {
-    /* Updates the store with the appropriate level                       */
+    /* Updates the store with the appropriate level between 0 and 11 */
     e.preventDefault();
     if (level >= 0 && level <= 11) {
       this.props.changeLevel(level);
 
-      // re-render a new game for the appropriate level
+      /* remove the previous game instance and then     */
+      /* re-render a new game for the appropriate level */
       $('canvas').remove();
       createGame({
         color: 'white',
         speed: 0,
-        /* no "case" property yet because this is just the initial rendering of the game */
+        /* no "case" property for the default rendering */
       }, level);
     }
 
@@ -38,7 +38,6 @@ class Footer extends Component {
 
   }
 
-  // == RENDER FOOTER =======================================================
   render() {
     return (
       <footer className='footer'>
