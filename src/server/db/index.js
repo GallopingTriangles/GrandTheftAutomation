@@ -38,14 +38,6 @@ var User = sequelize.define('User', {
   email: Sequelize.STRING
 });
 
-// //Attaches sequelize User schema/model to passport
-// passportLocalSequelize.attachToUser(User, {
-//   usernameField: 'username',
-//   passwordField: 'password',
-//   saltField: 'salt',
-//   emailField: 'email'
-// });
-
 /* sequelize method to establish Log table schemas and model */
 var Log = sequelize.define('Log', {
   level: Sequelize.INTEGER,
