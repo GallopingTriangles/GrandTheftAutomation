@@ -11,6 +11,21 @@ var level9 = require('./level9.js');
 var level10 = require('./level10.js');
 var level11 = require('./level11.js');
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* *                                                                               *
+ *    Contains all functionality for rendering the game utilizing the            * *
+* *   javascript gaming library Phaser: * * * * * https://phaser.io/ * * * * *    *
+ *    Each level is imported as a createGame() function.                         * *
+* *   Every re-rendering of a level or rendering of a new level                   *
+ *    would remove the HTML canvas the previous Phaser instance was running in,  * *
+* *   and instantiate a brand new HTML canvas for a new Phaser instance by        *
+ *    invoking the createGame() function. The differences in game logic is       * *
+* *   interpreted by createGame() through the userInput parameter sent from       *
+ *    the client, but all things related to the rendering  and updating of the   * *
+* *   game is contained in each createGame() function.                            *
+ *                                                                               * *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 export default function(userInput, level) {
   // create the game for the appropriate level
   if (level === 0) {
