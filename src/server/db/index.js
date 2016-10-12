@@ -3,13 +3,14 @@ var config = require('../config/config.js');
 
 /********************** DATABASE CONFIGURATION *************************
 ** The following code configures a mysql database with two tables:    **
-** User and Log. We are using sequelize as an ORM to handle database  **
-** and table creation, and table management.                          **
+** User and Log. We are using sequelize ORM to handle database and    **
+** table creation, and table management.                              **
 ************************************************************************/
 
-//Initializes MySQL database through instance of sequelize
+/* This variable instantiates a new mysql database via sequelize with 
+the following parameters: (databaseName, username, password, options) */
 var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, {
-  host: 'localhost', /* Will need to change once server is deployed */
+  host: 'localhost', 
   dialect: 'mysql',
   port: 3306,
   pool: {
@@ -20,7 +21,7 @@ var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPasswor
 });
 
 
-//tests connection to database
+/* sequelize method to test connection to database */
 sequelize.authenticate()
   .then(function(err) {
       console.log('successful connection to database!')
@@ -29,7 +30,7 @@ sequelize.authenticate()
     console.log('error connecting to db: ', err);
   })
 
-//Creates table schemas/models for User
+/* sequelize method to establish User table schemas and model */
 var User = sequelize.define('User', {
   username: Sequelize.STRING,
   password: Sequelize.STRING,
@@ -45,7 +46,7 @@ var User = sequelize.define('User', {
 //   emailField: 'email'
 // });
 
-//Creates table schemas/models for User
+/* sequelize method to establish Log table schemas and model */
 var Log = sequelize.define('Log', {
   level: Sequelize.INTEGER,
   solution: Sequelize.TEXT('long'),
