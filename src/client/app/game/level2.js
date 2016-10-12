@@ -232,7 +232,9 @@ var createGame = (userInput) => {
       car.body.moveForward(speed);
       checkCompletion();
     } else if (userInput.case === 2) {
-      // engine isnt moving
+      setTimeout(() => {
+        levelFailed();
+      }, 2000);
     } else if (userInput.case === 3) {
       car.body.moveForward(speed);
     }
@@ -366,10 +368,9 @@ var createGame = (userInput) => {
   }
 
   function levelFailed() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Failed!', style);
+    var text = game.add.sprite(400, 300, 'failure');
+    text.anchor.setTo(.5, .5);
     game.paused = true;
-    console.log('level failed');
   }
 
   /*
