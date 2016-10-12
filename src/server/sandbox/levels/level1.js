@@ -332,9 +332,9 @@ var level1 = function(req, res, next) {
   // if user level is greater than level 1, run tests of next level
   // and if case is success
   if (req.body.phaser.case === 1) {
-    if (req.body.level === 2 || req.body.level === 4) {
+    if (req.body.level === 2) {
     	level2(req, res, next);
-    } else if (req.body.level === 3) {
+    } else if (req.body.level === 3 || req.body.level === 4) {
     	level3(req, res, next);
     } else if (req.body.level === 5) {
     	level5(req, res, next);
