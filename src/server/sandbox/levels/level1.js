@@ -34,9 +34,9 @@ var level1 = function(req, res, next) {
   	// USER INPUT
   	var userInput = req.body.log;
     // == VIRTUAL MACHINE =================================
-    var funcColor = 'var setColor = function(input) { testColor = input; };';
-    var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
-    var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
+    var funcColor = 'var setColor = function(input) { testColor.value = input; testColor.count++; };';
+    var funcSpeed = 'var setSpeed = function(input) { testSpeed.value = input; testSpeed.count++; };';
+    var funcEnable = 'var enable = function(input) { testEnable.values.push(input); testEnable.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
     var funcTurn = 'var turn = function(input) { testTurn = input; };';
     var funcRoute = 'var setRoute = function(input) { testRoute = input; };';
 
@@ -55,10 +55,19 @@ var level1 = function(req, res, next) {
     	gps: {
     		intersection: false
     	},
-    	testEnable: [],
+    	testEnable: {
+    		values: [],
+    		count: 0
+    	},
     	testEngine: undefined,
-    	testColor: undefined,
-    	testSpeed: undefined,
+    	testColor: {
+        value: undefined,
+        count: 0
+    	},
+    	testSpeed: {
+        value: undefined,
+        count: 0
+    	},
     	testSensor: undefined,
     };
 
@@ -76,16 +85,37 @@ var level1 = function(req, res, next) {
     // == ENABLED TESTS == //
     runTestSuite(function EnabledInputTest(t) {
     	// grab enabled array from sandbox context
-    	var enabled = context.testEnable;
+    	var enabled = context.testEnable.values;
+    	var calls = context.testEnable.count;
 	  	// test if the enable function is called
 	  	this.testEnabledCalled = function() {
 	      t.assertTrue(
-	      	enabled.length > 0, 
+	      	calls, 
 	      	'Expected function enable() to be called, but got not called',
 	      	function() {
 	      		setCase(2);
 	      	}
 	      );
+	  	};
+
+	  	this.testEnabledCalledWithArgument = function() {
+        t.assertTrue(
+          enabled[0],
+          'Expected function enable() to be called with an argument, but got called with ' + enabled[0],
+          function() {
+          	setCase(2);
+          }
+        );
+	  	};
+
+	  	this.testEnabledArgumentString = function() {
+        t.assertTrue(
+          typeof enabled[0] === 'string',
+          'Expected function enable() to be called with an argument of type string, but got called with argument of type ' + typeof enabled[0],
+          function() {
+          	setCase(2);
+          }
+        );
 	  	};
 
 	  	// test the maximum allowed calls of the enable function
@@ -117,6 +147,9 @@ var level1 = function(req, res, next) {
     // set engine on phase object to context value
     req.body.phaser.engine = context.testEngine;
     runTestSuite(function EngineInputTest(t) {
+
+    	var enabled = context.testEnable.values;
+    	var calls = context.testEnable.count;
       
       var setEngineDefault = function(errorMessage) {
         req.body.phaser.engine = false;
@@ -127,7 +160,7 @@ var level1 = function(req, res, next) {
       this.testEngineDefined = function() {
         t.assertTrue(
         	context.testEngine,
-          'Expected engine to be enabled, but got undefined',
+          'Expected engine to be enabled with function enable(), but got undefined',
           function() {
           	setCase(2);
           }
@@ -136,11 +169,9 @@ var level1 = function(req, res, next) {
 
       // test if the engine is enabled firstly
       this.testEngineEnabledFirst = function() {
-      	var enabledFirst = '';
-        context.testEnable[0] ? enabledFirst = context.testEnable[0] : enabledFirst = '';
         t.assertTrue(
-          context.testEnable[0] === 'engine',
-          'Expected engine to be enabled first, but got ' + enabledFirst + ' enabled first',
+          enabled[0] === 'engine',
+          'Expected engine to be enabled first, but got ' + enabled[0] + ' enabled first',
           function() {
           	setCase(2);
           }
@@ -153,36 +184,53 @@ var level1 = function(req, res, next) {
     req.body.phaser.color = context.testColor;
     runTestSuite(function ColorInputTest(t) {
     	// grab color from sanbox context
-    	var color = context.testColor;
+    	var color = context.testColor.value;
+    	var calls = context.testColor.count;
 
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
         req.body.phaser.color = 'white';
       };
 
+      this.testColorCalled = function() {
+        t.assertTrue(
+          calls,
+          'Expected function setColor() got be called, but got ' + calls + ' calls',
+          setColorDefault
+        );
+      };
+
+      this.testColorCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function setColor() to be called once, but got ' + calls + ' calls',
+          setColorDefault
+        );
+      };
+
       // test if the set color function is called
-      this.testColorDefined = function() {
+      this.testColorCalledWithArgument = function() {
         t.assertTrue(
           color,
-          'Expected color to be set, but got undefined',
+          'Expected setColor() to be called with an argument, but got called with ' + color,
           setColorDefault
         );
       };
 
       // test if color is of data type string
       this.testColorString = function() {
-        t.assertString(
-          color,
-          'color',
+        t.assertTrue(
+          typeof color === 'string',
+          'Expected setColor() to be called with an argument of type string, but got called with ' + typeof color,
           setColorDefault
         );
       };
 
       // test if color is equal to white, red, blue, or black
       this.testColorWhiteRedBlueBlack = function() {
-        t.assertOptions(
-          ['white', 'black', 'red', 'blue'],
-          color,
+        t.assertTrue(
+          color === 'white' || color === 'black' || color === 'red' || color === 'blue' || color === 'panda',
+          'Expected setColor() to be called with an argument of value white, black, red or blue, but got ' + color,
           setColorDefault
         );
       };
