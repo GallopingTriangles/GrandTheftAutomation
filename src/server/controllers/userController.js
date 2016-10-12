@@ -1,27 +1,17 @@
-// == User requests and Authorization ==============================================
-
-var db = require('../db/index.js'); // retrieve and write to mySQL database
-var bcrypt = require('bcrypt'); //encryption module for hash and salt
+var db = require('../db/index.js'); 
+var bcrypt = require('bcrypt');              //encryption module for hash and salt
 var config = require('../config/config.js'); //config file that stores sensitive information
-// var passport = require('passport') // passport authentication module
 
+/********************* USER CONTROLLER METHODS *************************
+** The following methods correspond with specific endpoints following **
+** '/users'. Please refer to userRoutes.js for more information. Each **
+** of the methods below query the mysql database to either retrieve   **
+** from or write to the User table. Every method herein contributes   **
+** to the authorization process.                                      **
+************************************************************************/
 var userController = {
 
-  getState: (req, res, next) => {
-    /* sends the logs and other information specific to that user */
-    res.json({ message: 'Sends the state' });
-  },
-
   login: (req, res, next) => {
-    /*********************************************************************/
-    /*********************************************************************/
-    /************* HERE IS AN ERROR IN MAKING SESSION BECASE *************/
-    /*********** LOADING THE PAGE MAKES A GET REQUEST TO /GAME ***********/
-    /****** BUT THAT WON'T WORK BECAUSE THERE'S NO USER IN SESSION *******/
-    /***** LOGGING IN WILL CREATE THE SESSION.... BUT THE PROBLEM IS *****/
-    /*** WE NEED THE SESSION CREATED WHEN THE PAGE RENDERS B4 LOGGIN IN **/
-    /*********************************************************************/
-    /*********************************************************************/
 
     //check if user is already logged in
     if (req.session.user) {
