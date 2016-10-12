@@ -554,13 +554,167 @@ var level10 = function(req, res, next) {
         );
       };
     });
+  
+
+    // == CONDITIONAL LEFT TESTS == //
+    runTestSuite(function GpsIntersectionLeftTest(t) {
+      var sb = new Sandbox().sandbox;
+      sb.gps.intersection = 'left';
+
+      var context = new vm.createContext(sb);
+      script.runInContext(context);
+
+      var turn = context.testTurn.value;
+      var calls = context.testTurn.count;   
+
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+        t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right' || turn === 'straight',
+          'Expected function turn() argument to have value "left", "right" or "straight", but got value ' + turn,
+          function() {
+            setCase(5);
+          }
+        );
+      };
+
+      this.testTurnInputValueLeft = function() {
+        t.assertTrue(
+          turn === 'left',
+          'Expected function turn() argument to have value "left", but got value ' + turn,
+          function() {
+            if (turn === 'straight') {
+              setCase(5);
+            } else if (turn === 'right') {
+              setCase(6);
+            } else {
+              setCase(5);
+            }
+          }
+        );
+      };
+    });
+
+    // == CONDITIONAL Right TESTS == //
+    runTestSuite(function GpsIntersectionRightTest(t) {
+      var sb = new Sandbox().sandbox;
+      sb.gps.intersection = 'right';
+
+      var context = new vm.createContext(sb);
+      script.runInContext(context);
+
+      var turn = context.testTurn.value;
+      var calls = context.testTurn.count;   
+
+      this.testTurnCalled = function() {
+        t.assertTrue(
+          calls,
+          'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testTurnCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testTurnCalledWithArgument = function() {
+        t.assertTrue(
+          turn,
+          'Expected function turn() to be called with an argument, but got ' + turn,
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testTurnInputString = function() {
+        t.assertTrue(
+          typeof turn === 'string',
+          'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testTurnInputValue = function() {
+        t.assertTrue(
+          turn === 'left' || turn === 'right' || turn === 'straight',
+          'Expected function turn() argument to have value "left", "right" or "straight", but got value ' + turn,
+          function() {
+            setCase(3);
+          }
+        );
+      };
+
+      this.testTurnInputValueRight = function() {
+        t.assertTrue(
+          turn === 'right',
+          'Expected function turn() argument to have value "right", but got value ' + turn,
+          function() {
+            if (turn === 'left') {
+              setCase(9);
+            } else if (turn === 'straight') {
+              setCase(3);
+            } else {
+              setCase(5);
+            }
+          }
+        );
+      };
+    });
+  
   });
 
-  if (req.body.level === 11) {
-    level9(req, res, next);
-  } else {
-		next();
-  }
+  next();
 
 };
 
