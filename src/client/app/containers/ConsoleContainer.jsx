@@ -93,7 +93,6 @@ class Console extends Component {
   // == RENDER FUNCTIONS =================================================================
   renderContent() {
     switch (this.state.tab) {
-      case 'learn': return <Learn />;
       case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
                             code={ this.state.input } 
@@ -105,7 +104,6 @@ class Console extends Component {
     }
   }
 
-  // == RENDER COMPONENTS ================================================================
   render() {
     return (
       <div className='col-md-5'>
@@ -113,24 +111,28 @@ class Console extends Component {
 
           <div className='console-header'>
             <div className='btn-group' role='group'>
+
               <button 
                 type='button' 
                 className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'instructions') }>
                 <i className='fa fa-check-square-o' aria-hidden='true'></i> Instructions
                 </button>
+
               <button 
                 type='button' 
                 className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'editor') }>
                 <i className='fa fa-code' aria-hidden='true'></i> Code Editor
                 </button>
+
               <button 
                 type='button' 
                 className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'bugs') }>
                 <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{ this.state.bugs.length }</span>
               </button>
+              
             </div>
           </div>
 
