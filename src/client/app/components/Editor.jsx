@@ -13,21 +13,20 @@ class Editor extends Component {
 
   /* Allow the editor to communicate with the parent component */
 
-	inputChange(newCode) {
+	inputChange(newCode) { // updates the code in the editor
 		this.props.inputChange(newCode);
 	}
 
-	runCode() {
-    this.props.runInput();
+	runCode() { // runs the user's code by sending it to the server
+    this.props.runCode();
 	}
 
-	resetCode() {
+	resetInput() { // reset the code editor to the default
     this.props.resetInput();
 	}
 
 	render() {
-		// codemirror options
-		var options = {
+		var options = { // codemirror options
 			lineNumbers: true,
 			mode:  'javascript',
 			theme: 'monokai',
@@ -40,10 +39,10 @@ class Editor extends Component {
 
 		return (
 			<div>
-			  <Codemirror value={ this.props.code } onChange={ this.inputChange.bind(this) } options={options} />
+			  <Codemirror value={ this.props.code } onChange={ this.inputChange.bind(this) } options={ options } />
 			  <div className='editor-footer'>
-			    <button className='btn btn-primary' onClick={ this.runCode.bind(this) }>Run</button>
-			    <button className='btn btn-danger' onClick={ this.resetCode.bind(this) }>Reset</button>
+			    <button className='btn btn-primary' onClick={ this.runCode.bind(this) }> Run </button>
+			    <button className='btn btn-danger' onClick={ this.resetInput.bind(this) }> Reset </button>
 			  </div>
 			</div>
 		);

@@ -89,7 +89,7 @@ class Console extends Component {
       case 'editor': return <Editor 
                             code={ this.state.input } 
                             inputChange={ this.inputChange.bind(this) } 
-                            runInput={ this.postSolution.bind(this) } 
+                            runCode={ this.postSolution.bind(this) } 
                             resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
       default: return <div>ERROR</div>;
