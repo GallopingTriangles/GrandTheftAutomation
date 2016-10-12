@@ -273,8 +273,8 @@ var level10 = function(req, res, next) {
 
       this.testTurnInputValue = function() {
         t.assertTrue(
-          turn === 'left' || turn === 'right',
-          'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
+          turn === 'left' || turn === 'right' || turn === 'straight',
+          'Expected function turn() argument to have value "left" or "right" or "straight", but got value ' + turn,
           function() {
           	// ADD FAIL CALLBACK
           }
@@ -345,15 +345,15 @@ var level10 = function(req, res, next) {
 
       this.testTurnInputValue = function() {
         t.assertTrue(
-          turn === 'left' || turn === 'right',
-          'Expected function turn() argument to have value "left" or "right", but got value ' + turn,
+          turn === 'left' || turn === 'right' || turn === 'straight',
+          'Expected function turn() argument to have value "left" or "right" or "straight", but got value ' + turn,
           function() {
           	// ADD FAIL CALLBACK
           }
         );
       };
 
-      this.testTurnInputValueLeft = function() {
+      this.testTurnInputValueRight = function() {
         t.assertTrue(
           turn === 'right',
           'Expected function turn() argument to have value "right", but got value ' + turn,
@@ -365,7 +365,7 @@ var level10 = function(req, res, next) {
 	  });
 
     // == CONDITIONAL STRAIGHT TESTS == //
-	  runTestSuite(function GpsIntersectionRightTest(t) {
+	  runTestSuite(function GpsIntersectionStraightTest(t) {
 	  	var sb = new Sandbox().sandbox;
       sb.gps.intersection = 'straight';
 
@@ -417,8 +417,8 @@ var level10 = function(req, res, next) {
 
       this.testTurnInputValue = function() {
         t.assertTrue(
-          turn === 'left' || turn === 'straight',
-          'Expected function turn() argument to have value "left" or "straight", but got value ' + turn,
+          turn === 'left' || turn === 'straight' || turn === 'right',
+          'Expected function turn() argument to have value "left" or "straight" or "right", but got value ' + turn,
           function() {
           	// ADD FAIL CALLBACK
           }

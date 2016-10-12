@@ -367,7 +367,7 @@ var level8 = function(req, res, next) {
         );
       };
 
-      this.testTurnInputValueLeft = function() {
+      this.testTurnInputValueRight = function() {
         t.assertTrue(
           turn === 'right',
           'Expected function turn() argument to have value "right", but got value ' + turn,
