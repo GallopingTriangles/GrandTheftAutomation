@@ -275,7 +275,7 @@ var level1 = function(req, res, next) {
     	this.testSpeedNumber = function() {
         t.assertTrue(
           typeof speed === 'number',
-          'Expected setSpeed() to be called with an argument of type string, but got called with argument of type ' + typeof speed,
+          'Expected setSpeed() to be called with an argument of type number, but got called with argument of type ' + typeof speed,
           function() {
           	setCase(2);
           } 

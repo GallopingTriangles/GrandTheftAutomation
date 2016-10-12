@@ -101,7 +101,7 @@ var level3 = function(req, res, next) {
 
       this.testConditionalIntersectionPresence = function() {
         t.assertTrue(
-          userInput.indexOf('map.intersection === true'),
+          userInput.indexOf('map.intersection === true') !== -1,
           'Expected code to have an if statement with conditional: if (map.intersection === true) {...',
           function() {
             setCase(3);

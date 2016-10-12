@@ -89,7 +89,11 @@ var level2 = function(req, res, next) {
           userInput.indexOf('if') !== -1,
           'Expected code to have an if statement, example: "if (sensor.front) { do something..."',
           function() {
-            setCase(3);
+            if (req.body.level === 4) {
+              setCase(6);
+            } else {
+              setCase(3);
+            }
           }
         );
       };
@@ -99,7 +103,11 @@ var level2 = function(req, res, next) {
           userInput.indexOf('sensor.front === true') !== -1,
           'Expected code to have an if statement with conditional: if (sensor.front === true) {...',
           function() {
-            setCase(3);
+            if (req.body.level === 4) {
+              setCase(6);
+            } else {
+              setCase(3);
+            }
           }
         );
       };
@@ -133,7 +141,11 @@ var level2 = function(req, res, next) {
           calls === 2,
           'Expected function setSpeed() to be called twice, but got called ' + calls + ' times',
           function() {
-          	setCase(3);
+            if (req.body.level === 4) {
+              setCase(6);
+            } else {
+            	setCase(3);
+            }
           }
         );
 			};
@@ -144,7 +156,11 @@ var level2 = function(req, res, next) {
           calls === 2 && typeof speed === 'number',
           'Expected speed to be of data type number, but got set to ' + typeof speed,
           function() {
-          	setCase(3); // syntax error, crash into object
+            if (req.body.level === 4) {
+              setCase(6);  
+            } else {
+            	setCase(3); // syntax error, crash into object
+            }
           }
         );
 			};
@@ -155,7 +171,11 @@ var level2 = function(req, res, next) {
           calls === 2 && speed >= 0,
           'Expected speed to be a positive number, but got a negative number',
           function() {
-          	setCase(3); // syntax error, crash into object
+            if (req.body.level === 4) {
+              setCase(6);
+            } else {
+            	setCase(3); // syntax error, crash into object
+            }
           }
         );
 			}
@@ -166,7 +186,11 @@ var level2 = function(req, res, next) {
           calls === 2 && speed === 0,
           'Expected speed to be set to 0, but got ' + speed,
           function() {
-          	setCase(3); // wrong input, crash into object
+            if (req.body.level === 4) {
+              setCase(6);
+            } else {
+            	setCase(3); // wrong input, crash into object
+            }
           }
         );
 			};
