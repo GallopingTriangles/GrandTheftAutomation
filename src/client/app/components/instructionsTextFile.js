@@ -1,5 +1,7 @@
 module.exports = {
 
+  zero:           'LEVEL 0\n',
+
   one:            'LEVEL 1\n' +
                   'Welcome to GTA\n' +
                   '(a sentence for introducing AV shit...)\n' +
@@ -55,4 +57,16 @@ module.exports = {
 
   eight:          'LEVEL 8\n' +
                   'Get to the end!\n',
+
+  nine:           'LEVEL 9\n' +
+                  'You can also uturn!!!\n' +
+                  'turn(\'uturn\')\n',
+
+  ten:            'LEVEL 10\n' +
+                  'Solve this level ok cool noice\n',
+
+  eleven:         'LEVEL 11\n' +
+                  'Use rerouter function to reroute from an obstacle\n' +
+                  'Useful because the gps cannot detect some obstructions\n' +
+                  'Enable rerouter\n',
 }

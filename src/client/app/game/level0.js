@@ -53,7 +53,7 @@ var createGame = (userInput) => {
   var backgroundColor = '#3e5f96';
   var carForwardSpeed = 200;
   var carBackwardSpeed = 100;
-  var carScale = 0.7;
+  var carScale = 0.6;
   var forwardReverseMultiplier = 1 / 2;
   var userSpeedMultiplier = 4;
   var explosion;
@@ -184,12 +184,12 @@ var createGame = (userInput) => {
     ** Needs to be done before generating the p2 bodies below.
     ** The layer names must correspond to the layers from the JSON tilemap file
     */
+    layer_2 = map.createLayer('road_layer');
     layer_5 = map.createLayer('end_zone_layer');
     layer_6 = map.createLayer('intersection_layer');
     layer_1 = map.createLayer('collision_layer');
-    layer_2 = map.createLayer('road_layer');
-    layer_3 = map.createLayer('building_layer');
     layer_4 = map.createLayer('street_stuff_layer');
+    layer_3 = map.createLayer('building_layer');
 
     // layer_1 = map.createLayer('Tile Layer 1');
     // layer_2 = map.createLayer('Tile Layer 2');
