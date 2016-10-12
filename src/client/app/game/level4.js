@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   /*
            *** NOTE: the cases are not in order ***
-           
+
   var FAKE_USER_INPUT = {
     color: 'blue',
     speed: 65,
@@ -43,6 +43,8 @@ var createGame = (userInput) => {
     game.load.image('backSensor', './assets/sensor_back.png');
     game.load.image('rightSensor', './assets/sensor_right.png');
     game.load.image('leftSensor', './assets/sensor_left.png');
+    game.load.image('success', './assets/success.png');
+    game.load.image('failure', './assets/failure.png');
 
     /*
     ** A spritesheet contains a bunch of frames stitched together to create an animation effect

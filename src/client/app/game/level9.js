@@ -42,6 +42,8 @@ var createGame = (userInput) => {
     game.load.image('backSensor', './assets/sensor_back.png');
     game.load.image('rightSensor', './assets/sensor_right.png');
     game.load.image('leftSensor', './assets/sensor_left.png');
+    game.load.image('success', './assets/success.png');
+    game.load.image('failure', './assets/failure.png');
 
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
