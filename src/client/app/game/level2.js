@@ -360,10 +360,9 @@ var createGame = (userInput) => {
   }
 
   function levelCompleted() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Success!', style);
+    var text = game.add.sprite(400, 300, 'success');
+    text.anchor.setTo(.5, .5)
     game.paused = true;
-    console.log('COMPLETED!');
   }
 
   function levelFailed() {

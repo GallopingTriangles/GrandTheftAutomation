@@ -334,7 +334,6 @@ var createGame = (userInput) => {
     var text = game.add.sprite(400, 300, 'success');
     text.anchor.setTo(.5, .5)
     game.paused = true;
-    console.log('COMPLETED!');
   }
 
   /*
