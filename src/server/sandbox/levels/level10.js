@@ -22,6 +22,14 @@ var runTestSuite = require('../TestingFramework');
 	// == CASES =============================================
 	// case 1: success,
 	// case 2: fail, invalid engine or speed
+  // case: 9 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
+  // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
+  // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
+  // case: 5 // fail: [STRAIGHT, STRAIGHT]
+  // case: 6 // fail: [STRAIGHT, RIGHT]
+  // case: 7 // fail: [LEFT, LEFT]
+  // case: 8 // fail: [RIGHT]
+  // case: 2 // fail: USER DID NOT ENABLE THE ENGINE
 
 var level10 = function(req, res, next) {
 
@@ -34,9 +42,11 @@ var level10 = function(req, res, next) {
 	  var funcEnable = 'var enable = function(input) { testEnabled.values.push(input); testEnabled.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "gps") { testGps = true }; };';
 	  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
 	  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
+    var gps = 'var gps = { intersection: false };';
+    var reroute = 'gps.reroute = function() { testReroute++; };';
 
 	  // input for virtual machine
-	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
+	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + gps + reroute + userInput;
 	  var script = new vm.Script(input);
 
     var Sandbox = function() {
@@ -46,9 +56,6 @@ var level10 = function(req, res, next) {
 		  	},
 		  	map: {
 		      intersection: false
-		  	},
-		  	gps: {
-	        intersection: false
 		  	},
 		  	route: {
 		  		directions: undefined,
@@ -68,7 +75,8 @@ var level10 = function(req, res, next) {
 		  		value: undefined,
 		  		count: 0
         },
-        testGps: undefined
+        testGps: undefined,
+        testReroute: 0
       };
      };
 
@@ -88,7 +96,7 @@ var level10 = function(req, res, next) {
        var context = new vm.createContext(sb);
        script.runInContext(context);
 
-        //console.log(context);
+        console.log(context);
 
         var enabled = context.testEnabled.values;
         var calls = context.testEnabled.count;
