@@ -7,8 +7,6 @@ import Login from '../app/containers/LoginContainer.jsx';
 /* This will have the login/signup forms               */
 /* as well as AV information for users                 */
 /*******************************************************/
-  // <Signup />
-  // <Login />
 
 const LandingPage = props => {
   return (
