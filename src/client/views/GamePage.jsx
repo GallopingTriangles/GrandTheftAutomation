@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Game from '../app/containers/GameContainer.jsx';
+import Game from '../app/components/Game.jsx';
 import Console from '../app/containers/ConsoleContainer.jsx';
 import Footer from '../app/containers/FooterContainer.jsx';
 import setCode from '../app/actions/setCode.js';

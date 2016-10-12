@@ -87,10 +87,10 @@ class Console extends Component {
     switch (this.state.tab) {
       case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
-                            code={ this.state.input } 
-                            inputChange={ this.inputChange.bind(this) } 
-                            runCode={ this.postSolution.bind(this) } 
-                            resetInput={ this.codeReset.bind(this) } />;
+                              code={ this.state.input } 
+                              inputChange={ this.inputChange.bind(this) } 
+                              runCode={ this.postSolution.bind(this) } 
+                              resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
       default: return <div>ERROR</div>;
     }
