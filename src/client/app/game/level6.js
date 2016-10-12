@@ -41,7 +41,6 @@ var createGame = (userInput) => {
   }
 
   var car;
-  // var cursors;
   var text;
 
   var sensors = {};
@@ -51,15 +50,12 @@ var createGame = (userInput) => {
   sensors.back = {};
   sensors.left = {};
 
+  var speed = userInput.speed ? userInput.speed * 4 : 0;
   var startingX = 40;
   var startingY = 470;
+  var startingAngle = 90;
   var backgroundColor = '#3e5f96';
-  var speed = FAKE_USER_INPUT.speed * 4;
-  // var carForwardSpeed = 200;
-  // var carBackwardSpeed = 100;
   var carScale = .5;
-  // var forwardReverseMultiplier = 1 / 2;
-  // var userSpeedMultiplier = 4;
   var explosion;
   var wasted;
 
@@ -70,8 +66,6 @@ var createGame = (userInput) => {
   var obstacleCollisionGroup;
 
   var collisionBodies;
-
-  // var endZoneBodies;
 
   var completionTiles;
 
@@ -120,11 +114,10 @@ var createGame = (userInput) => {
       return tile.index > 0;
     })
 
-    if (FAKE_USER_INPUT.sensor) { // create the sensors if the use has enabled them
+    if (userInput.sensor) { // create the sensors if the use has enabled them
       createSensors();
     }
     createCar();
-    // setSpeed();
 
     carCollisionGroup = game.physics.p2.createCollisionGroup();
     obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -168,7 +161,7 @@ var createGame = (userInput) => {
       // }
     }
 
-    if (FAKE_USER_INPUT.case === 1) {
+    if (userInput.case === 1) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
@@ -177,22 +170,22 @@ var createGame = (userInput) => {
         car.body.angle = 90;
       }
       checkCompletion();
-    } else if (FAKE_USER_INPUT.case === 2) {
+    } else if (userInput.case === 2) {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
-    } else if (FAKE_USER_INPUT.case === 3) {
+    } else if (userInput.case === 3) {
       car.body.moveForward(speed);
-    } else if (FAKE_USER_INPUT.case === 4) {
+    } else if (userInput.case === 4) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
       }
-    } else if (FAKE_USER_INPUT.case === 5) {
+    } else if (userInput.case === 5) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 180;
       }
-    } else if (FAKE_USER_INPUT.case === 6) {
+    } else if (userInput.case === 6) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
@@ -221,7 +214,7 @@ var createGame = (userInput) => {
     game.physics.p2.enable(car);
     car.body.setRectangle(5, 5);
     car.body.collideWorldBounds = true;
-    car.body.angle = 90;
+    car.body.angle = startingAngle;
   }
 
   function setCarColor() {
@@ -274,13 +267,6 @@ var createGame = (userInput) => {
       index += 1;
     }
   }
-
-  // function setSpeed() {
-  //   if (userInput.speed) {
-  //     carForwardSpeed = userInput.speed * userSpeedMultiplier;
-  //     carBackwardSpeed = carForwardSpeed * forwardReverseMultiplier;
-  //   }
-  // }
 
   function checkCompletion() {
     completionTiles.forEach(function(tile) {
