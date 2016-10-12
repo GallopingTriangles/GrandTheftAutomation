@@ -212,8 +212,6 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      // collisionBody.debug = true;
-
     })
 
     /*
@@ -221,13 +219,6 @@ var createGame = (userInput) => {
     ** between the car and any body in the obstacleCollisionGroup (the tiles).
     */
     car.body.collides(obstacleCollisionGroup, gameOver, this);
-
-
-    /*
-    ** Enables the user to have control over the car through their cursor keys
-    */
-    // cursors = game.input.keyboard.createCursorKeys();
-
 
 
   }
@@ -268,20 +259,7 @@ var createGame = (userInput) => {
         }
       })
 
-      /*
-      ** Increase the opacity of the sensor while a collision body is in its area.
-      */
-      // if (overlap) {
-      //   sensor.alpha = 1;
-      // } else {
-      //   sensor.alpha = 0.1;
-      // }
     }
-
-    /*
-    ** The car should remain still if no arrow keys are pressed for early levels.
-    ** This resets the car's velocity per frame.
-    */
 
 
     if (userInput.case === 1) {
@@ -295,9 +273,6 @@ var createGame = (userInput) => {
   }
 
   function render() {
-    // game.debug.spriteInfo(car, 32, 32);
-    // car.body.debug = true;
-
   }
 
   /******* HELPER FUNCTIONS **********************/
