@@ -13,25 +13,23 @@ var config = require('../config/config.js');
 /* exports functions within object */
 module.exports = {
 
+  /* Queries database to verify sessionID stored in user's request, if it exists */
   checkAuth: (req, res, next) => {
-    console.log('REQUEST: ', req.sessionID);
     sequelize.query("select * from sessions where session_id = '" + req.sessionID + "'")
       .then(function(result) {
-        // var user = JSON.parse(result[0][0].data);
         return next();
       })
       .catch(function(err) {
-        console.log('ERROR: ', err);
         res.status(401).json({ message: 'User is not authorized. Please log in.' })
       })
   },
 
+  /******************************************************************************* 
+  ** Handles GET request by querying database with username to allocate userId. **
+  ** Then uses userId to query Log table for all level solutions and responds   **
+  ** with array of level objects                                                **
+  ********************************************************************************/
   getGameState: (req, res, next) => {
-    /* handles a GET request */
-    /* returns the state of the game (ALL level solutions) for that particular user */
-    console.log('Received GET request to get game state');
-
-    /* GET request must come with the username under params! */
     var username = req.query.username;
     console.log('username: ', req.query.username);
     db.User.findOne({ where: { username: username }}).then(user => {
