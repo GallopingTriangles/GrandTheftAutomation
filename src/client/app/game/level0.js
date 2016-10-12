@@ -376,32 +376,6 @@ var createGame = (userInput) => {
     }
   }
 
-  //////////////////// /*
-  //////////////////// ** If the user has activated the sensor:
-  //////////////////// ** Create the sensor around the car as a sprite. Scale it to an appropriate size,
-  //////////////////// ** and set the anchor point at the center, so it's rotation is relative to that point.
-  //////////////////// ** Initialize the starting coordinates to match up with the car's coordinates.
-  //////////////////// */
-  //////////////////// function createSensor() {
-  ////////////////////   if (userInput.sensor) {
-  ////////////////////     sensor = game.add.sprite(startingX, startingY, 'sensor');
-  ////////////////////     sensor.scale.setTo(.25, .25);
-  ////////////////////     game.physics.p2.enable(sensor);
-  ////////////////////     sensor.alpha = .1;
-  ////////////////////     sensor.anchor.setTo(.5, .5);
-  ////////////////////   }
-  //////////////////// }
-
-  //////////////////// /*
-  //////////////////// ** Attaches a sensor to the coordinate location of the car.
-  //////////////////// */
-  //////////////////// function attachSensor(sensor, carX, carY, carAngle) {
-  ////////////////////   sensor.body.x = carX;
-  ////////////////////   sensor.body.y = carY;
-  ////////////////////   sensor.body.angle = carAngle;
-  //////////////////// }
-
-
   function degToRad(num) {
     return num * (Math.PI / 180);
   }
@@ -409,33 +383,6 @@ var createGame = (userInput) => {
   function convertAngle(angle) {
     return degToRad(90 - angle)
   }
-
-
-  /* needsChange */
-
-  // function createSensors() {
-  //   // Check to make sure the user has turned the sensor on
-  //   if (userInput.sensor) {
-  //     // Appearace
-  //     for (var sensor in sensors) {
-  //       sensors[sensor] = game.add.sprite(startingX, startingY, 'sensor')
-  //       sensors[sensor].alpha = .1;
-  //       sensors[sensor].anchor.setTo(.5, .5);
-  //       sensors[sensor].scale.setTo(.5, .5);
-
-  //     }
-  //   }
-  // }
-
-  // function attachSensors(startingAngle, offset, FLBRArray) {
-  //   var index = 0;
-  //   for (var sensor in sensors) {
-  //     sensors[sensor].angle = car.body.angle;
-  //     sensors[sensor].y = (-offset * Math.sin(convertAngle(car.body.angle + 90 * index))) + car.body.y;
-  //     sensors[sensor].x = (offset * Math.cos(convertAngle(car.body.angle + 90 * index))) + car.body.x;
-  //     index += 1;
-  //   }
-  // }
 
   function createSensors() {
     // Appearace
