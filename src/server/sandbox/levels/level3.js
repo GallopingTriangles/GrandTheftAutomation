@@ -1,7 +1,7 @@
 var vm = require('vm');
 
 // next level
-var level4 = require('./level4');
+var level2 = require('./level2');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
@@ -99,12 +99,14 @@ var level3 = function(req, res, next) {
         );
       };
 
-      this.testConditionalSensorPresence = function() {
-        userInput.indexOf('map.intersection === true'),
-        'Expected code to have an if statement with conditional: if (map.intersection === true) {...',
-        function() {
-          setCase(3);
-        }
+      this.testConditionalIntersectionPresence = function() {
+        t.assertTrue(
+          userInput.indexOf('map.intersection === true'),
+          'Expected code to have an if statement with conditional: if (map.intersection === true) {...',
+          function() {
+            setCase(3);
+          }
+        );
       };
     });
 
@@ -204,7 +206,7 @@ var level3 = function(req, res, next) {
 
   // if user level is greater than level 2, run tests of next level
   if (req.body.level === 4 && req.body.phaser.case === 1) {
-  	level4(req, res, next);
+  	level2(req, res, next);
   } else {
   // else return phaser object
   	next();
