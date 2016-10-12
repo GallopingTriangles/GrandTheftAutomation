@@ -141,7 +141,8 @@ class Console extends Component {
   }
 }
 
-// == REDUX ============================================================================
+/* Allow access to the redux store through the props */
+/*                                                   */
 var mapStateToProps = state => {
   return {
     level: state.level,
@@ -152,10 +153,10 @@ var mapStateToProps = state => {
 
 var mapDispatchToProps = dispatch => {
   return {
-    // postSolution: (level, command) => {
-    //   dispatch(createCommand(level, command));
-    // }
+
   }
 }
+/*                                                   */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 export default connect(mapStateToProps, mapDispatchToProps)(Console);
