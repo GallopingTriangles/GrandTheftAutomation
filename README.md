@@ -1,6 +1,5 @@
 # Grand Theft Automation
 
----
 ### Synopsis
 This game rocks.
 
@@ -16,3 +15,4 @@ This game rocks.
 [Kevin Chan](https://github.com/kevindchan)  
 [Lorenzo Engelen](https://github.com/lorenzoengelen)  
 [Alex Pattison](https://github.com/AlexPattison)
+

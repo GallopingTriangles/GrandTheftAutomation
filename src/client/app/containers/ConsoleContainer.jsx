@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import CommandLine from '../components/CommandLine.jsx';
 import Editor from '../components/Editor.jsx';
-import Learn from '../components/Learn.jsx';
 import Instructions from '../components/Instructions.jsx';
 import Bugs from '../components/Bugs.jsx';
-import LogsContainer from './LogsContainer.jsx';
-import _ from 'underscore';
 import createGame from '../game/game.js';
 import $ from 'jquery';
 
 class Console extends Component {
-  // == REACT METHODS ====================================================================
   constructor(props) {
     super(props);
     this.state = {
       tab: 'editor',
-      // input: '',
       input: '',
       bugs: []
     };
@@ -85,12 +79,10 @@ class Console extends Component {
   }
 
   codeReset() {
-    // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
-    this.setState({input: '// Input your code here\n\n'}); // REFACTOR REFACTOR REFACTOR
-    // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
+    this.setState({ input: '// Input your code here\n\n' });
   }
 
-  // == RENDER FUNCTIONS =================================================================
+  /* Decide which component to render based on which tab is currently active */
   renderContent() {
     switch (this.state.tab) {
       case 'instructions': return <Instructions level={ this.props.level }/>;
