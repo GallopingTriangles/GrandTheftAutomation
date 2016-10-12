@@ -503,7 +503,6 @@ var createGame = (userInput) => {
     explosion.anchor.setTo(.5, .5);
     explosion.animations.add('explode');
     explosion.animations.play('explode', 24, false);
-    // text.kill();
     car.kill();
     for (var sensor in sensors) {
       if (sensors[sensor] !== {}) {
