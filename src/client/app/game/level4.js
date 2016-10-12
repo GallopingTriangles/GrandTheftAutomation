@@ -326,7 +326,7 @@ var createGame = (userInput) => {
     for (var sensor in sensors) {
       sensors[sensor].alpha = .1;
       sensors[sensor].anchor.setTo(.5, .5);
-      sensors[sensor].scale.setTo(.5, .5);
+      sensors[sensor].scale.setTo(0.8);
     }
   }
 
@@ -353,18 +353,24 @@ var createGame = (userInput) => {
       sensors[sensor].alpha = .3;
     }
 
-    sensors.front.y = (-40 * Math.sin(convertAngle(car.body.angle + 90 * 0))) + car.body.y;
-    sensors.front.x = (40 * Math.cos(convertAngle(car.body.angle + 90 * 0))) + car.body.x;
+    sensors.front.y = (-60 * Math.sin(convertAngle(car.body.angle + 90 * 0))) + car.body.y;
+    sensors.front.x = (60 * Math.cos(convertAngle(car.body.angle + 90 * 0))) + car.body.x;
 
-    sensors.right.y = (-20 * Math.sin(convertAngle(car.body.angle + 90 * 1))) + car.body.y;
-    sensors.right.x = (20 * Math.cos(convertAngle(car.body.angle + 90 * 1))) + car.body.x;
+    sensors.right.y = (-30 * Math.sin(convertAngle(car.body.angle + 90 * 1))) + car.body.y;
+    sensors.right.x = (30 * Math.cos(convertAngle(car.body.angle + 90 * 1))) + car.body.x;
 
-    sensors.back.y = (-40 * Math.sin(convertAngle(car.body.angle + 90 * 2))) + car.body.y;
-    sensors.back.x = (40 * Math.cos(convertAngle(car.body.angle + 90 * 2))) + car.body.x;
+    sensors.back.y = (-45 * Math.sin(convertAngle(car.body.angle + 90 * 2))) + car.body.y;
+    sensors.back.x = (45 * Math.cos(convertAngle(car.body.angle + 90 * 2))) + car.body.x;
 
-    sensors.left.y = (-20 * Math.sin(convertAngle(car.body.angle + 90 * 3))) + car.body.y;
-    sensors.left.x = (20 * Math.cos(convertAngle(car.body.angle + 90 * 3))) + car.body.x;
+    sensors.left.y = (-30 * Math.sin(convertAngle(car.body.angle + 90 * 3))) + car.body.y;
+    sensors.left.x = (30 * Math.cos(convertAngle(car.body.angle + 90 * 3))) + car.body.x;
 
+    /*
+    ** In every frame of the game, examine every collision body (tile) and check if
+    ** any of its corners are inside the sensor area. This serves as a listener to
+    ** detect overlapping between a sensor and collision bodies. If an overlap is
+    ** detected, set the variable overlap to true.
+    */
     collisionBodies.forEach(function(body) {
       for (var sensor in sensors) {
         if (sensors[sensor].getBounds().contains(body.x, body.y)

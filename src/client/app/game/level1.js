@@ -216,9 +216,6 @@ var createGame = (userInput) => {
   }
 
 
-
-
-
   function update() {
     /*
     ** Enable sensor functionality if the user has activated the car sensor.
