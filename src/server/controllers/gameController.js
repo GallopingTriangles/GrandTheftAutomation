@@ -24,38 +24,35 @@ module.exports = {
       })
   },
 
-  /******************************************************************************* 
-  ** Handles GET request by querying database with username to allocate userId. **
-  ** Then uses userId to query Log table for all level solutions and responds   **
-  ** with array of level objects                                                **
-  ********************************************************************************/
+  /********************************************************************************** 
+  ** Handles GET request by querying database with username to allocate userId.    **
+  ** Uses retrieved userId to query Log table for all level solutions and responds **
+  ** with array of level objects                                                   **
+  ***********************************************************************************/
   getGameState: (req, res, next) => {
     var username = req.query.username;
-    console.log('username: ', req.query.username);
-    db.User.findOne({ where: { username: username }}).then(user => {
-      if (!user) {
-        // user not logged in?
-        res.send({message: 'Processing error. Try again'});
-      } else {
-        var userId = user.dataValues.id;
-        db.Log.findAll({ where: {
-          UserId: userId
-        }}).then(logs => {
-          var logsList = logs.map(log => {
-            return {
-              level: log.dataValues.level,
-              solution: log.dataValues.solution
-            }
-          });
-          res.send(logsList); // status code 200 for success
-        }).catch(err => {
-          console.log('error: ', err);
-          res.send({message:'Error getting game state'});
-        })
-      }
-    }).catch(err => {
-      console.log('Error getting game state');
-    })
+    db.User.findOne({ where: { username: username }})
+      .then( user => {
+        if (!user) {
+          res.send({message: 'Processing error. Try again'});
+        } else {
+          var userId = user.dataValues.id;
+          db.Log.findAll({ where: { UserId: userId } })
+            .then( logs => {
+              var logsList = logs.map( log => {
+                return {
+                  level: log.dataValues.level,
+                  solution: log.dataValues.solution
+                }
+              });
+              res.send(logsList); 
+            }).catch( err => {
+              res.send({message:'Error getting game state'});
+            })
+        }
+      }).catch( err => {
+        console.log('Error getting game state');
+      })
   },
 
   saveGameState: (req, res, next) => {
