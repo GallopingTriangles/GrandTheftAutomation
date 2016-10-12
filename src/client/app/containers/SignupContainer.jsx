@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 class SignupContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { // altering this state requires altering the POST request FYI
+    this.state = {
       email: '',
       username: '',
       password: ''
@@ -18,30 +18,49 @@ class SignupContainer extends Component {
     this.setState(creds);
   }
 
-  createUser(e) { // POST request to create a server
+  createUser(e) { // POST request to create a user
     e.preventDefault();
     fetch('/users/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        email: this.state.email,
+        username: this.state.username,
+        password: this.state.password
+      })
     }).then(res => {
       console.log('signup status: ', res.status);
       res.json().then(result => {
-        /* process result based on the status code  */
-        /* 201 for creating a new user successfully */
-        /* 200 for pre-existing user error          */
-        /* 400 for error in user                    */
+        console.log('signup response: ', result.message);
 
-        // clear the form
+        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
+        /*********************************************************************************************/
+
+        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
+         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
+
+        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
+         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
+
+        /*********************************************************************************************/
+        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
+
+        /* clear the form after it has been submitted */
         this.setState({
           email: '',
           username: '',
           password: ''
         })
+
+        /* Redirect the logged in user to the game */
         this.props.router.push('/game');
-        console.log(result.message);
+
+        /********
+        ********* should probably be setting the level to 0 for new user?!?!?!
+        ********/
+
       })
     }).catch(err => {
       console.log('Error in signup request');

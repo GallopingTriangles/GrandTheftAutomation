@@ -23,7 +23,6 @@ class Console extends Component {
   }
 
   componentWillMount() {
-    // this.fetchSolutions();
 
     /*************************************************************/
     /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
@@ -40,29 +39,6 @@ class Console extends Component {
     var childContext = this;
     this.props.setConsole(childContext);
   }
-
-  // == FETCH FROM SERVER ================================================================
-  // fetchSolutions() {
-  //   var url = `/game?username=${this.props.user}`;
-
-  //   fetch(url, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then(response => {
-  //     response.json().then(solutions => {
-  //       var solution = (_.filter(solutions, (el) => {
-  //         return el.level === this.props.level;
-  //       }))[0];
-  //       this.setState({
-  //         input: solution ? solution.solution : '// iNPuT YouR CoDE HeRe WooOoOOoOooOOoOooO\n\n'
-  //       });
-  //     });
-  //   }).catch(err => {
-  //     console.log('error fetching code: ', err);
-  //   });
-  // }
 
   postSolution() {
 
@@ -84,9 +60,12 @@ class Console extends Component {
     }).then(res => {
       console.log('res: ', res);
       res.json().then(response => {
-        // the response from the server is an object that is used to create the game
-        // create a new game based off of the response object
+        /* The response from the server is an object that is used to create */
+        /* the game create a new game based off of the response object      */
+        /* The response also comes with a bug report describing the user's  */
+        /* errors in the form of passing or failing a particular test       */
         console.log('phaser response: ', response.phaser);
+        console.log('phaser bugs: ', response.bugs);
         createGame(response.phaser, this.props.level);
         this.setState({bugs: response.bugs});
       })
@@ -100,13 +79,9 @@ class Console extends Component {
     this.setState({ tab })
   }
 
-  // == EDITOR INPUT =====================================================================
+  /* Keep track of the user's code from the editor by storing it in state */
   codeChange(newCode) {
     this.setState({ input: newCode });
-  }
-
-  codeFetch() {
-    this.postSolution();
   }
 
   codeReset() {
@@ -118,19 +93,17 @@ class Console extends Component {
   // == RENDER FUNCTIONS =================================================================
   renderContent() {
     switch (this.state.tab) {
-      case 'learn': return <Learn />;
       case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
                             code={ this.state.input } 
                             inputChange={ this.codeChange.bind(this) } 
-                            runInput={ this.codeFetch.bind(this) } 
+                            runInput={ this.postSolution.bind(this) } 
                             resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
       default: return <div>ERROR</div>;
     }
   }
 
-  // == RENDER COMPONENTS ================================================================
   render() {
     return (
       <div className='col-md-5'>
@@ -138,30 +111,28 @@ class Console extends Component {
 
           <div className='console-header'>
             <div className='btn-group' role='group'>
-              <button 
-                type='button' 
-                className='btn btn-default' 
-                onClick={ (e) => this.setTab(e, 'learn') } >
-                <i className='fa fa-book' aria-hidden='true'></i> Learn
-              </button>
+
               <button 
                 type='button' 
                 className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'instructions') }>
-                <i className='fa fa-check-square-o' aria-hidden='true'></i> Instruction
+                <i className='fa fa-check-square-o' aria-hidden='true'></i> Instructions
                 </button>
+
               <button 
                 type='button' 
                 className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'editor') }>
-                <i className='fa fa-code' aria-hidden='true'></i> Code
+                <i className='fa fa-code' aria-hidden='true'></i> Code Editor
                 </button>
+
               <button 
                 type='button' 
                 className='btn btn-default' 
                 onClick={ (e) => this.setTab(e, 'bugs') }>
                 <i className='fa fa-bug' aria-hidden='true'></i> Bug Report <span className='badge'>{ this.state.bugs.length }</span>
               </button>
+              
             </div>
           </div>
 

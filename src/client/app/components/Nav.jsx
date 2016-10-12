@@ -9,6 +9,7 @@ class Nav extends Component {
 
   /************************* TODO *************************/
   /* The buttons should route users to appropriate places */
+  /* with Link components from react-router               */
   /********************************************************/
 
   logout() {
@@ -19,6 +20,11 @@ class Nav extends Component {
       }
     }).then(data => {
       data.json().then(response => {
+        /*
+        ** Remove the username from the Redux Store by setting it to an empty string.
+        ** The Game Page will check for a user in the Redux Store when mounting,
+        ** and cause a redirect back to the landing page if no user is found.
+        */
         this.props.eraseUser();
         console.log('Logging out: ', response);
       })
@@ -47,12 +53,14 @@ class Nav extends Component {
 }
 
 const mapStateToProps = state => {
+  /* Gives the Nav component access to the logged in user, to render as a Link on the Nav Bar  */
   return {
     user: state.user
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
+  /* A function to dispatch an action that sets the user to an empty string in the Redux Store */
   return {
     eraseUser: () => {
       dispatch(changeUser(''));
