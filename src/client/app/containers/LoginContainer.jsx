@@ -64,6 +64,13 @@ class LoginContainer extends Component {
   }
 }
 
+/*************************************************************/
+/*************************************************************/
+/********************* CAN WE DELETE?! ***********************/
+/********************* CAN WE DELETE?! ***********************/
+/********************* CAN WE DELETE?! ***********************/
+/*************************************************************/
+/*************************************************************/
 const mapStateToProps = state => {
   return {
     user: state.user
@@ -71,12 +78,16 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
+  /*
+  ** Functions to dispatch actions that will set the current user in the store to the logged in user
+  ** and reset the game level to level 0 in case a previously logged in user was on a higher level.
+  */
   return {
     changeUser: (user) => {
       dispatch(changeUser(user));
     },
     resetLevel: () => {
-      dispatch(changeLevel(1));
+      dispatch(changeLevel(0));
     }
   }
 }
