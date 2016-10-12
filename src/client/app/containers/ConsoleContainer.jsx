@@ -4,6 +4,7 @@ import Editor from '../components/Editor.jsx';
 import Instructions from '../components/Instructions.jsx';
 import Bugs from '../components/Bugs.jsx';
 import createGame from '../game/game.js';
+import setCode from '../actions/setCode.js';
 import $ from 'jquery';
 
 class Console extends Component {
@@ -75,7 +76,8 @@ class Console extends Component {
 
   /* Keep track of the user's code from the editor by storing it in state */
   inputChange(newCode) {
-    this.setState({ input: newCode });
+    // this.setState({ input: newCode });
+    this.props.setCode(newCode);
   }
 
   codeReset() {
@@ -87,7 +89,8 @@ class Console extends Component {
     switch (this.state.tab) {
       case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
-                              code={ this.state.input } 
+                              // code={ this.state.input } 
+                              code={ this.props.currentCode }
                               inputChange={ this.inputChange.bind(this) } 
                               runCode={ this.postSolution.bind(this) } 
                               resetInput={ this.codeReset.bind(this) } />;
@@ -153,7 +156,9 @@ var mapStateToProps = state => {
 
 var mapDispatchToProps = dispatch => {
   return {
-
+    setCode: (code) => {
+      dispatch(setCode(code));
+    }
   }
 }
 /*                                                   */
