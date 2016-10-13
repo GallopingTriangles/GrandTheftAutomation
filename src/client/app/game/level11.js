@@ -198,7 +198,10 @@ var createGame = (userInput) => {
     // case: 7 // fail:    [STRAIGHT, LEFT, RIGHT] (went into fail-zone)
     // case: 2 // fail:    ENGINE WAS NOT ENABLED
 
-    if (userInput.case !== 2) {
+    if (userInput.case === 0) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (userInput.case !== 2) {
       car.body.moveForward(speed);
     } else {
       car.body.velocity.x = 0;
@@ -354,7 +357,7 @@ var createGame = (userInput) => {
     text.anchor.setTo(.5, .5);
     game.paused = true;
   }
-  
+
   function gameOver() {
     explosion = game.add.sprite(400, 300, 'explosion');
     explosion.x = car.x;
