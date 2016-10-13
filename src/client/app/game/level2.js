@@ -214,10 +214,6 @@ var createGame = (userInput) => {
 
 
   function update() {
-    if (userInput === 3) {
-      levelFailed();
-    }
-
 
     /*
     ** Enable sensor functionality if the user has activated the car sensor.
