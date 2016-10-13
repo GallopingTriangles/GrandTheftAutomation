@@ -218,63 +218,57 @@ var level1 = function(req, res, next) {
       };
     }); // END setColor() tests
 
-    // == SPEED TESTS == //
+    // == NEW SPEED TESTS == //
     // set speed on phaser object to context
-    req.body.phaser.speed = context.testSpeed.value;
+    req.body.phaser.speed = newContext.testSetspeed.value;
     runTestSuite(function SpeedInputTest(t) {
-    	// grab speed from sandbox context
-    	var speed = context.testSpeed.value;
-    	var calls = context.testSpeed.count;
-
-      // if a test fails, set the speed to a default value
-      var setSpeedDefault = function(errorMessage) {
-        req.body.phaser.speed = false;
-        req.body.phaser.case = 2;
-      };
+      
+      var speed = newContext.testSetspeed.value;
+      var calls = newContext.testSetspeed.calls;
 
       this.testSpeedCalled = function() {
-      	t.assertTrue(
+        t.assertTrue(
           calls,
           'Expected setSpeed() to be called, but got ' + calls + ' calls',
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
-      	);
+        );
       };
 
-    	// test if the set speed function is called
-    	this.testSpeedCalledWithArgument = function() {
+      // test if the set speed function is called
+      this.testSpeedCalledWithArgument = function() {
         t.assertTrue(
           speed,
           'Expected setSpeed() to be called with an argument, but got ' + speed,
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
-    	};
+      };
 
-    	// test if speed if of data type number
-    	this.testSpeedNumber = function() {
+      // test if speed if of data type number
+      this.testSpeedNumber = function() {
         t.assertTrue(
           typeof speed === 'number',
           'Expected setSpeed() to be called with an argument of type number, but got called with argument of type ' + typeof speed,
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           } 
         );
-    	};
+      };
 
-    	// test if speed is a positive number
-    	this.testSpeedPositive = function() {
+      // test if speed is a positive number
+      this.testSpeedPositive = function() {
         t.assertTrue(
-        	speed >= 0, 
-        	'Expected speed to be a positive number, but got a negative number',
-        	function(error) {
-        		setCase(2, error);
-        	}
+          speed >= 0, 
+          'Expected speed to be a positive number, but got a negative number',
+          function(error) {
+            setCase(2, error);
+          }
         );
-    	};
-    });
+      };
+    }); // END setSpeed() tests
 
     // == SENSOR TESTS == //
     // set sensor on phaser object to context value
