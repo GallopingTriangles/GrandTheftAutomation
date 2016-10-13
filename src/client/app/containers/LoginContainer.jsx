@@ -9,7 +9,8 @@ class LoginContainer extends Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      invalid: false
     };
   }
 
@@ -35,28 +36,25 @@ class LoginContainer extends Component {
       res.json().then(result => {
         console.log('login result: ', result.message);
 
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR **/
+        if (result.message !== 'Incorrect password.' && result.message !== 'Username does not exist.') {
+          /* Dispatch an action to change the current user in the store */
+          this.props.changeUser(this.state.username);
+          this.props.resetLevel();
 
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
-        /*********  THIS WILL STILL TAKE THE USER TO THE GAME EVEN IF THE LOGIN IS INVALID  *********/
-        
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR **/
+          /* clear the form */
+          this.setState({
+            username: '',
+            password: '',
+            invalid: false
+          })
 
-        /* Dispatch an action to change the current user in the store */
-        this.props.changeUser(this.state.username);
-        this.props.resetLevel();
+          /* Redirect the user to the game */
+          this.props.router.push('/game');
+          
+        } else {
+          this.setState({ invalid: true });
+        }
 
-        /* clear the form */
-        this.setState({
-          username: '',
-          password: ''
-        })
-
-        /* Redirect the user to the game */
-        this.props.router.push('/game');
       })
     }).catch(err => {
       console.log('Error in signup request');
@@ -68,7 +66,8 @@ class LoginContainer extends Component {
       <div style={{float: 'left'}}>
         <form className="landing-form" onSubmit={ this.loginUser.bind(this) } >
           <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p>
-          <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
+          <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p>
+          { this.state.invalid ? <p style={{ color: 'red' }} >Invalid login. Please try again.</p> : null }
           <button className="btn btn-landing" type="submit">Submit</button>
         </form>
       </div>
