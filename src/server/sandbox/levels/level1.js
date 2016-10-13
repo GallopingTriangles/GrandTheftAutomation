@@ -151,44 +151,16 @@ var level1 = function(req, res, next) {
         );
       };
 
-
-    });
-
-    // == ENGINE TESTS == //
-    // set engine on phase object to context value
-    //req.body.phaser.engine = context.testEngine;
-    runTestSuite(function EngineInputTest(t) {
-
-    	var enabled = context.testEnable.values;
-    	var calls = context.testEnable.count;
-      
-      var setEngineDefault = function(errorMessage) {
-        req.body.phaser.engine = false;
-        req.body.phaser.case = 2;
-      };
-
-      // test if the engine is enabled
-      this.testEngineDefined = function() {
-        t.assertTrue(
-        	context.testEngine,
-          'Expected engine to be enabled with function enable(), but got undefined',
-          function(error) {
-          	setCase(2, error);
-          }
-        );
-      };
-
-      // test if the engine is enabled firstly
       this.testEngineEnabledFirst = function() {
         t.assertTrue(
           enabled[0] === 'engine',
           'Expected engine to be enabled first, but got ' + enabled[0] + ' enabled first',
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
       };
-    });
+    }); // END enable('engine') tests
 
     // == COLOR TESTS == //
     // set color on phaser object to context value
