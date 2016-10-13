@@ -42,6 +42,8 @@ var createGame = (userInput) => {
     game.load.image('backSensor', './assets/sensor_back.png');
     game.load.image('rightSensor', './assets/sensor_right.png');
     game.load.image('leftSensor', './assets/sensor_left.png');
+    game.load.image('success', './assets/success.png');
+    game.load.image('failure', './assets/failure.png');
 
     /*
     ** A spritesheet contains a bunch of frames stitched together to create an animation effect
@@ -299,6 +301,9 @@ var createGame = (userInput) => {
     } else if (userInput.case === 2) {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
+      setTimeout(() => {
+        levelFailed();
+      }, 2000);
     } else if (userInput.case === 3) {
       car.body.moveForward(speed);
     } else if (userInput.case === 4) {
@@ -438,12 +443,16 @@ var createGame = (userInput) => {
   }
 
   function levelCompleted() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Success!', style);
+    var text = game.add.sprite(400, 300, 'success');
+    text.anchor.setTo(.5, .5)
     game.paused = true;
-    console.log('COMPLETED!');
   }
 
+  function levelFailed() {
+    var text = game.add.sprite(400, 300, 'failure');
+    text.anchor.setTo(.5, .5);
+    game.paused = true;
+  }
   /*
   ** Called when the car collides with a collision body (tile)
   ** The car gloriously bursts into flames while the classic WASTED
@@ -459,8 +468,8 @@ var createGame = (userInput) => {
     explosion.animations.add('explode');
     explosion.animations.play('explode', 24, false);
     car.kill();
-    for (var sensor in sensors) {
-      if (sensors[sensor] !== {}) {
+    if (userInput.sensor) {
+      for (var sensor in sensors) {
         sensors[sensor].kill();
       }
     }

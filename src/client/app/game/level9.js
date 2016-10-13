@@ -42,6 +42,8 @@ var createGame = (userInput) => {
     game.load.image('backSensor', './assets/sensor_back.png');
     game.load.image('rightSensor', './assets/sensor_right.png');
     game.load.image('leftSensor', './assets/sensor_left.png');
+    game.load.image('success', './assets/success.png');
+    game.load.image('failure', './assets/failure.png');
 
 
     game.load.spritesheet('explosion', './assets/explosion.png', 256, 256, 48);
@@ -200,6 +202,10 @@ var createGame = (userInput) => {
     } else {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
+
+      setTimeout(() => {
+        levelFailed();
+      }, 2000);
     }
 
     if (userInput.case === 1) { // u-turn when encountering the obstacle
@@ -377,23 +383,14 @@ var createGame = (userInput) => {
   }
 
   function levelCompleted() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Success!', style);
+    var text = game.add.sprite(400, 300, 'success');
+    text.anchor.setTo(.5, .5)
     game.paused = true;
-    console.log('COMPLETED!');
-  }
-
-  function checkFailure() {
-    failureTiles.forEach(function(tile) {
-      if (Math.abs(tile.worldX + 16 - car.body.x) < 25 && Math.abs(tile.worldY +16 - car.body.y) < 25) {
-        levelFailed();
-      }
-    })
   }
 
   function levelFailed() {
-    var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'FAIL!', style);
+    var text = game.add.sprite(400, 300, 'failure');
+    text.anchor.setTo(.5, .5);
     game.paused = true;
   }
 
@@ -405,8 +402,8 @@ var createGame = (userInput) => {
     explosion.animations.add('explode');
     explosion.animations.play('explode', 24, false);
     car.kill();
-    for (var sensor in sensors) {
-      if (sensors[sensor] !== {}) {
+    if (userInput.sensor) {
+      for (var sensor in sensors) {
         sensors[sensor].kill();
       }
     }

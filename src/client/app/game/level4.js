@@ -7,7 +7,7 @@ var createGame = (userInput) => {
   /**********************************************************/
   /*
            *** NOTE: the cases are not in order ***
-           
+
   var FAKE_USER_INPUT = {
     color: 'blue',
     speed: 65,
@@ -43,6 +43,8 @@ var createGame = (userInput) => {
     game.load.image('backSensor', './assets/sensor_back.png');
     game.load.image('rightSensor', './assets/sensor_right.png');
     game.load.image('leftSensor', './assets/sensor_left.png');
+    game.load.image('success', './assets/success.png');
+    game.load.image('failure', './assets/failure.png');
 
     /*
     ** A spritesheet contains a bunch of frames stitched together to create an animation effect
@@ -240,12 +242,18 @@ var createGame = (userInput) => {
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] - 45 - car.body.y) < 30) {
         car.body.velocity.x = 0;
         car.body.velocity.y = 0;
+        setTimeout(() => {
+          levelFailed();
+        }, 2000);
       } else {
         car.body.moveForward(speed);
       }
     } else if (userInput.case === 2) { // failed, car didn't start
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
+      setTimeout(() => {
+        levelFailed();
+      }, 2000);
     }
 
     /*
@@ -383,10 +391,15 @@ var createGame = (userInput) => {
   }
 
   function levelCompleted() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Success!', style);
+    var text = game.add.sprite(400, 300, 'success');
+    text.anchor.setTo(.5, .5)
     game.paused = true;
-    console.log('COMPLETED!');
+  }
+
+  function levelFailed() {
+    var text = game.add.sprite(400, 300, 'failure');
+    text.anchor.setTo(.5, .5);
+    game.paused = true;
   }
 
   /*
@@ -404,8 +417,8 @@ var createGame = (userInput) => {
     explosion.animations.add('explode');
     explosion.animations.play('explode', 24, false);
     car.kill();
-    for (var sensor in sensors) {
-      if (sensors[sensor] !== {}) {
+    if (userInput.sensor) {
+      for (var sensor in sensors) {
         sensors[sensor].kill();
       }
     }
