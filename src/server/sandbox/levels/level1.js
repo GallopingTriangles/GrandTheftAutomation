@@ -46,12 +46,12 @@ var level1 = function(req, res, next) {
     };
 
     // == NEW GTA SANDBOX == //
-    var newContext = new gtaSandbox().create(userInput);
+    var context = new gtaSandbox().create(userInput);
 
     // == NEW ENABLED TESTS == //
     runTestSuite(function EnabledInputTest(t) {
-      var enabled = newContext.testEnabled.values;
-      var calls = newContext.testEnabled.calls;
+      var enabled = context.testEnabled.values;
+      var calls = context.testEnabled.calls;
 
       this.testEnabledCalled = function() {
         t.assertTrue(
@@ -96,11 +96,11 @@ var level1 = function(req, res, next) {
 
     // == NEW ENGINE TESTS == //
     // set engine on phaser object to context value
-    req.body.phaser.engine = newContext.testEnabled.values[0];
+    req.body.phaser.engine = context.testEnabled.values[0];
     runTestSuite(function EngineInputTest(t) {
 
-      var enabled = newContext.testEnabled.values;
-      var calls = newContext.testEnabled.calls;
+      var enabled = context.testEnabled.values;
+      var calls = context.testEnabled.calls;
 
       this.testEngineEnabled = function() {
         t.assertTrue(
@@ -125,10 +125,10 @@ var level1 = function(req, res, next) {
 
     // == NEW COLOR TESTS == //
     // set color on phaser object to new context value
-    req.body.phaser.color = newContext.testSetcolor.value;
+    req.body.phaser.color = context.testSetcolor.value;
     runTestSuite(function ColorInputTest(t) {
-      var color = newContext.testSetcolor.value;
-      var calls = newContext.testSetcolor.calls;
+      var color = context.testSetcolor.value;
+      var calls = context.testSetcolor.calls;
 
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
@@ -181,11 +181,11 @@ var level1 = function(req, res, next) {
 
     // == NEW SPEED TESTS == //
     // set speed on phaser object to context
-    req.body.phaser.speed = newContext.testSetspeed.value;
+    req.body.phaser.speed = context.testSetspeed.value;
     runTestSuite(function SpeedInputTest(t) {
       
-      var speed = newContext.testSetspeed.value;
-      var calls = newContext.testSetspeed.calls;
+      var speed = context.testSetspeed.value;
+      var calls = context.testSetspeed.calls;
 
       this.testSpeedCalled = function() {
         t.assertTrue(
@@ -233,10 +233,10 @@ var level1 = function(req, res, next) {
 
     // == NEW SENSOR TESTS == //
     // set sensor on phaser obj to context value
-    req.body.phaser.sensor = newContext.testEnabled.values[1];
+    req.body.phaser.sensor = context.testEnabled.values[1];
     runTestSuite(function SensorInputTest(t) {
       
-      var sensor = newContext.testEnabled.values[1];
+      var sensor = context.testEnabled.values[1];
 
       // if a test fails, set the sensor value to a default value
       var setSensorDefault = function(errorMessage) {
