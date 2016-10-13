@@ -68,15 +68,15 @@ var level5 = function(req, res, next) {
   script.runInContext(context);
 
   var setCaseCount = 1;
-  var setCase = function(caseNo) {
+  var setCase = function(caseNo, errorMessage) {
   	if (setCaseCount === 1) {
       req.body.phaser.case = caseNo;
+      req.body.bugs.push(errorMessage);
       setCaseCount++;
   	}
   };
 
   // == ENABLED TESTS == //
-  req.body.bugs.push({name: 'EnabledInputTest', tests: []});
   runTestSuite(function EnabledInputTest(t) {
   	// enabled array in sandbox context
   	var enabled = context.testEnable;
@@ -85,8 +85,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         enabled.length === 3,
         'Expect enable() to be called three times, but got called ' + enabled.length + ' times',
-        function() {
-        	setCase(4); 
+        function(error) {
+        	setCase(4, error); 
         }
       );
     };
@@ -95,8 +95,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         enabled[2] !== undefined,
         'Expected enable() to be called with an argument, but got called with ' + enabled[2],
-        function() {
-          setCase(4);
+        function(error) {
+          setCase(4, error);
         }
       );
     };
@@ -105,8 +105,8 @@ var level5 = function(req, res, next) {
     this.testEnableInputType = function() {
     	t.assertOptionsOfTypeString(
         enabled,
-        function() {
-        	setCase(4); // input error of lastly added item, car crashes
+        function(error) {
+        	setCase(4, error); // input error of lastly added item, car crashes
         }
     	);
     };
@@ -118,15 +118,14 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         enabledThird === 'route',
         'Expected route to be enabled thirdly, but got ' + enabledThird + ' enabled thirdly',
-        function() {
-          setCase(4); // syntax error, route not enabled. car crashes
+        function(error) {
+          setCase(4, error); // syntax error, route not enabled. car crashes
         }
       );
     }
   });
 
   // == ROUTE TESTS == //
-  req.body.bugs.push({name: 'RouteInputTest', tests: []});
   runTestSuite(function RouteInputTest(t) {
   	var route = context.route.directions;
   	var calls = context.route.count;
@@ -135,8 +134,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         calls,
         'Expected function setRoute() to be called, but got not called',
-        function() {
-        	setCase(4); // no route is created, car crashes straight
+        function(error) {
+        	setCase(4, error); // no route is created, car crashes straight
         }
       );
     };
@@ -145,8 +144,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         route,
         'Expected function setRoute() to be called with an argument, but got called with ' + route,
-        function() {
-          setCase(4);
+        function(error) {
+          setCase(4, error);
         }
       );
     };
@@ -156,8 +155,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         Array.isArray(route),
         'Expected setRoute() input to be an array, but got ' + typeof route,
-        function() {
-          setCase(4); // route is not defined, car crashes straight
+        function(error) {
+          setCase(4, error); // route is not defined, car crashes straight
         }
       );
     };
@@ -172,8 +171,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         typeof el === 'string',
         'Expect setRoute() input array elements to be of type string, but got ' + typeof el,
-        function() {
-          setCase(4);
+        function(error) {
+          setCase(4, error);
         }
       );
     };
@@ -183,8 +182,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         len === 1,
         'Expect setRoute() input array to have one element, but got ' + len + ' element(s)',
-        function() {
-        	setCase(4); // NOT SURE WHAT TO DO IN THIS CASE
+        function(error) {
+        	setCase(4, error); // NOT SURE WHAT TO DO IN THIS CASE
         }
       );
     };
@@ -193,8 +192,8 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         el === 'left' || el === 'right',
         'Expected setRoute() input array to have elements of value "left" or "right", but got ' + el,
-        function() {
-          setCase(4);
+        function(error) {
+          setCase(4, error);
         }
       );
     };
@@ -203,11 +202,11 @@ var level5 = function(req, res, next) {
       t.assertTrue(
         el === 'left',
         'Expected setRoute() input array element to have value "left", but got ' + el,
-        function() {
+        function(error) {
           if (el === 'right') {
-            setCase(5); // ADD THIS FAIL CASE TO PHASER, RIGHT TURN....
+            setCase(5, error); // ADD THIS FAIL CASE TO PHASER, RIGHT TURN....
           } else {
-            setCase(4);
+            setCase(4, error);
           }
         }
       );

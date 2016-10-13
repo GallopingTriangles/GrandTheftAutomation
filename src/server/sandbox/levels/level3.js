@@ -45,15 +45,15 @@ var level3 = function(req, res, next) {
     var script = new vm.Script(input);
 
     var setCaseCount = 1;
-    var setCase = function(caseNo) {
+    var setCase = function(caseNo, errorMessage) {
     	if (setCaseCount === 1) {
 	      req.body.phaser.case = caseNo;
+        req.body.bugs.push(errorMessage);
 	      setCaseCount++;
     	}
     };
 
   	// == MAP CONDITIONAL TEST == //
-    req.body.bugs.push({name: 'MapConditionalFalseTest', tests: []});
     runTestSuite(function MapConditionalFalseTest(t) {
     	// sandbox for virtual machine
     	var sandbox = {
@@ -80,8 +80,8 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           calls === 0,
           'Expected function turn() to be called inside if statement, but got called outside if statement',
-          function() {
-          	setCase(3); // car is turning before or after intersection
+          function(error) {
+          	setCase(3, error); // car is turning before or after intersection
           }
         );
     	};
@@ -89,14 +89,13 @@ var level3 = function(req, res, next) {
     });
 
     // == CONDITIONAL TESTS == //
-    req.body.bugs.push({name: 'ConditionalTest', tests: []});
     runTestSuite(function ConditionalTest(t) {
       this.testConditionalPresence = function() {
         t.assertTrue(
           userInput.indexOf('if') !== -1,
           'Expected code to have an if statement, example: "if (map.intersection) { do something..."',
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -105,14 +104,13 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           userInput.indexOf('map.intersection === true') !== -1,
           'Expected code to have an if statement with conditional: if (map.intersection === true) {...',
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
     });
 
-    req.body.bugs.push({name: 'MapConditionalTrueTest', tests: []});
     runTestSuite(function MapConditionalTrueTest(t) {
       // sandbox for virtual machine
       var sandbox = {
@@ -139,8 +137,8 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           calls > 0,
           'Expected function turn() to be called, but got not called',
-          function() {
-          	setCase(3); // car is not turning at intersection
+          function(error) {
+          	setCase(3, error); // car is not turning at intersection
           }
         );
       };
@@ -149,11 +147,11 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           calls === 1,
           'Expected function turn() to be called once, but got called ' + calls,
-          function() {
+          function(error) {
             if (turn === 'left') {
-              setCase(4);
+              setCase(4, error);
             } else {
-            	setCase(3); // car is turning multiple times
+            	setCase(3, error); // car is turning multiple times
             }
           }
         );
@@ -163,8 +161,8 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           turn,
           'Expected function turn() to be called with an argument, but got called with ' + turn,
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -173,8 +171,8 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           typeof turn === 'string',
           'Expected function turn() to be called with input type of string, but got called with input of type ' + typeof turn,
-          function() {
-          	setCase(3); // car is not turning at intersection
+          function(error) {
+          	setCase(3, error); // car is not turning at intersection
           }
         );
       };
@@ -183,8 +181,8 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           turn === 'left' || turn === 'right',
           'Expected function turn() to be called with argument "left" or "right", but got called with ' + turn,
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -193,11 +191,11 @@ var level3 = function(req, res, next) {
         t.assertTrue(
           turn === 'right',
           'Expected function turn() to be called with input value "right", but got input value ' + turn,
-          function() {
+          function(error) {
             if (turn === 'left') {
-              setCase(4);
+              setCase(4, error);
             } else {
-            	setCase(3); // car is not turning at intersetion
+            	setCase(3, error); // car is not turning at intersetion
             }
           }
         );

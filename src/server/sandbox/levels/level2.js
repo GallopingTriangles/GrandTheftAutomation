@@ -40,15 +40,15 @@ var level2 = function(req, res, next) {
     var script = new vm.Script(input);
 
     var setCaseCount = 1;
-    var setCase = function(caseNo) {
+    var setCase = function(caseNo, errorMessage) {
     	if (setCaseCount === 1) {
 	      req.body.phaser.case = caseNo;
+        req.body.bugs.push(errorMessage);
 	      setCaseCount++;
     	}
     };
 
   	// == CONDITIONAL TESTS == //
-    req.body.bugs.push({name: 'SensorConditionalFalseTest', tests: []});
   	runTestSuite(function SensorConditionalFalseTest(t) {
   		// sandbox for virtual machine
   		var sandbox = {
@@ -75,8 +75,8 @@ var level2 = function(req, res, next) {
 	      t.assertTrue(
 	        calls === 1,
 	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
-	        function() {
-	        	setCase(3);
+	        function(error) {
+	        	setCase(3, error);
 	        }
 	      );
 			};
@@ -84,17 +84,16 @@ var level2 = function(req, res, next) {
   	});
 
     // == CONDITIONAL TESTS == //
-    req.body.bugs.push({name: 'ConditionalTest', tests: []});
     runTestSuite(function ConditionalTest(t) {
       this.testConditionalPresence = function() {
         t.assertTrue(
           userInput.indexOf('if') !== -1,
           'Expected code to have an if statement, example: "if (sensor.front) { do something..."',
-          function() {
+          function(error) {
             if (req.body.level === 4) {
-              setCase(6);
+              setCase(6, error);
             } else {
-              setCase(3);
+              setCase(3, error);
             }
           }
         );
@@ -104,18 +103,17 @@ var level2 = function(req, res, next) {
         t.assertTrue(
           userInput.indexOf('sensor.front === true') !== -1,
           'Expected code to have an if statement with conditional: if (sensor.front === true) {...',
-          function() {
+          function(error) {
             if (req.body.level === 4) {
-              setCase(6);
+              setCase(6, error);
             } else {
-              setCase(3);
+              setCase(3, error);
             }
           }
         );
       };
     });
 
-    req.body.bugs.push({name: 'SensorConditionalTrueTest', tests: []});
 		runTestSuite(function SensorConditionalTrueTest(t) {
 			// sandbox for virtual machine
 			var sandbox = {
@@ -143,11 +141,11 @@ var level2 = function(req, res, next) {
         t.assertTrue(
           calls === 2,
           'Expected function setSpeed() to be called twice, but got called ' + calls + ' times',
-          function() {
+          function(error) {
             if (req.body.level === 4) {
-              setCase(6);
+              setCase(6, error);
             } else {
-            	setCase(3);
+            	setCase(3, error);
             }
           }
         );
@@ -158,11 +156,11 @@ var level2 = function(req, res, next) {
         t.assertTrue(
           calls === 2 && typeof speed === 'number',
           'Expected speed to be of data type number, but got set to ' + typeof speed,
-          function() {
+          function(error) {
             if (req.body.level === 4) {
-              setCase(6);  
+              setCase(6, error);  
             } else {
-            	setCase(3); // syntax error, crash into object
+            	setCase(3, error); // syntax error, crash into object
             }
           }
         );
@@ -173,11 +171,11 @@ var level2 = function(req, res, next) {
         t.assertTrue(
           calls === 2 && speed >= 0,
           'Expected speed to be a positive number, but got a negative number',
-          function() {
+          function(error) {
             if (req.body.level === 4) {
-              setCase(6);
+              setCase(6, error);
             } else {
-            	setCase(3); // syntax error, crash into object
+            	setCase(3, error); // syntax error, crash into object
             }
           }
         );
@@ -188,11 +186,11 @@ var level2 = function(req, res, next) {
         t.assertTrue(
           calls === 2 && speed === 0,
           'Expected speed to be set to 0, but got ' + speed,
-          function() {
+          function(error) {
             if (req.body.level === 4) {
-              setCase(6);
+              setCase(6, error);
             } else {
-            	setCase(3); // wrong input, crash into object
+            	setCase(3, error); // wrong input, crash into object
             }
           }
         );

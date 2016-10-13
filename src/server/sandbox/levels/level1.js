@@ -74,15 +74,15 @@ var level1 = function(req, res, next) {
     script.runInContext(context);
 
     var setCaseCount = 1;
-    var setCase = function(caseNo) {
+    var setCase = function(caseNo, errorMessage) {
     	if (setCaseCount === 1) {
     		req.body.phaser.case = caseNo;
+        req.body.bugs.push(errorMessage);
     		setCaseCount++;
     	}
     };
 
     // == ENABLED TESTS == //
-    req.body.bugs.push({name: 'EnabledInputTest', tests: []});
     runTestSuite(function EnabledInputTest(t) {
     	// grab enabled array from sandbox context
     	var enabled = context.testEnable.values;
@@ -92,8 +92,8 @@ var level1 = function(req, res, next) {
 	      t.assertTrue(
 	      	calls, 
 	      	'Expected function enable() to be called, but got not called',
-	      	function() {
-	      		setCase(2);
+	      	function(error) {
+	      		setCase(2, error);
 	      	}
 	      );
 	  	};
@@ -102,8 +102,8 @@ var level1 = function(req, res, next) {
         t.assertTrue(
           enabled[0],
           'Expected function enable() to be called with an argument, but got called with ' + enabled[0],
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           }
         );
 	  	};
@@ -112,8 +112,8 @@ var level1 = function(req, res, next) {
         t.assertTrue(
           typeof enabled[0] === 'string',
           'Expected function enable() to be called with an argument of type string, but got called with argument of type ' + typeof enabled[0],
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           }
         );
 	  	};
@@ -125,8 +125,8 @@ var level1 = function(req, res, next) {
           t.assertTrue(
           	calls <= 2,
             'Expected function enable() to be called twice, but got called ' + calls + ' times',
-            function() {
-            	// ADD FAIL CALLBACK
+            function(error) {
+            	setCase(2, error);
             }
           );
         };
@@ -146,7 +146,6 @@ var level1 = function(req, res, next) {
     // == ENGINE TESTS == //
     // set engine on phase object to context value
     req.body.phaser.engine = context.testEngine;
-    req.body.bugs.push({name: 'EngineInputTest', tests: []});
     runTestSuite(function EngineInputTest(t) {
 
     	var enabled = context.testEnable.values;
@@ -162,8 +161,8 @@ var level1 = function(req, res, next) {
         t.assertTrue(
         	context.testEngine,
           'Expected engine to be enabled with function enable(), but got undefined',
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           }
         );
       };
@@ -173,8 +172,8 @@ var level1 = function(req, res, next) {
         t.assertTrue(
           enabled[0] === 'engine',
           'Expected engine to be enabled first, but got ' + enabled[0] + ' enabled first',
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           }
         );
       };
@@ -183,7 +182,6 @@ var level1 = function(req, res, next) {
     // == COLOR TESTS == //
     // set color on phaser object to context value
     req.body.phaser.color = context.testColor.value;
-    req.body.bugs.push({name: 'ColorInputTest', tests: []});
     runTestSuite(function ColorInputTest(t) {
     	// grab color from sanbox context
     	var color = context.testColor.value;
@@ -192,6 +190,7 @@ var level1 = function(req, res, next) {
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
         req.body.phaser.color = 'white';
+        req.body.bugs.push(errorMessage);
       };
 
       this.testColorCalled = function() {
@@ -241,7 +240,6 @@ var level1 = function(req, res, next) {
     // == SPEED TESTS == //
     // set speed on phaser object to context
     req.body.phaser.speed = context.testSpeed.value;
-    req.body.bugs.push({name: 'SpeedInputTest', tests: []});
     runTestSuite(function SpeedInputTest(t) {
     	// grab speed from sandbox context
     	var speed = context.testSpeed.value;
@@ -257,8 +255,8 @@ var level1 = function(req, res, next) {
       	t.assertTrue(
           calls,
           'Expected setSpeed() to be called, but got ' + calls + ' calls',
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           }
       	);
       };
@@ -268,8 +266,8 @@ var level1 = function(req, res, next) {
         t.assertTrue(
           speed,
           'Expected setSpeed() to be called with an argument, but got ' + speed,
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           }
         );
     	};
@@ -279,8 +277,8 @@ var level1 = function(req, res, next) {
         t.assertTrue(
           typeof speed === 'number',
           'Expected setSpeed() to be called with an argument of type number, but got called with argument of type ' + typeof speed,
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           } 
         );
     	};
@@ -290,8 +288,8 @@ var level1 = function(req, res, next) {
         t.assertTrue(
         	speed >= 0, 
         	'Expected speed to be a positive number, but got a negative number',
-        	function() {
-        		setCase(2);
+        	function(error) {
+        		setCase(2, error);
         	}
         );
     	};
@@ -300,7 +298,6 @@ var level1 = function(req, res, next) {
     // == SENSOR TESTS == //
     // set sensor on phaser object to context value
     req.body.phaser.sensor = context.testSensor;
-    req.body.bugs.push({name: 'SensorInputTest', tests: []});
     runTestSuite(function SensorInputTest(t) {
     	// grab sensor value from context
     	var sensor = context.testSensor;
@@ -308,6 +305,7 @@ var level1 = function(req, res, next) {
       // if a test fails, set the sensor value to a default value
       var setSensorDefault = function(errorMessage) {
         req.body.phaser.sensor = false;
+        req.body.bugs.push(errorMessage);
         setCase(2);
       };
 

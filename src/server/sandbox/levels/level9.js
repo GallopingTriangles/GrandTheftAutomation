@@ -88,15 +88,15 @@ var level9 = function(req, res, next) {
 	   };
 
 	  var setCaseCount = 1;
-	  var setCase = function(caseNo) {
+	  var setCase = function(caseNo, errorMessage) {
 	  	if (setCaseCount === 1) {
 	      req.body.phaser.case = caseNo;
+        req.body.bugs.push(errorMessage);
 	      setCaseCount++;
 	  	}
 	  };
     
     // == CONDITIONAL TESTS == //
-    req.body.bugs.push({name: 'ConditionalTest', tests: []});
     runTestSuite(function ConditionalTest(t) {
       var sb = new Sandbox().sandbox;
       var context = new vm.createContext(sb);
@@ -113,8 +113,8 @@ var level9 = function(req, res, next) {
       	t.assertTrue(
           count === 3,
           'Expected code to have three if statements, but got ' + count + ' if statement(s)',
-          function() {
-          	setCase(2);
+          function(error) {
+          	setCase(2, error);
           }
       	);
       };
@@ -123,15 +123,14 @@ var level9 = function(req, res, next) {
         t.assertTrue(
           userInput.indexOf('sensor.front === true') !== -1,
           'Expected code to have an if statement with conditional: (sensor.front === true) {...',
-          function() {
-          	setCase(10);
+          function(error) {
+          	setCase(10, error);
           }
         );
       };
     });
 
     // == CONDITIONAL SENSOR TEST == //
-    req.body.bugs.push({name: 'ConditionalSensorTest', tests: []});
     runTestSuite(function ConditionalSensorTest(t) {
     	var sb = new Sandbox().sandbox;
     	sb.sensor.front = true;
@@ -145,8 +144,8 @@ var level9 = function(req, res, next) {
         t.assertTrue(
           calls,
           'Expected function turn() to be called in sensor.front if statement, but got ' + calls + ' calls',
-          function() {
-          	setCase(10);
+          function(error) {
+          	setCase(10, error);
           }
         );
     	};
@@ -155,8 +154,8 @@ var level9 = function(req, res, next) {
     	  t.assertTrue(
     	    turn,
     	    'Expected function turn() to be called with an argument, but got ' + turn,
-    	    function() {
-    	      setCase(10);
+    	    function(error) {
+    	      setCase(10, error);
     	    }
     	  );
     	};
@@ -165,8 +164,8 @@ var level9 = function(req, res, next) {
     		t.assertTrue(
     	    typeof turn === 'string',
     	    'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
-    	    function() {
-    	    	setCase(10);
+    	    function(error) {
+    	    	setCase(10, error);
     	    }
     		);
     	};
@@ -175,8 +174,8 @@ var level9 = function(req, res, next) {
     	  t.assertTrue(
     	    turn === 'left' || turn === 'right' || turn === 'u-turn',
     	    'Expected function turn() argument to have value "left", "right" or "u-turn", but got value ' + turn,
-    	    function() {
-    	    	setCase(10);
+    	    function(error) {
+    	    	setCase(10, error);
     	    }
     	  );
     	};
@@ -185,8 +184,8 @@ var level9 = function(req, res, next) {
     	  t.assertTrue(
     	    turn === 'u-turn',
     	    'Expected function turn() argument to have value "u-turn", but got value ' + turn,
-    	    function() {
-    	    	setCase(10);
+    	    function(error) {
+    	    	setCase(10, error);
     	    }
     	  );
     	};
