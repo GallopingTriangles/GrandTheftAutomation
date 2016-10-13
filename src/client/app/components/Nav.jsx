@@ -35,13 +35,13 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default" style={styles.navbar}>
+      <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">
           <div className='navbar-header'>
-            <a className='navbar-brand'>Grand Theft Automation</a>
+            <a className='navbar-brand'><span style={{color: 'red'}}>GTA</span>utomation</a>
           </div>
           <ul className="nav navbar-nav navbar-right">
-            <li><Link to='/'> Landing </Link></li>
+            <li><Link to='/'> Home </Link></li>
             <li><Link to={ this.props.user ? '/game' : '/' }> Game </Link></li>
             <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
             { this.props.user ? <li><Link to='/profile'>{ this.props.user }</Link></li> : null }
