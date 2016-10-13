@@ -67,10 +67,16 @@ class LoginContainer extends Component {
     return (
       <div style={{float: 'left'}}>
         <form className="landing-form" onSubmit={ this.loginUser.bind(this) } >
-          <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p>
-          <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p>
-          { this.state.invalid ? <p style={{ color: 'red' }} >Invalid login. Please try again.</p> : null }
-          <button className="btn btn-landing" type="submit">Submit</button>
+          <div className="form-group">
+            <label className="sr-only" htmlFor="username">Username</label>
+            <input type="username" className="form-control black-text" id="username" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } placeholder="username" required />
+          </div>
+          <div className="form-group">
+            <label className="sr-only" htmlFor="password">Password</label>
+            <input type="password" className="form-control black-text" id="password" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } placeholder="password" required />
+          </div>
+          { this.state.invalid ? <p style={{ color: 'red' }} >Please try again.</p> : null }
+          <button className="btn btn-secondary" type="submit">Submit</button>
         </form>
       </div>
     )
