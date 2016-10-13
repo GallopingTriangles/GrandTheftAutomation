@@ -49,14 +49,14 @@ class LoginContainer extends Component {
           
         } else {
           /* Invalid credentials will render an error message */
-          this.setState({ invalid: true });
+          /* clear the form */
+          this.setState({
+            username: '',
+            password: '',
+            invalid: true
+          });
         }
 
-        /* clear the form */
-        this.setState({
-          username: '',
-          password: '',
-        })
       })
     }).catch(err => {
       console.log('Error in signup request');
