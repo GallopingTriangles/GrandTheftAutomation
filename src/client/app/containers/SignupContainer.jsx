@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import changeUser from '../actions/changeUser.js';
+import changeLevel from '../actions/changeLevel.js';
+import setCode from '../actions/setCode.js';
 
 class SignupContainer extends Component {
   constructor(props) {
@@ -37,24 +39,22 @@ class SignupContainer extends Component {
       console.log('signup status: ', res.status);
       res.json().then(result => {
         console.log('signup response: ', result.message);
-        
+
         if (result.message !== 'User already exists.') {
 
-          /* Dispatch an action to change the current user in the store */
-          this.props.changeUser(this.state.username);            
+          /* Reset the current items in the store to accomadate the new user */
+          this.props.changeUser(this.state.username);
+          this.props.resetLevel();
+          this.props.resetCode();
+
           this.setState({ invalid: false });
 
           /* Redirect the logged in user to the game */
           this.props.router.push('/game');
-
-          /********
-          ********* should probably be setting the level to 0 for new user?!?!?!
-          ********/
           
         } else {
           this.setState({ invalid: true });
         }
-
 
         /* clear the form after it has been submitted */
         this.setState({
@@ -93,6 +93,12 @@ const mapDispatchToProps = dispatch => {
   return {
     changeUser: user => {
       dispatch(changeUser(user));
+    },
+    resetLevel: () => {
+      dispatch(changeLevel(0));
+    },
+    resetCode: () => {
+      dispatch(setCode('// Input your code here\n\n'));
     }
   }
 }
