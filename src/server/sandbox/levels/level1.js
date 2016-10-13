@@ -11,6 +11,8 @@ var level10 = require('./level10');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 var level1 = function(req, res, next) {
 
@@ -82,21 +84,40 @@ var level1 = function(req, res, next) {
     	}
     };
 
+    // == NEW GTA SANDBOX == //
+    var newContext = new gtaSandbox().create(userInput);
+
+    // == NEW ENABLED TESTS == //
+    runTestSuite(function EnabledInputTest(t) {
+      var enabled = newContext.testEnabled.values;
+      var calls = newContext.testEnabled.calls;
+
+      this.testEnabledCalled = function() {
+        t.assertTrue(
+          calls,
+          'Expected function enable() to be called, but got ' + calls + ' calls',
+          function(error) {
+            setCase(2, error);
+          }
+        );
+      }
+    });
+
     // == ENABLED TESTS == //
     runTestSuite(function EnabledInputTest(t) {
     	// grab enabled array from sandbox context
     	var enabled = context.testEnable.values;
     	var calls = context.testEnable.count;
 	  	// test if the enable function is called
-	  	this.testEnabledCalled = function() {
-	      t.assertTrue(
-	      	calls, 
-	      	'Expected function enable() to be called, but got not called',
-	      	function(error) {
-	      		setCase(2, error);
-	      	}
-	      );
-	  	};
+	  	// this.testEnabledCalled = function() {
+	   //    t.assertTrue(
+	   //    	calls, 
+	   //    	'Expected function enable() to be called, but got not called',
+	   //    	function(error) {
+	   //    		setCase(2, error);
+	   //    	}
+	   //    );
+	  	// };
 
 	  	this.testEnabledCalledWithArgument = function() {
         t.assertTrue(
