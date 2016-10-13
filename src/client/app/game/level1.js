@@ -202,8 +202,10 @@ var createGame = (userInput) => {
     ** The car should remain still if no arrow keys are pressed for early levels.
     ** This resets the car's velocity per frame.
     */
-
-    if (userInput.case === 1) {
+    if (userInput.case === 0) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (userInput.case === 1) {
       car.body.moveForward(speed);
       checkCompletion();
     } else {
