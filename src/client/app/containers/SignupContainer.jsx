@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import changeUser from '../actions/changeUser.js';
+import changeLevel from '../actions/changeLevel.js';
+import setCode from '../actions/setCode.js';
 
 class SignupContainer extends Component {
   constructor(props) {
@@ -7,7 +11,8 @@ class SignupContainer extends Component {
     this.state = {
       email: '',
       username: '',
-      password: ''
+      password: '',
+      invalid: false
     };
   }
 
@@ -35,17 +40,21 @@ class SignupContainer extends Component {
       res.json().then(result => {
         console.log('signup response: ', result.message);
 
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
-        /*********************************************************************************************/
+        if (result.message !== 'User already exists.') {
 
-        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
-         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
+          /* Reset the current items in the store to accomadate the new user */
+          this.props.changeUser(this.state.username);
+          this.props.resetLevel();
+          this.props.resetCode();
 
-        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
-         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
+          this.setState({ invalid: false });
 
-        /*********************************************************************************************/
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
+          /* Redirect the logged in user to the game */
+          this.props.router.push('/game');
+          
+        } else {
+          this.setState({ invalid: true });
+        }
 
         /* clear the form after it has been submitted */
         this.setState({
@@ -53,14 +62,6 @@ class SignupContainer extends Component {
           username: '',
           password: ''
         })
-
-        /* Redirect the logged in user to the game */
-        this.props.router.push('/game');
-
-        /********
-        ********* should probably be setting the level to 0 for new user?!?!?!
-        ********/
-
       })
     }).catch(err => {
       console.log('Error in signup request');
@@ -73,7 +74,8 @@ class SignupContainer extends Component {
         <form className="landing-form" onSubmit={ this.createUser.bind(this) } >
           <p className="white-text">Email: <input className="black-text" onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } required/></p>
           <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p>
-          <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p><br/>
+          <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p>
+          { this.state.invalid ? <p style={{ color: 'red' }} > Sorry, that username already exists. </p> : null }
           <button className="btn btn-landing" type="submit">Submit</button>
         </form>
       </div>
@@ -81,4 +83,24 @@ class SignupContainer extends Component {
   }
 }
 
-export default withRouter(SignupContainer);
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUser: user => {
+      dispatch(changeUser(user));
+    },
+    resetLevel: () => {
+      dispatch(changeLevel(0));
+    },
+    resetCode: () => {
+      dispatch(setCode('// Input your code here\n\n'));
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupContainer));

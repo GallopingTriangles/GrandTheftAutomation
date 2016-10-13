@@ -45,7 +45,6 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     level: state.level,
-    currentCode: state.currentCode
   }
 }
 
