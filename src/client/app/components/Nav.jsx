@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import changeUser from '../actions/changeUser.js';
+import Login from '../containers/LoginContainer.jsx';
 
 import styles from '../../styles/Nav.css.js';
 
@@ -44,8 +45,24 @@ class Nav extends Component {
             <li><Link to='/'> Home </Link></li>
             <li><Link to={ this.props.user ? '/game' : '/' }> Game </Link></li>
             <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
-            { this.props.user ? <li><Link to='/profile'>{ this.props.user }</Link></li> : null }
+
+            { this.props.user ? <li><Link>{ this.props.user }</Link></li> : 
+              <li className="dropdown">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown">Login<span className="caret"></span></a>
+                <ul id="login-dp" className="dropdown-menu">
+                  <li>
+                     <div className="row">
+                        <div className="col-md-12">
+                          <Login />
+                        </div>
+                     </div>
+                  </li>
+                </ul>
+              </li>
+            }
+            
           </ul>
+          
         </div>
       </nav>
     )

@@ -35,7 +35,7 @@ app.use(morgan('dev'));                                         // log every req
 
 // == mysql session store config===============================
 var sessionStore = new MySQLStore({                             // initializes a mysql session store
-  host: 'localhost',                                            // this property will change if/when app is deployed
+  host: config.dbHost,                                            // this property will change if/when app is deployed
   port: 3306,                                                   // this property will change if/when app is deployed
   user: config.dbUsername,                                      // mysql username
   password: config.dbPassword,                                  // mysql password for username above

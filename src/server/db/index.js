@@ -10,7 +10,7 @@ var config = require('../config/config.js');
 /* This variable instantiates a new mysql database via sequelize with 
 the following parameters: (databaseName, username, password, options) */
 var sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, {
-  host: 'localhost', 
+  host: config.dbHost, 
   dialect: 'mysql',
   port: 3306,
   pool: {
