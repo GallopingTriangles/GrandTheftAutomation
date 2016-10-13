@@ -1,48 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import CommandLine from '../components/CommandLine.jsx';
 import Editor from '../components/Editor.jsx';
-import Learn from '../components/Learn.jsx';
 import Instructions from '../components/Instructions.jsx';
 import Bugs from '../components/Bugs.jsx';
-import LogsContainer from './LogsContainer.jsx';
-import _ from 'underscore';
 import createGame from '../game/game.js';
+import setCode from '../actions/setCode.js';
 import $ from 'jquery';
 
 class Console extends Component {
-  // == REACT METHODS ====================================================================
   constructor(props) {
     super(props);
     this.state = {
       tab: 'editor',
-      // input: '',
-      input: '',
       bugs: []
     };
   }
 
-  componentWillMount() {
-
-    /*************************************************************/
-    /* DIRTIEST HACK EVER... NEED TO FIGURE OUT A WORKAROUND     */
-    /* This sends the Console component context up to the parent */
-    /* So the parent can set the 'currentCode' into this state   */
-    /*   because the console wasn't refreshing on its own,       */
-    /*   even though the store's state was changing              */
-    /*   and the store's currentCode is mapped to props...       */
-    /*                                                           */
-    /* Why we doing this?? To get the editor to change when      */
-    /*  switching levels from the footer                         */
-    /*************************************************************/
-
-    var childContext = this;
-    this.props.setConsole(childContext);
-  }
-
   postSolution() {
 
-    console.log('User submitted solution: ', this.state.input);
+    console.log('User submitted solution: ', this.props.currentCode);
 
     // remove the currently rendered game so we can create a new one
     $('canvas').remove();
@@ -55,7 +31,7 @@ class Console extends Component {
       body: JSON.stringify({
         username: this.props.user,
         level: this.props.level,
-        log: this.state.input
+        log: this.props.currentCode
       })
     }).then(res => {
       console.log('res: ', res);
@@ -80,25 +56,23 @@ class Console extends Component {
   }
 
   /* Keep track of the user's code from the editor by storing it in state */
-  codeChange(newCode) {
-    this.setState({ input: newCode });
+  inputChange(newCode) {
+    this.props.setCode(newCode);
   }
 
   codeReset() {
-    // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
-    this.setState({input: '// Input your code here\n\n'}); // REFACTOR REFACTOR REFACTOR
-    // REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR REFACTOR
+    this.props.setCode('// Input your code here\n\n');
   }
 
-  // == RENDER FUNCTIONS =================================================================
+  /* Decide which component to render based on which tab is currently active */
   renderContent() {
     switch (this.state.tab) {
       case 'instructions': return <Instructions level={ this.props.level }/>;
       case 'editor': return <Editor 
-                            code={ this.state.input } 
-                            inputChange={ this.codeChange.bind(this) } 
-                            runInput={ this.postSolution.bind(this) } 
-                            resetInput={ this.codeReset.bind(this) } />;
+                              code={ this.props.currentCode }
+                              inputChange={ this.inputChange.bind(this) } 
+                              runCode={ this.postSolution.bind(this) } 
+                              resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
       default: return <div>ERROR</div>;
     }
@@ -149,7 +123,8 @@ class Console extends Component {
   }
 }
 
-// == REDUX ============================================================================
+/* Allow access to the redux store through the props */
+/*                                                   */
 var mapStateToProps = state => {
   return {
     level: state.level,
@@ -160,10 +135,12 @@ var mapStateToProps = state => {
 
 var mapDispatchToProps = dispatch => {
   return {
-    // postSolution: (level, command) => {
-    //   dispatch(createCommand(level, command));
-    // }
+    setCode: (code) => {
+      dispatch(setCode(code));
+    }
   }
 }
+/*                                                   */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 export default connect(mapStateToProps, mapDispatchToProps)(Console);
