@@ -11,3 +11,4 @@ npm-debug.log
 !.elasticbeanstalk/*.global.yml
 
 config.js
+configEnv.bash
