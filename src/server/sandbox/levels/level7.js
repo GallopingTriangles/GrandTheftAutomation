@@ -89,14 +89,25 @@ var level7 = function(req, res, next) {
 	  		);
 	  	};
 
-	  	this.testEnableInputType = function() {
-	      t.assertOptionsOfTypeString(
-	        enabled,
-	        function() {
-	        	setCase(3);
-	        }
-	      );
+	  	this.testEnableCalledWithArgument = function() {
+        t.assertTrue(
+          enabled[2],
+          'Expected enable() to be called with an argument, but got called with ' + enabled[2],
+          function() {
+          	setCase(3);
+          }
+        );
 	  	};
+
+	  	this.testEnableCalledWithArgumentTypeString = function() {
+	  		t.assertTrue(
+          typeof enabled[2] === 'string',
+          'Expected enable() to be called with an argument of type string, but got called with argument of type ' + typeof enabled[2],
+          function() {
+          	setCase(3);
+          }
+	  		);
+	  	}
 
 	  	// test if route is enabled thirdly
 	  	this.testRouteEnabledThirdly = function() {
@@ -138,6 +149,16 @@ var level7 = function(req, res, next) {
         );
 	  	};
 
+	  	this.testRouteCalledWithArgument = function() {
+        t.assertTrue(
+          route,
+          'Expected function setRoute() to be called with an argument, but got called with ' + route,
+          function() {
+          	setCase(3);
+          }
+        );
+	  	};
+
 	  	// test if the setRoute input is of data type array
 	  	this.testRouteArray = function() {
 	  	  t.assertTrue(
@@ -162,16 +183,16 @@ var level7 = function(req, res, next) {
 	  	  );
 	  	};
 
-	  	// test if the array elements are of type string
-	  	this.testRouteArrayString = function() {
+	  	this.testRouteArrayElementsString = function() {
 	  		var array = route || [];
-	  	  t.assertOptionsOfTypeString(
-	  	    array,
-	  	    function() {
-	  	    	setCase(3);
-	  	    }
-	  	  );
-	  	};
+	  		t.assertTrue(
+          typeof array[0] === 'string',
+          'Expected setRoute() input array elements to be of type string, but got ' + typeof array[0],
+          function() {
+          	setCase(3);
+          }
+	  		);
+	  	}
 
 	  	// test if the array element is set to right or left
 	  	this.testRouteArrayFirstValueLeftOrRight = function() {
@@ -223,7 +244,18 @@ var level7 = function(req, res, next) {
           array.length === 2,
           'Expect setRoute() input array to have length of 2, but got ' + array.length + ' ',
           function() {
-          	setCase(6);
+          	setCase(4);
+          }
+        );
+      };
+
+      this.testRouteArraySecondElementTypeString = function() {
+        var array = route || [];
+        t.assertTrue(
+          typeof array[1] === 'string',
+          'Expected setRoute() second element in input array to be of type string, but got ' + typeof array[1],
+          function() {
+          	setCase(4);
           }
         );
       };
@@ -240,13 +272,17 @@ var level7 = function(req, res, next) {
       };
 
       // test if the it is a success!
-      this.testRouteArraySecondValueRight = function() {
+      this.testRouteArraySecondValueLeft = function() {
       	var array = route || [];
         t.assertTrue(
           array[1] === 'left',
           'Expected setRoute() second element of input array to be "left", but got ' + array[1],
           function() {
-            setCase(6);
+          	if (array[1] === 'right') {
+          		setCase(6);
+          	} else {
+          		setCase(4);
+          	}
           }
         );
       };	

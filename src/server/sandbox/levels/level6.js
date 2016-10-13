@@ -90,14 +90,25 @@ var level6 = function(req, res, next) {
 	  		);
 	  	};
 
-	  	this.testEnableInputType = function() {
-        t.assertOptionsOfTypeString(
-          enabled,
+      this.testEnableCalledWithArgument = function() {
+        t.assertTrue(
+          enabled[2],
+          'Expected enable() to be called with an argument, but got called with ' + enabled[2],
           function() {
-          	setCase(3);
+            setCase(3);
           }
         );
-	  	};
+      };
+      
+      this.testEnableCalledWithString = function() {
+        t.assertTrue(
+          typeof enabled[2] === 'string',
+          'Expected enable() to be called with an argument of type string, but got called with type ' + typeof enabled[2],
+          function() {
+            setCase(3);
+          }
+        );
+      };
 
 	  	// test if route is enabled thirdly
 	  	this.testRouteEnabledThirdly = function() {
@@ -129,19 +140,18 @@ var level6 = function(req, res, next) {
         );
 	  	};
 
-	  	// test is setRoute function has input
-	    // this.testRouteDefined = function() {
-	    //   t.assertTrue(
-	    //     route,
-	    //     'Expected route to be defined, but got ' + route,
-	    //     function() {
-	    //     	setCase(3); // no route defined, car crashes straigt
-	    //     }
-	    //   );
-	    // };
+      this.testRouteCalledWithArgument = function() {
+        t.assertTrue(
+          route,
+          'Expected function setRoute() to be called with an argument, but got called with ' + route,
+          function() {
+            setCase(3);
+          }
+        );
+      };
 
       // test if the setRoute input is of data type array
-      this.testRouteArray = function() {
+      this.testRouteArgumentArray = function() {
         t.assertTrue(
           Array.isArray(route),
           'Expected setRoute() input to be an array, but got ' + typeof route,
@@ -152,25 +162,24 @@ var level6 = function(req, res, next) {
       };
 
       // test if the array is not empty
+      var arr = route || [];
+      var len = arr.length;
       this.testRouteArrayNotEmpty = function() {
-      	var array = route || [];
-      	var length = array.length;
         t.assertTrue(
-          length !== 0,
-          'Expect setRoute() input array to be not empty, but got ' + length + ' input',
+          len !== 0,
+          'Expect setRoute() input array to be not empty, but got ' + len + ' input',
           function() {
           	setCase(3); 
           }
         );
       };
 
-      // test if the array elements are of type string
-      this.testRouteArrayString = function() {
-      	var array = route || [];
-        t.assertOptionsOfTypeString(
-          array,
+      this.testRouteArrayValueString = function() {
+        t.assertTrue(
+          typeof arr[0] === 'string',
+          'Expected setRoute() input array elements to have type of string',
           function() {
-          	setCase(3);
+            setCase(3);
           }
         );
       };
