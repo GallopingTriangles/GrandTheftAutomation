@@ -48,6 +48,7 @@ var level2 = function(req, res, next) {
     };
 
   	// == CONDITIONAL TESTS == //
+    req.body.bugs.push({name: 'SensorConditionalFalseTest', tests: []});
   	runTestSuite(function SensorConditionalFalseTest(t) {
   		// sandbox for virtual machine
   		var sandbox = {
@@ -83,6 +84,7 @@ var level2 = function(req, res, next) {
   	});
 
     // == CONDITIONAL TESTS == //
+    req.body.bugs.push({name: 'ConditionalTest', tests: []});
     runTestSuite(function ConditionalTest(t) {
       this.testConditionalPresence = function() {
         t.assertTrue(
@@ -113,6 +115,7 @@ var level2 = function(req, res, next) {
       };
     });
 
+    req.body.bugs.push({name: 'SensorConditionalTrueTest', tests: []});
 		runTestSuite(function SensorConditionalTrueTest(t) {
 			// sandbox for virtual machine
 			var sandbox = {
