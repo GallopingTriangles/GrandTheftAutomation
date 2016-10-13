@@ -220,7 +220,10 @@ var createGame = (userInput) => {
       enableSensors();
     }
 
-    if (userInput.case === 1) { // successful right turn
+    if (userInput.case === 0) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (userInput.case === 1) { // successful right turn
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 32 - car.body.x) < 30 && Math.abs(coord_1[1] + 30 - car.body.y) < 30) {
         car.body.angle = 90;

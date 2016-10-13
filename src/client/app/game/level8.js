@@ -187,7 +187,10 @@ var createGame = (userInput) => {
       enableSensors();
     }
 
-    if (userInput.case === 2) {
+    if (userInput.case === 0) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (userInput.case === 2) {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
       setTimeout(() => {
