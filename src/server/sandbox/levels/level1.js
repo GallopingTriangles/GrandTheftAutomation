@@ -35,45 +35,6 @@ var level1 = function(req, res, next) {
 
   	// USER INPUT
   	var userInput = req.body.log;
-    // == VIRTUAL MACHINE =================================
-    var funcColor = 'var setColor = function(input) { testColor.value = input; testColor.count++; };';
-    var funcSpeed = 'var setSpeed = function(input) { testSpeed.value = input; testSpeed.count++; };';
-    var funcEnable = 'var enable = function(input) { testEnable.values.push(input); testEnable.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
-    var funcTurn = 'var turn = function(input) { testTurn = input; };';
-    var funcRoute = 'var setRoute = function(input) { testRoute = input; };';
-    var gps = 'var gps = { intersection: false };';
-    var reroute = 'gps.reroute = function() {};';
-
-    // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + gps + reroute + userInput;
-    var script = new vm.Script(input);
-
-    // sandbox used in virtual machine
-    var sandbox = {
-    	sensor: {
-    		front: false
-    	},
-    	map: {
-        intersection: false
-    	},
-    	testEnable: {
-    		values: [],
-    		count: 0
-    	},
-    	testEngine: undefined,
-    	testColor: {
-        value: undefined,
-        count: 0
-    	},
-    	testSpeed: {
-        value: undefined,
-        count: 0
-    	},
-    	testSensor: undefined,
-    };
-
-    var context = new vm.createContext(sandbox);
-    script.runInContext(context);
 
     var setCaseCount = 1;
     var setCase = function(caseNo, errorMessage) {
