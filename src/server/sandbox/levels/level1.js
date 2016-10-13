@@ -162,13 +162,12 @@ var level1 = function(req, res, next) {
       };
     }); // END enable('engine') tests
 
-    // == COLOR TESTS == //
-    // set color on phaser object to context value
-    req.body.phaser.color = context.testColor.value;
+    // == NEW COLOR TESTS == //
+    // set color on phaser object to new context value
+    req.body.phaser.color = newContext.testSetcolor.value;
     runTestSuite(function ColorInputTest(t) {
-    	// grab color from sanbox context
-    	var color = context.testColor.value;
-    	var calls = context.testColor.count;
+      var color = newContext.testSetcolor.value;
+      var calls = newContext.testSetcolor.calls;
 
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
@@ -192,7 +191,6 @@ var level1 = function(req, res, next) {
         );
       };
 
-      // test if the set color function is called
       this.testColorCalledWithArgument = function() {
         t.assertTrue(
           color,
@@ -218,7 +216,7 @@ var level1 = function(req, res, next) {
           setColorDefault
         );
       };
-    });
+    }); // END setColor() tests
 
     // == SPEED TESTS == //
     // set speed on phaser object to context
