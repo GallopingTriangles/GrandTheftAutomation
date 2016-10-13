@@ -82,6 +82,7 @@ var level1 = function(req, res, next) {
     };
 
     // == ENABLED TESTS == //
+    req.body.bugs.push({name: 'EnabledInputTest', tests: []});
     runTestSuite(function EnabledInputTest(t) {
     	// grab enabled array from sandbox context
     	var enabled = context.testEnable.values;
@@ -145,6 +146,7 @@ var level1 = function(req, res, next) {
     // == ENGINE TESTS == //
     // set engine on phase object to context value
     req.body.phaser.engine = context.testEngine;
+    req.body.bugs.push({name: 'EngineInputTest', tests: []});
     runTestSuite(function EngineInputTest(t) {
 
     	var enabled = context.testEnable.values;
@@ -181,6 +183,7 @@ var level1 = function(req, res, next) {
     // == COLOR TESTS == //
     // set color on phaser object to context value
     req.body.phaser.color = context.testColor.value;
+    req.body.bugs.push({name: 'ColorInputTest', tests: []});
     runTestSuite(function ColorInputTest(t) {
     	// grab color from sanbox context
     	var color = context.testColor.value;
@@ -238,6 +241,7 @@ var level1 = function(req, res, next) {
     // == SPEED TESTS == //
     // set speed on phaser object to context
     req.body.phaser.speed = context.testSpeed.value;
+    req.body.bugs.push({name: 'SpeedInputTest', tests: []});
     runTestSuite(function SpeedInputTest(t) {
     	// grab speed from sandbox context
     	var speed = context.testSpeed.value;
@@ -296,6 +300,7 @@ var level1 = function(req, res, next) {
     // == SENSOR TESTS == //
     // set sensor on phaser object to context value
     req.body.phaser.sensor = context.testSensor;
+    req.body.bugs.push({name: 'SensorInputTest', tests: []});
     runTestSuite(function SensorInputTest(t) {
     	// grab sensor value from context
     	var sensor = context.testSensor;
