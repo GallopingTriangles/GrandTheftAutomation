@@ -12,8 +12,8 @@ class Game extends Component {
     // create the default game when the component mounts
     createGame({
       color: 'white',
-      speed: 0
-      /* no "case" property yet because this is just the initial rendering of the game */
+      speed: 0,
+      case: 0, // default case when initially rendering the game
     }, this.props.level)
   }
 

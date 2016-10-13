@@ -1,3 +1,4 @@
+/* HTML plugin to copy over html files */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   filename: 'index.html',
@@ -5,6 +6,7 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
+/* Copy plugin to copy over game assets */
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CopyWebpackPluginConfig = new CopyWebpackPlugin([
   {
