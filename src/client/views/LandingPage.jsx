@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Signup from '../app/containers/SignupContainer.jsx';
 import Login from '../app/containers/LoginContainer.jsx';
 
@@ -42,17 +43,24 @@ class LandingPage extends Component {
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style={{marginTop: '15px'}}>
-              <ul className="nav nav-tabs" role="tablist">
-                <li role="presentation" className="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
-                <li role="presentation"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab">Sign Up</a></li>
-              </ul>
 
-              <div className="tab-content">
-                <br />
-                <div role="tabpanel" className="tab-pane active" id="login"> <Login /> </div>
-                <div role="tabpanel" className="tab-pane" id="signup"> <Signup /> </div>
-              </div>
-              
+              { this.props.user ? <button onClick={ () => this.props.router.push('/game') } >TO THE GAME</button> : 
+
+                <div>
+                  <ul className="nav nav-tabs" role="tablist">
+                    <li role="presentation" className="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
+                    <li role="presentation"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab">Sign Up</a></li>
+                  </ul>
+
+                  <div className="tab-content">
+                    <br />
+                    <div role="tabpanel" className="tab-pane active" id="login"> <Login /> </div>
+                    <div role="tabpanel" className="tab-pane" id="signup"> <Signup /> </div>
+                  </div>
+                </div>
+
+              }
+
             </div>
           </div>
         </div>
@@ -68,4 +76,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(LandingPage);
+export default withRouter(connect(mapStateToProps)(LandingPage));
