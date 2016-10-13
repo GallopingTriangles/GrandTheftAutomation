@@ -270,12 +270,12 @@ var level1 = function(req, res, next) {
       };
     }); // END setSpeed() tests
 
-    // == SENSOR TESTS == //
-    // set sensor on phaser object to context value
-    req.body.phaser.sensor = context.testSensor;
+    // == NEW SENSOR TESTS == //
+    // set sensor on phaser obj to context value
+    req.body.phaser.sensor = newContext.testEnabled.values[1];
     runTestSuite(function SensorInputTest(t) {
-    	// grab sensor value from context
-    	var sensor = context.testSensor;
+      
+      var sensor = newContext.testEnabled.values[1];
 
       // if a test fails, set the sensor value to a default value
       var setSensorDefault = function(errorMessage) {
@@ -287,7 +287,7 @@ var level1 = function(req, res, next) {
       // test if the sensor is enabled
       this.testSensorDefined = function() {
         t.assertTrue(
-        	sensor,
+          sensor,
           'Expected sensor to be enabled with function enable(), but got undefined',
           setSensorDefault
         );
@@ -295,17 +295,15 @@ var level1 = function(req, res, next) {
 
       // test if the engine is enabled firstly
       this.testSensorEnabledSecond = function() {
-      	var enabledSecond = '';
-        context.testEnable.values[1] ? enabledSecond = context.testEnable.values[1] : enabledSecond = '';
         t.assertTrue(
-          context.testEnable.values[1] === 'sensor',
-          'Expected sensor to be enabled secondly, but got ' + enabledSecond + ' enabled second',
+          sensor === 'sensor',
+          'Expected sensor to be enabled secondly, but got ' + sensor + ' enabled second',
           setSensorDefault
         );
       };
-    });
+    }); // END enable('sensor') tests
 
-  });
+  }); // END UserInputTestLevel1
 
   // if user level is greater than level 1, run tests of next level
   // and if case is success
