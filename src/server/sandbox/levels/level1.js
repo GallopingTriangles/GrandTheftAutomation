@@ -100,73 +100,63 @@ var level1 = function(req, res, next) {
             setCase(2, error);
           }
         );
-      }
-    });
+      };
 
-    // == ENABLED TESTS == //
-    runTestSuite(function EnabledInputTest(t) {
-    	// grab enabled array from sandbox context
-    	var enabled = context.testEnable.values;
-    	var calls = context.testEnable.count;
-	  	// test if the enable function is called
-	  	// this.testEnabledCalled = function() {
-	   //    t.assertTrue(
-	   //    	calls, 
-	   //    	'Expected function enable() to be called, but got not called',
-	   //    	function(error) {
-	   //    		setCase(2, error);
-	   //    	}
-	   //    );
-	  	// };
-
-	  	this.testEnabledCalledWithArgument = function() {
+      this.testEnabledCalledWithArgument = function() {
         t.assertTrue(
           enabled[0],
           'Expected function enable() to be called with an argument, but got called with ' + enabled[0],
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
-	  	};
+      };
 
-	  	this.testEnabledArgumentString = function() {
+      this.testEnabledArgumentString = function() {
         t.assertTrue(
           typeof enabled[0] === 'string',
           'Expected function enable() to be called with an argument of type string, but got called with argument of type ' + typeof enabled[0],
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
-	  	};
+      };
 
-	  	// test the maximum allowed calls of the enable function
-	  	if (req.body.level === 1) {
-        this.testEnabledMaxCalls = function() {
-        	var calls = enabled.length;
-          t.assertTrue(
-          	calls <= 2,
-            'Expected function enable() to be called twice, but got called ' + calls + ' times',
-            function(error) {
-            	setCase(2, error);
-            }
-          );
-        };
-	  	}
+      this.testEnabledMaxCalls = function() {
+        t.assertTrue(
+          calls >= 2,
+          'Expected function enable() to be called twice, but got called ' + calls + ' times',
+          function(error) {
+            setCase(2, error);
+          }
+        );
+      };
+    }); // END enable() tests
 
-      // test if the input is of data type string
-      // this.testEnableInputType = function() {
-      //   t.assertOptionsOfTypeString(
-      //     enabled,
-      //     function() {
-      //     	setCase(2);
-      //     }
-      //   );
-      // };
+    // == NEW ENGINE TESTS == //
+    // set engine on phaser object to context value
+    req.body.phaser.engine = newContext.testEnabled.values[0];
+    runTestSuite(function EngineInputTest(t) {
+
+      var enabled = newContext.testEnabled.values;
+      var calls = newContext.testEnabled.calls;
+
+      this.testEngineEnabled = function() {
+        t.assertTrue(
+          enabled.indexOf('engine') !== -1,
+          'Expected engine to be enabled with function enable(), but got not enabled',
+          function(error) {
+            setCase(2, error);
+          }
+        );
+      };
+
+
     });
 
     // == ENGINE TESTS == //
     // set engine on phase object to context value
-    req.body.phaser.engine = context.testEngine;
+    //req.body.phaser.engine = context.testEngine;
     runTestSuite(function EngineInputTest(t) {
 
     	var enabled = context.testEnable.values;
