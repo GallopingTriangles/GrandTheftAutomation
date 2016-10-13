@@ -143,6 +143,7 @@ var createGame = (userInput) => {
     if (userInput.sensor) {
       enableSensors();
     }
+    
 
     if (userInput.case === 1) {
       car.body.moveForward(speed);
