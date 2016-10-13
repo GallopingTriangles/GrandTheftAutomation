@@ -75,7 +75,7 @@ class LoginContainer extends Component {
             <input type="password" className="form-control black-text" id="password" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } placeholder="password" required />
           </div>
           { this.state.invalid ? <p style={{ color: 'red' }} >Please try again.</p> : null }
-          <button className="btn btn-secondary" type="submit">Submit</button>
+          <button className="btn btn-warning" type="submit">Submit</button>
         </form>
       </div>
     )
