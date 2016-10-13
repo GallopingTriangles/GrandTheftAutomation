@@ -39,8 +39,8 @@ var level9 = function(req, res, next) {
 	// case: 9 // fail: [LEFT, LEFT]
 	// case: 10 // fail: ENGINE IS NOT ENABLED
 
-  // == TESTING USER INPUT LEVEL 8 ========================
-	runTestSuite(function UserInputTestLevel8(t) {
+  // == TESTING USER INPUT LEVEL 9 ========================
+	runTestSuite(function UserInputTestLevel9(t) {
 	  // USER INPUT
 		var userInput = req.body.log;
 	  // == VIRTUAL MACHINE =================================
@@ -113,7 +113,7 @@ var level9 = function(req, res, next) {
           count === 3,
           'Expected code to have three if statements, but got ' + count + ' if statement(s)',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(2);
           }
       	);
       };
@@ -123,7 +123,7 @@ var level9 = function(req, res, next) {
           userInput.indexOf('sensor.front === true') !== -1,
           'Expected code to have an if statement with conditional: (sensor.front === true) {...',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(10);
           }
         );
       };
@@ -144,7 +144,7 @@ var level9 = function(req, res, next) {
           calls,
           'Expected function turn() to be called in sensor.front if statement, but got ' + calls + ' calls',
           function() {
-          	// ADD FAIL CALLBACK
+          	setCase(10);
           }
         );
     	};
@@ -154,7 +154,7 @@ var level9 = function(req, res, next) {
     	    turn,
     	    'Expected function turn() to be called with an argument, but got ' + turn,
     	    function() {
-    	      // ADD FAIL CALLBACK
+    	      setCase(10);
     	    }
     	  );
     	};
@@ -164,7 +164,7 @@ var level9 = function(req, res, next) {
     	    typeof turn === 'string',
     	    'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
     	    function() {
-    	    	// ADD FAIL CALLBACK
+    	    	setCase(10);
     	    }
     		);
     	};
@@ -174,7 +174,7 @@ var level9 = function(req, res, next) {
     	    turn === 'left' || turn === 'right' || turn === 'u-turn',
     	    'Expected function turn() argument to have value "left", "right" or "u-turn", but got value ' + turn,
     	    function() {
-    	    	// ADD FAIL CALLBACK
+    	    	setCase(10);
     	    }
     	  );
     	};
@@ -184,7 +184,7 @@ var level9 = function(req, res, next) {
     	    turn === 'u-turn',
     	    'Expected function turn() argument to have value "u-turn", but got value ' + turn,
     	    function() {
-    	    	// ADD FAIL CALLBACK
+    	    	setCase(10);
     	    }
     	  );
     	};
