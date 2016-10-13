@@ -1,6 +1,7 @@
 // import the virtual machine module from node
 var vm = require('vm');
 
+// == GTA SANDBOX == //
 var GtaSandbox = function() {
   this.setColor = 'var setColor = function(string) { testSetcolor.value = string; testSetcolor.calls++; };';
   this.setSpeed = 'var setSpeed = function(number) { testSetspeed.value = number; testSetspeed.calls++; };';
@@ -45,33 +46,34 @@ GtaSandbox.prototype.create = function(userInput, options) {
   return context; 
 };
 
+// sensor.front === true
 GtaSandbox.prototype.sensorTrue = function(userInput) {
 	this.environment.sensor.front = true;
   return this.create(userInput);
 };
 
+// map.intersection === true
 GtaSandbox.prototype.mapTrue = function(userInput) {
 	this.environment.map.intersection = true;
   return this.create(userInput);
 };
 
+// gps.intersection === 'left'
 GtaSandbox.prototype.gpsLeft = function(userInput) {
 	this.environment.gps.intersection = 'left';
   return this.create(userInput);
 };
 
+// gps.intersection === 'right'
 GtaSandbox.prototype.gpsRight = function(userInput) {
 	this.environment.gps.intersection = 'right';
   return this.create(userInput);
 };
 
+// gps.intersection === 'straight'
 GtaSandbox.prototype.gpsStraight = function(userInput) {
 	this.environment.gps.intersection = 'straight';
   return this.create(userInput);
 };
-
-var gta = new GtaSandbox().gpsLeft("enable('engine');");
-console.log(gta);
-
 
 module.exports = GtaSandbox;
