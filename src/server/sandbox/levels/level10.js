@@ -86,9 +86,10 @@ var level10 = function(req, res, next) {
       };
 
       var setCaseCount = 1;
-      var setCase = function(caseNo) {
+      var setCase = function(caseNo, errorMessage) {
       if (setCaseCount === 1) {
        req.body.phaser.case = caseNo;
+       req.body.bugs.push(errorMessage);
        setCaseCount++;
       }
     };
@@ -110,8 +111,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           calls === 3,
           'Expected function enabled() to be called 3 times, but got called ' + calls + ' time(s)',
-          function() {
-           setCase(5);
+          function(error) {
+           setCase(5, error);
           }
         );
       };
@@ -120,8 +121,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           enabled[2],
           'Expected function enabled() to be called with an argument, but got ' + enabled[2],
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -130,8 +131,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           typeof enabled[2] === 'string',
           'Expected function enabled() to be called with an argument of type string, but got called with type ' + typeof enabled[2],
-          function() {
-           setCase(5);
+          function(error) {
+           setCase(5, error);
           }
         );
       };
@@ -140,8 +141,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           enabled[2] === 'gps',
           'Expected function enabled() to be called with argument "gps", but got called with ' + enabled[2],
-          function() {
-           setCase(5);
+          function(error) {
+           setCase(5, error);
           }
         );
       };
@@ -162,8 +163,8 @@ var level10 = function(req, res, next) {
          t.assertTrue(
            calls === 0,
            'Expected function turn() not to be called outside if statement, but got called ' + calls + ' time(s)',
-           function() {
-           	setCase(2);
+           function(error) {
+           	setCase(2, error);
            }
          );
        };
@@ -172,8 +173,8 @@ var level10 = function(req, res, next) {
          t.assertTrue(
            userInput.indexOf('if') !== -1,
            'Expected code to have an if statement, example: "if (gps.intersection) { do something... }"',
-           function() {
-           	setCase(5);
+           function(error) {
+           	setCase(5, error);
            }
          );
        };
@@ -182,8 +183,8 @@ var level10 = function(req, res, next) {
        	t.assertTrue(
            userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1 || userInput.indexOf("gps.intersection === 'straight'") !== -1,
            'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
-           function() {
-             setCase(5);
+           function(error) {
+             setCase(5, error);
            }
        	);
        };
@@ -199,8 +200,8 @@ var level10 = function(req, res, next) {
          t.assertTrue(
            count >= 3,
            'Expected code to have three if statements, but got ' + count + ' if statement(s)',
-           function() {
-             setCase(5);
+           function(error) {
+             setCase(5, error);
            }
          );
        };
@@ -209,8 +210,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
            userInput.indexOf("gps.intersection === 'straight'") !== -1,
            'Expect code to have an if statement with conditinal: (gps.intersection === "straight") {..',
-           function() {
-             setCase(5);
+           function(error) {
+             setCase(5, error);
            }
         );
        };
@@ -219,8 +220,8 @@ var level10 = function(req, res, next) {
        	t.assertTrue(
            userInput.indexOf("gps.intersection === 'left'") !== -1,
            'Expect code to have an if statement with conditinal: if (gps.intersection === "left") {..',
-           function() {
-             setCase(5);
+           function(error) {
+             setCase(5, error);
            }
        	);
        };
@@ -229,8 +230,8 @@ var level10 = function(req, res, next) {
        	t.assertTrue(
            userInput.indexOf("gps.intersection === 'right'") !== -1,
            'Expect code to have an if statement with conditinal: (gps.intersection === "right") {..',
-           function() {
-             setCase(5);
+           function(error) {
+             setCase(5, error);
            }
        	);
        };
@@ -252,8 +253,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           calls,
           'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -262,8 +263,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           calls === 1,
           'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -272,8 +273,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn,
           'Expected function turn() to be called with an argument, but got ' + turn,
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -282,8 +283,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           typeof turn === 'string',
           'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -292,8 +293,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn === 'left' || turn === 'right' || turn === 'straight',
           'Expected function turn() argument to have value "left", "right" or "straight", but got value ' + turn,
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -303,13 +304,13 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn === 'straight',
           'Expected function turn() argument to have value "straight", but got value ' + turn,
-          function() {
+          function(error) {
             if (turn === 'left') {
-              setCase(7);
+              setCase(7, error);
             } else if (turn === 'right') {
-              setCase(8);
+              setCase(8, error);
             } else {
-              setCase(5);
+              setCase(5, error);
             }
           }
         );
@@ -332,8 +333,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           calls,
           'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -342,8 +343,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           calls === 1,
           'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -352,8 +353,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn,
           'Expected function turn() to be called with an argument, but got ' + turn,
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -362,8 +363,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           typeof turn === 'string',
           'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -372,8 +373,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn === 'left' || turn === 'right' || turn === 'straight',
           'Expected function turn() argument to have value "left", "right" or "straight", but got value ' + turn,
-          function() {
-            setCase(5);
+          function(error) {
+            setCase(5, error);
           }
         );
       };
@@ -382,13 +383,13 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn === 'left',
           'Expected function turn() argument to have value "left", but got value ' + turn,
-          function() {
+          function(error) {
             if (turn === 'straight') {
-              setCase(5);
+              setCase(5, error);
             } else if (turn === 'right') {
-              setCase(6);
+              setCase(6, error);
             } else {
-              setCase(5);
+              setCase(5, error);
             }
           }
         );
@@ -410,8 +411,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           calls,
           'Extected function turn() to be called in if statement, but got ' + calls + ' calls',
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -420,8 +421,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           calls === 1,
           'Expected function turn() to be called once in if statement, but got ' + calls + ' calls',
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -430,8 +431,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn,
           'Expected function turn() to be called with an argument, but got ' + turn,
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -440,8 +441,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           typeof turn === 'string',
           'Expected function turn() argument to be of type string, but got type of ' + typeof turn,
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -450,8 +451,8 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn === 'left' || turn === 'right' || turn === 'straight',
           'Expected function turn() argument to have value "left", "right" or "straight", but got value ' + turn,
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -460,13 +461,13 @@ var level10 = function(req, res, next) {
         t.assertTrue(
           turn === 'right',
           'Expected function turn() argument to have value "right", but got value ' + turn,
-          function() {
+          function(error) {
             if (turn === 'left') {
-              setCase(9);
+              setCase(9, error);
             } else if (turn === 'straight') {
-              setCase(3);
+              setCase(3, error);
             } else {
-              setCase(5);
+              setCase(5, error);
             }
           }
         );

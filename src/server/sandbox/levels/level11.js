@@ -55,9 +55,10 @@ var level11 = function(req, res, next) {
      };
 
      var setCaseCount = 1;
-     var setCase = function(caseNo) {
+     var setCase = function(caseNo, errorMessage) {
        if (setCaseCount === 1) {
          req.body.phaser.case = caseNo;
+         req.body.bugs.push(errorMessage);
          setCaseCount++;
        }
      };
@@ -73,8 +74,8 @@ var level11 = function(req, res, next) {
          t.assertTrue(
            calls === 0,
            'Expected function turn() not to be called outside if statement, but got called ' + calls + ' time(s)',
-           function() {
-            setCase(4);
+           function(error) {
+            setCase(4, error);
            }
          );
        };
@@ -83,8 +84,8 @@ var level11 = function(req, res, next) {
          t.assertTrue(
            userInput.indexOf('if') !== -1,
            'Expected code to have an if statement, example: "if (sensor.front) { do something... }"',
-           function() {
-            setCase(5);
+           function(error) {
+            setCase(5, error);
            }
          );
        };
@@ -100,8 +101,8 @@ var level11 = function(req, res, next) {
          t.assertTrue(
            count >= 4,
            'Expected code to have three if statements, but got ' + count + ' if statement(s)',
-           function() {
-             setCase(8);
+           function(error) {
+             setCase(8, error);
            }
          );
        };
@@ -110,8 +111,8 @@ var level11 = function(req, res, next) {
         t.assertTrue(
            userInput.indexOf("sensor.front === true") !== -1,
            'Expect code to have an if statement with conditinal: (sensor.front === true) {..',
-           function() {
-             setCase(8);
+           function(error) {
+             setCase(8, error);
            }
         );
        };
@@ -130,8 +131,8 @@ var level11 = function(req, res, next) {
            t.assertTrue(
              calls,
              'Extected function gps.reroute() to be called in if statement, but got ' + calls + ' calls',
-             function() {
-               setCase(8);
+             function(error) {
+               setCase(8, error);
              }
            );
          };
@@ -140,8 +141,8 @@ var level11 = function(req, res, next) {
            t.assertTrue(
              calls === 1,
              'Expected function gps.reroute() to be called once in if statement, but got ' + calls + ' calls',
-             function() {
-               setCase(8);
+             function(error) {
+               setCase(8, error);
              }
            );
          };

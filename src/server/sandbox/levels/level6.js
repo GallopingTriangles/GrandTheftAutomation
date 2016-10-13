@@ -70,9 +70,10 @@ var level6 = function(req, res, next) {
 	  script.runInContext(context);
 
 	  var setCaseCount = 1;
-	  var setCase = function(caseNo) {
+	  var setCase = function(caseNo, errorMessage) {
 	  	if (setCaseCount === 1) {
 	      req.body.phaser.case = caseNo;
+        req.body.bugs.push(errorMessage);
 	      setCaseCount++;
 	  	}
 	  };
@@ -84,8 +85,8 @@ var level6 = function(req, res, next) {
 	  		t.assertTrue(
 	  		  enabled.length === 3,
 	  		  'Expect enable() to be called 3 times, bug got called ' + enabled.length + ' times',
-	  		  function() {
-	  		  	setCase(3);
+	  		  function(error) {
+	  		  	setCase(3, error);
 	  		  }
 	  		);
 	  	};
@@ -94,8 +95,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           enabled[2],
           'Expected enable() to be called with an argument, but got called with ' + enabled[2],
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -104,8 +105,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           typeof enabled[2] === 'string',
           'Expected enable() to be called with an argument of type string, but got called with type ' + typeof enabled[2],
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -117,8 +118,8 @@ var level6 = function(req, res, next) {
 	  	  t.assertTrue(
 	  	    enabledThird === 'route',
 	  	    'Expected route to be enabled thirdly, but got ' + enabledThird + ' enabled thirdly',
-	  	    function() {
-	  	      setCase(3); // syntax error, route not enabled. car crashes
+	  	    function(error) {
+	  	      setCase(3, error); // syntax error, route not enabled. car crashes
 	  	    }
 	  	  );
 	  	};
@@ -134,8 +135,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           calls,
           'Expected function setRoute() to be called, but got not called',
-          function() {
-          	setCase(3);
+          function(error) {
+          	setCase(3, error);
           }
         );
 	  	};
@@ -144,8 +145,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           route,
           'Expected function setRoute() to be called with an argument, but got called with ' + route,
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -155,8 +156,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           Array.isArray(route),
           'Expected setRoute() input to be an array, but got ' + typeof route,
-          function() {
-            setCase(3); // route is not defined, car crashes straight
+          function(error) {
+            setCase(3, error); // route is not defined, car crashes straight
           }
         );
       };
@@ -168,8 +169,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           len !== 0,
           'Expect setRoute() input array to be not empty, but got ' + len + ' input',
-          function() {
-          	setCase(3); 
+          function(error) {
+          	setCase(3, error); 
           }
         );
       };
@@ -178,8 +179,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           typeof arr[0] === 'string',
           'Expected setRoute() input array elements to have type of string',
-          function() {
-            setCase(3);
+          function(error) {
+            setCase(3, error);
           }
         );
       };
@@ -190,8 +191,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           array[0] === 'left' || array[0] === 'right',
           'Expected setRoute() input array elements to be "left" or "right", but got ' + array[0],
-          function() {
-          	setCase(3);
+          function(error) {
+          	setCase(3, error);
           }
         );
       };
@@ -201,11 +202,11 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           array[0] === 'left',
           'Expected setRoute() first element of input array to be "left", but got ' + array[0],
-          function() {
+          function(error) {
             if (array[0] === 'right') {
-            	setCase(5);
+            	setCase(5, error);
             } else {
-            	setCase(3);
+            	setCase(3, error);
             }
           }
         );
@@ -217,11 +218,11 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           array.length !== 1,
           'Expect setRoute() input array to have more than 1 element, but got ' + array.length + ' element',
-          function() {
+          function(error) {
           	if (array[0] === 'left') {
-              setCase(4);
+              setCase(4, error);
           	} else if (array[0] === 'right') {
-              setCase(5);
+              setCase(5, error);
           	}
           }
         );
@@ -233,13 +234,13 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           array.length === 2,
           'Expect setRoute() input array to have length of 2, but got ' + array.length + ' ',
-          function() {
+          function(error) {
           	if (array[1] === 'left' && array[2] === 'right') {
-          		setCase(6); // EASTER EGG SUCCESS
+          		setCase(6, error); // EASTER EGG SUCCESS
           	} else if (array[1] === 'left') {
-          		setCase(7); // EASTER EGG FAIL
+          		setCase(7, error); // EASTER EGG FAIL
           	} else {
-              setCase(4);
+              setCase(4, error);
           	}
           }
         );
@@ -250,8 +251,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           array[1] === 'left' || array[1] === 'right',
           'Expected setRoute() input array elements to be "left" or "right", but got ' + array[1],
-          function() {
-          	setCase(4);
+          function(error) {
+          	setCase(4, error);
           }
         );
       };
@@ -262,8 +263,8 @@ var level6 = function(req, res, next) {
         t.assertTrue(
           array[1] === 'right',
           'Expected setRoute() second element of input array to be "right", but got ' + array[1],
-          function() {
-            setCase(7);
+          function(error) {
+            setCase(7, error);
           }
         );
       };	    
