@@ -86,7 +86,7 @@ html, body {
 
 /* == NEW CODE EDITOR ================================== */
 .editor-footer {
-	background-color: #272822;
+	background-color: transparent;
 	height: 100%;
 }
 
@@ -372,4 +372,14 @@ td.text-center {
 
 td.text-right {
   text-align: right;
+}
+
+/* == INSTRUCTIONS/BUGS  =========================================== */
+.instructions {
+	background-color: #272822;
+	height: calc(100vh - 180px)
+}
+
+p.instructions {
+	color: 
 }

@@ -46,7 +46,7 @@ module.exports = {
   six:            'LEVEL 6\n' +
                   'introduce ROUTES\n' +
                   'When dealing with multiple intersections\n' +
-                  'It can get too tedious to hard code every turn at every intersection and\n' + 
+                  'It can get too tedious to hard code every turn at every intersection and\n' +
                   'we may want to program our car to handle a certain route.\n' +
                   'Add <code> enable(\'routes\'); </code>\n' +
                   'In order to use our routes, we must give it a list of commands\n' +

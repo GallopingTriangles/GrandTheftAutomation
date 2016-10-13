@@ -4,12 +4,12 @@ class Bugs extends Component {
 
 	render() {
 		return (
-      <div style={{backgroundColor: '#272822', height: 'calc(100vh - 180px)'}}>
+      <div className='instructions'>
 
         { this.props.bugs.map(message => {
           return (
-            <div style={{color: '#f8f8f2'}}>
-              <i className='fa fa-bug' aria-hidden='true'></i>
+            <div>
+              <p className='fa fa-bug' aria-hidden='true'></p>
               { message }
             </div>
           )
