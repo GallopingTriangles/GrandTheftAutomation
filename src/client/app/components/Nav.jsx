@@ -41,25 +41,20 @@ class Nav extends Component {
             <a className='navbar-brand'><span style={{color: 'red'}}>GTA</span>utomation</a>
           </div>
           <ul className="nav navbar-nav navbar-right">
-            <li><Link to='/'> Home </Link></li>
-            <li><Link to={ this.props.user ? '/game' : '/' }> Game </Link></li>
-            <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li>
+            { this.props.user ? <li><Link to='/'> Home </Link></li> : null }
+            { this.props.user ? <li><Link to='/game'> Game </Link></li> : null }
+            { this.props.user ? <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li> : null }
 
             { this.props.user ? <li><Link>{ this.props.user }</Link></li> : 
               <li className="dropdown">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown">Login<span className="caret"></span></a>
+                <a href="#" className="dropdown" data-toggle="dropdown">Login</a>
                 <ul id="login-dp" className="dropdown-menu">
                   <li>
-                     <div className="row">
-                        <div className="col-md-12">
-                          <Login />
-                        </div>
-                     </div>
+                    <Login />
                   </li>
                 </ul>
               </li>
-            }
-            
+            }  
           </ul>
           
         </div>
