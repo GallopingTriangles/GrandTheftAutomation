@@ -1,13 +1,11 @@
 var createGame = (userInput) => {
-  /* debugTools */
-  // userInput.case = 2;
-
   /**********************************************************/
   /**********************************************************/
   /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
   /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
   /**********************************************************/
   /**********************************************************/
+  /*
   var FAKE_USER_INPUT = {
     color: 'panda',
     speed: 100,
@@ -18,6 +16,7 @@ var createGame = (userInput) => {
     // case: 4, // fail, crash left
     // case: 5, // fail, stalls at intersection
   }
+  */
   /**********************************************************/
   /**********************************************************/
 
@@ -87,12 +86,6 @@ var createGame = (userInput) => {
   */
   var collisionBodies;
 
-  /*
-  ** An array of endZone bodies that will trigger a success callback
-  ** when the car hits them, and the level is considered completed.
-  */
-  // var endZoneBodies;
-
   var completionTiles;
 
   var intersectionTiles_1;
@@ -133,9 +126,6 @@ var createGame = (userInput) => {
     map = game.add.tilemap('level_3');
     map.addTilesetImage('GTA_tileset');
 
-    // map = game.add.tilemap('map');
-    // map.addTilesetImage('tmw_desert_spacing');
-
     /*
     ** Set the layers and their respective tile IDs for collision.
     ** Needs to be done before generating the p2 bodies below.
@@ -149,16 +139,12 @@ var createGame = (userInput) => {
 
     layer_1 = map.createLayer('collision_layer');
 
+
     /*
     ** Set the appropriate tiles of a certain layer to be collideable
     ** http://phaser.io/docs/2.6.2/Phaser.Tilemap.html#setCollision
     */
-
-    /* debugTools */
     map.setCollisionBetween(0, 2000, true, 'collision_layer');
-    // map.setCollision(34, true, 'Tile Layer 1');
-
-    // map.setCollisionBetween(0, 2000, true, 'end_zone_layer');
 
     /*
     ** Convert the collision-enabled tile layer into Phaser p2 bodies. Only tiles
@@ -168,13 +154,6 @@ var createGame = (userInput) => {
     */
     collisionBodies = game.physics.p2.convertTilemap(map, layer_1, true, false);
 
-    /*
-    ** Convert the endZoneBodies into Phaser p2 bodies so the game can detect when
-    ** the car has entered any of these tiles, which will be interpreted as a level completion.
-    */
-    // endZoneBodies = game.physics.p2.convertTilemap(map, layer_5, true, false);
-    // console.log(endZoneBodies);
-
     completionTiles = layer_5.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     });
@@ -182,15 +161,6 @@ var createGame = (userInput) => {
     intersectionTiles_1 = layer_6.getTiles(0, 0, 2000, 2000).filter(function(tile) {
       return tile.index > 0;
     })
-
-    /*
-    ** Gather all tiles from layer_1 into an array of tiles,
-    ** and assign a callback function to when these tiles are hit by anything.
-    */
-    // collisionTiles = layer_1.getTiles(0, 0, 800, 600).filter(function(tile) {
-    //   return tile.index > 0;
-    // });
-
 
     /*
     ** Initiates the car sensor, the car body, and sets the speed based on the user input
@@ -219,7 +189,6 @@ var createGame = (userInput) => {
     collisionBodies.forEach(function(collisionBody) {
       collisionBody.setCollisionGroup(obstacleCollisionGroup);
       collisionBody.collides([carCollisionGroup, obstacleCollisionGroup]);
-      collisionBody.debug = true;
 
     })
 
