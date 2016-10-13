@@ -196,8 +196,10 @@ var createGame = (userInput) => {
     // case: 8 // fail: [LEFT, STRAIGHT]
     // case: 9 // fail: [LEFT, LEFT]
     // case: 2 // fail: ENGINE IS NOT ENABLED
-
-    if (userInput.case !== 2) { // engine is enabled in all cases except case 2
+    if (userInput.case === 0) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (userInput.case !== 2) { // engine is enabled in all cases except case 2
       car.body.moveForward(speed);
     } else {
       car.body.velocity.x = 0;
