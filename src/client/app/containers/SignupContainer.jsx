@@ -37,20 +37,7 @@ class SignupContainer extends Component {
       console.log('signup status: ', res.status);
       res.json().then(result => {
         console.log('signup response: ', result.message);
-
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
-        /*********************************************************************************************/
-
-        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
-         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
-
-        /***      THIS WILL THROW A WEIRD ERROR WHEN REDIRECTING TO GAME BECAUSE THERE IS NO      ****
-         ************      SAVED SOLUTION CODE IN THE DATABASE FOR THE NEW USER      *****************/
-
-        /*********************************************************************************************/
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
-
-
+        
         if (result.message !== 'User already exists.') {
 
           /* Dispatch an action to change the current user in the store */
