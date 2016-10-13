@@ -9,7 +9,8 @@
     "start": "node bin/www",
     "nodem": "nodemon bin/www",
     "build": "webpack -w",
-    "rebase": "git pull --rebase upstream master && git push origin master"
+    "rebase": "git pull --rebase upstream master && git push origin master",
+    "deploy": "bash configEnv.bash"
   },
   "babel": {
     "presets": [
