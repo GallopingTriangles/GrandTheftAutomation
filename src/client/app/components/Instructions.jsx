@@ -21,9 +21,9 @@ export default class Instructions extends Component {
   }
 	render() {
     return (
-      <div style={{backgroundColor: '#272822'}}>
+      <div style={{backgroundColor: '#272822', height: 'calc(100vh - 180px)'}}>
         { this.state[this.props.level].split('\n').map(line => (
-          <p key={ Math.random() }> { line } </p>
+          <p style={{color: '#f8f8f2'}}key={ Math.random() }> { line } </p>
         )) }
       </div>
     )
