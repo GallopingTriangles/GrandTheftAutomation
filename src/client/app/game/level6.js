@@ -144,8 +144,10 @@ var createGame = (userInput) => {
       enableSensors();
     }
 
-
-    if (userInput.case === 1) {
+    if (userInput.case === 0) {
+      car.body.velocity.x = 0;
+      car.body.velocity.y = 0;
+    } else if (userInput.case === 1) {
       car.body.moveForward(speed);
       if (Math.abs(coord_1[0] + 75 - car.body.x) < 30 && Math.abs(coord_1[1] + 45 - car.body.y) < 30) {
         car.body.angle = 0;
