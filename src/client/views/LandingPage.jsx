@@ -43,15 +43,15 @@ class LandingPage extends Component {
             </div>
             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style={{marginTop: '15px'}}>
               <ul className="nav nav-tabs" role="tablist">
-                  <li role="presentation" className="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
-                  <li role="presentation"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab">Sign Up</a></li>
-                </ul>
+                <li role="presentation" className="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
+                <li role="presentation"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab">Sign Up</a></li>
+              </ul>
 
-                <div className="tab-content">
-                  <br />
-                  <div role="tabpanel" className="tab-pane active" id="login"> <Login /> </div>
-                  <div role="tabpanel" className="tab-pane" id="signup"> <Signup /> </div>
-                </div>
+              <div className="tab-content">
+                <br />
+                <div role="tabpanel" className="tab-pane active" id="login"> <Login /> </div>
+                <div role="tabpanel" className="tab-pane" id="signup"> <Signup /> </div>
+              </div>
               
             </div>
           </div>
@@ -62,4 +62,10 @@ class LandingPage extends Component {
 }
 
 
-export default LandingPage;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(LandingPage);
