@@ -35,10 +35,6 @@ class Footer extends Component {
     }
 
     /* Fetches and renders the user's code for that level into the editor */
-    // this.props.getCode();
-
-
-
     this.getCode();
 
   }

@@ -49,11 +49,5 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-
-  }
-}
-
 /* React-Router's 'withRouter' allows manual redirection */
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GamePage));
+export default withRouter(connect(mapStateToProps)(GamePage));
