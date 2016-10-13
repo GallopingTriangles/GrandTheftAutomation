@@ -53,6 +53,7 @@ var level3 = function(req, res, next) {
     };
 
   	// == MAP CONDITIONAL TEST == //
+    req.body.bugs.push({name: 'MapConditionalFalseTest', tests: []});
     runTestSuite(function MapConditionalFalseTest(t) {
     	// sandbox for virtual machine
     	var sandbox = {
@@ -88,6 +89,7 @@ var level3 = function(req, res, next) {
     });
 
     // == CONDITIONAL TESTS == //
+    req.body.bugs.push({name: 'ConditionalTest', tests: []});
     runTestSuite(function ConditionalTest(t) {
       this.testConditionalPresence = function() {
         t.assertTrue(
@@ -110,6 +112,7 @@ var level3 = function(req, res, next) {
       };
     });
 
+    req.body.bugs.push({name: 'MapConditionalTrueTest', tests: []});
     runTestSuite(function MapConditionalTrueTest(t) {
       // sandbox for virtual machine
       var sandbox = {

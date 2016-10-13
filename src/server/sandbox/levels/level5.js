@@ -76,6 +76,7 @@ var level5 = function(req, res, next) {
   };
 
   // == ENABLED TESTS == //
+  req.body.bugs.push({name: 'EnabledInputTest', tests: []});
   runTestSuite(function EnabledInputTest(t) {
   	// enabled array in sandbox context
   	var enabled = context.testEnable;
@@ -125,6 +126,7 @@ var level5 = function(req, res, next) {
   });
 
   // == ROUTE TESTS == //
+  req.body.bugs.push({name: 'RouteInputTest', tests: []});
   runTestSuite(function RouteInputTest(t) {
   	var route = context.route.directions;
   	var calls = context.route.count;
