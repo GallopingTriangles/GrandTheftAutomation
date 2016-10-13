@@ -202,6 +202,10 @@ var createGame = (userInput) => {
     } else {
       car.body.velocity.x = 0;
       car.body.velocity.y = 0;
+
+      setTimeout(() => {
+        levelFailed();
+      }, 2000);
     }
 
     if (userInput.case === 1) { // u-turn when encountering the obstacle
@@ -379,19 +383,17 @@ var createGame = (userInput) => {
   }
 
   function levelCompleted() {
-    var style = { font: 'bold 48px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'Success!', style);
+    var text = game.add.sprite(400, 300, 'success');
+    text.anchor.setTo(.5, .5)
     game.paused = true;
-    console.log('COMPLETED!');
   }
 
-  function checkFailure() {
-    failureTiles.forEach(function(tile) {
-      if (Math.abs(tile.worldX + 16 - car.body.x) < 25 && Math.abs(tile.worldY +16 - car.body.y) < 25) {
-        levelFailed();
-      }
-    })
+  function levelFailed() {
+    var text = game.add.sprite(400, 300, 'failure');
+    text.anchor.setTo(.5, .5);
+    game.paused = true;
   }
+
 
   function levelFailed() {
     var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
