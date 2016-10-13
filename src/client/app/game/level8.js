@@ -1,38 +1,4 @@
 var createGame = (userInput) => {
-  /**********************************************************/
-  /**********************************************************/
-  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
-  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
-  /**********************************************************/
-  /**********************************************************/
-  /*
-            *** NOTE: case 2 and 3 are not in order ***
-
-  var FAKE_USER_INPUT = {
-    color: 'panda',
-    speed: 100,
-    sensor: true,
-    case: 1, // success, the upper route ([LEFT, RIGHT, RIGHT, LEFT])
-    // case: 3, // success, the lower route ([RIGHT, LEFT, LEFT, RIGHT])
-    // case: 2, // fail, didn't enable the engine
-    // case: 4, // fail, drove STRAIGHT through the FIRST intersection and crashed ([STRAIGHT])
-    // case: 5, // fail, turned LEFT then STRAIGHT and crashed ([LEFT, STRAIGHT])
-    // case: 6, // fail, ([LEFT, LEFT])
-    // case: 7, // fail, ([LEFT, RIGHT, STRAIGHT])
-    // case: 8, // fail, ([LEFT, RIGHT, LEFT])
-    // case: 9, // fail, ([LEFT, RIGHT, RIGHT, STRAIGHT])
-    // case: 10, // fail, ([LEFT, RIGHT, RIGHT, RIGHT])
-    // case: 11, // fail, ([RIGHT, STRAIGHT])
-    // case: 12, // fail, ([RIGHT, RIGHT])
-    // case: 13, // fail, ([RIGHT, LEFT, STRAIGHT])
-    // case: 14, // fail, ([RIGHT, LEFT, RIGHT])
-    // case: 15, // fail, ([RIGHT, LEFT, LEFT, STRAIGHT])
-    // case: 16, // fail, ([RIGHT, LEFT, LEFT, LEFT])
-  }
-  */
-  /**********************************************************/
-  /**********************************************************/
-
   var width = window.innerWidth;
   var height = window.innerHeight;
 

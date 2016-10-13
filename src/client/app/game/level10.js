@@ -1,33 +1,6 @@
 var utils = require('./routeSolver.js');
 
 var createGame = (userInput) => {
-  /**********************************************************/
-  /**********************************************************/
-  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
-  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
-  /**********************************************************/
-  /**********************************************************/
-  /*
-        *** NOTE: cases are not in order (2 and 9) ***
-
-  var FAKE_USER_INPUT = {
-    color: 'panda',
-    speed: 100,
-    sensor: true,
-    case: 1 // success: [STRAIGHT, LEFT, STRAIGHT, RIGHT]
-    // case: 9 // fail: [STRAIGHT, LEFT, STRAIGHT, LEFT]
-    // case: 3 // fail: [STRAIGHT, LEFT, STRAIGHT, STRAIGHT]
-    // case: 4 // fail: [STRAIGHT, LEFT, RIGHT]
-    // case: 5 // fail: [STRAIGHT, STRAIGHT]
-    // case: 6 // fail: [STRAIGHT, RIGHT]
-    // case: 7 // fail: [LEFT, LEFT]
-    // case: 8 // fail: [RIGHT]
-    // case: 2 // fail: USER DID NOT ENABLE THE ENGINE
-  }
-  */
-  /**********************************************************/
-  /**********************************************************/
-
   var width = window.innerWidth;
   var height = window.innerHeight;
 

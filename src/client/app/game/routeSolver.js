@@ -117,33 +117,3 @@ module.exports = {
 
 }
 
-
-// SOLUTIONS
-/**********************************************************/
-// if (map.intersection...) { // level 5 & 6
-//   turn('the appropriate directions');
-// }
-
-
-/**********************************************************/
-// route(['left', 'right', 'straight', 'right', 'etc...']); // level 7
-
-
-/**********************************************************/
-// if (gps.intersection ....) { // level 8 & 10
-//   turn('the appropriate directions');
-// }
-
-
-/**********************************************************/
-// if (sensor.front === true) { // level 9
-//   turn('u-turn');
-// }
-
-
-/**********************************************************/
-// if (sensor.front === true) { // level 11
-//   gps.reroute();
-// }
-
-
