@@ -72,7 +72,7 @@ class SignupContainer extends Component {
     return (
       <div style={{float: 'left'}}>
         <form className="landing-form" onSubmit={ this.createUser.bind(this) } >
-          <p className="white-text">Email: <input className="black-text" onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } required/></p>
+          <p className="white-text">Email: <input className="black-text" onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } type='email' required/></p>
           <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p>
           <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p>
           { this.state.invalid ? <p style={{ color: 'red' }} > Sorry, that username already exists. </p> : null }
