@@ -90,25 +90,9 @@ class LandingPage extends Component {
 
         <div className="container">
           <div className="row">
-            <div className="col-xs-12" style={{marginTop: '15px'}}>
-
-              { this.props.user ? <button onClick={ () => this.props.router.push('/game') } >TO THE GAME</button> : 
-
-                <div>
-                  <ul className="nav nav-tabs" role="tablist">
-                    <li role="presentation" className="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
-                    <li role="presentation"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab">Sign Up</a></li>
-                  </ul>
-
-                  <div className="tab-content">
-                    <br />
-                    <div role="tabpanel" className="tab-pane active" id="login"> <Login /> </div>
-                    <div role="tabpanel" className="tab-pane" id="signup"> <Signup /> </div>
-                  </div>
-                </div>
-
-              }
-
+            <div className="col-xs-12">
+              <h4 className="white-text">Sign Up Here:</h4>
+              <Signup />
             </div>
           </div>
         </div>
