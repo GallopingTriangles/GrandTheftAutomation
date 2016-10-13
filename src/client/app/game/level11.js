@@ -354,13 +354,7 @@ var createGame = (userInput) => {
     text.anchor.setTo(.5, .5);
     game.paused = true;
   }
-
-  function levelFailed() {
-    var style = { font: 'bold 64px Arial', fill: '#ffffff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    var text = game.add.text(400, 300, 'FAIL!', style);
-    game.paused = true;
-  }
-
+  
   function gameOver() {
     explosion = game.add.sprite(400, 300, 'explosion');
     explosion.x = car.x;
