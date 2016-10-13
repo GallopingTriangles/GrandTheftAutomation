@@ -20,7 +20,7 @@ class LandingPage extends Component {
 
     return (
       <div>
-        <div className="jumbotron jumbotron-fluid" style={{backgroundImage: 'url(http://www-tc.pbs.org/wgbh/nova/next/wp-content/uploads/2016/01/chicago-grid.jpg)', backgroundSize: '100%'}}>
+        <div className="jumbotron container-fluid" style={{backgroundImage: 'url(http://www-tc.pbs.org/wgbh/nova/next/wp-content/uploads/2016/01/chicago-grid.jpg)', backgroundSize: '100%'}}>
           <div className="container">
             <div className="title-image">
               <h1>The Future Is Now</h1>
@@ -30,7 +30,12 @@ class LandingPage extends Component {
         </div>
 
         <div className="container">
-          <br />
+          <h2 className="white-text" style={{textAlign: 'center', paddingBottom: '5px', borderBottom: '1px solid white'}}>
+            Drive into the future.
+          </h2>
+        </div>
+
+        <div className="container">
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
               <img className="landing-image" src="https://www.expats.com.mt/wp-content/uploads/2016/01/learn-to-code.jpg" />
@@ -42,7 +47,50 @@ class LandingPage extends Component {
               <h4 className="horizontal-divider">Autonomous Vehicles</h4>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
-            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style={{marginTop: '15px'}}>
+            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
+              <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
+
+                <ol className="carousel-indicators">
+                  <li data-target="#carousel-example-generic" data-slide-to="0" className="active"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
+
+
+                <div className="carousel-inner" role="listbox">
+                  <div className="item active">
+                    <img src={'http://www.vtti.vt.edu/featured/wp-content/uploads/2016/01/citystreets-1.jpg'} alt="..." />
+                    <div className="carousel-caption">
+                    </div>
+                  </div>
+                  <div className="item">
+                    <img src={'http://dujs.dartmouth.edu/wp-content/uploads/AV.png'} alt="..." />
+                    <div className="carousel-caption">
+                    </div>
+                  </div>
+                  <div className="item">
+                    <img src={'http://oc-apa.org/wp-content/uploads/2016/05/connected-vehicles.jpg'} alt="..." />
+                    <div className="carousel-caption">
+                    </div>
+                  </div>
+                </div>
+
+                <a className="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                  <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  <span className="sr-only">Previous</span>
+                </a>
+                <a className="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                  <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  <span className="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12" style={{marginTop: '15px'}}>
 
               { this.props.user ? <button onClick={ () => this.props.router.push('/game') } >TO THE GAME</button> : 
 
@@ -64,6 +112,7 @@ class LandingPage extends Component {
             </div>
           </div>
         </div>
+
       </div>
     )
   }
