@@ -10,7 +10,7 @@ class Bugs extends Component {
           return (
             <div>
               <p className='fa fa-bug' aria-hidden='true'></p>
-              { message }
+              <p> { message } </p>
             </div>
           )
         })}

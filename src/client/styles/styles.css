@@ -377,9 +377,11 @@ td.text-right {
 /* == INSTRUCTIONS/BUGS  =========================================== */
 .instructions {
 	background-color: #272822;
-	height: calc(100vh - 180px)
+	height: calc(100vh - 180px);
 }
 
-p.instructions {
-	color: 
+.instructions p {
+	color: #f8f8f2;
+	font-family: 'Menlo';
+	font-size: 16px;
 }
