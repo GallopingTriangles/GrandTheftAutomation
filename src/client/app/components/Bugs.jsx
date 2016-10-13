@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 
-export default class Bugs extends Component {
+class Bugs extends Component {
+
 	render() {
 		return (
       <div>
-      	<i className='fa fa-bug' aria-hidden='true'></i>
-      	{this.props.bugs}
+
+        { this.props.bugs.map(message => {
+          return (
+            <div>
+              <i className='fa fa-bug' aria-hidden='true'></i>
+              { message }
+            </div>
+          )
+        })}
+
       </div>
 		);
 	}
 }
+
+export default Bugs;
