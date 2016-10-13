@@ -96,6 +96,7 @@ var level9 = function(req, res, next) {
 	  };
     
     // == CONDITIONAL TESTS == //
+    req.body.bugs.push({name: 'ConditionalTest', tests: []});
     runTestSuite(function ConditionalTest(t) {
       var sb = new Sandbox().sandbox;
       var context = new vm.createContext(sb);
@@ -130,6 +131,7 @@ var level9 = function(req, res, next) {
     });
 
     // == CONDITIONAL SENSOR TEST == //
+    req.body.bugs.push({name: 'ConditionalSensorTest', tests: []});
     runTestSuite(function ConditionalSensorTest(t) {
     	var sb = new Sandbox().sandbox;
     	sb.sensor.front = true;

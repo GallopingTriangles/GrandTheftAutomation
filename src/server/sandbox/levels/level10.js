@@ -94,6 +94,7 @@ var level10 = function(req, res, next) {
     };
 
     // == ENABLED TESTS == //
+    req.body.bugs.push({name: 'EnabledInputTest', tests: []});
     runTestSuite(function EnabledGpsInputTest(t) {
       // create new sandbox
       var sb = new Sandbox().sandbox;
@@ -148,6 +149,7 @@ var level10 = function(req, res, next) {
       });
 
       // == ENABLED TESTS == //
+      req.body.bugs.push({name: 'EnabledGpsInputTest', tests: []});
      runTestSuite(function EnabledGpsInputTest(t) {
        // create new sandbox
        var sb = new Sandbox().sandbox;
@@ -237,6 +239,7 @@ var level10 = function(req, res, next) {
  	  });
 
     // == CONDITIONAL STRAIGHT TESTS == //
+    req.body.bugs.push({name: 'GpsIntersectionStraightTest', tests: []});
     runTestSuite(function GpsIntersectionStraightTest(t) {
       var sb = new Sandbox().sandbox;
       sb.gps.intersection = 'straight';
@@ -318,6 +321,7 @@ var level10 = function(req, res, next) {
   
 
     // == CONDITIONAL LEFT TESTS == //
+    req.body.bugs.push({name: 'GpsIntersectionLeftTest', tests: []});
     runTestSuite(function GpsIntersectionLeftTest(t) {
       var sb = new Sandbox().sandbox;
       sb.gps.intersection = 'left';
@@ -396,6 +400,7 @@ var level10 = function(req, res, next) {
     });
 
     // == CONDITIONAL Right TESTS == //
+    req.body.bugs.push({name: 'GpsIntersectionRightTest', tests: []});
     runTestSuite(function GpsIntersectionRightTest(t) {
       var sb = new Sandbox().sandbox;
       sb.gps.intersection = 'right';

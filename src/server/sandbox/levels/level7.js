@@ -77,6 +77,7 @@ var level7 = function(req, res, next) {
 	  };
 
 	  // == ENABLED TESTS == //
+	  req.body.bugs.push({name: 'EnabledInputTest', tests: []});
 	  runTestSuite(function EnabledInputTest(t) {
 	  	var enabled = context.testEnable;
 	  	this.testEnableCalledThreeTimes = function() {
@@ -125,6 +126,7 @@ var level7 = function(req, res, next) {
 	  });
 
 	  // == ROUTE TESTS == //
+	  req.body.bugs.push({name: 'RouteInputTest', tests: []});
 	  runTestSuite(function RouteInputTest(t) {
 	  	var route = context.route.directions;
 	  	var calls = context.route.count;
