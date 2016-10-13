@@ -37,24 +37,26 @@ class LoginContainer extends Component {
         console.log('login result: ', result.message);
 
         if (result.message !== 'Incorrect password.' && result.message !== 'Username does not exist.') {
+
           /* Dispatch an action to change the current user in the store */
           this.props.changeUser(this.state.username);
           this.props.resetLevel();
 
-          /* clear the form */
-          this.setState({
-            username: '',
-            password: '',
-            invalid: false
-          })
+          this.setState({ invalid: false });
 
           /* Redirect the user to the game */
           this.props.router.push('/game');
           
         } else {
+          /* Invalid credentials will render an error message */
           this.setState({ invalid: true });
         }
 
+        /* clear the form */
+        this.setState({
+          username: '',
+          password: '',
+        })
       })
     }).catch(err => {
       console.log('Error in signup request');
