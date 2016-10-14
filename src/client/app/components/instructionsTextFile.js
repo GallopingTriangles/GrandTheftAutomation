@@ -5,15 +5,15 @@ module.exports = {
 
                   'We know you\'re excited to program you\'re first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with with the command:\n' +
                   "enable('engine');\n" +
-                  'Think of this as turning the key in the ignition. We also need to set our speed:\n' +
+                  'Think of this as turning the key in the ignition. Always remember to put semicolons at the end of each command. This tells the car\'s computer that you finished an instruction. We also need to set our speed:\n' +
                   "setSpeed(20);\n" +
-                  'Start out slow. We\'re in a small parking lot. Click run and your car should start right up. Always remember to put semicolons at the end of each command. This tells the car\'s computer that you finished an instruction. Have fun!',
+                  'Start out slow. We\'re in a small parking lot. Click run and your car should start right up.  Have fun!',
 
 
   one:            'LEVEL 1\n' +
 
                   'If you want to customize your car:\nsetColor(\'black\');\n' +
-                  'The quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.' ,
+                  'The quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.',
 
   two:            'LEVEL 2\n' +
                   'If our automated vehicle is going to do more then just drive in straight lines all day, we need to give it a way of detecting obstructions. Every automated vehicle has a built in sensor for detecting other objects. How should we enable our \'sensor\'? If you can\'t figure it out on your own, be sure to check the bugs tab.' +
