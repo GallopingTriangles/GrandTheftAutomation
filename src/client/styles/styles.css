@@ -71,7 +71,7 @@ html, body {
 .console-right {
   float: left;
   margin-left: 15px;
-  min-width: calc(100vw - 845px);
+  width: calc(100vw - 845px);
 }
 
 /* == phaser_game ================================== */
