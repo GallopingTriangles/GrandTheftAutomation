@@ -1,9 +1,13 @@
 module.exports = {
 
   zero:           'LEVEL 0\n' +
-                  'Welcome to GTA!',
+                  'Welcome to GTA!\n' +
 
-                  'We know you\'re excited to program you\'re first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with with the command 
+                  'We know you\'re excited to program you\'re first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with with the command:\n' +
+                  "enable('engine')\n" +
+                  'Think of this as turning the key in the ignition. We also need to set our speed:\n' +
+                  "setSpeed(20)\n" +
+                  'Start out slow. We\'re in a small parking lot.'
 
 
   one:            'LEVEL 1\n' +
