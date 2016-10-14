@@ -11,6 +11,8 @@ var level10 = require('./level10');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 var level1 = function(req, res, next) {
 
@@ -33,45 +35,6 @@ var level1 = function(req, res, next) {
 
   	// USER INPUT
   	var userInput = req.body.log;
-    // == VIRTUAL MACHINE =================================
-    var funcColor = 'var setColor = function(input) { testColor.value = input; testColor.count++; };';
-    var funcSpeed = 'var setSpeed = function(input) { testSpeed.value = input; testSpeed.count++; };';
-    var funcEnable = 'var enable = function(input) { testEnable.values.push(input); testEnable.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
-    var funcTurn = 'var turn = function(input) { testTurn = input; };';
-    var funcRoute = 'var setRoute = function(input) { testRoute = input; };';
-    var gps = 'var gps = { intersection: false };';
-    var reroute = 'gps.reroute = function() {};';
-
-    // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + gps + reroute + userInput;
-    var script = new vm.Script(input);
-
-    // sandbox used in virtual machine
-    var sandbox = {
-    	sensor: {
-    		front: false
-    	},
-    	map: {
-        intersection: false
-    	},
-    	testEnable: {
-    		values: [],
-    		count: 0
-    	},
-    	testEngine: undefined,
-    	testColor: {
-        value: undefined,
-        count: 0
-    	},
-    	testSpeed: {
-        value: undefined,
-        count: 0
-    	},
-    	testSensor: undefined,
-    };
-
-    var context = new vm.createContext(sandbox);
-    script.runInContext(context);
 
     var setCaseCount = 1;
     var setCase = function(caseNo, errorMessage) {
@@ -82,110 +45,90 @@ var level1 = function(req, res, next) {
     	}
     };
 
-    // == ENABLED TESTS == //
-    runTestSuite(function EnabledInputTest(t) {
-    	// grab enabled array from sandbox context
-    	var enabled = context.testEnable.values;
-    	var calls = context.testEnable.count;
-	  	// test if the enable function is called
-	  	this.testEnabledCalled = function() {
-	      t.assertTrue(
-	      	calls, 
-	      	'Expected function enable() to be called, but got not called',
-	      	function(error) {
-	      		setCase(2, error);
-	      	}
-	      );
-	  	};
+    // == NEW GTA SANDBOX == //
+    var context = new gtaSandbox().create(userInput);
 
-	  	this.testEnabledCalledWithArgument = function() {
+    // == NEW ENABLED TESTS == //
+    runTestSuite(function EnabledInputTest(t) {
+      var enabled = context.testEnabled.values;
+      var calls = context.testEnabled.calls;
+
+      this.testEnabledCalled = function() {
+        t.assertTrue(
+          calls,
+          'Expected function enable() to be called, but got ' + calls + ' calls',
+          function(error) {
+            setCase(2, error);
+          }
+        );
+      };
+
+      this.testEnabledCalledWithArgument = function() {
         t.assertTrue(
           enabled[0],
           'Expected function enable() to be called with an argument, but got called with ' + enabled[0],
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
-	  	};
+      };
 
-	  	this.testEnabledArgumentString = function() {
+      this.testEnabledArgumentString = function() {
         t.assertTrue(
           typeof enabled[0] === 'string',
           'Expected function enable() to be called with an argument of type string, but got called with argument of type ' + typeof enabled[0],
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
-	  	};
+      };
 
-	  	// test the maximum allowed calls of the enable function
-	  	if (req.body.level === 1) {
-        this.testEnabledMaxCalls = function() {
-        	var calls = enabled.length;
-          t.assertTrue(
-          	calls <= 2,
-            'Expected function enable() to be called twice, but got called ' + calls + ' times',
-            function(error) {
-            	setCase(2, error);
-            }
-          );
-        };
-	  	}
+      this.testEnabledMaxCalls = function() {
+        t.assertTrue(
+          calls >= 2,
+          'Expected function enable() to be called twice, but got called ' + calls + ' times',
+          function(error) {
+            setCase(2, error);
+          }
+        );
+      };
+    }); // END enable() tests
 
-      // test if the input is of data type string
-      // this.testEnableInputType = function() {
-      //   t.assertOptionsOfTypeString(
-      //     enabled,
-      //     function() {
-      //     	setCase(2);
-      //     }
-      //   );
-      // };
-    });
-
-    // == ENGINE TESTS == //
-    // set engine on phase object to context value
-    req.body.phaser.engine = context.testEngine;
+    // == NEW ENGINE TESTS == //
+    // set engine on phaser object to context value
+    req.body.phaser.engine = context.testEnabled.values[0];
     runTestSuite(function EngineInputTest(t) {
 
-    	var enabled = context.testEnable.values;
-    	var calls = context.testEnable.count;
-      
-      var setEngineDefault = function(errorMessage) {
-        req.body.phaser.engine = false;
-        req.body.phaser.case = 2;
-      };
+      var enabled = context.testEnabled.values;
+      var calls = context.testEnabled.calls;
 
-      // test if the engine is enabled
-      this.testEngineDefined = function() {
+      this.testEngineEnabled = function() {
         t.assertTrue(
-        	context.testEngine,
-          'Expected engine to be enabled with function enable(), but got undefined',
+          enabled.indexOf('engine') !== -1,
+          'Expected engine to be enabled with function enable(), but got not enabled',
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
       };
 
-      // test if the engine is enabled firstly
       this.testEngineEnabledFirst = function() {
         t.assertTrue(
           enabled[0] === 'engine',
           'Expected engine to be enabled first, but got ' + enabled[0] + ' enabled first',
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
       };
-    });
+    }); // END enable('engine') tests
 
-    // == COLOR TESTS == //
-    // set color on phaser object to context value
-    req.body.phaser.color = context.testColor.value;
+    // == NEW COLOR TESTS == //
+    // set color on phaser object to new context value
+    req.body.phaser.color = context.testSetcolor.value;
     runTestSuite(function ColorInputTest(t) {
-    	// grab color from sanbox context
-    	var color = context.testColor.value;
-    	var calls = context.testColor.count;
+      var color = context.testSetcolor.value;
+      var calls = context.testSetcolor.calls;
 
       // if a test fails, set the color to a default value
       var setColorDefault = function(errorMessage) {
@@ -209,7 +152,6 @@ var level1 = function(req, res, next) {
         );
       };
 
-      // test if the set color function is called
       this.testColorCalledWithArgument = function() {
         t.assertTrue(
           color,
@@ -235,72 +177,66 @@ var level1 = function(req, res, next) {
           setColorDefault
         );
       };
-    });
+    }); // END setColor() tests
 
-    // == SPEED TESTS == //
+    // == NEW SPEED TESTS == //
     // set speed on phaser object to context
-    req.body.phaser.speed = context.testSpeed.value;
+    req.body.phaser.speed = context.testSetspeed.value;
     runTestSuite(function SpeedInputTest(t) {
-    	// grab speed from sandbox context
-    	var speed = context.testSpeed.value;
-    	var calls = context.testSpeed.count;
-
-      // if a test fails, set the speed to a default value
-      var setSpeedDefault = function(errorMessage) {
-        req.body.phaser.speed = false;
-        req.body.phaser.case = 2;
-      };
+      
+      var speed = context.testSetspeed.value;
+      var calls = context.testSetspeed.calls;
 
       this.testSpeedCalled = function() {
-      	t.assertTrue(
+        t.assertTrue(
           calls,
           'Expected setSpeed() to be called, but got ' + calls + ' calls',
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
-      	);
+        );
       };
 
-    	// test if the set speed function is called
-    	this.testSpeedCalledWithArgument = function() {
+      // test if the set speed function is called
+      this.testSpeedCalledWithArgument = function() {
         t.assertTrue(
           speed,
           'Expected setSpeed() to be called with an argument, but got ' + speed,
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           }
         );
-    	};
+      };
 
-    	// test if speed if of data type number
-    	this.testSpeedNumber = function() {
+      // test if speed if of data type number
+      this.testSpeedNumber = function() {
         t.assertTrue(
           typeof speed === 'number',
           'Expected setSpeed() to be called with an argument of type number, but got called with argument of type ' + typeof speed,
           function(error) {
-          	setCase(2, error);
+            setCase(2, error);
           } 
         );
-    	};
+      };
 
-    	// test if speed is a positive number
-    	this.testSpeedPositive = function() {
+      // test if speed is a positive number
+      this.testSpeedPositive = function() {
         t.assertTrue(
-        	speed >= 0, 
-        	'Expected speed to be a positive number, but got a negative number',
-        	function(error) {
-        		setCase(2, error);
-        	}
+          speed >= 0, 
+          'Expected speed to be a positive number, but got a negative number',
+          function(error) {
+            setCase(2, error);
+          }
         );
-    	};
-    });
+      };
+    }); // END setSpeed() tests
 
-    // == SENSOR TESTS == //
-    // set sensor on phaser object to context value
-    req.body.phaser.sensor = context.testSensor;
+    // == NEW SENSOR TESTS == //
+    // set sensor on phaser obj to context value
+    req.body.phaser.sensor = context.testEnabled.values[1];
     runTestSuite(function SensorInputTest(t) {
-    	// grab sensor value from context
-    	var sensor = context.testSensor;
+      
+      var sensor = context.testEnabled.values[1];
 
       // if a test fails, set the sensor value to a default value
       var setSensorDefault = function(errorMessage) {
@@ -312,7 +248,7 @@ var level1 = function(req, res, next) {
       // test if the sensor is enabled
       this.testSensorDefined = function() {
         t.assertTrue(
-        	sensor,
+          sensor,
           'Expected sensor to be enabled with function enable(), but got undefined',
           setSensorDefault
         );
@@ -320,17 +256,15 @@ var level1 = function(req, res, next) {
 
       // test if the engine is enabled firstly
       this.testSensorEnabledSecond = function() {
-      	var enabledSecond = '';
-        context.testEnable.values[1] ? enabledSecond = context.testEnable.values[1] : enabledSecond = '';
         t.assertTrue(
-          context.testEnable.values[1] === 'sensor',
-          'Expected sensor to be enabled secondly, but got ' + enabledSecond + ' enabled second',
+          sensor === 'sensor',
+          'Expected sensor to be enabled secondly, but got ' + sensor + ' enabled second',
           setSensorDefault
         );
       };
-    });
+    }); // END enable('sensor') tests
 
-  });
+  }); // END UserInputTestLevel1
 
   // if user level is greater than level 1, run tests of next level
   // and if case is success

@@ -5,6 +5,8 @@ var level2 = require('./level2');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 var level3 = function(req, res, next) {
   
@@ -34,15 +36,6 @@ var level3 = function(req, res, next) {
   	
   	// USER INPUT
   	var userInput = req.body.log;
-    // == VIRTUAL MACHINE =================================
-    var funcColor = 'var setColor = function(input) { testColor = input; };';
-    var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
-    var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
-    var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
-
-    // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + funcTurn + userInput;
-    var script = new vm.Script(input);
 
     var setCaseCount = 1;
     var setCase = function(caseNo, errorMessage) {
@@ -55,26 +48,10 @@ var level3 = function(req, res, next) {
 
   	// == MAP CONDITIONAL TEST == //
     runTestSuite(function MapConditionalFalseTest(t) {
-    	// sandbox for virtual machine
-    	var sandbox = {
-    		sensor: {
-    	    front: false
-    		},
-    		map: {
-    	    intersection: false
-    		},
-    		testEnable: [],
-    		testTurn: {
-    			value: undefined,
-    			count: 0
-    		}
-    	};
-
-    	var context = new vm.createContext(sandbox);
-    	script.runInContext(context);
-
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().create(userInput);
     	var turn = context.testTurn.value;
-      var calls = context.testTurn.count;
+      var calls = context.testTurn.calls;
 
     	this.testTurnNotCalled = function() {
         t.assertTrue(
@@ -86,7 +63,7 @@ var level3 = function(req, res, next) {
         );
     	};
 
-    });
+    }); // END if (map.intersection === false) {...}
 
     // == CONDITIONAL TESTS == //
     runTestSuite(function ConditionalTest(t) {
@@ -112,26 +89,10 @@ var level3 = function(req, res, next) {
     });
 
     runTestSuite(function MapConditionalTrueTest(t) {
-      // sandbox for virtual machine
-      var sandbox = {
-      	sensor: {
-          front: false
-      	},
-      	map: {
-          intersection: true
-      	},
-      	testEnable: [],
-      	testTurn: {
-      		value: undefined,
-      		count: 0
-      	}
-      };
-
-      var context = new vm.createContext(sandbox);
-      script.runInContext(context);
-
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().mapTrue(userInput);
       var turn = context.testTurn.value;
-      var calls = context.testTurn.count;
+      var calls = context.testTurn.calls;
 
       this.testTurnCalled = function() {
         t.assertTrue(

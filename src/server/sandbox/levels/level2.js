@@ -5,6 +5,8 @@ var level4 = require('./level4');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 var level2 = function(req, res, next) {
   
@@ -29,15 +31,6 @@ var level2 = function(req, res, next) {
   	
   	// USER INPUT
   	var userInput = req.body.log;
-    // == VIRTUAL MACHINE =================================
-    var funcColor = 'var setColor = function(input) { testColor = input; };';
-    var funcSpeed = 'var setSpeed = function(input) { testSpeed.value = input; testSpeed.count++ };';
-    var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; };';
-    // var funcTurn = 'var turn = function(input) { testTurn = input; };';
-
-    // input for virtual machine
-    var input = funcColor + funcSpeed + funcEnable + userInput;
-    var script = new vm.Script(input);
 
     var setCaseCount = 1;
     var setCase = function(caseNo, errorMessage) {
@@ -48,40 +41,22 @@ var level2 = function(req, res, next) {
     	}
     };
 
-  	// == CONDITIONAL TESTS == //
-  	runTestSuite(function SensorConditionalFalseTest(t) {
-  		// sandbox for virtual machine
-  		var sandbox = {
-  			sensor: {
-          front: false
-  			},
-  			map: {
-          intersection: false
-  			},
-        testEnable: [],
-        testSpeed: {
-        	value: 0,
-        	count: 0
-        }
-  		};
+    // == NEW CONDITIONAL TESTS == //
+    runTestSuite(function SensorConditionalFalseTest(t) {
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().create(userInput);
+      var calls = context.testSetspeed.calls;
 
-  		var context = new vm.createContext(sandbox);
-  		script.runInContext(context);
-
-			var speed = context.testSpeed.value;
-			var calls = context.testSpeed.count;
-
-			this.testSetSpeedCalledOnce = function() {
-	      t.assertTrue(
-	        calls === 1,
-	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
-	        function(error) {
-	        	setCase(3, error);
-	        }
-	      );
-			};
-
-  	});
+      this.testSetSpeedCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
+          function(error) {
+            setCase(3, error);
+          }
+        );
+      };
+    }); // END sensor.front === false
 
     // == CONDITIONAL TESTS == //
     runTestSuite(function ConditionalTest(t) {
@@ -112,29 +87,13 @@ var level2 = function(req, res, next) {
           }
         );
       };
-    });
+    }); // END if (sensor.front === true) {...
 
 		runTestSuite(function SensorConditionalTrueTest(t) {
-			// sandbox for virtual machine
-			var sandbox = {
-				sensor: {
-	        front: true
-				},
-				map: {
-          intersection: false
-				},
-	      testEnable: [],
-	      testSpeed: {
-	      	value: 0,
-	      	count: 0
-	      }
-			};
-
-			var context = new vm.createContext(sandbox);
-			script.runInContext(context);
-
-			var speed = context.testSpeed.value;
-			var calls = context.testSpeed.count;
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().sensorTrue(userInput);
+			var speed = context.testSetspeed.value;
+			var calls = context.testSetspeed.calls;
 
       // test is the setSpeed function is called twice, indicating the conditional
 			this.testSetSpeedCalledTwice = function() {
@@ -150,6 +109,16 @@ var level2 = function(req, res, next) {
           }
         );
 			};
+
+      this.testSetSpeedCalledWithArgument = function() {
+        t.assertTrue(
+          speed || speed === 0,
+          'Expected setSpeed() to be called with an argument, but got ' + speed,
+          function(error) {
+            setCase(3, error);
+          }
+        );
+      };
 
       // test if the second call sets the speed to a number
 			this.testSensorSetSpeedNumber = function() {
@@ -195,10 +164,9 @@ var level2 = function(req, res, next) {
           }
         );
 			};
+		}); // END if (sensor.front === true) { setSpeed(0) }
 
-		});
-
-  });
+  }); // END tests level 2
 
   // if user level is greater than level 2, run tests of next level
   if (req.body.level === 4 && req.body.phaser.case === 1) {
