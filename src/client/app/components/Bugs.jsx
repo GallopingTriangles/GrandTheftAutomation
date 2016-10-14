@@ -35,7 +35,7 @@ function formatBugs(message) {
   
   var first = '';
   var last = '';
-  var span = (<span style={{color: 'yellow'}}>{ words[i] }</span>);
+  var span = (<span>{ words[i] }</span>);
   words.forEach((word, ind) => {
     if (ind < i) {
       first += word + ' ';
