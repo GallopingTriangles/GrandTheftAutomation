@@ -13,12 +13,10 @@ module.exports = {
   one:            'LEVEL 1\n' +
 
                   'If you want to customize your car:\nsetColor(\'black\');\n' +
-                  'The quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\'. Strings are JavaScript\'s way of representing plain text.' ,
+                  'The quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.' ,
 
   two:            'LEVEL 2\n' +
-                  'Let\'s give your car a sensor\n' +
-                  'Add <code> enable(\'sensor\'); </code> to your previous code\n' +
-                  'Allows car to use the sensor\n' +
+                  'If our automated vehicle is going to do more then just drive in straight lines all day, we need to give it a way of detecting obstructions. Every automated vehicle has a built in sensor for detecting other objects. How should we enable our \'sensor\'? If you can\'t figure it out on your own, be sure to check the bugs tab.' +
                   'But it still crashes into the obstacle\n' +
                   'Need to learn about conditional statements, AKA "if" statements\n' +
                   'Use "if" to specify a block of code to be executed, if a specified condition is true\n' +
