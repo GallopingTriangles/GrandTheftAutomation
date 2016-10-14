@@ -11,7 +11,7 @@ class Bugs extends Component {
           return (
             <div>
               <p className='fa fa-bug' aria-hidden='true'></p>
-              <p>{ formatBugs(message) }</p>
+              <p>{message}</p>
             </div>
           )
         })}
@@ -21,21 +21,21 @@ class Bugs extends Component {
 	}
 }
 
-function formatBugs(message) {
-  return (
-    <div>
-      {message.split(' ').map((word, i) => {
-        if (word.indexOf('()') > -1) {
-          return (<p style={{ display: 'inline', margin: 0, "padding-right": '3px' }}><span style={{ color: 'yellow', margin: 0, 'padding-right': 0 }}>{ word }</span></p>);
-        } else if (word.indexOf('undefined') > -1) {
-          return (<p style={{ display: 'inline', margin: 0, "padding-right": '3px' }}><span style={{ color: '#ae81ff', margin: 0, "padding-right": 0 }}>{ word }</span></p>);
-        } else {
-          return (<p style={{ display: 'inline', margin: 0, "padding-right": '3px' }}>{ word }</p>);
-        }
-      })}
-    </div>
-  )
-
+// function formatBugs(message) {
+//   return (
+//     <div>
+//       {message.split(' ').map((word, i) => {
+//         if (word.indexOf('()') > -1) {
+//           return (<p style={{ display: 'inline', margin: 0, "padding-right": '3px' }}><span style={{ color: 'yellow', margin: 0, 'padding-right': 0 }}>{ word }</span></p>);
+//         } else if (word.indexOf('undefined') > -1) {
+//           return (<p style={{ display: 'inline', margin: 0, "padding-right": '3px' }}><span style={{ color: '#ae81ff', margin: 0, "padding-right": 0 }}>{ word }</span></p>);
+//         } else {
+//           return (<p style={{ display: 'inline', margin: 0, "padding-right": '3px' }}>{ word }</p>);
+//         }
+//       })}
+//     </div>
+//   )
+//
 
 
   // var words = message.split(' ');
@@ -48,7 +48,7 @@ function formatBugs(message) {
   // if (!i) { // if there is no function in it
   //   return message;
   // }
-  
+
   // var first = '';
   // var last = '';
   // var span = (<span>{ words[i] }</span>);
@@ -64,6 +64,6 @@ function formatBugs(message) {
   //     <p style={{ display: 'inline '}} >{ first }</p>{ span }<p style={{ display: 'inline '}} >{ last }</p>
   //   </p>
   // )
-}
+// }
 
 export default Bugs;
