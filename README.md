@@ -1,7 +1,7 @@
 # Grand Theft Automation
-![](https://media.giphy.com/media/eThRxELjyuZz2/giphy.gif)
 ---
 ## Synopsis
+<img src='https://media.giphy.com/media/eThRxELjyuZz2/giphy.gif' align='right'>
 www.grandtheftautomation.com  
 Grand Theft Automation is an interactive game to expose users to programming logic through creating their own automated vehicle.
 ## Getting started  
