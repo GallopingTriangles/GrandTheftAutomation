@@ -4,13 +4,13 @@ class Bugs extends Component {
 
 	render() {
 		return (
-      <div>
+      <div className='instructions'>
 
         { this.props.bugs.map(message => {
           return (
             <div>
-              <i className='fa fa-bug' aria-hidden='true'></i>
-              { message }
+              <p className='fa fa-bug' aria-hidden='true'></p>
+              <p> { message } </p>
             </div>
           )
         })}

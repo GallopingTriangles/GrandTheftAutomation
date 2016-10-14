@@ -1,30 +1,27 @@
 module.exports = {
 
-  zero:           'LEVEL 0\n',
+  zero:           'LEVEL 0\n' +
+                  'Welcome to GTA!\n' +
+
+                  'We know you\'re excited to program you\'re first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with with the command:\n' +
+                  "enable('engine');\n" +
+                  'Think of this as turning the key in the ignition. Always remember to put semicolons at the end of each command. This tells the car\'s computer that you finished an instruction. We also need to set our speed:\n' +
+                  "setSpeed(20);\n" +
+                  'Start out slow. We\'re in a small parking lot. Click run and your car should start right up.  Have fun!',
+
 
   one:            'LEVEL 1\n' +
-                  'Welcome to GTA\n' +
-                  '(a sentence for introducing AV shit...)\n' +
-                  'Let\'s turn on your engine, need to use a special tool called "enable"\n' +
-                  'Type <code> enable(\'engine\'); </code>\n' +
-                  'Now let\'s give the car a speed\n' +
-                  'Type <code> setSpeed(30); </code>\n' +
-                  'If you want to customize your car... <code> setColor(\'black\'); </code>\n' +
-                  'The semicolons are used to separate statements\n' +
-                  'and the quotation marks are to represent \'STRINGS\'\n' +
-                  '(((EXPLAIN WHAT STRINGS ARE)))\n' +
-                  'Click RUN to see the car you\'ve just programmed!\n',
+
+                  'If you want to customize your car:\nsetColor(\'black\');\n' +
+                  'The quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.',
 
   two:            'LEVEL 2\n' +
-                  'Let\'s give your car a sensor\n' +
-                  'Add <code> enable(\'sensor\'); </code> to your previous code\n' +
-                  'Allows car to use the sensor\n' +
-                  'But it still crashes into the obstacle\n' +
-                  'Need to learn about conditional statements, AKA "if" statements\n' +
-                  'Use "if" to specify a block of code to be executed, if a specified condition is true\n' +
-                  'Write <code> if(sensor.front === true) { setSpeed(0); }; </code>\n' +
-                  'If the front sensor is detecting an obstacle, it becomes true\n' +
-                  'If it is true, we want to stop the car so we set the speed to 0\n',
+                  'If our automated vehicle is going to do more then just drive in straight lines all day, we need to give it a way of detecting obstructions. Every automated vehicle has a built in sensor for detecting other objects. How should we enable our \'sensor\'? If you can\'t figure it out on your own, be sure to check the bugs tab.' +
+
+                  'The sensor will light up if it detects anything in it\'s path, but the car will keep driving forward unless you program it to stop. You\'ve learned quite a bit about programming already, but there are a few more key concepts we need to go over you will be able to program you\'re car to stop automatically.\n' +
+                  'Conditional statements are how programmers deal with branching logic. A conditional statement looks like this:\n' +
+                  'if (sensor.front === true) { setSpeed(0); };\n' +
+                  'The statement inside of the parentheses',
 
   three:          'LEVEL 3\n' +
                   'Introduce INTERSECTIONS\n' +
@@ -46,7 +43,7 @@ module.exports = {
   six:            'LEVEL 6\n' +
                   'introduce ROUTES\n' +
                   'When dealing with multiple intersections\n' +
-                  'It can get too tedious to hard code every turn at every intersection and\n' + 
+                  'It can get too tedious to hard code every turn at every intersection and\n' +
                   'we may want to program our car to handle a certain route.\n' +
                   'Add <code> enable(\'routes\'); </code>\n' +
                   'In order to use our routes, we must give it a list of commands\n' +

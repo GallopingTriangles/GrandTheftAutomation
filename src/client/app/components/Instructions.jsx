@@ -21,7 +21,7 @@ export default class Instructions extends Component {
   }
 	render() {
     return (
-      <div>
+      <div className='instructions'>
         { this.state[this.props.level].split('\n').map(line => (
           <p key={ Math.random() }> { line } </p>
         )) }
