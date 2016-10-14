@@ -384,15 +384,27 @@ td.text-right {
 	height: calc(100vh - 180px);
 	padding-top: 6px;
 	overflow: scroll;
+	white-space: pre-wrap;
+	font-size: 16px;
 }
 
-.instructions p {
+.instructions p, h3 {
 	color: #f8f8f2;
-	font-family: monospace;
-	font-size: 16px;
+	/*font-family: monospace;*/
 	padding-left: 16px;
 	margin-top: 0px;
 	padding-top: 0px;
 	margin-bottom: 0px;
 	padding-right: 16px;
+}
+
+.instructions span {
+	color: #e6db74;
+	font-family: monospace;
+	padding-left: 16px;
+	margin-top: 0px;
+	padding-top: 0px;
+	margin-bottom: 0px;
+	padding-right: 16px;
+	max-width: 100%;
 }
