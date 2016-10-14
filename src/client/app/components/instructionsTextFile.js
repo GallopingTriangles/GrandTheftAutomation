@@ -130,7 +130,7 @@ module.exports = {
                   'The conditional statement inside of the parentheses will be evaluated every moment as the car drives. If the car is ever in an intersection, the car will turn right.',
 
   four:
-                  'Now that you\'ve learned to write conditionals to execute different snippets of code depending on changing circumstances, you have all the tools to program your car to make this turn and stop if it encounters any obstacles.\n\nAs always, remember to check the bug report if you have any trouble.',
+                  'Now that you can write conditionals to execute different snippets of code depending on changing circumstances, you have all the tools you need to program your car to make this turn without crashing.\n\nAs always, remember to check the bug report if you have any trouble.',
 
   five:           'LEVEL 5^' +
                   'DisneyLand is on the left.^' +
