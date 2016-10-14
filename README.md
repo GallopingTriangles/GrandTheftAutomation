@@ -15,8 +15,7 @@ Server listening on port 8080
 http://phaser.io  
 https://github.com/photonstorm/phaser
 ## Usage  
-Levels are created in `src/client/app/game/game.js`.  
-Each map is rendered with its own `createGame()` function, which generates a new game instance for each level. The car's behavior will depend on the user's input from the code editor.
+Levels are created in `src/client/app/game/game.js`. Each map is rendered with its own `createGame()` function, which generates a new game instance for each level. The car's behavior will depend on the user's input from the code editor.
 ## Contributors  
 [Chris Chiang](https://github.com/cchrispy)  
 [Kevin Chan](https://github.com/kevindchan)  
