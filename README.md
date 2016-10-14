@@ -1,7 +1,7 @@
 # Grand Theft Automation
+www.grandtheftautomation.com
 ---
 ## Synopsis
-www.grandtheftautomation.com
 Grand Theft Automation is an interactive game to expose users to programming logic through creating their own automated vehicle.
 
 ## Getting started
