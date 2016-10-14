@@ -1,7 +1,9 @@
 module.exports = {
 
-  zero:           'LEVEL 0\n\n\n' +
-                  'Hello there and welcome to GTA!\n\n',
+  zero:           'LEVEL 0\n' +
+                  'Welcome to GTA!',
+
+                  'We know you\'re excited to program you\'re first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with with the command 
 
 
   one:            'LEVEL 1\n' +
