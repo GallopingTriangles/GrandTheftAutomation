@@ -24,7 +24,7 @@ class Game extends Component {
 
   render() {
     return (
-      <div className='col-md-7'>
+      <div className='phaser-outer'>
         <div id='phaser_game'></div>
       </div>
     )

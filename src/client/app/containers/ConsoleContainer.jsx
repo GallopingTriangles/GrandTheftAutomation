@@ -113,7 +113,7 @@ class Console extends Component {
 
   render() {
     return (
-      <div className='col-md-5'>
+      <div className='console-right'>
         <div className='console'>
 
           <div className='console-header'>
