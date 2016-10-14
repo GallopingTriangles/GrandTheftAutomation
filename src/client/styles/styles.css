@@ -380,11 +380,14 @@ td.text-right {
 	height: calc(100vh - 180px);
 	padding-top: 6px;
 	overflow: scroll;
+	white-space: pre-wrap;
+
+
 }
 
 .instructions p {
 	color: #f8f8f2;
-	font-family: monospace;
+	/*font-family: monospace;*/
 	font-size: 16px;
 	padding-left: 16px;
 	margin-top: 0px;
@@ -402,4 +405,5 @@ td.text-right {
 	padding-top: 0px;
 	margin-bottom: 0px;
 	padding-right: 16px;
+	max-width: 100%;
 }
