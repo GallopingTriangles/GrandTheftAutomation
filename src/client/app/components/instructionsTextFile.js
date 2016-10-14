@@ -21,14 +21,36 @@ module.exports = {
                   'The sensor will light up if it detects anything in it\'s path, but the car will keep driving forward unless you program it to stop. You\'ve learned quite a bit about programming already, but there are a few more key concepts we need to go over you will be able to program you\'re car to stop automatically.\n' +
                   'Conditional statements are how programmers deal with branching logic. A conditional statement looks like this:\n' +
                   'if (sensor.front === true) { setSpeed(0); };\n' +
-                  'The statement inside of the parentheses',
+                  'The statement inside of the parentheses\n' +
+                  '.\n' +
+                  '.\n' +
+                  'OUTLINE FOR THINGS TO TALK ABOUT OVER HERE OK (MAYBE NOT IN ORDER): \n' +
+                  'we can access the front sensor by doing "sensor.front"\n'+
+                  'a sensor has two states: "true" and "false". This determines if it\'s currently detecting an obstacle\n'+
+                  '"true" and "false" statements are called "BOOLEAN", which is a binary variable representing only two possible values\n'+
+                  'To compare things in code, we use a triple equal sign "==="\n'+
+                  'A single equal sign is used for different purposes so we have to use triple equals\n'+
+                  'the "if" statement begins a conditional statement. If the expression inside the parentheses evaluates into a true statement, then the code inside the curly braces {} will be executed\n'+
+                  'Here, if the front sensor is detecting an obstacle, we set the car\'s speed to 0\n',
 
   three:          'LEVEL 3\n' +
                   'Introduce INTERSECTIONS\n' +
-                  'Need to enable maps\n' +
+                  'Need to ENABLE MAPS\n' +
                   'If we\'re at the intersection, need to turn(\'right\');\n' +
                   '<code> if (map.intersection === true) { turn(\'right\'); } </code>\n' +
-                  'Your car will execute it\'s right turn only if its in an intersection\n',
+                  'Your car will execute it\'s right turn only if its in an intersection\n' +
+                  '.\n' +
+                  '.\n' +
+                  'MORE DETAILED INSTRUCTION OUTLINE BELOW OVER HERE OK (MAYBE NOT IN ORDER): \n' +
+                  'here we have another case of using conditional statemets, booleans, and checking for equality\n' +
+                  'The car can read the map if "map" is enabled. If the car is currently in the intersection, we want it to turn right\n' +
+                  'Here, we program the car to make a right turn if it is in an intersection\n'+
+                  'WE HAVE LEARNED A NEW COMMAND, AWESOME COOL SHIT YO: "turn"\n' +
+                  'the "turn" command is known as a "function", and it can listen to instructions, which are called "parameters"\n' +
+                  'The "turn" function is allowed three "parameters", which must be STRINGS: "left", "right", "straight"\n'+
+                  'This function will make the car turn right or left or go straight\n'+
+                  'See if you can understand the code: \n'+
+                  '<code> if (map.intersection === true) { turn(\'right\'); } </code>\n',
 
   four:           'LEVEL 4\n' +
                   'Combine what we learned from sensors with the intersections\n' +
