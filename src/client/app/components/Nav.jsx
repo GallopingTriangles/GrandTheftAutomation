@@ -27,7 +27,6 @@ class Nav extends Component {
         ** and cause a redirect back to the landing page if no user is found.
         */
         this.props.eraseUser();
-        console.log('Logging out: ', response);
       })
     }).catch(err => {
       console.log('Error logging out: ', err);

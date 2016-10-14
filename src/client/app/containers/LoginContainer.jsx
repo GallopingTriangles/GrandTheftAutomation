@@ -34,7 +34,6 @@ class LoginContainer extends Component {
       })
     }).then(res => {
       res.json().then(result => {
-        console.log('login result: ', result.message);
 
         if (result.message !== 'Incorrect password.' && result.message !== 'Username does not exist.') {
 

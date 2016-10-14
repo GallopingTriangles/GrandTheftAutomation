@@ -36,9 +36,7 @@ class SignupContainer extends Component {
         password: this.state.password
       })
     }).then(res => {
-      console.log('signup status: ', res.status);
       res.json().then(result => {
-        console.log('signup response: ', result.message);
 
         if (result.message !== 'User already exists.') {
 

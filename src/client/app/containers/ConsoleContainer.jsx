@@ -50,8 +50,6 @@ class Console extends Component {
 
   postSolution() {
 
-    console.log('User submitted solution: ', this.props.currentCode);
-
     // remove the currently rendered game so we can create a new one
     $('canvas').remove();
 
@@ -66,7 +64,6 @@ class Console extends Component {
         log: this.props.currentCode
       })
     }).then(res => {
-      console.log('res: ', res);
       res.json().then(response => {
 
         /* The response from the server is an object that is used to create */
