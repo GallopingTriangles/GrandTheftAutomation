@@ -70,6 +70,7 @@ class LoginContainer extends Component {
             <label className="sr-only" htmlFor="username">Username</label>
             <input type="username" className="form-control black-text" id="username" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } placeholder="username" required />
           </div>
+          <p></p>
           <div className="form-group">
             <label className="sr-only" htmlFor="password">Password</label>
             <input type="password" className="form-control black-text" id="password" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } placeholder="password" required />
