@@ -18,8 +18,6 @@ class Console extends Component {
 
   componentWillMount() {
 
-    console.log('current code: ', this.props.currentCode);
-
     var url = `/game?username=${ this.props.user }`;
 
     fetch(url, {
@@ -29,6 +27,7 @@ class Console extends Component {
       }
     }).then(res => {
       res.json().then(response => {
+
         /* response is an array of submitted solution code per level */
         /* filter out the correct code for the level                 */
         var code = response.filter(levelCode => {
@@ -40,6 +39,7 @@ class Console extends Component {
         this.props.setCode(code);
 
       })
+
     }).catch(err => {
       console.log('Error fetching code: ', err);
     })
@@ -65,15 +65,17 @@ class Console extends Component {
     }).then(res => {
       console.log('res: ', res);
       res.json().then(response => {
+
         /* The response from the server is an object that is used to create */
         /* the game create a new game based off of the response object      */
         /* The response also comes with a bug report describing the user's  */
         /* errors in the form of passing or failing a particular test       */
         console.log('phaser response: ', response.phaser);
-        console.log('phaser bugs: ', response.bugs);
         createGame(response.phaser, this.props.level);
         this.setState({bugs: response.bugs});
+
       })
+
     }).catch(err => {
       console.log('Error saving input: ', err);
     });
@@ -97,13 +99,15 @@ class Console extends Component {
   renderContent() {
     switch (this.state.tab) {
       case 'instructions': return <Instructions level={ this.props.level }/>;
+
       case 'editor': return <Editor 
                               code={ this.props.currentCode }
                               inputChange={ this.inputChange.bind(this) } 
                               runCode={ this.postSolution.bind(this) } 
                               resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
-      default: return <div>ERROR</div>;
+      
+      default: return <div>Oops! Something went wrong. Try refreshing the page.</div>;
     }
   }
 
