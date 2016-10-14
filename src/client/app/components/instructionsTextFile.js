@@ -16,6 +16,11 @@ module.exports = {
 
   two:
                   'If our automated vehicle is going to do more then just drive in straight lines all day, we need to give it a way of detecting obstructions. Every automated vehicle has a built in sensor for detecting other objects. How should we enable our \'sensor\'? If you can\'t figure it out on your own, be sure to check the bugs tab.' +
+                  'The sensor will light up if it detects anything in it\'s path, but the car will keep driving forward unless you program it to stop. You\'ve learned quite a bit about programming already, but there are a few more key concepts we need to go over before you will be able to program your car to stop automatically.^' +
+                  '\nConditional statements are how programmers deal with branching logic. A conditional statement looks like this:^' +
+                  '<code>  if (sensor.front === true) {\n^<code>    setSpeed(0);\n^<code>  };^' +
+                  'The statement inside of the parentheses',
+
 
 // <<<<<<< 2010891c001ac28a9b124811dc1c1e7cf0d14ed5
 //                   'The sensor will light up if it detects anything in it\'s path, but the car will keep driving forward unless you program it to stop. You\'ve learned quite a bit about programming already, but there are a few more key concepts we need to go over you will be able to program you\'re car to stop automatically.\n' +
@@ -117,23 +122,15 @@ module.exports = {
 //                   'Useful because the gps cannot detect some obstructions\n' +
 //                   'Enable rerouter\n',
 // =======
-                  'The sensor will light up if it detects anything in it\'s path, but the car will keep driving forward unless you program it to stop. You\'ve learned quite a bit about programming already, but there are a few more key concepts we need to go over before you will be able to program your car to stop automatically.^' +
-                  '\nConditional statements are how programmers deal with branching logic. A conditional statement looks like this:^' +
-                  '<code>  if (sensor.front === true) {\n^<code>    setSpeed(0);\n^<code>  };^' +
-                  'The statement inside of the parentheses',
 
-  three:          'LEVEL 3^' +
-                  'Introduce INTERSECTIONS^' +
-                  'Need to enable maps^' +
-                  'If we\'re at the intersection, need to turn(\'right\');^' +
-                  '<code> if (map.intersection === true) { turn(\'right\'); } </code>^' +
-                  'Your car will execute it\'s right turn only if its in an intersection^',
+  three:
+                  'A truly automated vehicle needs to do more than just drive in straight lines. '+
+                  'Let\'s program our car to turn at intersections:\n^' +
+                  '<code>  if (map.intersection === true) { \n^<code>      turn(\'right\'); \n^<code>  }\n^' +
+                  'The conditional statement inside of the parentheses will be evaluated every moment as the car drives. If the car is ever in an intersection, the car will turn right.',
 
-  four:           'LEVEL 4^' +
-                  'Combine what we learned from sensors with the intersections^' +
-                  'Enable sensors so code it so that it will stop if ^' +
-                  'the front sensor detects any incoming obstacle.^' +
-                  'Also make the car turn right correctly as before.^',
+  four:
+                  'Now that you\'ve learned to write conditionals to execute different snippets of code depending on changing circumstances, you have all the tools to program your car to make this turn and stop if it encounters any obstacles.\n\nAs always, remember to check the bug report if you have any trouble.',
 
   five:           'LEVEL 5^' +
                   'DisneyLand is on the left.^' +
