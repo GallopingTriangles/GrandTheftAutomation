@@ -5,10 +5,10 @@ Grand Theft Automation is an interactive game to expose users to programming log
 
 ---
 ### Getting started
-`npm install`  
-`bower install`  
-`webpack`  
-`npm start`
+`npm install   
+ bower install   
+ webpack   
+ npm start`
 
 `npm install` and `bower install` to install dependencies
 `npm run build` to transpile and compile
