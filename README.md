@@ -1,4 +1,5 @@
 # Grand Theft Automation
+![](https://hr46.slack.com/archives/D2FK98GSK/p1476420961000003)
 ---
 ## Synopsis
 www.grandtheftautomation.com  
@@ -14,7 +15,7 @@ Server listening on port 8080
 http://phaser.io  
 https://github.com/photonstorm/phaser
 ## Usage  
-Levels are created in `src/client/app/game/game.js'.  
+Levels are created in `src/client/app/game/game.js`.  
 Each map is rendered with its own `createGame()` function, which generates a new game instance for each level. The car's behavior will depend on the user's input from the code editor.
 ## Contributors  
 [Chris Chiang](https://github.com/cchrispy)  
