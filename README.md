@@ -1,5 +1,5 @@
 # Grand Theft Automation
-![](https://hr46.slack.com/archives/D2FK98GSK/p1476420961000003)
+![](https://media.giphy.com/media/eThRxELjyuZz2/giphy.gif)
 ---
 ## Synopsis
 www.grandtheftautomation.com  
