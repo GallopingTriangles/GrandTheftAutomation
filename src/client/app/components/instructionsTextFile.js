@@ -190,5 +190,4 @@ module.exports = {
                   'Use rerouter function to reroute from an obstacle^' +
                   'Useful because the gps cannot detect some obstructions^' +
                   'Enable rerouter^',
->>>>>>> levels 0-2 working with formatting
 }
