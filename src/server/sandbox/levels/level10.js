@@ -5,6 +5,8 @@ var level11 = require('./level11');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 	// == EXPECTED USER INPUT ===============================
 	//
@@ -39,54 +41,9 @@ var level10 = function(req, res, next) {
   runTestSuite(function UserInputTestLevel10(t) {
     // USER INPUT
 		var userInput = req.body.log;
-	  // == VIRTUAL MACHINE =================================
-	  var funcColor = 'var setColor = function(input) { testColor = input; };';
-	  var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
-	  var funcEnable = 'var enable = function(input) { testEnabled.values.push(input); testEnabled.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "gps") { testGps = true }; };';
-	  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
-	  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
-    var reroute = 'gps.reroute = function() { testReroute++; };';
-
-	  // input for virtual machine
-	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + reroute + userInput;
-	  var script = new vm.Script(input);
-
-    var Sandbox = function() {
-      this.sandbox = {
-		  	sensor: {
-		  		front: false
-		  	},
-		  	map: {
-		      intersection: false
-		  	},
-		  	route: {
-		  		directions: undefined,
-		  		count: 0
-		  	},
-		  	testEnabled: {
-          values: [],
-          count: 0
-        },
-        testEngine: undefined,
-        testColor: undefined,
-        testSpeed: undefined,
-        testSensor: undefined,
-        testRoute: undefined,
-        testRoute: undefined,
-        testTurn: {
-        	value: undefined,
-        	count: 0
-        },
-        testGps: undefined,
-        testReroute: 0,
-        gps: {
-          intersection: false
-        }
-        };
-      };
-
-      var setCaseCount = 1;
-      var setCase = function(caseNo, errorMessage) {
+	  
+    var setCaseCount = 1;
+    var setCase = function(caseNo, errorMessage) {
       if (setCaseCount === 1) {
        req.body.phaser.case = caseNo;
        req.body.bugs.push(errorMessage);
@@ -96,16 +53,11 @@ var level10 = function(req, res, next) {
 
     // == ENABLED TESTS == //
     runTestSuite(function EnabledGpsInputTest(t) {
-      // create new sandbox
-      var sb = new Sandbox().sandbox;
-      // create new virtual machine
-      var context = new vm.createContext(sb);
-      script.runInContext(context);
-
-      //console.log(context);
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().create(userInput);
 
       var enabled = context.testEnabled.values;
-      var calls = context.testEnabled.count;
+      var calls = context.testEnabled.calls;
 
       this.testEnabledCalledThreeTimes = function() {
         t.assertTrue(
@@ -148,63 +100,60 @@ var level10 = function(req, res, next) {
       };
       });
 
-      // == ENABLED TESTS == //
-     runTestSuite(function EnabledGpsInputTest(t) {
-       // create new sandbox
-       var sb = new Sandbox().sandbox;
-       // create new virtual machine
-       var context = new vm.createContext(sb);
-       script.runInContext(context);
+    // == ENABLED TESTS == //
+    runTestSuite(function EnabledGpsInputTest(t) {
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().create(userInput);
 
-       var enabled = context.testEnabled.values;
-       var calls = context.testTurn.count;
+      var enabled = context.testEnabled.values;
+      var calls = context.testTurn.calls;
 
-       this.testTurnNotCalledOutsideConditional = function() {
-         t.assertTrue(
-           calls === 0,
-           'Expected function turn() not to be called outside if statement, but got called ' + calls + ' time(s)',
-           function(error) {
-           	setCase(2, error);
-           }
-         );
-       };
+      this.testTurnNotCalledOutsideConditional = function() {
+        t.assertTrue(
+          calls === 0,
+          'Expected function turn() not to be called outside if statement, but got called ' + calls + ' time(s)',
+          function(error) {
+            setCase(2, error);
+          }
+        );
+      };
 
-       this.testConditionalPresence = function() {
-         t.assertTrue(
-           userInput.indexOf('if') !== -1,
-           'Expected code to have an if statement, example: "if (gps.intersection) { do something... }"',
-           function(error) {
-           	setCase(5, error);
-           }
-         );
-       };
+      this.testConditionalPresence = function() {
+        t.assertTrue(
+          userInput.indexOf('if') !== -1,
+          'Expected code to have an if statement, example: "if (gps.intersection) { do something... }"',
+          function(error) {
+          	setCase(5, error);
+          }
+        );
+      };
 
-       this.testConditionalLeftRightStraightPresence = function() {
-       	t.assertTrue(
-           userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1 || userInput.indexOf("gps.intersection === 'straight'") !== -1,
-           'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
-           function(error) {
-             setCase(5, error);
-           }
+      this.testConditionalLeftRightStraightPresence = function() {
+        t.assertTrue(
+          userInput.indexOf("gps.intersection === 'left'") !== -1 || userInput.indexOf("gps.intersection === 'right'") !== -1 || userInput.indexOf("gps.intersection === 'straight'") !== -1,
+          'Expect code to have an if statement with conditional: if (gps.intersection === "left") {.. or if (gps.intersection === "right") {..',
+          function(error) {
+            setCase(5, error);
+          }
        	);
-       };
+      };
 
-       this.testThreeConditionalsPresent = function() {
-         var input = userInput;
-         var count = 0;
-         var pos = input.indexOf('if');
-         while (pos !== -1) {
-         	count++;
+      this.testThreeConditionalsPresent = function() {
+        var input = userInput;
+        var count = 0;
+        var pos = input.indexOf('if');
+        while (pos !== -1) {
+          count++;
          	pos = input.indexOf('if', pos + 1);
-         }
-         t.assertTrue(
-           count >= 3,
-           'Expected code to have three if statements, but got ' + count + ' if statement(s)',
-           function(error) {
-             setCase(5, error);
-           }
-         );
-       };
+        }
+        t.assertTrue(
+          count >= 3,
+          'Expected code to have three if statements, but got ' + count + ' if statement(s)',
+          function(error) {
+            setCase(5, error);
+          }
+        );
+      };
 
        this.testConditionalStraightPresence = function() {
         t.assertTrue(
@@ -239,15 +188,11 @@ var level10 = function(req, res, next) {
 
     // == CONDITIONAL STRAIGHT TESTS == //
     runTestSuite(function GpsIntersectionStraightTest(t) {
-      var sb = new Sandbox().sandbox;
-      sb.gps.intersection = 'straight';
-
-      var context = new vm.createContext(sb);
-      script.runInContext(context);
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().gpsStraight(userInput);
 
       var turn = context.testTurn.value;
-      var calls = context.testTurn.count;
-
+      var calls = context.testTurn.calls;
 
       this.testTurnCalled = function() {
         t.assertTrue(
@@ -320,14 +265,11 @@ var level10 = function(req, res, next) {
 
     // == CONDITIONAL LEFT TESTS == //
     runTestSuite(function GpsIntersectionLeftTest(t) {
-      var sb = new Sandbox().sandbox;
-      sb.gps.intersection = 'left';
-
-      var context = new vm.createContext(sb);
-      script.runInContext(context);
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().gpsLeft(userInput);
 
       var turn = context.testTurn.value;
-      var calls = context.testTurn.count;   
+      var calls = context.testTurn.calls;   
 
       this.testTurnCalled = function() {
         t.assertTrue(
@@ -398,14 +340,11 @@ var level10 = function(req, res, next) {
 
     // == CONDITIONAL Right TESTS == //
     runTestSuite(function GpsIntersectionRightTest(t) {
-      var sb = new Sandbox().sandbox;
-      sb.gps.intersection = 'right';
-
-      var context = new vm.createContext(sb);
-      script.runInContext(context);
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().gpsRight(userInput);
 
       var turn = context.testTurn.value;
-      var calls = context.testTurn.count;   
+      var calls = context.testTurn.calls;   
 
       this.testTurnCalled = function() {
         t.assertTrue(
