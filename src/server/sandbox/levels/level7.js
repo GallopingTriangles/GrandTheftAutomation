@@ -2,6 +2,8 @@ var vm = require('vm');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 	// == EXPECTED USER INPUT ===============================
 	// 
@@ -34,39 +36,8 @@ var level7 = function(req, res, next) {
 
 	  // USER INPUT
 		var userInput = req.body.log;
-	  // == VIRTUAL MACHINE =================================
-	  var funcColor = 'var setColor = function(input) { testColor = input; };';
-	  var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
-	  var funcEnable = 'var enable = function(input) { testEnable.push(input); if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "route") { testRoute = true }; };';
-	  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
-	  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
-
-	  // input for virtual machine
-	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
-	  var script = new vm.Script(input);
-
-	  var sandbox = {
-	  	sensor: {
-	  		front: false
-	  	},
-	  	map: {
-	      intersection: false
-	  	},
-	  	route: {
-	  		directions: undefined,
-	  		count: 0
-	  	},
-	  	testEnable: [],
-	  	testEngine: undefined,
-	  	testColor: undefined,
-	  	testSpeed: undefined,
-	  	testSensor: undefined,
-	  	testRoute: undefined,
-	  	testRoute: undefined
-	  };
-
-	  var context = new vm.createContext(sandbox);
-	  script.runInContext(context);
+	  // == NEW GTA SANDBOX == //
+    var context = new gtaSandbox().create(userInput);
 
 	  var setCaseCount = 1;
 	  var setCase = function(caseNo, errorMessage) {
@@ -79,11 +50,12 @@ var level7 = function(req, res, next) {
 
 	  // == ENABLED TESTS == //
 	  runTestSuite(function EnabledInputTest(t) {
-	  	var enabled = context.testEnable;
+	  	var enabled = context.testEnabled.values;
+	  	var calls = context.testEnabled.calls;
 	  	this.testEnableCalledThreeTimes = function() {
 	  		t.assertTrue(
-	  		  enabled.length === 3,
-	  		  'Expect enable() to be called 3 times, bug got called ' + enabled.length + ' times',
+	  		  calls === 3,
+	  		  'Expect enable() to be called 3 times, bug got called ' + calls + ' times',
 	  		  function(error) {
 	  		  	setCase(3, error);
 	  		  }
@@ -112,11 +84,9 @@ var level7 = function(req, res, next) {
 
 	  	// test if route is enabled thirdly
 	  	this.testRouteEnabledThirdly = function() {
-	  	  var enabledThird = '';
-	  	  context.testEnable[2] ? enabledThird = context.testEnable[2] : enabledThird = '';
 	  	  t.assertTrue(
-	  	    enabledThird === 'route',
-	  	    'Expected route to be enabled thirdly, but got ' + enabledThird + ' enabled thirdly',
+	  	    enabled[2] === 'route',
+	  	    'Expected "route" to be enabled thirdly, but got ' + enabled[2] + ' enabled thirdly',
 	  	    function(error) {
 	  	      setCase(3, error); // syntax error, route not enabled. car crashes
 	  	    }
@@ -127,8 +97,8 @@ var level7 = function(req, res, next) {
 
 	  // == ROUTE TESTS == //
 	  runTestSuite(function RouteInputTest(t) {
-	  	var route = context.route.directions;
-	  	var calls = context.route.count;
+	  	var route = context.testSetRoute.value;
+	  	var calls = context.testSetRoute.calls;
 	  	// test if the set route function is called
 	  	this.testRouteCalled = function() {
 	      t.assertTrue(
