@@ -28,14 +28,17 @@ class Console extends Component {
     }).then(res => {
       res.json().then(response => {
 
-        /* response is an array of submitted solution code per level */
-        /* filter out the correct code for the level                 */
+        /* Response is an array of submitted solution code per level */
+        /* Filter out the correct code for the level if it exists    */
+        /* or render a default code comment if it doesn't exist      */
         var code = response.filter(levelCode => {
           return levelCode.level === this.props.level;
-        })[0].solution || '// Input your code here\n\n';
-        console.log(code);
+        })[0] ? response.filter(levelCode => {
+          return levelCode.level === this.props.level;
+        })[0].solution : '// Input your code here\n\n';
 
         /* Set the current code in the Redux store to the fetched code on load */
+        /* This code will passed down to be rendered in the Editor component   */
         this.props.setCode(code);
 
       })
@@ -106,7 +109,7 @@ class Console extends Component {
                               runCode={ this.postSolution.bind(this) } 
                               resetInput={ this.codeReset.bind(this) } />;
       case 'bugs': return <Bugs bugs={ this.state.bugs } />;
-      
+
       default: return <div>Oops! Something went wrong. Try refreshing the page.</div>;
     }
   }

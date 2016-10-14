@@ -45,7 +45,6 @@ class SignupContainer extends Component {
           /* Reset the current items in the store to accomadate the new user */
           this.props.changeUser(this.state.username);
           this.props.resetLevel();
-          this.props.resetCode();
 
           this.setState({ invalid: false });
 
@@ -53,15 +52,16 @@ class SignupContainer extends Component {
           this.props.router.push('/game');
           
         } else {
-          this.setState({ invalid: true });
+          /* clear the form after it has been submitted */
+          /* and render an error message for invalid submission */
+          this.setState({
+            email: '',
+            username: '',
+            password: '',
+            invalid: true
+          })
         }
 
-        /* clear the form after it has been submitted */
-        this.setState({
-          email: '',
-          username: '',
-          password: ''
-        })
       })
     }).catch(err => {
       console.log('Error in signup request');
