@@ -4,13 +4,12 @@
 www.grandtheftautomation.com
 Grand Theft Automation is an interactive game to expose users to programming logic through creating their own automated vehicle.
 
-
----
 ## Getting started
 `$ npm install`  
 `$ bower install`  
 `$ webpack`  
-`$ npm start`
+`$ npm start`  
+
 Server listening on port 8080
 
 ### Phaser
@@ -19,7 +18,6 @@ http://phaser.io
 https://github.com/photonstorm/phaser
 
 
----
 ## Contributors
 [Chris Chiang](https://github.com/cchrispy)  
 [Kevin Chan](https://github.com/kevindchan)  
