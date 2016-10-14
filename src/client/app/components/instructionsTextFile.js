@@ -7,14 +7,13 @@ module.exports = {
                   "enable('engine');\n" +
                   'Think of this as turning the key in the ignition. We also need to set our speed:\n' +
                   "setSpeed(20);\n" +
-                  'Start out slow. We\'re in a small parking lot. Click run and your car should start right up. Always remember to put semicolons at the end of each command. This tells the car each time you finish an instruction. Have fun!',
+                  'Start out slow. We\'re in a small parking lot. Click run and your car should start right up. Always remember to put semicolons at the end of each command. This tells the car\'s computer that you finished an instruction. Have fun!',
 
 
   one:            'LEVEL 1\n' +
 
-                  'If you want to customize your car:\nsetColor(\'black\');' +
-                  '(((EXPLAIN WHAT STRINGS ARE)))\n' +
-                  'Click RUN to see the car you\'ve just programmed!\n',
+                  'If you want to customize your car:\nsetColor(\'black\');\n' +
+                  'The quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\'. Strings are JavaScript\'s way of representing plain text.' ,
 
   two:            'LEVEL 2\n' +
                   'Let\'s give your car a sensor\n' +
