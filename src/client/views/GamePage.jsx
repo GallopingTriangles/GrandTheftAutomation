@@ -31,7 +31,7 @@ class GamePage extends Component {
     /* Need a conditional otherwise a game may render itself onto the */
     /* landing page if a redirect occurs before the component mounts  */
     return this.props.user ? (
-      <div>
+      <div className='game-page'>
         <Game level={ this.props.level } />
         <Console />
         <Footer/>
