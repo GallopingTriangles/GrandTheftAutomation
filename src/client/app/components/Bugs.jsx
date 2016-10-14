@@ -7,7 +7,6 @@ class Bugs extends Component {
       <div className='instructions'>
 
         { this.props.bugs.map(message => {
-          console.log(message);
           return (
             <div>
               <p className='fa fa-bug' aria-hidden='true'></p>
