@@ -4,22 +4,15 @@ module.exports = {
                   'Welcome to GTA!\n' +
 
                   'We know you\'re excited to program you\'re first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with with the command:\n' +
-                  "enable('engine')\n" +
+                  "enable('engine');\n" +
                   'Think of this as turning the key in the ignition. We also need to set our speed:\n' +
-                  "setSpeed(20)\n" +
-                  'Start out slow. We\'re in a small parking lot.'
+                  "setSpeed(20);\n" +
+                  'Start out slow. We\'re in a small parking lot. Click run and your car should start right up. Always remember to put semicolons at the end of each command. This tells the car each time you finish an instruction. Have fun!',
 
 
   one:            'LEVEL 1\n' +
-                  'Welcome to GTA\n' +
-                  '(a sentence for introducing AV shit...)\n' +
-                  'Let\'s turn on your engine, need to use a special tool called "enable"\n' +
-                  'Type <code> enable(\'engine\'); </code>\n' +
-                  'Now let\'s give the car a speed\n' +
-                  'Type <code> setSpeed(30); </code>\n' +
-                  'If you want to customize your car... <code> setColor(\'black\'); </code>\n' +
-                  'The semicolons are used to separate statements\n' +
-                  'and the quotation marks are to represent \'STRINGS\'\n' +
+
+                  'If you want to customize your car:\nsetColor(\'black\');' +
                   '(((EXPLAIN WHAT STRINGS ARE)))\n' +
                   'Click RUN to see the car you\'ve just programmed!\n',
 
