@@ -24,7 +24,7 @@ module.exports = {
                   'The statement inside of the parentheses\n' +
                   '.\n' +
                   '.\n' +
-                  'OUTLINE FOR THINGS TO TALK ABOUT OVER HERE OK (MAYBE NOT IN ORDER): \n'
+                  'OUTLINE FOR THINGS TO TALK ABOUT OVER HERE OK (MAYBE NOT IN ORDER): \n' +
                   'we can access the front sensor by doing "sensor.front"\n'+
                   'a sensor has two states: "true" and "false". This determines if it\'s currently detecting an obstacle\n'+
                   '"true" and "false" statements are called "BOOLEAN", which is a binary variable representing only two possible values\n'+
