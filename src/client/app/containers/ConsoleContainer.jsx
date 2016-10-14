@@ -16,6 +16,32 @@ class Console extends Component {
     };
   }
 
+  componentWillMount() {
+
+    var url = `/game?username=${ this.props.user }`;
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      res.json().then(response => {
+        /* response is an array of submitted solution code per level */
+        /* filter out the correct code for the level                 */
+        var code = response.filter(levelCode => {
+          return levelCode.level === this.props.level;
+        })[0] || '// Input your code here\n\n'
+
+        /* Set the current code in the Redux store to the fetched code on load */
+        this.props.setCode(code);
+
+      })
+    }).catch(err => {
+      console.log('Error fetching code: ', err);
+    })
+  }
+
   postSolution() {
 
     console.log('User submitted solution: ', this.props.currentCode);
