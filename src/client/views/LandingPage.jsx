@@ -67,10 +67,8 @@ class LandingPage extends Component {
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 white-text">
               <h4 className="horizontal-divider">Project Team</h4>
-              <p>Alex Pattison</p> 
-              <p>Chris Chiang</p> 
-              <p>Kevin Chan</p> 
-              <p>Lorenzo Engelen</p> 
+              <p>Alex Pattison | Chris Chiang | Kevin Chan | Lorenzo Engelen</p> 
+              <p>Hack Reactor 46 | October | 2016</p>
             </div>
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 white-text">
