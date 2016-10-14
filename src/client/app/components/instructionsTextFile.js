@@ -1,23 +1,25 @@
 module.exports = {
 
-  zero:           'LEVEL 0\n\n' +
-                  'Welcome to GTA!\nWe know you\'re excited to program your first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with the command:\n' +
-                  "<code>enable('engine');\n" +
+  zero:
+                  'Welcome to GTA!' +
+
+                  'We know you\'re excited to program your first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with the command:\n' +
+                  "<code>  enable('engine');\n" +
                   'Think of this as turning the key in the ignition. Always remember to put semicolons at the end of each command. This tells the car\'s computer that you finished an instruction. We also need to set our speed:\n' +
-                  "<code>setSpeed(20);\n" +
+                  "<code>  setSpeed(20);\n" +
                   'Start out slow. We\'re in a small parking lot. Click run and your car should start right up.  Have fun!',
 
 
-  one:            'LEVEL 1\n' +
+  one:
 
-                  '\tIf you want to customize your car:\n<code>setColor(\'black\');\n\tThe quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.',
+                  'If you want to customize your car:\n<code>  setColor(\'black\');\nThe quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.',
 
-  two:            'LEVEL 2\n' +
+  two:
                   'If our automated vehicle is going to do more then just drive in straight lines all day, we need to give it a way of detecting obstructions. Every automated vehicle has a built in sensor for detecting other objects. How should we enable our \'sensor\'? If you can\'t figure it out on your own, be sure to check the bugs tab.' +
 
                   'The sensor will light up if it detects anything in it\'s path, but the car will keep driving forward unless you program it to stop. You\'ve learned quite a bit about programming already, but there are a few more key concepts we need to go over you will be able to program you\'re car to stop automatically.\n' +
                   'Conditional statements are how programmers deal with branching logic. A conditional statement looks like this:\n' +
-                  '<code>if (sensor.front === true) { setSpeed(0); };\n' +
+                  '<code>  if (sensor.front === true) { setSpeed(0); };\n' +
                   'The statement inside of the parentheses',
 
   three:          'LEVEL 3\n' +

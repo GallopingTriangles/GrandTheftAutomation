@@ -22,6 +22,8 @@ export default class Instructions extends Component {
 	render() {
     return (
       <div className='instructions'>
+        <h3>{`Level ${this.props.level}`}</h3>
+        {console.log(this.props)}
         { this.state[this.props.level].split('\n').map(function(line) {
           if (line.slice(0, 6) === '<code>') {
             return (
