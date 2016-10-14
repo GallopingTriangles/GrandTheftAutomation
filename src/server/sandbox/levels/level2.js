@@ -5,6 +5,8 @@ var level4 = require('./level4');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 var level2 = function(req, res, next) {
   
@@ -48,40 +50,22 @@ var level2 = function(req, res, next) {
     	}
     };
 
-  	// == CONDITIONAL TESTS == //
-  	runTestSuite(function SensorConditionalFalseTest(t) {
-  		// sandbox for virtual machine
-  		var sandbox = {
-  			sensor: {
-          front: false
-  			},
-  			map: {
-          intersection: false
-  			},
-        testEnable: [],
-        testSpeed: {
-        	value: 0,
-        	count: 0
-        }
-  		};
+    // == NEW CONDITIONAL TESTS == //
+    runTestSuite(function SensorConditionalFalseTest(t) {
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().create(userInput);
+      var calls = context.testSetspeed.calls;
 
-  		var context = new vm.createContext(sandbox);
-  		script.runInContext(context);
-
-			var speed = context.testSpeed.value;
-			var calls = context.testSpeed.count;
-
-			this.testSetSpeedCalledOnce = function() {
-	      t.assertTrue(
-	        calls === 1,
-	        'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
-	        function(error) {
-	        	setCase(3, error);
-	        }
-	      );
-			};
-
-  	});
+      this.testSetSpeedCalledOnce = function() {
+        t.assertTrue(
+          calls === 1,
+          'Expected function setSpeed() to be called once, but got called ' + calls + ' times',
+          function(error) {
+            setCase(3, error);
+          }
+        );
+      };
+    }); // END sensor.front === false
 
     // == CONDITIONAL TESTS == //
     runTestSuite(function ConditionalTest(t) {
