@@ -25,11 +25,11 @@ export default class Instructions extends Component {
         { this.state[this.props.level].split('\n').map(function(line) {
           if (line.slice(0, 6) === '<code>') {
             return (
-              <span key={ Math.random() }> { line.slice(6) } </span>
+              <span key={ Math.random() }>{ line.slice(6) }</span>
             )
           } else {
             return (
-              <p key={ Math.random() }> { line } </p>
+              <p key={ Math.random() }>{ line }</p>
             )
           }
         })}
