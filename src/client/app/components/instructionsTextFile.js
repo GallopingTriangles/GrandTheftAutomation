@@ -1,6 +1,8 @@
 module.exports = {
 
-  zero:           'LEVEL 0\n',
+  zero:           'LEVEL 0\n\n\n' +
+                  'Hello there and welcome to GTA!\n\n',
+
 
   one:            'LEVEL 1\n' +
                   'Welcome to GTA\n' +
