@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import changeUser from '../actions/changeUser.js';
 import Login from '../containers/LoginContainer.jsx';
+import Signup from '../containers/SignupContainer.jsx';
 
 import styles from '../../styles/Nav.css.js';
 
@@ -45,6 +46,16 @@ class Nav extends Component {
             { this.props.user ? <li><Link to='/game'> Game </Link></li> : null }
             { this.props.user ? <li><Link to='/' onClick={ this.logout.bind(this) }> Logout </Link></li> : null }
 
+            { this.props.user ? null : 
+              <li className="dropdown">
+                <a href="#" className="dropdown" data-toggle="dropdown">Sign Up</a>
+                <ul id="login-dp" className="dropdown-menu">
+                  <li>
+                    <Signup />
+                  </li>
+                </ul>
+              </li>  
+            }
             { this.props.user ? <li><Link>{ this.props.user }</Link></li> : 
               <li className="dropdown">
                 <a href="#" className="dropdown" data-toggle="dropdown">Login</a>
@@ -54,7 +65,7 @@ class Nav extends Component {
                   </li>
                 </ul>
               </li>
-            }  
+            }
           </ul>
           
         </div>
