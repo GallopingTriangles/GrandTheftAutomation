@@ -112,7 +112,7 @@ var level2 = function(req, res, next) {
 
       this.testSetSpeedCalledWithArgument = function() {
         t.assertTrue(
-          speed,
+          speed || speed === 0,
           'Expected setSpeed() to be called with an argument, but got ' + speed,
           function(error) {
             setCase(3, error);
