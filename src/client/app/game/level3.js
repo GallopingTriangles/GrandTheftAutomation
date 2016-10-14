@@ -1,26 +1,4 @@
 var createGame = (userInput) => {
-  /**********************************************************/
-  /**********************************************************/
-  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
-  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
-  /**********************************************************/
-  /**********************************************************/
-  /*
-  var FAKE_USER_INPUT = {
-    color: 'panda',
-    speed: 100,
-    sensor: true,
-    case: 1, // success right turn
-    // case: 2, // fail, car did not start engine
-    // case: 3, // fail, crashed straight
-    // case: 4, // fail, crash left
-    // case: 5, // fail, stalls at intersection
-  }
-  */
-  /**********************************************************/
-  /**********************************************************/
-
-
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;

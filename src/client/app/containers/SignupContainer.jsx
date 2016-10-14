@@ -36,16 +36,13 @@ class SignupContainer extends Component {
         password: this.state.password
       })
     }).then(res => {
-      console.log('signup status: ', res.status);
       res.json().then(result => {
-        console.log('signup response: ', result.message);
 
         if (result.message !== 'User already exists.') {
 
           /* Reset the current items in the store to accomadate the new user */
           this.props.changeUser(this.state.username);
           this.props.resetLevel();
-          this.props.resetCode();
 
           this.setState({ invalid: false });
 
@@ -53,15 +50,16 @@ class SignupContainer extends Component {
           this.props.router.push('/game');
           
         } else {
-          this.setState({ invalid: true });
+          /* clear the form after it has been submitted */
+          /* and render an error message for invalid submission */
+          this.setState({
+            email: '',
+            username: '',
+            password: '',
+            invalid: true
+          })
         }
 
-        /* clear the form after it has been submitted */
-        this.setState({
-          email: '',
-          username: '',
-          password: ''
-        })
       })
     }).catch(err => {
       console.log('Error in signup request');
@@ -72,7 +70,7 @@ class SignupContainer extends Component {
     return (
       <div style={{float: 'left'}}>
         <form className="landing-form" onSubmit={ this.createUser.bind(this) } >
-          <p className="white-text">Email: <input className="black-text" onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } required/></p>
+          <p className="white-text">Email: <input className="black-text" onChange={ (e) => this.updateForm('email', e) } value={ this.state.email } type='email' required/></p>
           <p className="white-text">Username: <input className="black-text" onChange={ (e) => this.updateForm('username', e) } value={ this.state.username } required/></p>
           <p className="white-text">Password: <input className="black-text" onChange={ (e) => this.updateForm('password', e) } value={ this.state.password } type='password' required/></p>
           { this.state.invalid ? <p style={{ color: 'red' }} > Sorry, that username already exists. </p> : null }

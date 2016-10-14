@@ -1,21 +1,4 @@
 var createGame = (userInput) => {
-  /**********************************************************/
-  /**********************************************************/
-  /********* SAMPLE USER INPUT TO BASE THIS OFF OF **********/
-  /**** REMOVE LATER AFTER WE GET THE REAL INPUT FROM VM ****/
-  /**********************************************************/
-  /**********************************************************/
-  var FAKE_USER_INPUT = {
-    color: 'white',
-    speed: 400,
-    sensor: true,
-    case: 1, // success engine goes forward
-    // case: 2, // fail, engine didn't get turned on
-  }
-  /**********************************************************/
-  /**********************************************************/
-
-
   // change width depends on window width, no dynamically resizing yet
   var width = window.innerWidth;
   var height = window.innerHeight;

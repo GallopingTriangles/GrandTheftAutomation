@@ -25,7 +25,7 @@ class Footer extends Component {
       createGame({
         color: 'white',
         speed: 0,
-        /* no "case" property for the default rendering */
+        case: 0
       }, level);
     }
 
@@ -53,15 +53,10 @@ class Footer extends Component {
     }).then(response => {
       response.json().then(solutions => {
 
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
-
-        /** THIS MAY HAVE BEEN FIXED, I'M NOT SURE                                                  **/
-        /** Throws an error when it tries to fetch code for a user that has never saved code before **/
-        /** This problem may or may not be present anymore... Troubleshooting required              **/ 
-        /** The reason is most likely that getCode() was being run when it shouldn't be? Test it    **/
-
-        /** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ** ERROR ***/
-
+        /* Fetch the solution code for the logged in user         */
+        /* If it doesn't exist, return a default code comment     */
+        /* Set the code in the Redux Store which will be rendered */
+        /* appropriately in the Editor component                  */
         var result = solutions.filter(solution => {
           return solution.level === this.props.level;
         })[0];
