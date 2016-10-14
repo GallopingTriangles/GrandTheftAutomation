@@ -46,8 +46,8 @@ class LandingPage extends Component {
                     <img className="landing-image" src="https://www.expats.com.mt/wp-content/uploads/2016/01/learn-to-code.jpg" />
                   </div>
                   <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3" style={{paddingRight: '30px'}}>
-                    <h4 className="horizontal-divider">Coding/Programing</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. quis nostrud exercitation </p>
+                    <h4 className="horizontal-divider">Coding</h4>
+                    <p>Coding has become a sought after skill, valued for its ability to rapidly create incredible applications. GTAutomation is an entry-point into coding, allowing users to quickly learn through a fun and captivating experience. </p>
                   </div>
                 </div>
                 <div className="white-text">
@@ -56,7 +56,7 @@ class LandingPage extends Component {
                   </div>
                   <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3" style={{paddingRight: '30px', paddingTop: '30px'}}>
                     <h4 className="horizontal-divider">Autonomous Vehicles</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. quis nostrud exercitation </p>
+                    <p>The advent of new technologies produces amazing results. In the past few years, self-driving vehicles have changed our perspective of the roadway. Learn more by signing up above and coding your own autonomous vehicle today. </p>
                   </div>
                 </div>
               </div>
