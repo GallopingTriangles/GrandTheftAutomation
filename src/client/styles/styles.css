@@ -52,6 +52,10 @@ html, body {
   min-width: 250px;
 }
 
+.game-page {
+  /*max-width: 300px;*/
+}
+
 /* == CONSOLE ========================================== */
 .console {
 	width: 100%;
