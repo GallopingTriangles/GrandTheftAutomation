@@ -22,9 +22,17 @@ export default class Instructions extends Component {
 	render() {
     return (
       <div className='instructions'>
-        { this.state[this.props.level].split('\n').map(line => (
-          <p key={ Math.random() }> { line } </p>
-        )) }
+        { this.state[this.props.level].split('\n').map(function(line) {
+          if (line.slice(0, 6) === '<code>') {
+            return (
+              <span key={ Math.random() }> { line.slice(6) } </span>
+            )
+          } else {
+            return (
+              <p key={ Math.random() }> { line } </p>
+            )
+          }
+        })}
       </div>
     )
 	}

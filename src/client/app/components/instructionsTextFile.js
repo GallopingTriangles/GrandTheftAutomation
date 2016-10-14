@@ -4,15 +4,15 @@ module.exports = {
                   'Welcome to GTA!\n' +
 
                   'We know you\'re excited to program you\'re first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with with the command:\n' +
-                  "enable('engine');\n" +
+                  "<code>enable('engine');\n" +
                   'Think of this as turning the key in the ignition. Always remember to put semicolons at the end of each command. This tells the car\'s computer that you finished an instruction. We also need to set our speed:\n' +
-                  "setSpeed(20);\n" +
+                  "<code>setSpeed(20);\n" +
                   'Start out slow. We\'re in a small parking lot. Click run and your car should start right up.  Have fun!',
 
 
   one:            'LEVEL 1\n' +
 
-                  'If you want to customize your car:\nsetColor(\'black\');\n' +
+                  'If you want to customize your car:\n<code>setColor(\'black\');\n' +
                   'The quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.',
 
   two:            'LEVEL 2\n' +
@@ -32,6 +32,8 @@ module.exports = {
                   'A single equal sign is used for different purposes so we have to use triple equals\n'+
                   'the "if" statement begins a conditional statement. If the expression inside the parentheses evaluates into a true statement, then the code inside the curly braces {} will be executed\n'+
                   'Here, if the front sensor is detecting an obstacle, we set the car\'s speed to 0\n',
+                  '<code>if (sensor.front === true) { setSpeed(0); };\n' +
+                  'The statement inside of the parentheses',
 
   three:          'LEVEL 3\n' +
                   'Introduce INTERSECTIONS\n' +
