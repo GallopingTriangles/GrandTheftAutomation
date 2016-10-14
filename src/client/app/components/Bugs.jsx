@@ -24,22 +24,17 @@ class Bugs extends Component {
 function formatBugs(message) {
   var words = message.split(' ');
   var i;
-  var j;
   words.forEach((word, ind) => {
     if (word.indexOf('()') > -1) {
       i = ind;
     }
-    if (word.indexOf('undefined') > -1) {
-      j = ind;
-    }
   })
-  if (!i && !j) { // if there is no function or 'undefined' in it
+  if (!i) { // if there is no function in it
     return message;
   }
   
   var first = '';
   var last = '';
-  var span;
   var span = (<span style={{color: 'yellow'}}>{ words[i] }</span>);
   words.forEach((word, ind) => {
     if (ind < i) {
