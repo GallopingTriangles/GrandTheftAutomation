@@ -5,6 +5,8 @@ var level9 = require('./level9');
 
 // == USE TESTING FRAMEWORK ===============================
 var runTestSuite = require('../TestingFramework');
+// == USE GTA SANDBOX =====================================
+var gtaSandbox = require('../gtaSandbox');
 
 	// == EXPECTED USER INPUT ===============================
 	//
@@ -52,49 +54,6 @@ var level8 = function(req, res, next) {
 	runTestSuite(function UserInputTestLevel8(t) {
 	  // USER INPUT
 		var userInput = req.body.log;
-	  // == VIRTUAL MACHINE =================================
-	  var funcColor = 'var setColor = function(input) { testColor = input; };';
-	  var funcSpeed = 'var setSpeed = function(input) { testSpeed = input; };';
-	  var funcEnable = 'var enable = function(input) { testEnabled.values.push(input); testEnabled.count++; if (input === "engine") { testEngine = true; }; if (input === "sensor") { testSensor = true; }; if (input === "gps") { testGps = true }; };';
-	  var funcTurn = 'var turn = function(input) { testTurn.value = input; testTurn.count++ };';
-	  var funcRoute = 'var setRoute = function(input) { route.directions = input; route.count++ };';
-
-	  // input for virtual machine
-	  var input = funcColor + funcSpeed + funcEnable + funcTurn + funcRoute + userInput;
-	  var script = new vm.Script(input);
-
-    var Sandbox = function() {
-      this.sandbox = {
-		  	sensor: {
-		  		front: false
-		  	},
-		  	map: {
-		      intersection: false
-		  	},
-		  	gps: {
-	        intersection: false
-		  	},
-		  	route: {
-		  		directions: undefined,
-		  		count: 0
-		  	},
-		  	testEnabled: {
-          values: [],
-          count: 0
-		  	},
-		  	testEngine: undefined,
-		  	testColor: undefined,
-		  	testSpeed: undefined,
-		  	testSensor: undefined,
-		  	testRoute: undefined,
-		  	testRoute: undefined,
-		  	testTurn: {
-		  		value: undefined,
-		  		count: 0
-        },
-        testGps: undefined
-      };
-     };
 
 	  var setCaseCount = 1;
 	  var setCase = function(caseNo, errorMessage) {
@@ -107,16 +66,11 @@ var level8 = function(req, res, next) {
 
     // == ENABLED TESTS == //
 	  runTestSuite(function EnabledGpsInputTest(t) {
-	  	// create new sandbox
-	  	var sb = new Sandbox().sandbox;
-	  	// create new virtual machine
-	  	var context = new vm.createContext(sb);
-		  script.runInContext(context);
-
-      //console.log(context);
+	  	// == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().create(userInput);
 
       var enabled = context.testEnabled.values;
-      var calls = context.testEnabled.count;
+      var calls = context.testEnabled.calls;
 
       this.testEnabledCalledThreeTimes = function() {
         t.assertTrue(
@@ -161,11 +115,10 @@ var level8 = function(req, res, next) {
 
     // == CONDITIONAL TESTS == //
 	  runTestSuite(function ConditionalTest(t) {
-      var sb = new Sandbox().sandbox;
-      var context = new vm.createContext(sb);
-      script.runInContext(context);
+      // == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().create(userInput);
 
-      var calls = context.testTurn.count;
+      var calls = context.testTurn.calls;
 
       this.testTurnNotCalledOutsideConditional = function() {
         t.assertTrue(
@@ -237,14 +190,11 @@ var level8 = function(req, res, next) {
 
     // == CONDITIONAL LEFT TESTS == //
 	  runTestSuite(function GpsIntersectionLeftTest(t) {
-	  	var sb = new Sandbox().sandbox;
-      sb.gps.intersection = 'left';
-
-      var context = new vm.createContext(sb);
-      script.runInContext(context);
+	  	// == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().gpsLeft(userInput);
 
       var turn = context.testTurn.value;
-      var calls = context.testTurn.count;
+      var calls = context.testTurn.calls;
 
       this.testTurnCalled = function() {
         t.assertTrue(
@@ -309,14 +259,11 @@ var level8 = function(req, res, next) {
 
     // == CONDITIONAL RIGHT TESTS == //
 	  runTestSuite(function GpsIntersectionRightTest(t) {
-	  	var sb = new Sandbox().sandbox;
-      sb.gps.intersection = 'right';
-
-      var context = new vm.createContext(sb);
-      script.runInContext(context);
+	  	// == NEW GTA SANDBOX == //
+      var context = new gtaSandbox().gpsRight(userInput);
 
       var turn = context.testTurn.value;
-      var calls = context.testTurn.count;
+      var calls = context.testTurn.calls;
 
       this.testTurnCalled = function() {
         t.assertTrue(
