@@ -37,62 +37,46 @@ class LandingPage extends Component {
 
         <div className="container">
           <div className="row">
-            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
-              <img className="landing-image" src="https://www.expats.com.mt/wp-content/uploads/2016/01/learn-to-code.jpg" />
-              <h4 className="horizontal-divider">Coding</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 white-text">
+              <img id="game_gif" src="https://media.giphy.com/media/eThRxELjyuZz2/giphy.gif" style={{height: '416px'}}/>
             </div>
-            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
-              <img className="landing-image" src="http://core0.staticworld.net/images/article/2013/08/edmunds_rides_self_driving_car_diagram_connected_car-100049056-orig.jpg" />
-              <h4 className="horizontal-divider">Autonomous Vehicles</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 white-text">
-              <div id="carousel-example-generic" className="carousel slide" data-ride="carousel">
-
-                <ol className="carousel-indicators">
-                  <li data-target="#carousel-example-generic" data-slide-to="0" className="active"></li>
-                  <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                  <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-
-
-                <div className="carousel-inner" role="listbox">
-                  <div className="item active">
-                    <img src={'http://www.vtti.vt.edu/featured/wp-content/uploads/2016/01/citystreets-1.jpg'} alt="..." />
-                    <div className="carousel-caption">
-                    </div>
-                  </div>
-                  <div className="item">
-                    <img src={'http://dujs.dartmouth.edu/wp-content/uploads/AV.png'} alt="..." />
-                    <div className="carousel-caption">
-                    </div>
-                  </div>
-                  <div className="item">
-                    <img src={'http://oc-apa.org/wp-content/uploads/2016/05/connected-vehicles.jpg'} alt="..." />
-                    <div className="carousel-caption">
-                    </div>
-                  </div>
+            <div className="row">
+              <div className="white-text">
+                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                  <img className="landing-image" src="https://www.expats.com.mt/wp-content/uploads/2016/01/learn-to-code.jpg" />
                 </div>
-
-                <a className="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                  <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                  <span className="sr-only">Previous</span>
-                </a>
-                <a className="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                  <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                  <span className="sr-only">Next</span>
-                </a>
+                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3" style={{paddingRight: '30px'}}>
+                  <h4 className="horizontal-divider">Coding/Programing</h4>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. quis nostrud exercitation </p>
+                </div>
+              </div>
+              <div className="white-text">
+                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3" style={{paddingTop: '30px'}}>
+                  <img className="landing-image" src="http://core0.staticworld.net/images/article/2013/08/edmunds_rides_self_driving_car_diagram_connected_car-100049056-orig.jpg" />
+                </div>
+                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3" style={{paddingRight: '30px', paddingTop: '30px'}}>
+                  <h4 className="horizontal-divider">Autonomous Vehicles</h4>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. quis nostrud exercitation </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="container">
+        <div className="container" style={{marginTop: '15px'}}>
           <div className="row">
-            <div className="col-xs-12">
-              <h4 className="white-text">Sign Up Here:</h4>
-              <Signup />
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 white-text">
+              <h4 className="horizontal-divider">Project Team</h4>
+              <p>Alex Pattison</p> 
+              <p>Chris Chiang</p> 
+              <p>Kevin Chan</p> 
+              <p>Lorenzo Engelen</p> 
+            </div>
+            <div className="row">
+              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 white-text">
+                <h4 className="horizontal-divider">Sign Up Here</h4>
+                <Signup />
+              </div>
             </div>
           </div>
         </div>

@@ -192,7 +192,9 @@ html, body {
 
 .horizontal-divider {
   border-bottom: 1px solid white;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 
 .landing-form {
@@ -200,12 +202,12 @@ html, body {
 }
 
 .landing-image {
-  max-height: 200px;
+  height: 192.5px;
   width: 100%;
 }
 
-.login_signup {
-  margin: 15px 0 15px 0;
+#game_gif {
+  width: 100%;
 }
 
 /* == BADGE  =========================================== */
