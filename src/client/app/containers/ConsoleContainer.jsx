@@ -18,6 +18,8 @@ class Console extends Component {
 
   componentWillMount() {
 
+    console.log('current code: ', this.props.currentCode);
+
     var url = `/game?username=${ this.props.user }`;
 
     fetch(url, {
@@ -31,7 +33,8 @@ class Console extends Component {
         /* filter out the correct code for the level                 */
         var code = response.filter(levelCode => {
           return levelCode.level === this.props.level;
-        })[0] || '// Input your code here\n\n'
+        })[0].solution || '// Input your code here\n\n';
+        console.log(code);
 
         /* Set the current code in the Redux store to the fetched code on load */
         this.props.setCode(code);
