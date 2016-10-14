@@ -1,9 +1,7 @@
 module.exports = {
 
   zero:           'LEVEL 0\n\n' +
-                  'Welcome to GTA!\n' +
-
-                  'We know you\'re excited to program your first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with the command:\n' +
+                  'Welcome to GTA!\nWe know you\'re excited to program your first automated vehicle, but first we have to make sure you know how to drive a regular old car. In GTA we start our car with the command:\n' +
                   "<code>enable('engine');\n" +
                   'Think of this as turning the key in the ignition. Always remember to put semicolons at the end of each command. This tells the car\'s computer that you finished an instruction. We also need to set our speed:\n' +
                   "<code>setSpeed(20);\n" +
@@ -12,7 +10,7 @@ module.exports = {
 
   one:            'LEVEL 1\n' +
 
-                  'If you want to customize your car:\n<code>setColor(\'black\');\n\tThe quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.',
+                  '\tIf you want to customize your car:\n<code>setColor(\'black\');\n\tThe quotes around the color indicate that the word(s) are to be interpretted as a \'STRING\' data type. Strings are JavaScript\'s way of representing plain text.',
 
   two:            'LEVEL 2\n' +
                   'If our automated vehicle is going to do more then just drive in straight lines all day, we need to give it a way of detecting obstructions. Every automated vehicle has a built in sensor for detecting other objects. How should we enable our \'sensor\'? If you can\'t figure it out on your own, be sure to check the bugs tab.' +
